@@ -1,0 +1,26 @@
+{
+  "app-name": "Pando",
+  "connect.wallet": "Connect Wallet",
+  "common.qr": "Please use Mixin Messenger or Reborn Platform scan to pay.",
+  "common.from": "From",
+  "common.to": "To",
+  "common.authing":"Logining...",
+  "common.input": "Input",
+  "common.deposit": "Deposit",
+  "common.balance": "Balance",
+  "common.asset-apy":"Asset/APY",
+  "common.all-market":"All Markets",
+  "common.on-ok":"Confirm",
+  "common.done":"Done",
+  "common.amount":"Amount",
+  "common.checking-payment":"Checking...",
+
+  "tab.me":"Me",
+  "tab.market":"Market",
+  
+  "errorcode.-1": "NETWORK ERROR",
+  "errorcode.404": "CANNOT FIND RESOURCE",
+  "errorcode.403": "ACCESS DENIED",
+  "errorcode.401": "AUTH REQUIRED",
+  "errorcode.fallback": "NETWORK ERROR"
+}

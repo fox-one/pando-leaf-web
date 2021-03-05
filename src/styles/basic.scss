@@ -1,0 +1,34 @@
+a {
+  text-decoration: none;
+}
+
+span,
+div,
+p,
+a {
+  user-select: none;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme--dark.v-application {
+  .f-bg-greyscale-7 {
+    background-color: #000000;
+  }
+  .f-panel.v-sheet {
+    background-color: #1e1e1e;
+  }
+}
+
+.theme--light.v-application {
+  .f-bg-greyscale-7 {
+    background-color: #ffffff;
+  }
+}

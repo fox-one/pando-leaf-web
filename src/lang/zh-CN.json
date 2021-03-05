@@ -1,0 +1,26 @@
+{
+  "app-name": "4compound",
+  "connect.wallet": "连接钱包",
+  "common.qr": "请使用 Mixin Messenger 或 新生大讲堂 App 扫码支付",
+  "common.from": "From",
+  "common.to": "To",
+  "common.authing":"登录中...",
+  "common.input": "Input",
+  "common.deposit": "存入",
+  "common.balance": "余额",
+  "common.asset-apy":"资产/APY",
+  "common.all-market":"所有市场",
+  "common.on-ok":"我已了解",
+  "common.done":"完成",
+  "common.amount":"数量",
+  "common.checking-payment":"查询结果中...",
+  
+  "tab.me":"我的",
+  "tab.market":"市场",
+  
+  "errorcode.-1": "网络错误",
+  "errorcode.404": "资源不存在",
+  "errorcode.403":"没有访问权限",
+  "errorcode.401": "请登录",
+  "errorcode.fallback": "网络错误"
+}
