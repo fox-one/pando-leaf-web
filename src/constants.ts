@@ -8,14 +8,16 @@ export const APP_TOKEN = process.env.TOKEN;
 
 export const APP_SCOPE = process.env.SCOPE;
 
+export const MIXIN_HOST = "https://mixin-api.zeromesh.net/";
+
 export const CONFIG = isProduct
   ? {
-      API_BASE: "https://pando-test-api.fox.one/api/v1",
+      API_BASE: "https://pando-test-api.fox.one/api/",
       WS_BASE: "wss://",
       MIXIN_CLIENT_ID: "670e1faa-2975-48d9-a81f-cd0905ae847e",
     }
   : {
-      API_BASE: "https://pando-test-api.fox.one/api/v1",
+      API_BASE: "https://pando-test-api.fox.one/api/",
       WS_BASE: "wss://uniswap-dev.fox.one/ws?raw=1",
       MIXIN_CLIENT_ID: "670e1faa-2975-48d9-a81f-cd0905ae847e",
     };
