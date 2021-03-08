@@ -1,14 +1,20 @@
 import Http from "~/utils/http";
 import { AxiosRequestConfig } from "axios";
-import { IMixinResponse } from "../types/dto";
-import { IMixinAsset } from "../types/vo";
+import { BaseRes, IMixinResponse } from "../types/dto";
+import { AuthResult, ICollateral, IMixinAsset } from "../types/vo";
 
 export default function (http: Http) {
   return {
-    auth(code: string): Promise<{ access_token: string; scope: string }> {
+    auth(code: string): Promise<BaseRes<AuthResult>> {
       return http.post("/oauth", {
         data: { code },
       });
+    },
+    listCollaterals(): Promise<BaseRes<{ collaterals: ICollateral[] }>> {
+      return http.get("/cats");
+    },
+    getAssets(): Promise<BaseRes<{ assets: IMixinAsset[] }>> {
+      return http.get("/assets");
     },
     async getAssetsFromMixin(): Promise<IMixinResponse<IMixinAsset[]>> {
       return await http.get("https://mixin-api.zeromesh.net/assets");

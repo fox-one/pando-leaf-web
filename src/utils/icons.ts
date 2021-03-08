@@ -1,3 +1,13 @@
-import { mdiGoogleAnalytics, mdiAccount } from "@mdi/js";
+import {
+  mdiGoogleAnalytics,
+  mdiAccount,
+  mdiArrowDown,
+  mdiHelpCircleOutline,
+} from "@mdi/js";
 
-export default { mdiGoogleAnalytics, mdiAccount };
+export default {
+  mdiGoogleAnalytics,
+  mdiHelpCircleOutline,
+  mdiAccount,
+  mdiArrowDown,
+};

@@ -893,10 +893,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@foxone/uikit@^2.0.25":
-  version "2.0.36"
-  resolved "https://registry.npm.taobao.org/@foxone/uikit/download/@foxone/uikit-2.0.36.tgz#6192aea4145d3a72071b3856e28882207b8bdc5a"
-  integrity sha1-YZKupBRdOnIHGzhW4oiCIHuL3Fo=
+"@foxone/uikit@^2.0.40":
+  version "2.0.40"
+  resolved "https://registry.npm.taobao.org/@foxone/uikit/download/@foxone/uikit-2.0.40.tgz#a854c5d32ef5323d977848a826b82143298472df"
+  integrity sha1-qFTF0y71Mj2XeEioJrghQymEct8=
   dependencies:
     animate.css "^4.1.0"
     bignumber.js "^9.0.0"

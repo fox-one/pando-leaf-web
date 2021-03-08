@@ -14,14 +14,8 @@ const locales = {
 const icons = {
   iconfont: "mdiSvg",
   values: {
-    iconDefi: {
-      component: "icon-defi",
-    },
-    iconMine: {
-      component: "icon-mine",
-    },
-    iconTrade: {
-      component: "icon-trade",
+    iconListArrow: {
+      component: "icon-list-arrow",
     },
   },
 };

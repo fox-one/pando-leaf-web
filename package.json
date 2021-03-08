@@ -19,7 +19,7 @@
     "generate": "nuxt-ts generate"
   },
   "dependencies": {
-    "@foxone/uikit": "^2.0.25",
+    "@foxone/uikit": "^2.0.40",
     "@mdi/js": "^5.5.55",
     "@nuxt/types": "^2.14.6",
     "@nuxt/typescript-runtime": "^2.0.0",

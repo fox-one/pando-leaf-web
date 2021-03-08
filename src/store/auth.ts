@@ -1,14 +1,21 @@
 import { MutationTree, GetterTree, ActionTree } from "vuex";
+import { AuthResult } from "~/services/types/vo";
 import { SCOPE } from "~/types";
 
 const state = () => ({
   token: "",
   scope: "",
+  id: "",
+  name: "",
+  avatar: "",
 });
 
 export type AuthState = {
   token: string;
   scope: string;
+  id: string;
+  name: string;
+  avatar: string;
 };
 
 const getters: GetterTree<AuthState, any> = {
@@ -24,22 +31,23 @@ const getters: GetterTree<AuthState, any> = {
 };
 
 const mutations: MutationTree<AuthState> = {
-  SET_TOKEN(state, data: { token: string; scope: string }) {
+  SET_TOKEN(state, data: AuthResult) {
     state.token = data.token;
     state.scope = data.scope;
+    state.id = data.id;
+    state.name = data.name;
+    state.avatar = data.avatar;
   },
 };
 
 const actions: ActionTree<AuthState, any> = {
-  async login({ commit, dispatch }, code) {
+  async login({ commit }, code) {
     const res = await this.$http.auth(code);
-    commit("SET_TOKEN", { token: res.access_token, scope: res.scope });
-    // dispatch("global/syncAccount");
-    // dispatch("global/syncMarkets");
+    commit("SET_TOKEN", res.data);
   },
   logout({ dispatch, commit }) {
-    commit("SET_TOKEN", { token: "", scope: "" });
-    // dispatch("global/clear");
+    commit("SET_TOKEN", { token: "", scope: "", id: "", name: "", avatar: "" });
+    dispatch("global/clear");
   },
 };
 

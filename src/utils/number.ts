@@ -1,6 +1,15 @@
 import BigNumber from "bignumber.js";
 
 export default {
+  isValid(num: number): boolean {
+    return (
+      !isNaN(num) &&
+      num !== undefined &&
+      num !== null &&
+      num !== Infinity &&
+      num !== -Infinity
+    );
+  },
   getPrecision(n) {
     return new BigNumber(n).dp();
   },
