@@ -116,17 +116,19 @@ export function genPaymentUrl(data: {
 }
 
 export function requestLogin(vue) {
-  if (NODE_ENV === "development" && APP_TOKEN) {
-    vue.$store?.commit("auth/SET_TOKEN", {
-      token: APP_TOKEN,
-      scope: APP_SCOPE,
-    });
-    initApp(vue);
-    return;
-  }
-  const state = { location: window.location.href };
+  // if (NODE_ENV === "development" && APP_TOKEN) {
+  //   vue.$store?.commit("auth/SET_TOKEN", {
+  //     token: APP_TOKEN,
+  //     scope: APP_SCOPE,
+  //   });
+  //   initApp(vue);
+  //   return;
+  // }
+  const host = window.location.origin;
+  const redirectUrl = encodeURIComponent(host + "/#/auth/");
+  localStorage.setItem("authPath", window.location.href);
   let path = `https://mixin-oauth.firesbox.com/?client_id=${CONFIG.MIXIN_CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ+SNAPSHOTS:READ&response_type=code`;
-  path += `&state=${encodeURIComponent(JSON.stringify(state))}`;
+  path += `&redirect_url=${redirectUrl}`;
   window.location.href = path;
 }
 

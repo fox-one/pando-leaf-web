@@ -88,7 +88,7 @@ export default class Me extends Mixins(mixins.page) {
   }
 
   generateVault() {
-    this.$router.push("/vault");
+    this.$router.push("/market");
   }
 }
 </script>

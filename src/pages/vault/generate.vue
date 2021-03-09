@@ -35,7 +35,12 @@
         :precision="precision"
       >
       </f-asset-amount-input>
-      <div class="f-caption f-greyscale-3 mt-1">Wallet Bal.</div>
+      <div v-if="!isLogged" class="f-caption f-blue mt-1" @click="requestLogin">
+        Connect Wallet
+      </div>
+      <div v-if="isLogged" class="f-caption f-greyscale-3 mt-1">
+        Wallet Bal.
+      </div>
       <div class="f-body-1 f-greyscale-3 my-3 text-center">
         How much {{ mint.symbol }} would you generate?
         <f-tooltip v-model="mintTips" bottom>
@@ -68,7 +73,12 @@
         :precision="precision"
       >
       </f-asset-amount-input>
-      <div class="f-caption f-greyscale-3 mt-1">Wallet Bal.</div>
+      <div v-if="!isLogged" class="f-caption f-blue mt-1" @click="requestLogin">
+        Connect Wallet
+      </div>
+      <div v-if="isLogged" class="f-caption f-greyscale-3 mt-1">
+        Wallet Bal.
+      </div>
       <f-button type="primary" class="mt-7">Deposit to Generate</f-button>
     </v-layout>
 
@@ -109,6 +119,7 @@ import { mdiAbTesting } from "@mdi/js";
   components: {},
 })
 export default class GenerateVault extends Mixins(mixins.page) {
+  @Getter("global/isLogged") isLogged;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   depositAmount = "";
@@ -146,9 +157,12 @@ export default class GenerateVault extends Mixins(mixins.page) {
     )}`;
     const liquidationPrice =
       (mintNum * Number(this.collateral?.mat || "0")) / depositNum;
-    const liquidationPriceText = `${this.$utils.number.toPrecision(
+    let liquidationPriceText = `${this.$utils.number.toPrecision(
       liquidationPrice
     )}`;
+    if (!this.$utils.number.isValid(liquidationPrice)) {
+      liquidationPriceText = `-`;
+    }
     const stabilityFee =
       this.$utils.number.toPrecision(Number(this.collateral.duty) - 1) * 100;
     const maxToGenerate =
@@ -217,6 +231,10 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.collateral = this.getCollateral(this.vaultId);
     this.deposit = this.getAssetById(this.collateral.gem);
     this.mint = this.getAssetById(this.collateral.dai);
+  }
+
+  requestLogin() {
+    this.$utils.helper.requestLogin(this);
   }
 }
 </script>
