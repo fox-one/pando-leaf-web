@@ -40,7 +40,6 @@ const plugin: Plugin = ({ app }, inject) => {
   inject("ws", createWsService(app, CONFIG.WS_BASE));
   inject("utils", utils);
   inject("icons", utils.icons);
-
   if (NODE_ENV === "development" && APP_TOKEN) {
     app.store?.commit("auth/SET_TOKEN", { token: APP_TOKEN, scope: APP_SCOPE });
   }

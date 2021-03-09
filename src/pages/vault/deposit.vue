@@ -3,13 +3,13 @@
     <vault-stats :collateral="collateral" :vault="vault"></vault-stats>
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        How much to Generate?
+        How much to deposit?
       </div>
 
       <f-asset-amount-input
         v-model="amount"
-        label="Generate amount"
-        :assets="[asset]"
+        label="Deposit amount"
+        :assets="assets"
         :asset.sync="asset"
         :selectable="false"
         :precision="precision"
@@ -23,12 +23,10 @@
         Connect Wallet
       </div>
       <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
-        Max available
-        <span class="f-blue" @click="amount = maxAvailable">
-          {{ maxAvailable }} </span
+        Wallet Bal.<span class="f-blue"> {{ assetBalance }} </span
         >{{ assetSymbol }}
       </div>
-      <f-button type="primary" class="mt-5">Generate</f-button>
+      <f-button type="primary" class="mt-5">Deposit</f-button>
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">
@@ -63,14 +61,13 @@ import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
-import BigNumber from "bignumber.js";
 
 @Component({
   components: {
     VaultStats,
   },
 })
-export default class GenerateForm extends Mixins(mixins.page) {
+export default class DepositForm extends Mixins(mixins.page) {
   @Getter("auth/isLogged") isLogged;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
@@ -90,14 +87,12 @@ export default class GenerateForm extends Mixins(mixins.page) {
     };
   }
 
-  get maxAvailable() {
-    const debtAmount =
-      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
-    const collateralAmount = Number(this.vault?.ink);
-    const price = Number(this.collateral?.price);
-    const mininumRatio = Number(this.collateral?.mat);
-    const max = (collateralAmount * price) / mininumRatio - debtAmount;
-    return this.$utils.number.toPrecision(max, 8, BigNumber.ROUND_DOWN);
+  get assets() {
+    return [this.asset];
+  }
+
+  get assetBalance() {
+    return this.getWalletAssetById(this.collateral.gem)?.balance || "0";
   }
 
   get assetSymbol() {
@@ -105,7 +100,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
   }
 
   get title() {
-    return `Generate more ${this.assetSymbol}`;
+    return `Deposit to Vault`;
   }
 
   get vaultId() {
@@ -127,12 +122,14 @@ export default class GenerateForm extends Mixins(mixins.page) {
         ratio: this.$utils.number.toFixed(collateralizationRatio * 100, 2),
       };
     }
-    const increasedDebt = Number(this.amount);
+    const increasedCollateral = Number(this.amount);
     const price =
-      ((debtAmount + increasedDebt) * liquidationRatio) / collateralAmount;
+      (debtAmount * liquidationRatio) /
+      (collateralAmount + increasedCollateral);
     const ratio =
-      (collateralAmount * Number(this.collateral?.price)) /
-      (debtAmount + increasedDebt);
+      ((collateralAmount + increasedCollateral) *
+        Number(this.collateral?.price)) /
+      debtAmount;
     return {
       price: this.$utils.number.toPrecision(price),
       ratio: this.$utils.number.toFixed(ratio * 100, 2),
@@ -164,9 +161,10 @@ export default class GenerateForm extends Mixins(mixins.page) {
     }
     this.vault = this.getVault(this.vaultId);
     this.collateral = this.getCollateral(this.vault.collateral_id);
-    this.asset = this.getAssetById(this.collateral.dai);
-    this.syncWalletAsset(this.collateral.dai);
+    this.asset = this.getAssetById(this.collateral.gem);
+    this.syncWalletAsset(this.collateral.gem);
   }
+  
   requestLogin() {
     this.$utils.helper.requestLogin(this);
   }

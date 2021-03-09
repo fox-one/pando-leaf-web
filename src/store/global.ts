@@ -1,20 +1,25 @@
 import Vue from "vue";
 import { MutationTree, GetterTree, ActionTree } from "vuex";
-import { IAsset, ICollateral, IMixinAsset } from "~/services/types/vo";
+import { IAsset, ICollateral, IMixinAsset, IVault } from "~/services/types/vo";
 
 const state = () => ({
   collaterals: [],
   walletAssets: {},
   assets: [],
+  myVaults: [],
 });
 
 export type AssetsState = {
   collaterals: ICollateral[];
   walletAssets: Map<string, IMixinAsset>;
   assets: IAsset[];
+  myVaults: IVault[];
 };
 
 const getters: GetterTree<AssetsState, any> = {
+  haveVault(state) {
+    return state.myVaults && state.myVaults?.length !== 0;
+  },
   getWalletAssetById(state) {
     return (id) => state.walletAssets[id];
   },
@@ -23,6 +28,9 @@ const getters: GetterTree<AssetsState, any> = {
   },
   getCollateral(state) {
     return (id) => state.collaterals.find((c) => c.id === id);
+  },
+  getVault(state) {
+    return (id) => state.myVaults.find((v) => v.id === id);
   },
 };
 
@@ -43,6 +51,9 @@ const mutations: MutationTree<AssetsState> = {
   SET_COLLATERALS(state, data: ICollateral[]) {
     state.collaterals = data;
   },
+  SET_MY_VAULTS(state, data: IVault[]) {
+    state.myVaults = data;
+  },
 };
 
 const actions: ActionTree<AssetsState, any> = {
@@ -57,6 +68,14 @@ const actions: ActionTree<AssetsState, any> = {
   async syncWallets({ commit }) {
     const response = await this.$http.getAssetsFromMixin();
     commit("SET_WALLET_ASSETS", response?.data);
+  },
+  async syncWalletAsset({ commit }, id) {
+    const response = await this.$http.getAssetFromMixin(id);
+    commit("SET_WALLET_ASSETS", response?.data);
+  },
+  async syncMyVaults({ commit }) {
+    const response = await this.$http.getMyVaults();
+    commit("SET_MY_VAULTS", response?.data?.vaults);
   },
   clear({ commit }) {
     commit("SET_WALLET_ASSETS", []);

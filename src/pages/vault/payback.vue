@@ -3,13 +3,12 @@
     <vault-stats :collateral="collateral" :vault="vault"></vault-stats>
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        How much to Generate?
+        How much to pay back?
       </div>
 
       <f-asset-amount-input
         v-model="amount"
-        label="Generate amount"
-        :assets="[asset]"
+        label="Pay back amount"
         :asset.sync="asset"
         :selectable="false"
         :precision="precision"
@@ -22,13 +21,15 @@
       >
         Connect Wallet
       </div>
-      <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
-        Max available
-        <span class="f-blue" @click="amount = maxAvailable">
-          {{ maxAvailable }} </span
-        >{{ assetSymbol }}
-      </div>
-      <f-button type="primary" class="mt-5">Generate</f-button>
+      <v-layout v-else justify-space-between>
+        <div class="f-caption f-greyscale-3 my-2 ml-4">
+          Wallet Bal. {{ assetBalance }} {{ assetSymbol }}
+        </div>
+        <div class="f-caption f-blue my-2 mr-4" @click="amount = maxPayback">
+          Set Max
+        </div>
+      </v-layout>
+      <f-button type="primary" class="mt-5">Pay Back</f-button>
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">
@@ -70,7 +71,7 @@ import BigNumber from "bignumber.js";
     VaultStats,
   },
 })
-export default class GenerateForm extends Mixins(mixins.page) {
+export default class PaybackForm extends Mixins(mixins.page) {
   @Getter("auth/isLogged") isLogged;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
@@ -90,14 +91,14 @@ export default class GenerateForm extends Mixins(mixins.page) {
     };
   }
 
-  get maxAvailable() {
+  get assetBalance() {
+    return this.getWalletAssetById(this.collateral?.dai)?.balance || "0";
+  }
+
+  get maxPayback() {
     const debtAmount =
       Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
-    const collateralAmount = Number(this.vault?.ink);
-    const price = Number(this.collateral?.price);
-    const mininumRatio = Number(this.collateral?.mat);
-    const max = (collateralAmount * price) / mininumRatio - debtAmount;
-    return this.$utils.number.toPrecision(max, 8, BigNumber.ROUND_DOWN);
+    return this.$utils.number.toPrecision(debtAmount, 8, BigNumber.ROUND_UP);
   }
 
   get assetSymbol() {
@@ -105,7 +106,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
   }
 
   get title() {
-    return `Generate more ${this.assetSymbol}`;
+    return `Pay back ${this.assetSymbol}`;
   }
 
   get vaultId() {
@@ -123,17 +124,19 @@ export default class GenerateForm extends Mixins(mixins.page) {
       const collateralizationRatio =
         (collateralAmount * Number(this.collateral?.price)) / debtAmount;
       return {
+        debtAmount,
         price: this.$utils.number.toPrecision(liquidationPrice),
         ratio: this.$utils.number.toFixed(collateralizationRatio * 100, 2),
       };
     }
-    const increasedDebt = Number(this.amount);
+    const decreasedDebt = Number(this.amount);
     const price =
-      ((debtAmount + increasedDebt) * liquidationRatio) / collateralAmount;
+      ((debtAmount - decreasedDebt) * liquidationRatio) / collateralAmount;
     const ratio =
       (collateralAmount * Number(this.collateral?.price)) /
-      (debtAmount + increasedDebt);
+      (debtAmount - decreasedDebt);
     return {
+      debtAmount,
       price: this.$utils.number.toPrecision(price),
       ratio: this.$utils.number.toFixed(ratio * 100, 2),
     };
@@ -141,6 +144,11 @@ export default class GenerateForm extends Mixins(mixins.page) {
 
   get predictions() {
     return [
+      {
+        title: `${this.assetSymbol} Debt`,
+        value: this.$utils.number.toPrecision(this.meta.debtAmount),
+        valueUnit: this.assetSymbol,
+      },
       {
         title: `New Liquidation Price`,
         value: this.meta.price,
@@ -164,8 +172,8 @@ export default class GenerateForm extends Mixins(mixins.page) {
     }
     this.vault = this.getVault(this.vaultId);
     this.collateral = this.getCollateral(this.vault.collateral_id);
-    this.asset = this.getAssetById(this.collateral.dai);
-    this.syncWalletAsset(this.collateral.dai);
+    this.asset = this.getAssetById(this.collateral?.dai);
+    this.syncWalletAsset(this.collateral?.dai);
   }
   requestLogin() {
     this.$utils.helper.requestLogin(this);

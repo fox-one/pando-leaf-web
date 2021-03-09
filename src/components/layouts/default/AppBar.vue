@@ -1,5 +1,9 @@
 <template>
-  <f-app-bar v-bind="appbar" @back="handleBack"></f-app-bar>
+  <f-app-bar
+    class="custom-f-app-bar"
+    v-bind="appbar"
+    @back="handleBack"
+  ></f-app-bar>
 </template>
 
 <script lang="ts">
@@ -14,7 +18,7 @@ class DefaultLayoutAppBar extends Vue {
 
     return {
       ...appbar,
-      color: isDark ?  "#000000" : "#FFFFFF",
+      color: isDark ? "#000000" : "#FFFFFF",
     };
   }
 
@@ -28,3 +32,30 @@ class DefaultLayoutAppBar extends Vue {
 }
 export default DefaultLayoutAppBar;
 </script>
+<style lang="scss" scoped>
+.custom-f-app-bar {
+  ::v-deep {
+    .f-app-bar-title {
+      display: block;
+      position: absolute;
+      left: 32px;
+      right: 40px;
+      &.left {
+        text-align: left;
+        padding-left: 4px !important;
+      }
+      &.left.no-back {
+        left: 8px;
+      }
+      &.center {
+        text-align: center;
+        padding-left: 0px !important;
+      }
+      &.center.no-back {
+        left: 0px;
+        right: 0px;
+      }
+    }
+  }
+}
+</style>

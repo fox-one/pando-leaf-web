@@ -1,0 +1,111 @@
+<template>
+  <v-layout column class="f-bg-greyscale-7">
+    <div class="mx-4 f-body-2 f-greyscale-3 text-center">
+      Current Vault Stats
+    </div>
+    <f-info-grid :window-size="2">
+      <f-info-grid-item
+        v-for="(item, ix) in infos"
+        :key="ix"
+        :index="ix"
+        :title="item.title"
+        :value="item.value"
+        :value-unit="item.valueUnit"
+        :value-color="item.valueColor"
+        :value-custom-color="item.valueCustomColor"
+        :hint="item.hint"
+      ></f-info-grid-item>
+    </f-info-grid>
+  </v-layout>
+</template>
+
+<script lang="ts" scoped>
+import { Vue, Component, Prop } from "vue-property-decorator";
+import { Getter, State } from "vuex-class";
+import { ICollateral, IVault } from "~/services/types/vo";
+
+@Component
+export default class VaultStats extends Vue {
+  @Getter("global/getAssetById") getAssetById;
+  @Getter("global/getWalletAssetById") getWalletAssetById;
+  @Prop() vault!: IVault;
+  @Prop() collateral!: ICollateral;
+
+  get collateralAsset() {
+    return this.getAssetById(this.collateral?.gem);
+  }
+
+  get debtAsset() {
+    return this.getAssetById(this.collateral?.mat);
+  }
+
+  get meta() {
+    const debtAmount =
+      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
+    const collateralAmount = Number(this.vault?.ink);
+    const collateralizationRatio =
+      (collateralAmount * Number(this.collateral?.price)) / debtAmount;
+    const collateralizationRatioText = this.$utils.number.toFixed(
+      collateralizationRatio * 100,
+      2
+    );
+    const liquidationRatio = Number(this.collateral?.mat);
+    const liquidationPrice = (debtAmount * liquidationRatio) / collateralAmount;
+    const liquidationPenalty = this.$utils.number.toFixed(
+      (Number(this.collateral?.chop) - 1) * 100,
+      2
+    );
+    const stabilityFee = this.$utils.number.toFixed(
+      (Number(this.collateral?.duty) - 1) * 100,
+      2
+    );
+    return {
+      liquidationPrice: this.$utils.number.toPrecision(liquidationPrice),
+      collateralizationRatio: collateralizationRatioText,
+      liquidationPenalty,
+      stabilityFee,
+    };
+  }
+
+  get infos() {
+    return [
+      {
+        title: "Liquidation Price", // debt * ratio / collateral
+        value: this.meta.liquidationPrice,
+        valueUnit: "USD",
+      },
+      {
+        title: `Collateralization ratio`, //
+        value: this.meta.collateralizationRatio,
+        valueUnit: `%`,
+      },
+      {
+        title: `Current ${this.collateral?.name} price`,
+        value: this.collateral?.price,
+        valueUnit: "USD",
+      },
+      {
+        title: "Minimum ratio",
+        value: this.$utils.number.toFixed(
+          Number(this.collateral?.mat) * 100,
+          2
+        ),
+        valueUnit: "%",
+        hint: "Some description about profit.",
+      },
+      {
+        title: "Liquidation penalty",
+        value: this.meta.liquidationPenalty,
+        valueUnit: "%",
+      },
+      {
+        title: "Stability fee",
+        value: this.meta.stabilityFee,
+        valueUnit: "%",
+      },
+    ];
+  }
+}
+</script>
+
+<style></style>

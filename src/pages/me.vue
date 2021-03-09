@@ -32,24 +32,56 @@
         >
           <span>Open a new Vault</span>
         </v-btn>
+        <v-btn
+          class="mt-4"
+          color="primary"
+          @click="mockVaults"
+          :min-width="220"
+          rounded
+          depressed
+          >Mock Vault</v-btn
+        >
       </v-layout>
     </v-container>
+
+    <my-vault-item
+      v-for="vault in myVaults"
+      :key="vault.id"
+      :vault="vault"
+    ></my-vault-item>
+    <v-layout column fill-height align-center>
+      <v-btn
+        v-if="haveVault && isLogged"
+        class="mt-4"
+        color="primary"
+        @click="clearVaults"
+        :min-width="220"
+        rounded
+        depressed
+        >Clear Vault</v-btn
+      >
+    </v-layout>
   </v-layout>
 </template>
 
 <script lang="ts">
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
-import { Getter } from "vuex-class";
+import { Getter, State } from "vuex-class";
+import { IVault } from "~/services/types/vo";
+import MyVaultItem from "~/components/particles/MyVaultItem.vue";
 
 @Component({
-  components: {},
+  components: {
+    MyVaultItem,
+  },
 })
 export default class Me extends Mixins(mixins.page) {
-  @Getter("auth/isLogged") isLogged;
+  @State((state) => state.global.myVaults) myVaults!: IVault[];
+  @Getter("auth/isLogged") isLogged!: boolean;
+  @Getter("global/haveVault") haveVault!: boolean;
 
   loading = true;
-  haveVault = false;
   get title() {
     const s = this.$t("tab.me");
     return `${s}`;
@@ -89,6 +121,22 @@ export default class Me extends Mixins(mixins.page) {
 
   generateVault() {
     this.$router.push("/market");
+  }
+
+  mockVaults() {
+    this.$store.commit("global/SET_MY_VAULTS", [
+      {
+        id: "e40060ae-fb63-3b6b-8c17-72550ffa5a5d",
+        created_at: "2021-03-03T08:56:34Z",
+        collateral_id: "176f8903-27c4-5a47-aaf1-1a50b9d3e4e1",
+        ink: "1", // Total Deposited
+        art: "120", // Total Normalised Debt, debt = art * rate
+      } as IVault,
+    ]);
+  }
+
+  clearVaults() {
+    this.$store.commit("global/SET_MY_VAULTS", []);
   }
 }
 </script>

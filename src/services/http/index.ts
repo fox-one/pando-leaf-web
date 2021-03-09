@@ -1,12 +1,12 @@
 import Http from "~/utils/http";
 import { AxiosRequestConfig } from "axios";
 import { BaseRes, IMixinResponse } from "../types/dto";
-import { AuthResult, ICollateral, IMixinAsset } from "../types/vo";
+import { AuthResult, ICollateral, IMixinAsset, IVault } from "../types/vo";
 
 export default function (http: Http) {
   return {
     auth(code: string): Promise<BaseRes<AuthResult>> {
-      return http.post("/oauth", {
+      return http.post("/login", {
         data: { code },
       });
     },
@@ -16,11 +16,14 @@ export default function (http: Http) {
     getAssets(): Promise<BaseRes<{ assets: IMixinAsset[] }>> {
       return http.get("/assets");
     },
-    async getAssetsFromMixin(): Promise<IMixinResponse<IMixinAsset[]>> {
-      return await http.get("https://mixin-api.zeromesh.net/assets");
+    getMyVaults(): Promise<BaseRes<{ vaults: IVault[] }>> {
+      return http.get("/vats");
     },
-    async getAssetFromMixin(id: string): Promise<{ data: IMixinAsset }> {
-      return await http.get(`https://mixin-api.zeromesh.net/assets/${id}`);
+    getAssetsFromMixin(): Promise<IMixinResponse<IMixinAsset[]>> {
+      return http.get("https://mixin-api.zeromesh.net/assets");
+    },
+    getAssetFromMixin(id: string): Promise<{ data: IMixinAsset }> {
+      return http.get(`https://mixin-api.zeromesh.net/assets/${id}`);
     },
     getPublic() {
       return http.get("/hc");
