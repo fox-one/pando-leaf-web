@@ -168,6 +168,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
       });
       this.$router.replace("/");
     }
+    this.follow_id = this.$utils.helper.uuidV4();
     this.vault = this.getVault(this.vaultId);
     this.collateral = this.getCollateral(this.vault.collateral_id);
     this.asset = this.getAssetById(this.collateral.dai);
