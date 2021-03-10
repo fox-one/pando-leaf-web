@@ -3,6 +3,7 @@ import { APP_SCOPE, APP_TOKEN, CONFIG, NODE_ENV } from "~/constants";
 import i18n from "~/i18n";
 import { initApp } from "./app";
 import { v4 as uuid } from "uuid";
+import number from "./number";
 
 export function toast(vue: Vue, data: { message: string; color?: string }) {
   vue.$store.commit("app/SET_TOAST", data);
@@ -189,4 +190,18 @@ export function hidePaymentDialog(vue: Vue) {
     visible: false,
     paymentUrl: "",
   });
+}
+
+export function risk(currentRatio, minimumRatio) {
+  const risk = Number(currentRatio) / Number(minimumRatio);
+  if (!number.isValid(risk)) return "greyscale-1";
+  if (risk < 0) {
+    return "greyscale-1";
+  } else if (risk <= 1.1) {
+    return "red";
+  } else if (risk <= 1.5) {
+    return "orange";
+  } else {
+    return "green";
+  }
 }

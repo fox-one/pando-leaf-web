@@ -25,11 +25,17 @@ a {
   .f-panel.v-sheet {
     background-color: #1e1e1e;
   }
+  .f-orange {
+    color: #f07a02;
+  }
 }
 
 .theme--light.v-application {
   .f-bg-greyscale-7 {
     background-color: #ffffff;
+  }
+  .f-orange {
+    color: #ffa800;
   }
 }
 
@@ -37,4 +43,3 @@ a {
   font-family: "SF Pro Text";
   font-weight: 700;
 }
-

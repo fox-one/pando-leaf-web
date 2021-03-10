@@ -61,7 +61,8 @@ export default class VaultStats extends Vue {
     );
     return {
       liquidationPrice: this.$utils.number.toPrecision(liquidationPrice),
-      collateralizationRatio: collateralizationRatioText,
+      collateralizationRatio,
+      collateralizationRatioText,
       liquidationPenalty,
       stabilityFee,
     };
@@ -76,8 +77,12 @@ export default class VaultStats extends Vue {
       },
       {
         title: `Collateralization ratio`, //
-        value: this.meta.collateralizationRatio,
+        value: this.meta.collateralizationRatioText,
         valueUnit: `%`,
+        valueColor: this.$utils.helper.risk(
+          this.meta.collateralizationRatio,
+          this.collateral.mat
+        ),
       },
       {
         title: `Current ${this.collateral?.name} price`,

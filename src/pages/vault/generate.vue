@@ -130,7 +130,8 @@ export default class GenerateForm extends Mixins(mixins.page) {
         (collateralAmount * Number(this.collateral?.price)) / debtAmount;
       return {
         price: this.$utils.number.toPrecision(liquidationPrice),
-        ratio: this.$utils.number.toFixed(collateralizationRatio * 100, 2),
+        ratio: collateralizationRatio,
+        ratioText: this.$utils.number.toFixed(collateralizationRatio * 100, 2),
       };
     }
     const increasedDebt = Number(this.amount);
@@ -141,7 +142,8 @@ export default class GenerateForm extends Mixins(mixins.page) {
       (debtAmount + increasedDebt);
     return {
       price: this.$utils.number.toPrecision(price),
-      ratio: this.$utils.number.toFixed(ratio * 100, 2),
+      ratio,
+      ratioText: this.$utils.number.toFixed(ratio * 100, 2),
     };
   }
 
@@ -154,8 +156,12 @@ export default class GenerateForm extends Mixins(mixins.page) {
       },
       {
         title: "New Collateralization Ratio",
-        value: this.meta.ratio,
+        value: this.meta.ratioText,
         valueUnit: "%",
+        valueColor: this.$utils.helper.risk(
+          this.meta.ratio,
+          this.collateral.mat
+        ),
       },
     ];
   }

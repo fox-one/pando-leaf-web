@@ -34,9 +34,11 @@ export default function ({ store }) {
       themes: {
         light: {
           primary: "#E4AF77",
+          orange: "#FFA800",
         },
         dark: {
           primary: "#E4AF77",
+          orange: "#f08b04",
         },
       },
     },

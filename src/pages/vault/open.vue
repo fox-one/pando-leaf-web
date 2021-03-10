@@ -221,7 +221,8 @@ export default class GenerateVault extends Mixins(mixins.page) {
       // collateralizationRatioText = `${this.$utils.number.toPercent(collateralizationRatio)}`
     }
     return {
-      collateralizationRatio: collateralizationRatioText,
+      collateralizationRatio,
+      collateralizationRatioText,
       liquidationPrice: liquidationPriceText,
       currentDepositPrice: `${this.$utils.number.toPrecision(
         this.collateral?.price || "0"
@@ -241,9 +242,12 @@ export default class GenerateVault extends Mixins(mixins.page) {
       },
       {
         title: "Collateralization Ratio", // deposit * price / mint
-        value: this.meta.collateralizationRatio,
+        value: this.meta.collateralizationRatioText,
         valueUnit: "%",
-        valueCustomColor: "green",
+        valueColor: this.$utils.helper.risk(
+          this.meta.collateralizationRatio,
+          this.collateral.mat
+        ),
         hint: "Some description about profit.",
       },
       {

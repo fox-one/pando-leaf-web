@@ -169,6 +169,10 @@ export default class PaybackForm extends Mixins(mixins.page) {
         title: "New Collateralization Ratio",
         value: this.meta.ratioText,
         valueUnit: this.meta.ratio < 0 ? "" : "%",
+        valueColor: this.$utils.helper.risk(
+          this.meta.ratio,
+          this.collateral.mat
+        ),
       },
     ];
   }

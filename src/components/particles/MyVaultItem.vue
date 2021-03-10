@@ -16,6 +16,10 @@
             :logo="debtLogo"
           ></f-mixin-asset-logo>
           <span>{{ debtSymbol }}</span>
+          <v-spacer></v-spacer>
+          <div :class="`f-${risk}`">
+            {{ this.meta.collateralizationRatioText }}%
+          </div>
         </v-layout>
         <f-info-grid :window-size="2" class="mt-2">
           <f-info-grid-item
@@ -97,6 +101,7 @@
 </template>
 
 <script lang="ts" scoped>
+import BigNumber from "bignumber.js";
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
@@ -136,6 +141,29 @@ export default class MyVaultItem extends Vue {
     return this.debtAsset?.symbol;
   }
 
+  get maxAvailableToGenerate() {
+    const debtAmount =
+      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
+    const collateralAmount = Number(this.vault?.ink);
+    const price = Number(this.collateral?.price);
+    const mininumRatio = Number(this.collateral?.mat);
+    const max = (collateralAmount * price) / mininumRatio - debtAmount;
+    return this.$utils.number.toPrecision(max);
+  }
+
+  get maxAvailableToWithdraw() {
+    const debtAmount =
+      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
+    if (debtAmount === 0) {
+      return this.vault?.ink;
+    }
+    const collateralAmount = Number(this.vault?.ink);
+    const price = Number(this.collateral?.price);
+    const mininumRatio = Number(this.collateral?.mat);
+    const max = collateralAmount - (mininumRatio * debtAmount) / price;
+    return this.$utils.number.toPrecision(max);
+  }
+
   get meta() {
     const debtAmount =
       Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
@@ -148,38 +176,46 @@ export default class MyVaultItem extends Vue {
     );
     const liquidationRatio = Number(this.collateral?.mat);
     const liquidationPrice = (debtAmount * liquidationRatio) / collateralAmount;
-    const liquidationPenalty = this.$utils.number.toFixed(
-      (Number(this.collateral?.chop) - 1) * 100,
-      2
-    );
     const stabilityFee = this.$utils.number.toFixed(
       (Number(this.collateral?.duty) - 1) * 100,
       2
     );
     return {
       liquidationPrice: this.$utils.number.toPrecision(liquidationPrice),
-      collateralizationRatio: collateralizationRatioText,
-      liquidationPenalty,
+      collateralizationRatio,
+      collateralizationRatioText,
       stabilityFee,
     };
+  }
+
+  get risk() {
+    return this.$utils.helper.risk(
+      this.meta.collateralizationRatio,
+      this.collateral.mat
+    );
   }
 
   get infos() {
     return [
       {
-        title: "Collateralization ratio",
-        value: this.meta.collateralizationRatio,
-        valueUnit: "%",
-        hint:
-          "The current collateralization ratio, when the ratio reach the minimum ratio, your collateralization will be auctioned.",
+        title: `${this.collateralSymbol} Locked`,
+        value: this.$utils.number.toPrecision(this.vault?.ink),
+        valueUnit: this.collateralSymbol,
       },
       {
-        title: "Minimum ratio",
-        value: this.$utils.number.toFixed(
-          Number(this.collateral?.mat) * 100,
-          2
-        ),
-        valueUnit: "%",
+        title: `Outstanding ${this.debtSymbol} Debt`,
+        value: this.$utils.number.toPrecision(this.vault?.art),
+        valueUnit: this.debtSymbol,
+      },
+      {
+        title: "Available to withdraw",
+        value: this.maxAvailableToWithdraw,
+        valueUnit: this.collateralSymbol,
+      },
+      {
+        title: "Available to generate",
+        value: this.maxAvailableToGenerate,
+        valueUnit: this.debtSymbol,
       },
     ];
   }
@@ -192,14 +228,17 @@ export default class MyVaultItem extends Vue {
         valueUnit: "USD",
       },
       {
+        title: "Minimum ratio",
+        value: this.$utils.number.toFixed(
+          Number(this.collateral?.mat) * 100,
+          2
+        ),
+        valueUnit: "%",
+      },
+      {
         title: `Current ${this.collateralSymbol} price`,
         value: this.collateral?.price,
         valueUnit: "USD",
-      },
-      {
-        title: "Liquidation penalty",
-        value: this.meta?.liquidationPenalty,
-        valueUnit: "%",
       },
       {
         title: "Stability fee",
