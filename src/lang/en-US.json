@@ -17,6 +17,11 @@
 
   "tab.me":"Me",
   "tab.market":"Market",
+
+  "button.deposit":"Deposit",
+  "button.withdraw":"Withdraw",
+  "button.generate":"Generate",
+  "button.pay-back":"Pay back",
   
   "errorcode.-1": "NETWORK ERROR",
   "errorcode.404": "CANNOT FIND RESOURCE",

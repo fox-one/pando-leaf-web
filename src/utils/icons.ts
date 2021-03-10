@@ -3,6 +3,11 @@ import {
   mdiAccount,
   mdiArrowDown,
   mdiHelpCircleOutline,
+  mdiPlusCircle,
+  mdiMinusCircle,
+  mdiLock,
+  mdiLockOpen,
+  mdiCloseThick,
 } from "@mdi/js";
 
 export default {
@@ -10,4 +15,9 @@ export default {
   mdiHelpCircleOutline,
   mdiAccount,
   mdiArrowDown,
+  mdiPlusCircle,
+  mdiMinusCircle,
+  mdiLock,
+  mdiLockOpen,
+  mdiCloseThick,
 };

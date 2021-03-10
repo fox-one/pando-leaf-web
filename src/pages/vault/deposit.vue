@@ -79,6 +79,7 @@ export default class DepositForm extends Mixins(mixins.page) {
   vault = {} as IVault;
   asset = {} as IAsset;
   amount = "";
+  precision = 8
 
   get appbar() {
     return {
@@ -164,7 +165,7 @@ export default class DepositForm extends Mixins(mixins.page) {
     this.asset = this.getAssetById(this.collateral.gem);
     this.syncWalletAsset(this.collateral.gem);
   }
-  
+
   requestLogin() {
     this.$utils.helper.requestLogin(this);
   }

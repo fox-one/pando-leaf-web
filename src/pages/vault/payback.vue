@@ -83,6 +83,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
   vault = {} as IVault;
   asset = {} as IAsset;
   amount = "";
+  precision = 8
 
   get appbar() {
     return {

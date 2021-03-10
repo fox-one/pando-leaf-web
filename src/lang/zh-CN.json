@@ -17,7 +17,13 @@
   
   "tab.me":"我的",
   "tab.market":"市场",
-  
+
+  "button.deposit":"Deposit",
+  "button.withdraw":"Withdraw",
+  "button.generate":"Generate",
+  "button.pay-back":"Pay back",
+
+
   "errorcode.-1": "网络错误",
   "errorcode.404": "资源不存在",
   "errorcode.403":"没有访问权限",

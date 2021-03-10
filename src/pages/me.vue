@@ -43,12 +43,15 @@
         >
       </v-layout>
     </v-container>
-
-    <my-vault-item
-      v-for="vault in myVaults"
-      :key="vault.id"
-      :vault="vault"
-    ></my-vault-item>
+    <div class="px-4">
+      <v-expansion-panels accordion class="rounded-xl">
+        <my-vault-item
+          :key="vault.id"
+          v-for="vault in myVaults"
+          :vault="vault"
+        ></my-vault-item>
+      </v-expansion-panels>
+    </div>
     <v-layout column fill-height align-center>
       <v-btn
         v-if="haveVault && isLogged"
