@@ -201,7 +201,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
   }
 
   follow_id = "";
-  async comfirm() {
+  async confirm() {
     const request = {
       user_id: this.user_id,
       follow_id: this.follow_id,

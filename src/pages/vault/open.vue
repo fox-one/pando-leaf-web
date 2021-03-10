@@ -95,7 +95,7 @@
           {{ mintBalance }} </span
         >{{ mintSymbol }}
       </div> -->
-      <f-button type="primary" class="mt-5" @click="comfirm"
+      <f-button type="primary" class="mt-5" @click="confirm"
         >Deposit to Generate</f-button
       >
     </v-layout>
@@ -302,7 +302,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
   }
 
   follow_id = "";
-  async comfirm() {
+  async confirm() {
     const request = {
       user_id: this.user_id,
       follow_id: this.follow_id,
