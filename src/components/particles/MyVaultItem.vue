@@ -8,18 +8,26 @@
             :size="16"
             :logo="collateralLogo"
           ></f-mixin-asset-logo>
-          <span class="f-body-1">{{ collateralSymbol }}</span>
-          <v-icon class="mx-1" size="12"> {{ $icons.mdiCloseThick }} </v-icon>
           <f-mixin-asset-logo
             class="flex-grow-0 mr-1"
             :size="16"
             :logo="debtLogo"
           ></f-mixin-asset-logo>
-          <span>{{ debtSymbol }}</span>
+          <span class="f-body-2">{{
+            `${collateral.name} #${vault.id.substr(0, 4)}`
+          }}</span>
           <v-spacer></v-spacer>
-          <div :class="`f-${risk}`">
+          <div :class="`mr-1 f-${risk}`">
             {{ this.meta.collateralizationRatioText }}%
           </div>
+          <f-tooltip v-model="tooltip" top>
+            <template #activator="{ on, attrs }">
+              <v-icon size="16" v-on="on" v-bind="attrs">{{
+                $icons.mdiHelpCircleOutline
+              }}</v-icon>
+            </template>
+            <div class="f-greyscale-3 f-caption">Collateral Ratio</div>
+          </f-tooltip>
         </v-layout>
         <f-info-grid :window-size="2" class="mt-2">
           <f-info-grid-item
@@ -112,6 +120,8 @@ export default class MyVaultItem extends Vue {
   @State((state) => state.app.settings) settings;
   @Getter("global/getCollateral") getCollateral!: (id) => ICollateral;
   @Getter("global/getAssetById") getAssetById;
+
+  tooltip = false;
 
   get collateral() {
     return this.getCollateral(this.vault?.collateral_id);
