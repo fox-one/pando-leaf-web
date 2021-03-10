@@ -95,7 +95,7 @@ export default class Me extends Mixins(mixins.page) {
   }
 
   get appbar() {
-    if (this.isLogged) {
+    if (!this.isLogged) {
       return {
         back: false,
         avatar: false,
