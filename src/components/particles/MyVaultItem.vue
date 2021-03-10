@@ -9,7 +9,7 @@
             :logo="collateralLogo"
           ></f-mixin-asset-logo>
           <span class="f-body-1">{{ collateralSymbol }}</span>
-          <v-icon class="mx-2" size="12"> {{ $icons.mdiCloseThick }} </v-icon>
+          <v-icon class="mx-1" size="12"> {{ $icons.mdiCloseThick }} </v-icon>
           <f-mixin-asset-logo
             class="flex-grow-0 mr-1"
             :size="16"
@@ -17,7 +17,7 @@
           ></f-mixin-asset-logo>
           <span>{{ debtSymbol }}</span>
         </v-layout>
-        <f-info-grid :window-size="2">
+        <f-info-grid :window-size="2" class="mt-2">
           <f-info-grid-item
             v-for="(item, ix) in infos"
             :key="ix"
@@ -33,9 +33,9 @@
     </v-expansion-panel-header>
     <v-expansion-panel-content class="content-panel">
       <v-layout column class="ma-0 pa-0">
-        <f-info-grid :window-size="2" class="mt-2">
+        <f-info-grid :window-size="2">
           <f-info-grid-item
-            v-for="(item, ix) in infos"
+            v-for="(item, ix) in collapseInfos"
             :key="ix"
             :index="ix"
             :title="item.title"
@@ -45,50 +45,52 @@
             :hint="item.hint"
           ></f-info-grid-item>
         </f-info-grid>
-        <v-flex d-flex flex-row justify-space-around class="buttons">
+        <v-layout justify-space-around class="buttons">
           <v-btn
             text
-            class="f-actionbar-button-label f-caption f-weight-m mt-4"
+            :min-height="68"
+            class="f-actionbar-button-label f-caption f-weight-m"
             @click="toDeposit"
           >
-            <v-flex d-flex flex-column justify-center align-center>
+            <v-layout column justify-center align-center>
               <v-icon color="primary">{{ $icons.mdiPlusCircle }}</v-icon>
               <div class="caption">{{ $t("button.deposit") }}</div>
-            </v-flex>
+            </v-layout>
           </v-btn>
           <v-btn
             text
-            class="f-actionbar-button-label f-caption f-weight-m mt-4"
+            :min-height="68"
+            class="f-actionbar-button-label f-caption f-weight-m"
             @click="toWithdraw"
           >
-            <v-flex d-flex flex-column justify-center align-center>
-              <v-icon :color="colors.redeem">{{
-                $icons.mdiMinusCircle
-              }}</v-icon>
+            <v-layout column justify-center align-center>
+              <v-icon color="primary">{{ $icons.mdiMinusCircle }}</v-icon>
               <div class="caption">{{ $t("button.withdraw") }}</div>
-            </v-flex>
+            </v-layout>
           </v-btn>
           <v-btn
             text
-            class="f-actionbar-button-label f-caption f-weight-m mt-4"
+            class="f-actionbar-button-label f-caption f-weight-m"
+            :min-height="68"
             @click="toGenerate"
           >
-            <v-flex d-flex flex-column justify-center align-center>
-              <v-icon :color="colors.pledge">{{ $icons.mdiLock }}</v-icon>
+            <v-layout column justify-center align-center>
+              <v-icon color="green">{{ $icons.mdiLock }}</v-icon>
               <div class="caption">{{ $t("button.generate") }}</div>
-            </v-flex>
+            </v-layout>
           </v-btn>
           <v-btn
             text
-            class="f-actionbar-button-label f-caption f-weight-m mt-4"
+            :min-height="68"
+            class="f-actionbar-button-label f-caption f-weight-m"
             @click="toPayback"
           >
-            <v-flex d-flex flex-column justify-center align-center>
-              <v-icon :color="colors.unpledge">{{ $icons.mdiLockOpen }}</v-icon>
+            <v-layout column justify-center align-center>
+              <v-icon color="deep-orange">{{ $icons.mdiLockOpen }}</v-icon>
               <div class="caption">{{ $t("button.pay-back") }}</div>
-            </v-flex>
+            </v-layout>
           </v-btn>
-        </v-flex>
+        </v-layout>
       </v-layout>
     </v-expansion-panel-content>
   </v-expansion-panel>
@@ -134,39 +136,42 @@ export default class MyVaultItem extends Vue {
     return this.debtAsset?.symbol;
   }
 
-  get colors() {
-    return {
-      redeem: "primary",
-      pledge: "#32cd70",
-      unpledge: "#dd783f",
-    };
-  }
-
   get meta() {
+    const debtAmount =
+      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
+    const collateralAmount = Number(this.vault?.ink);
+    const collateralizationRatio =
+      (collateralAmount * Number(this.collateral?.price)) / debtAmount;
+    const collateralizationRatioText = this.$utils.number.toFixed(
+      collateralizationRatio * 100,
+      2
+    );
+    const liquidationRatio = Number(this.collateral?.mat);
+    const liquidationPrice = (debtAmount * liquidationRatio) / collateralAmount;
+    const liquidationPenalty = this.$utils.number.toFixed(
+      (Number(this.collateral?.chop) - 1) * 100,
+      2
+    );
+    const stabilityFee = this.$utils.number.toFixed(
+      (Number(this.collateral?.duty) - 1) * 100,
+      2
+    );
     return {
-      name: this.collateral?.name,
-      price: this.collateral?.price,
-      rate: this.$utils.number.toPercent(this.collateral?.duty),
-      rho: this.$utils.time.format(this.collateral?.rho),
+      liquidationPrice: this.$utils.number.toPrecision(liquidationPrice),
+      collateralizationRatio: collateralizationRatioText,
+      liquidationPenalty,
+      stabilityFee,
     };
   }
 
   get infos() {
     return [
-      //   {
-      //     title: "Liquidation Price", // debt * ratio / collateral
-      //     value: this.meta?.liquidationPrice,
-      //     valueUnit: "USD",
-      //   },
-      //   {
-      //     title: `Collateralization ratio`, //
-      //     value: this.meta?.collateralizationRatio,
-      //     valueUnit: `%`,
-      //   },
       {
-        title: `Current ${this.collateral?.name} price`,
-        value: this.collateral?.price,
-        valueUnit: "USD",
+        title: "Collateralization ratio",
+        value: this.meta.collateralizationRatio,
+        valueUnit: "%",
+        hint:
+          "The current collateralization ratio, when the ratio reach the minimum ratio, your collateralization will be auctioned.",
       },
       {
         title: "Minimum ratio",
@@ -175,18 +180,32 @@ export default class MyVaultItem extends Vue {
           2
         ),
         valueUnit: "%",
-        hint: "Some description about profit.",
       },
-      //   {
-      //     title: "Liquidation penalty",
-      //     value: this.meta?.liquidationPenalty,
-      //     valueUnit: "%",
-      //   },
-      //   {
-      //     title: "Stability fee",
-      //     value: this.meta?.stabilityFee,
-      //     valueUnit: "%",
-      //   },
+    ];
+  }
+
+  get collapseInfos() {
+    return [
+      {
+        title: `Current ${this.collateral?.name} price`,
+        value: this.collateral?.price,
+        valueUnit: "USD",
+      },
+      {
+        title: "Liquidation penalty",
+        value: this.meta?.liquidationPenalty,
+        valueUnit: "%",
+      },
+      {
+        title: "Liquidation Price", // debt * ratio / collateral
+        value: this.meta?.liquidationPrice,
+        valueUnit: "USD",
+      },
+      {
+        title: "Stability fee",
+        value: this.meta?.stabilityFee,
+        valueUnit: "%",
+      },
     ];
   }
   toDeposit() {
@@ -210,9 +229,6 @@ export default class MyVaultItem extends Vue {
     .v-expansion-panel-content__wrap {
       padding: 0px 0px;
     }
-  }
-  .buttons {
-    padding-bottom: 16px;
   }
 }
 </style>

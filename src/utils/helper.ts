@@ -2,6 +2,7 @@ import Vue from "vue";
 import { APP_SCOPE, APP_TOKEN, CONFIG, NODE_ENV } from "~/constants";
 import i18n from "~/i18n";
 import { initApp } from "./app";
+import { v4 as uuid } from "uuid";
 
 export function toast(vue: Vue, data: { message: string; color?: string }) {
   vue.$store.commit("app/SET_TOAST", data);
@@ -152,4 +153,8 @@ export function throttle<T extends (...args: any[]) => any>(
       return fn(...args);
     }
   };
+}
+
+export function uuidV4() {
+  return uuid();
 }

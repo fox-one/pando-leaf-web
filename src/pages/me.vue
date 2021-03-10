@@ -43,8 +43,8 @@
         >
       </v-layout>
     </v-container>
-    <div class="px-4">
-      <v-expansion-panels accordion class="rounded-xl">
+    <div class="px-4 pt-4">
+      <v-expansion-panels accordion flat class="rounded-xl">
         <my-vault-item
           :key="vault.id"
           v-for="vault in myVaults"

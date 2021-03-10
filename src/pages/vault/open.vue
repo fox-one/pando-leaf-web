@@ -95,7 +95,9 @@
           {{ mintBalance }} </span
         >{{ mintSymbol }}
       </div>
-      <f-button type="primary" class="mt-5">Deposit to Generate</f-button>
+      <f-button type="primary" class="mt-5" @click="comfirm"
+        >Deposit to Generate</f-button
+      >
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">
@@ -130,6 +132,7 @@ import mixins from "@/mixins";
 import { Action, Getter, State } from "vuex-class";
 import { IAsset, ICollateral } from "~/services/types/vo";
 import { mdiAbTesting } from "@mdi/js";
+import { IActionsParams } from "~/services/types/dto";
 
 @Component({
   components: {},
@@ -140,6 +143,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncWalletAsset") syncWalletAsset;
+  @State((state) => state.auth.id) user_id!: string;
   depositAmount = "";
   depositTips = false;
   mintAmount = "";
@@ -265,12 +269,12 @@ export default class GenerateVault extends Mixins(mixins.page) {
       });
       this.$router.replace("/");
     }
+    this.follow_id = this.$utils.helper.uuidV4();
     this.collateral = this.getCollateral(this.vaultId);
     this.deposit = this.getAssetById(this.collateral?.gem);
     this.mint = this.getAssetById(this.collateral?.dai);
     this.updateWalletAsset();
   }
-
   updateWalletAsset() {
     this.syncWalletAsset(this.collateral.gem);
     this.syncWalletAsset(this.collateral.dai);
@@ -278,6 +282,15 @@ export default class GenerateVault extends Mixins(mixins.page) {
 
   requestLogin() {
     this.$utils.helper.requestLogin(this);
+  }
+
+  follow_id = "";
+  comfirm() {
+    const params = {
+      user_id: this.user_id,
+      follow_id: this.follow_id,
+    } as IActionsParams;
+    // this.$http.postActions(params);
   }
 }
 </script>

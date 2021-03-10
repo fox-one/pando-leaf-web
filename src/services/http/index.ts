@@ -1,6 +1,6 @@
 import Http from "~/utils/http";
 import { AxiosRequestConfig } from "axios";
-import { BaseRes, IMixinResponse } from "../types/dto";
+import { BaseRes, IActionsParams, IMixinResponse } from "../types/dto";
 import { AuthResult, ICollateral, IMixinAsset, IVault } from "../types/vo";
 
 export default function (http: Http) {
@@ -24,6 +24,19 @@ export default function (http: Http) {
     },
     getAssetFromMixin(id: string): Promise<{ data: IMixinAsset }> {
       return http.get(`https://mixin-api.zeromesh.net/assets/${id}`);
+    },
+    postActions(
+      params: IActionsParams
+    ): Promise<
+      BaseRes<{
+        memo: string;
+        code: string;
+        core_url: string;
+      }>
+    > {
+      return http.post("/actions", {
+        data: params,
+      });
     },
     getPublic() {
       return http.get("/hc");
