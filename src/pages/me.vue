@@ -1,5 +1,5 @@
 <template>
-  <v-layout column fill-height class="pa-0">
+  <v-layout column fill-height class="pa-0 custom-info-grid">
     <v-btn
       v-if="!isLogged"
       rounded
@@ -174,4 +174,18 @@ export default class Me extends Mixins(mixins.page) {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.custom-info-grid {
+  overflow: hidden;
+  ::v-deep {
+    .f-info-grid {
+      .f-info-grid-inner {
+        width: calc(100vw - 32px) !important;
+        .f-info-grid-item {
+          width: calc(50vw - 16px);
+        }
+      }
+    }
+  }
+}
+</style>
