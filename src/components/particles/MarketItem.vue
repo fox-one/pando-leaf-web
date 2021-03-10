@@ -36,7 +36,7 @@ export default class MarketItem extends Vue {
     return {
       name: this.collateral.name,
       price: this.collateral.price,
-      rate: this.$utils.number.toPercent(this.collateral.duty),
+      rate: this.$utils.number.toPercent(Number(this.collateral.duty) - 1),
       rho: this.$utils.time.format(this.collateral.rho),
     };
   }

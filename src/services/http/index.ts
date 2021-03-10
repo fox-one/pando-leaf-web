@@ -1,7 +1,13 @@
 import Http from "~/utils/http";
 import { AxiosRequestConfig } from "axios";
 import { BaseRes, IActionsParams, IMixinResponse } from "../types/dto";
-import { AuthResult, ICollateral, IMixinAsset, IVault } from "../types/vo";
+import {
+  AuthResult,
+  ICollateral,
+  IMixinAsset,
+  ITransaction,
+  IVault,
+} from "../types/vo";
 
 export default function (http: Http) {
   return {
@@ -17,7 +23,7 @@ export default function (http: Http) {
       return http.get("/assets");
     },
     getMyVaults(): Promise<BaseRes<{ vaults: IVault[] }>> {
-      return http.get("/vats");
+      return http.get("/me/vats");
     },
     getAssetsFromMixin(): Promise<IMixinResponse<IMixinAsset[]>> {
       return http.get("https://mixin-api.zeromesh.net/assets");
@@ -25,13 +31,16 @@ export default function (http: Http) {
     getAssetFromMixin(id: string): Promise<{ data: IMixinAsset }> {
       return http.get(`https://mixin-api.zeromesh.net/assets/${id}`);
     },
+    getTransaction(follow_id: string): Promise<BaseRes<ITransaction>> {
+      return http.get(`/transactions/${follow_id}`);
+    },
     postActions(
       params: IActionsParams
     ): Promise<
       BaseRes<{
         memo: string;
         code: string;
-        core_url: string;
+        code_url: string;
       }>
     > {
       return http.post("/actions", {

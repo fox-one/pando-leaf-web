@@ -71,7 +71,7 @@ const actions: ActionTree<AssetsState, any> = {
   },
   async syncWalletAsset({ commit }, id) {
     const response = await this.$http.getAssetFromMixin(id);
-    commit("SET_WALLET_ASSETS", response?.data);
+    commit("SET_WALLET_ASSET", response?.data);
   },
   async syncMyVaults({ commit }) {
     const response = await this.$http.getMyVaults();

@@ -11,6 +11,7 @@ function generateStructureInterceptor(app: NuxtAppOptions) {
         return Promise.reject(res.data);
       }
       if (res?.data?.error?.code === 401) {
+        app.store?.dispatch("auth/logout");
         return Promise.reject(res.data.error);
       }
       return res.data;

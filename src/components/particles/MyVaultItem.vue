@@ -187,7 +187,12 @@ export default class MyVaultItem extends Vue {
   get collapseInfos() {
     return [
       {
-        title: `Current ${this.collateral?.name} price`,
+        title: "Liquidation Price", // debt * ratio / collateral
+        value: this.meta?.liquidationPrice,
+        valueUnit: "USD",
+      },
+      {
+        title: `Current ${this.collateralSymbol} price`,
         value: this.collateral?.price,
         valueUnit: "USD",
       },
@@ -195,11 +200,6 @@ export default class MyVaultItem extends Vue {
         title: "Liquidation penalty",
         value: this.meta?.liquidationPenalty,
         valueUnit: "%",
-      },
-      {
-        title: "Liquidation Price", // debt * ratio / collateral
-        value: this.meta?.liquidationPrice,
-        valueUnit: "USD",
       },
       {
         title: "Stability fee",

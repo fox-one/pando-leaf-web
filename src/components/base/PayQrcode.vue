@@ -1,5 +1,5 @@
 <template>
-  <f-panel v-if="url && !isMixin" class="ma-4">
+  <f-panel v-if="url && !isMixin" flat>
     <v-layout column align-center>
       <f-qr-code v-if="url && !isMixin" :text="url" :size="260" />
     </v-layout>

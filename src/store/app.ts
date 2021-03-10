@@ -1,13 +1,15 @@
+import { MutationTree, GetterTree, ActionTree } from "vuex";
 import { SOCKET_STATE } from "~/types";
 import { isDarkTheme } from "~/utils/helper";
 
-export const state = () => ({
+const state = () => ({
   appbar: {
     title: "",
     style: "",
     show: true,
     back: false,
     flat: true,
+    avatar: false,
   },
   settings: {
     dark: isDarkTheme(),
@@ -28,6 +30,10 @@ export const state = () => ({
   websocket: {
     state: SOCKET_STATE.CLOSED,
   },
+  payment: {
+    url: "",
+    visible: false,
+  },
   notShowDevAlertAgain: false,
 });
 
@@ -43,6 +49,10 @@ export const mutations = {
       clearTimeout(state.paying.timer as any);
     }
   },
+  SET_PAYMENT_URL(state, { visible = false, paymentUrl = "" }) {
+    state.payment.visible = visible;
+    state.payment.url = paymentUrl;
+  },
   SET_APPBAR(state, value) {
     const defaultValue = {
       title: "",
@@ -50,6 +60,7 @@ export const mutations = {
       show: true,
       back: true,
       flat: true,
+      avatar: false,
     };
     state.appbar = { ...defaultValue, ...value };
   },

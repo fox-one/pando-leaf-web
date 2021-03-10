@@ -1,9 +1,12 @@
 <template>
-  <f-app-bar
-    class="custom-f-app-bar"
-    v-bind="appbar"
-    @back="handleBack"
-  ></f-app-bar>
+  <f-app-bar class="custom-f-app-bar" v-bind="appbar" @back="handleBack">
+    <v-layout v-if="appbar.avatar" align-center>
+      <v-avatar class="ml-2" size="32">
+        <v-img :src="avatar" :size="32"></v-img>
+      </v-avatar>
+      <h4 class="mx-2">Hi, {{ name }}</h4>
+    </v-layout>
+  </f-app-bar>
 </template>
 
 <script lang="ts">
@@ -20,6 +23,16 @@ class DefaultLayoutAppBar extends Vue {
       ...appbar,
       color: isDark ? "#000000" : "#FFFFFF",
     };
+  }
+
+  get avatar() {
+    const avatar = this.$store.state.auth.avatar;
+    return avatar;
+  }
+
+  get name() {
+    const name = this.$store.state.auth.name;
+    return name;
   }
 
   handleBack() {

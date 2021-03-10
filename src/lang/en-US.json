@@ -2,6 +2,7 @@
   "app-name": "Pando",
   "connect.wallet": "Connect Wallet",
   "common.qr": "Please use Mixin Messenger or Reborn Platform scan to pay.",
+  "common.close":"Close",
   "common.from": "From",
   "common.to": "To",
   "common.authing":"Logining...",

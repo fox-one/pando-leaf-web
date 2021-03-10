@@ -37,7 +37,7 @@ declare module "vuex/types/index" {
 
 const plugin: Plugin = ({ app }, inject) => {
   inject("http", createHttpService(app, CONFIG.API_BASE));
-  inject("ws", createWsService(app, CONFIG.WS_BASE));
+  // inject("ws", createWsService(app, CONFIG.WS_BASE));
   inject("utils", utils);
   inject("icons", utils.icons);
   if (NODE_ENV === "development" && APP_TOKEN) {

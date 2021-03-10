@@ -47,7 +47,7 @@ const actions: ActionTree<AuthState, any> = {
   },
   logout({ dispatch, commit }) {
     commit("SET_TOKEN", { token: "", scope: "", id: "", name: "", avatar: "" });
-    dispatch("global/clear");
+    commit("global/clear");
   },
 };
 

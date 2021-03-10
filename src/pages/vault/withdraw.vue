@@ -60,9 +60,12 @@
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
-import { Action, Getter } from "vuex-class";
+import { Action, Getter, State } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
 import BigNumber from "bignumber.js";
+import { IActionsParams } from "~/services/types/dto";
+import { TransactionStatus } from "~/types";
+import { ACTION_ASSET_ID } from "~/constants";
 
 @Component({
   components: {
@@ -76,6 +79,8 @@ export default class WithdrawForm extends Mixins(mixins.page) {
   @Getter("global/getVault") getVault;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncWalletAsset") syncWalletAsset;
+  @Action("global/syncMyVaults") syncMyVaults;
+  @State((state) => state.auth.id) user_id!: string;
 
   collateral = {} as ICollateral;
   vault = {} as IVault;
@@ -131,7 +136,8 @@ export default class WithdrawForm extends Mixins(mixins.page) {
         (collateralAmount * Number(this.collateral?.price)) / debtAmount;
       return {
         price: this.$utils.number.toPrecision(liquidationPrice),
-        ratio: this.$utils.number.toFixed(collateralizationRatio * 100, 2),
+        ratio: collateralizationRatio,
+        ratioText: this.$utils.number.toFixed(collateralizationRatio * 100, 2),
       };
     }
     const decreasedCollateral = Number(this.amount);
@@ -142,9 +148,14 @@ export default class WithdrawForm extends Mixins(mixins.page) {
       ((collateralAmount - decreasedCollateral) *
         Number(this.collateral?.price)) /
       debtAmount;
+    let ratioText = this.$utils.number.toPrecision(ratio * 100);
+    if (ratio < 0) {
+      ratioText = "N/A";
+    }
     return {
       price: this.$utils.number.toPrecision(price),
-      ratio: this.$utils.number.toFixed(ratio * 100, 2),
+      ratio,
+      ratioText,
     };
   }
 
@@ -157,8 +168,8 @@ export default class WithdrawForm extends Mixins(mixins.page) {
       },
       {
         title: "New Collateralization Ratio",
-        value: this.meta.ratio,
-        valueUnit: "%",
+        value: this.meta.ratioText,
+        valueUnit: this.meta.ratio < 0 ? "" : "%",
       },
     ];
   }
@@ -174,10 +185,68 @@ export default class WithdrawForm extends Mixins(mixins.page) {
     this.vault = this.getVault(this.vaultId);
     this.collateral = this.getCollateral(this.vault.collateral_id);
     this.asset = this.getAssetById(this.collateral.gem);
-    this.syncWalletAsset(this.collateral.gem);
+    this.updateWalletAsset();
   }
+
+  destroy() {
+    clearInterval(0);
+  }
+
+  updateWalletAsset() {
+    this.syncWalletAsset(this.collateral.gem);
+    this.syncWalletAsset(this.collateral.dai);
+  }
+
   requestLogin() {
     this.$utils.helper.requestLogin(this);
+  }
+
+  follow_id = "";
+  async comfirm() {
+    const request = {
+      user_id: this.user_id,
+      follow_id: this.follow_id,
+      amount: "0.00000001",
+      asset_id: ACTION_ASSET_ID,
+      parameters: ["bit", "33", "uuid", this.vaultId, "decimal", this.amount],
+    } as IActionsParams;
+    const resposne = await this.$http.postActions(request);
+    if (resposne.data?.code_url) {
+      window.location.assign(resposne.data.code_url);
+      if (!this.$utils.helper.isMixin()) {
+        this.$utils.helper.showPayDialog(this, {
+          paymentUrl: resposne.data.code_url,
+        });
+      } else {
+        this.$utils.helper.showPaying(this, {
+          timer: this.$utils.helper.uuidV4(),
+        });
+      }
+      this.checkTransaction(this.follow_id);
+    }
+  }
+
+  checkTransaction(follow_id: string) {
+    let intervalId = 0 as any;
+    clearInterval(intervalId);
+    intervalId = setInterval(async () => {
+      const response = await this.$http.getTransaction(follow_id);
+      if (
+        response.data?.status === TransactionStatus.OK ||
+        response.data?.status === TransactionStatus.Abort
+      ) {
+        clearInterval(intervalId);
+        this.updateWalletAsset();
+        this.syncMyVaults();
+        this.$utils.helper.hidePaying(this);
+        this.$utils.helper.hidePaymentDialog(this);
+        this.$utils.helper.toast(this, {
+          message: "Withdraw finish.",
+          color: "success",
+        });
+        this.$router.replace("/me");
+      }
+    }, 3000);
   }
 }
 </script>

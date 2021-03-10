@@ -87,14 +87,14 @@
       >
         Connect Wallet
       </div>
-      <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
+      <!-- <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
         Max avail to generate<span
           class="f-blue"
           @click="mintAmount = mintBalance"
         >
           {{ mintBalance }} </span
         >{{ mintSymbol }}
-      </div>
+      </div> -->
       <f-button type="primary" class="mt-5" @click="comfirm"
         >Deposit to Generate</f-button
       >
@@ -133,6 +133,8 @@ import { Action, Getter, State } from "vuex-class";
 import { IAsset, ICollateral } from "~/services/types/vo";
 import { mdiAbTesting } from "@mdi/js";
 import { IActionsParams } from "~/services/types/dto";
+import { TransactionStatus } from "~/types";
+import { toast } from "~/utils/helper";
 
 @Component({
   components: {},
@@ -143,7 +145,9 @@ export default class GenerateVault extends Mixins(mixins.page) {
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncWalletAsset") syncWalletAsset;
+  @Action("global/syncMyVaults") syncMyVaults;
   @State((state) => state.auth.id) user_id!: string;
+
   depositAmount = "";
   depositTips = false;
   mintAmount = "";
@@ -190,7 +194,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
     const depositNum = Number(this.depositAmount);
     const mintNum = Number(this.mintAmount);
     const collateralizationRatio =
-      (depositNum * Number(this.deposit.price)) / mintNum;
+      (depositNum * Number(this.collateral?.price)) / mintNum;
     let collateralizationRatioText = `${this.$utils.number.toFixed(
       collateralizationRatio * 100,
       2
@@ -219,8 +223,8 @@ export default class GenerateVault extends Mixins(mixins.page) {
     return {
       collateralizationRatio: collateralizationRatioText,
       liquidationPrice: liquidationPriceText,
-      currentDepositPrice: `$${this.$utils.number.toPrecision(
-        this.deposit?.price || "0"
+      currentDepositPrice: `${this.$utils.number.toPrecision(
+        this.collateral?.price || "0"
       )}`,
       stabilityFee: this.$utils.number.toFixed(stabilityFee, 2),
       maxToGenerate: maxToGenerateText,
@@ -230,6 +234,12 @@ export default class GenerateVault extends Mixins(mixins.page) {
   get infos() {
     return [
       {
+        title: "Liquidation Price", // mint * mat / deposit
+        value: this.meta.liquidationPrice,
+        valueUnit: `${this.mint.symbol}`,
+        hint: "Some description about profit.",
+      },
+      {
         title: "Collateralization Ratio", // deposit * price / mint
         value: this.meta.collateralizationRatio,
         valueUnit: "%",
@@ -237,26 +247,28 @@ export default class GenerateVault extends Mixins(mixins.page) {
         hint: "Some description about profit.",
       },
       {
-        title: "Liquidation Price", // mint * mat / deposit
-        value: this.meta.liquidationPrice,
-        valueUnit: `${this.mint.symbol}/${this.deposit.symbol}`,
-        hint: "Some description about profit.",
+        title: `Current ${this.deposit?.symbol}/${this.mint?.symbol} Price`,
+        value: this.meta.currentDepositPrice,
+        valueUnit: `${this.mint.symbol}`,
       },
       {
-        title: `Current ${this.deposit?.symbol} Price`,
-        value: this.meta.currentDepositPrice,
-        // valueUnit: "USD",
+        title: "Minimum ratio",
+        value: this.$utils.number.toFixed(
+          Number(this.collateral?.mat) * 100,
+          2
+        ),
+        valueUnit: "%",
+      },
+      {
+        title: "Max available to Generate", // line- debt
+        value: this.meta.maxToGenerate,
+        valueUnit: this.mint?.symbol,
       },
       {
         title: "Stability Fee",
         value: this.meta.stabilityFee,
         valueUnit: "%",
         hint: "Some description about profit.",
-      },
-      {
-        title: "Max available to Generate", // line- debt
-        value: this.meta.maxToGenerate,
-        valueUnit: this.mint?.symbol,
       },
     ];
   }
@@ -275,6 +287,11 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.mint = this.getAssetById(this.collateral?.dai);
     this.updateWalletAsset();
   }
+
+  destroy() {
+    clearInterval(0);
+  }
+
   updateWalletAsset() {
     this.syncWalletAsset(this.collateral.gem);
     this.syncWalletAsset(this.collateral.dai);
@@ -285,12 +302,58 @@ export default class GenerateVault extends Mixins(mixins.page) {
   }
 
   follow_id = "";
-  comfirm() {
-    const params = {
+  async comfirm() {
+    const request = {
       user_id: this.user_id,
       follow_id: this.follow_id,
+      amount: this.depositAmount,
+      asset_id: this.deposit?.id,
+      parameters: [
+        "bit",
+        "31",
+        "uuid",
+        this.collateral.id,
+        "decimal",
+        this.mintAmount,
+      ],
     } as IActionsParams;
-    // this.$http.postActions(params);
+    const resposne = await this.$http.postActions(request);
+    if (resposne.data?.code_url) {
+      window.location.assign(resposne.data.code_url);
+      if (!this.$utils.helper.isMixin()) {
+        this.$utils.helper.showPayDialog(this, {
+          paymentUrl: resposne.data.code_url,
+        });
+      } else {
+        this.$utils.helper.showPaying(this, {
+          timer: this.$utils.helper.uuidV4(),
+        });
+      }
+      this.checkTransaction(this.follow_id);
+    }
+  }
+
+  checkTransaction(follow_id: string) {
+    let intervalId = 0 as any;
+    clearInterval(intervalId);
+    intervalId = setInterval(async () => {
+      const response = await this.$http.getTransaction(follow_id);
+      if (
+        response.data?.status === TransactionStatus.OK ||
+        response.data?.status === TransactionStatus.Abort
+      ) {
+        clearInterval(intervalId);
+        this.updateWalletAsset();
+        this.syncMyVaults();
+        this.$utils.helper.hidePaying(this);
+        this.$utils.helper.hidePaymentDialog(this);
+        this.$utils.helper.toast(this, {
+          message: "New Vault has been created.",
+          color: "success",
+        });
+        this.$router.replace("/me");
+      }
+    }, 3000);
   }
 }
 </script>

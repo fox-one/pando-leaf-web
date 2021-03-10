@@ -10,3 +10,8 @@ export enum SOCKET_STATE {
   ERROR = "error",
   CLOSED = "closed",
 }
+
+export enum TransactionStatus {
+  OK = "OK",
+  Abort = "Abort",
+}

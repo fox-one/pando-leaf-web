@@ -12,8 +12,8 @@
       {{ $t("connect.wallet") }}
     </v-btn>
     <v-layout v-if="isLogged" column class="pa-4 f-bg-greyscale-7">
-      <div class="f-caption f-greyscale-3">Total Vault Balance</div>
-      <h2>$0.0</h2>
+      <div class="f-caption f-greyscale-3">Total Vault Collateral Balance</div>
+      <h2>{{ totalVaultsBalance }}</h2>
     </v-layout>
 
     <v-container v-if="isLogged && !haveVault" fill-height>
@@ -32,7 +32,7 @@
         >
           <span>Open a new Vault</span>
         </v-btn>
-        <v-btn
+        <!-- <v-btn
           class="mt-4"
           color="primary"
           @click="mockVaults"
@@ -40,12 +40,13 @@
           rounded
           depressed
           >Mock Vault</v-btn
-        >
+        > -->
       </v-layout>
     </v-container>
     <div class="px-4 pt-4">
-      <v-expansion-panels accordion flat class="rounded-xl">
+      <v-expansion-panels accordion flat>
         <my-vault-item
+          class="mb-4 rounded-xl"
           :key="vault.id"
           v-for="vault in myVaults"
           :vault="vault"
@@ -55,13 +56,13 @@
     <v-layout column fill-height align-center>
       <v-btn
         v-if="haveVault && isLogged"
-        class="mt-4"
+        class="mt-4 pb-20"
         color="primary"
-        @click="clearVaults"
+        @click="refreshMyVaults"
         :min-width="220"
         rounded
         depressed
-        >Clear Vault</v-btn
+        >Refresh My Vaults</v-btn
       >
     </v-layout>
   </v-layout>
@@ -70,7 +71,7 @@
 <script lang="ts">
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
-import { Getter, State } from "vuex-class";
+import { Action, Getter, State } from "vuex-class";
 import { IVault } from "~/services/types/vo";
 import MyVaultItem from "~/components/particles/MyVaultItem.vue";
 
@@ -83,6 +84,9 @@ export default class Me extends Mixins(mixins.page) {
   @State((state) => state.global.myVaults) myVaults!: IVault[];
   @Getter("auth/isLogged") isLogged!: boolean;
   @Getter("global/haveVault") haveVault!: boolean;
+  @Getter("global/getCollateral") getCollateral;
+  @Getter("global/getAssetById") getAssetById;
+  @Action("global/syncMyVaults") syncMyVaults;
 
   loading = true;
   get title() {
@@ -91,8 +95,17 @@ export default class Me extends Mixins(mixins.page) {
   }
 
   get appbar() {
+    if (this.isLogged) {
+      return {
+        back: false,
+        avatar: false,
+      };
+    }
     return {
       back: false,
+      customContent: true,
+      avatar: true,
+      mixinImmersive: true,
     };
   }
 
@@ -100,10 +113,23 @@ export default class Me extends Mixins(mixins.page) {
     return "me";
   }
 
+  get totalVaultsBalance() {
+    if (this.myVaults.length === 0) return "$0.00";
+    let total = 0;
+    this.myVaults.forEach((v) => {
+      const collateral = this.getCollateral(v.collateral_id);
+      const asset = this.getAssetById(collateral?.gem);
+      const amount = Number(v.ink || "0");
+      const price = Number(asset?.price || "0");
+      total += amount * price;
+    });
+    return `$${this.$utils.number.toPrecision(total)}`;
+  }
+
   mounted() {
     this.checkLogin();
     try {
-      // this.refreshData();
+      this.syncMyVaults();
     } catch (e) {
       this.loading = false;
     } finally {
@@ -124,6 +150,10 @@ export default class Me extends Mixins(mixins.page) {
 
   generateVault() {
     this.$router.push("/market");
+  }
+
+  refreshMyVaults() {
+    this.syncMyVaults();
   }
 
   mockVaults() {

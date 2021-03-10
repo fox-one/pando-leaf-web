@@ -61,9 +61,12 @@
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
-import { Action, Getter } from "vuex-class";
+import { Action, Getter, State } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
 import BigNumber from "bignumber.js";
+import { IActionsParams } from "~/services/types/dto";
+import { TransactionStatus } from "~/types";
+import { ACTION_ASSET_ID } from "~/constants";
 
 @Component({
   components: {
@@ -77,12 +80,14 @@ export default class GenerateForm extends Mixins(mixins.page) {
   @Getter("global/getVault") getVault;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncWalletAsset") syncWalletAsset;
+  @Action("global/syncMyVaults") syncMyVaults;
+  @State((state) => state.auth.id) user_id!: string;
 
   collateral = {} as ICollateral;
   vault = {} as IVault;
   asset = {} as IAsset;
   amount = "";
-  precision = 8
+  precision = 8;
 
   get appbar() {
     return {
@@ -166,10 +171,68 @@ export default class GenerateForm extends Mixins(mixins.page) {
     this.vault = this.getVault(this.vaultId);
     this.collateral = this.getCollateral(this.vault.collateral_id);
     this.asset = this.getAssetById(this.collateral.dai);
+    this.updateWalletAsset();
+  }
+
+  destroy() {
+    clearInterval(0);
+  }
+
+  updateWalletAsset() {
+    this.syncWalletAsset(this.collateral.gem);
     this.syncWalletAsset(this.collateral.dai);
   }
+
   requestLogin() {
     this.$utils.helper.requestLogin(this);
+  }
+
+  follow_id = "";
+  async comfirm() {
+    const request = {
+      user_id: this.user_id,
+      follow_id: this.follow_id,
+      amount: "0.00000001",
+      asset_id: ACTION_ASSET_ID,
+      parameters: ["bit", "35", "uuid", this.vaultId, "decimal", this.amount],
+    } as IActionsParams;
+    const resposne = await this.$http.postActions(request);
+    if (resposne.data?.code_url) {
+      window.location.assign(resposne.data.code_url);
+      if (!this.$utils.helper.isMixin()) {
+        this.$utils.helper.showPayDialog(this, {
+          paymentUrl: resposne.data.code_url,
+        });
+      } else {
+        this.$utils.helper.showPaying(this, {
+          timer: this.$utils.helper.uuidV4(),
+        });
+      }
+      this.checkTransaction(this.follow_id);
+    }
+  }
+
+  checkTransaction(follow_id: string) {
+    let intervalId = 0 as any;
+    clearInterval(intervalId);
+    intervalId = setInterval(async () => {
+      const response = await this.$http.getTransaction(follow_id);
+      if (
+        response.data?.status === TransactionStatus.OK ||
+        response.data?.status === TransactionStatus.Abort
+      ) {
+        clearInterval(intervalId);
+        this.updateWalletAsset();
+        this.syncMyVaults();
+        this.$utils.helper.hidePaying(this);
+        this.$utils.helper.hidePaymentDialog(this);
+        this.$utils.helper.toast(this, {
+          message: "Generate finish.",
+          color: "success",
+        });
+        this.$router.replace("/me");
+      }
+    }, 3000);
   }
 }
 </script>

@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import { TransactionStatus } from "~/types/enum";
+
 export interface AuthResult {
   avatar: string;
   id: string; // uuid
@@ -79,6 +81,6 @@ export interface ITransaction {
   created_at: string;
   data: string;
   id: string;
-  status: number;
+  status: TransactionStatus;
   vault_id: string;
 }

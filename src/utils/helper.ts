@@ -158,3 +158,35 @@ export function throttle<T extends (...args: any[]) => any>(
 export function uuidV4() {
   return uuid();
 }
+
+export function showPaying(
+  vue: Vue,
+  data: {
+    timer: any;
+  }
+) {
+  vue.$store.commit("app/SET_PAYING", {
+    visible: true,
+    timer: data.timer,
+  });
+}
+
+export function hidePaying(vue: Vue) {
+  vue.$store.commit("app/SET_PAYING", {
+    visible: false,
+  });
+}
+
+export function showPayDialog(vue: Vue, data: { paymentUrl: string }) {
+  vue.$store.commit("app/SET_PAYMENT_URL", {
+    visible: true,
+    paymentUrl: data.paymentUrl,
+  });
+}
+
+export function hidePaymentDialog(vue: Vue) {
+  vue.$store.commit("app/SET_PAYMENT_URL", {
+    visible: false,
+    paymentUrl: "",
+  });
+}

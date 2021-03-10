@@ -1,7 +1,8 @@
 {
-  "app-name": "4compound",
+  "app-name": "Pando",
   "connect.wallet": "连接钱包",
   "common.qr": "请使用 Mixin Messenger 或 新生大讲堂 App 扫码支付",
+  "common.close":"关闭",
   "common.from": "From",
   "common.to": "To",
   "common.authing":"登录中...",
