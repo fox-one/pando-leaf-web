@@ -29,7 +29,7 @@
           Set Max
         </div>
       </v-layout>
-      <f-button type="primary" class="mt-5">Pay Back</f-button>
+      <f-button type="primary" class="mt-5" @click="confirm">Pay Back</f-button>
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">

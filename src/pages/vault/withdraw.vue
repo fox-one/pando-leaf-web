@@ -27,7 +27,7 @@
           {{ maxAvailable }} </span
         >{{ assetSymbol }}
       </div>
-      <f-button type="primary" class="mt-5">Withdraw</f-button>
+      <f-button type="primary" class="mt-5" @click="confirm">Withdraw</f-button>
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">

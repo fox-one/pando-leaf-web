@@ -26,7 +26,7 @@
         Wallet Bal.<span class="f-blue"> {{ assetBalance }} </span
         >{{ assetSymbol }}
       </div>
-      <f-button type="primary" class="mt-5">Deposit</f-button>
+      <f-button type="primary" class="mt-5" @click="confirm">Deposit</f-button>
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">

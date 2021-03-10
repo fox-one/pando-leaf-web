@@ -28,7 +28,7 @@
           {{ maxAvailable }} </span
         >{{ assetSymbol }}
       </div>
-      <f-button type="primary" class="mt-5">Generate</f-button>
+      <f-button type="primary" class="mt-5" @click="confirm">Generate</f-button>
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">
