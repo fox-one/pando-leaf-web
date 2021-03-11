@@ -4,21 +4,21 @@
       <v-layout column>
         <v-layout row align-center class="ma-0 mt-4 pa-0">
           <f-mixin-asset-logo
-            class="flex-grow-0 ml-4 mr-1"
-            :size="16"
+            class="flex-grow-0 ml-4 mr-1 z-index-2"
+            :size="24"
             :logo="collateralLogo"
           ></f-mixin-asset-logo>
           <f-mixin-asset-logo
-            class="flex-grow-0 mr-1"
-            :size="16"
+            class="flex-grow-0 ml-n3 mr-1"
+            :size="24"
             :logo="debtLogo"
           ></f-mixin-asset-logo>
-          <span class="f-body-2">{{
+          <span class="f-title-2">{{
             `${collateral.name} #${vault.id.substr(0, 4)}`
           }}</span>
           <v-spacer></v-spacer>
           <div :class="`mr-1 f-${risk}`">
-            {{ this.meta.collateralizationRatioText }}%
+            {{ this.meta.collateralizationRatioText }}
           </div>
           <f-tooltip v-model="tooltip" top>
             <template #activator="{ on, attrs }">
@@ -26,8 +26,16 @@
                 $icons.mdiHelpCircleOutline
               }}</v-icon>
             </template>
-            <div class="f-greyscale-3 f-caption">Collateral Ratio</div>
+            <div class="f-greyscale-4 f-caption">Collateral Ratio</div>
           </f-tooltip>
+        </v-layout>
+        <v-layout v-if="inLiquidation" column class="red pl-4 my-4 ml-4">
+          <div class="mt-2 f-caption">
+            You have reached minimum collateral ratio.
+          </div>
+          <div class="mb-2 f-caption">
+            This vault is on the liquidation list.
+          </div>
         </v-layout>
         <f-info-grid :window-size="2" class="mt-2">
           <f-info-grid-item
@@ -71,6 +79,7 @@
           </v-btn>
           <v-btn
             text
+            :disabled="inLiquidation"
             :min-height="68"
             class="f-actionbar-button-label f-caption f-weight-m"
             @click="toWithdraw"
@@ -82,6 +91,7 @@
           </v-btn>
           <v-btn
             text
+            :disabled="inLiquidation"
             class="f-actionbar-button-label f-caption f-weight-m"
             :min-height="68"
             @click="toGenerate"
@@ -180,10 +190,11 @@ export default class MyVaultItem extends Vue {
     const collateralAmount = Number(this.vault?.ink);
     const collateralizationRatio =
       (collateralAmount * Number(this.collateral?.price)) / debtAmount;
-    const collateralizationRatioText = this.$utils.number.toFixed(
-      collateralizationRatio * 100,
-      2
-    );
+    let collateralizationRatioText =
+      this.$utils.number.toFixed(collateralizationRatio * 100, 2) + "%";
+    if (!this.$utils.number.isValid(collateralizationRatio)) {
+      collateralizationRatioText = "N/A";
+    }
     const liquidationRatio = Number(this.collateral?.mat);
     const liquidationPrice = (debtAmount * liquidationRatio) / collateralAmount;
     const stabilityFee = this.$utils.number.toFixed(
@@ -205,6 +216,10 @@ export default class MyVaultItem extends Vue {
     );
   }
 
+  get inLiquidation() {
+    return this.meta.collateralizationRatio <= Number(this.collateral.mat);
+  }
+
   get infos() {
     return [
       {
@@ -214,18 +229,24 @@ export default class MyVaultItem extends Vue {
       },
       {
         title: `Outstanding ${this.debtSymbol} Debt`,
-        value: this.$utils.number.toPrecision(this.vault?.art),
+        value: this.$utils.number.toPrecision(
+          Number(this.vault?.art) * Number(this.collateral?.rate),
+          undefined,
+          BigNumber.ROUND_UP
+        ),
         valueUnit: this.debtSymbol,
       },
       {
         title: "Available to withdraw",
         value: this.maxAvailableToWithdraw,
         valueUnit: this.collateralSymbol,
+        valueColor: Number(this.maxAvailableToWithdraw) < 0 ? "red" : "",
       },
       {
         title: "Available to generate",
         value: this.maxAvailableToGenerate,
         valueUnit: this.debtSymbol,
+        valueColor: Number(this.maxAvailableToGenerate) < 0 ? "red" : "",
       },
     ];
   }
@@ -277,7 +298,13 @@ export default class MyVaultItem extends Vue {
   ::v-deep {
     .v-expansion-panel-content__wrap {
       padding: 0px 0px;
+      .f-info-grid-inner {
+        padding-top: 0px !important;
+      }
     }
   }
+}
+.z-index-2 {
+  z-index: 2;
 }
 </style>

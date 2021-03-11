@@ -3,7 +3,7 @@
     <default-layout-app-bar />
     <v-main>
       <!-- <base-ws-connect-bar /> -->
-      <nuxt />
+      <nuxt style="max-width: 660px" />
     </v-main>
     <default-layout-bottom-nav />
     <default-layout-modals />

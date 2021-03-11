@@ -2,12 +2,19 @@
   <v-container class="pa-0">
     <v-layout
       justify-space-between
-      class="px-4 f-greyscale-3 f-bg-greyscale-7 f-caption"
+      class="px-4 pb-2 f-bg-greyscale-7 f-caption"
     >
-      <div>Name/Price</div>
-      <div>Stability Fee/Update Time</div>
+      <v-layout column>
+        <div>Total Collaterals</div>
+        <div class="f-title-2">{{ total.collaterals }}</div>
+      </v-layout>
+      <v-layout column class="text-right">
+        <div>Total Supply</div>
+        <div class="f-title-2">{{ total.supply }}</div>
+      </v-layout>
     </v-layout>
     <market-item
+      class="my-2"
       v-for="item in collaterals"
       :collateral="item"
       :key="item.id"
@@ -28,9 +35,10 @@ import { ICollateral } from "~/services/types/vo";
   },
 })
 export default class Market extends Mixins(mixins.page) {
+  @State((state) => state.global.collaterals) collaterals!: ICollateral[];
   @Getter("auth/isLogged") isLogged;
+  @Getter("global/getAssetById") getAssetById;
   @Action("global/syncWallets") syncWallets;
-  @State((state) => state.global.collaterals) collaterals;
 
   get title() {
     const s = this.$t("tab.market");
@@ -47,12 +55,28 @@ export default class Market extends Mixins(mixins.page) {
     return "market";
   }
 
-  get meta() {
+  get total() {
+    if (!this.collaterals || this.collaterals.length === 0) {
+      return {
+        supply: "-",
+        collaterals: "-",
+      };
+    }
+    let col = 0;
+    let dai = 0;
+    this.collaterals.forEach((c) => {
+      const colAsset = this.getAssetById(c?.gem);
+      const daiAsset = this.getAssetById(c?.dai);
+      const colAmount = Number(c.ink || "0");
+      const daiAmount = Number(c.art || "0") * Number(c.rate || "1");
+      const colPrice = Number(colAsset?.price || "0");
+      const daiPrice = Number(daiAsset?.price || "0");
+      col += colAmount * colPrice;
+      dai += daiAmount * daiPrice;
+    });
     return {
-      totalSupply: "-",
-      totalBorrow: "-",
-      volume24hSupply: "-",
-      volume24hBorrow: "-",
+      collaterals: "$" + this.$utils.number.toShort(col),
+      supply: "$" + this.$utils.number.toShort(dai),
     };
   }
 

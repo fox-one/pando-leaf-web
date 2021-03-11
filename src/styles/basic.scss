@@ -35,11 +35,23 @@ a {
     background-color: #ffffff;
   }
   .f-orange {
-    color: #ffa800;
+    color: #ffa125;
   }
 }
 
 .risk-title {
   font-family: "SF Pro Text";
   font-weight: 700;
+}
+
+.f-info-grid {
+  .f-info-grid-inner {
+    .f-info-grid-item {
+      .f-info-grid-item-value-wrapper {
+        .f-info-grid-item-value {
+          font-size: 16px;
+        }
+      }
+    }
+  }
 }

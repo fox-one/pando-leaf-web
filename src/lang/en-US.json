@@ -19,6 +19,13 @@
   "tab.me":"Me",
   "tab.market":"Market",
 
+  "me.total-collaterals":"Your total collaterals",
+  "me.total-debts":"Your total debts",
+  "me.no-vault-1":"You haven't any Vault yet.",
+  "me.no-vault-2":"Open your first Vault to start generating Pando Assets.",
+  "me.no-vault-button":"Open a new Vault",
+  
+
   "button.deposit":"Deposit",
   "button.withdraw":"Withdraw",
   "button.generate":"Generate",

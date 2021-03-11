@@ -29,7 +29,7 @@ export default {
   toPrecision(
     n: string | number,
     p: number | undefined = undefined,
-    roundMode: BigNumber.RoundingMode = 1
+    roundMode: BigNumber.RoundingMode = BigNumber.ROUND_DOWN
   ): any {
     if (p === undefined) {
       p = this.getDefaultPercision(n);

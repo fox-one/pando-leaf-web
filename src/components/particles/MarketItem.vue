@@ -1,22 +1,54 @@
 <template>
-  <v-layout @click="generateNewVault" class="pl-4 pr-2 py-3 f-bg-greyscale-7">
+  <v-layout
+    @click="generateNewVault"
+    align-center
+    class="pt-3 f-bg-greyscale-7"
+  >
     <v-layout column>
-      <v-layout row class="ma-0" justify-space-between align-center>
-        <div class="f-greyscale-1 f-body-2">
-          {{ meta.name }}
-        </div>
+      <v-layout align-center class="ml-4">
+        <f-mixin-asset-logo
+          class="flex-grow-0 z-index-2"
+          :size="24"
+          :logo="collateralLogo"
+        ></f-mixin-asset-logo>
+        <f-mixin-asset-logo
+          class="flex-grow-0 ml-n2"
+          :size="24"
+          :logo="debtLogo"
+        ></f-mixin-asset-logo>
+
+        <span class="f-body-2 ml-2"> {{ meta.name }}</span>
+      </v-layout>
+      <!-- <v-layout column class="ml-2"> -->
+
+      <!-- <v-layout row class="ma-0" justify-space-between align-center>
+        <span class="f-body-2"> {{ meta.name }}</span>
         <div class="f-greyscale-1 f-body-2 font-weight-bold">
-          {{ meta.rate }}
+          ${{ meta.collateralValue }}
         </div>
       </v-layout>
       <v-layout row class="ma-0" justify-space-between align-center>
         <div class="f-greyscale-3 f-body-2">
-          {{ meta.price }}
+          {{ meta.available }}
         </div>
         <div class="f-greyscale-1 f-body-2">
-          {{ meta.rho }}
+          {{ meta.rate }}
         </div>
-      </v-layout>
+      </v-layout> -->
+      <!-- </v-layout> -->
+      <v-spacer />
+      <f-info-grid :window-size="2">
+        <f-info-grid-item
+          v-for="(item, ix) in infos"
+          :key="ix"
+          :index="ix"
+          :title="item.title"
+          :value="item.value"
+          :value-unit="item.valueUnit"
+          :value-color="item.valueColor"
+          :hint="item.hint"
+        ></f-info-grid-item>
+      </f-info-grid>
     </v-layout>
     <v-icon class="icon" size="20">{{ "$vuetify.icons.iconListArrow" }}</v-icon>
   </v-layout>
@@ -31,14 +63,62 @@ import { ICollateral } from "~/services/types/vo";
 export default class MarketItem extends Vue {
   @Prop() collateral!: ICollateral;
   @State((state) => state.app.settings) settings;
+  @Getter("global/getAssetById") getAssetById;
 
   get meta() {
+    const collateralValue =
+      Number(this.collateral.ink) * Number(this.collateral.price);
+    const available =
+      Number(this.collateral.line) - Number(this.collateral.debt);
+    const rate = collateralValue / Number(this.collateral.debt);
     return {
       name: this.collateral.name,
       price: this.collateral.price,
-      rate: this.$utils.number.toPercent(Number(this.collateral.duty) - 1),
-      rho: this.$utils.time.format(this.collateral.rho),
+      available: this.$utils.number.toShort(available),
+      rate: this.$utils.number.toFixed(rate * 100, 2),
+      collateralValue: "$" + this.$utils.number.toPrecision(collateralValue),
     };
+  }
+
+  get infos() {
+    return [
+      {
+        title: `Price`,
+        value: this.meta.price,
+        valueUnit: this.debtSymbol,
+      },
+      {
+        title: `Collateral Rate`,
+        value: this.meta.rate,
+        valueUnit: "%",
+      },
+      {
+        title: "Max available",
+        value: this.meta.available,
+        valueUnit: this.collateralSymbol,
+      },
+      {
+        title: "Collaterals",
+        value: this.meta.collateralValue,
+        valueUnit: "",
+      },
+    ];
+  }
+
+  get collateralSymbol() {
+    return this.getAssetById(this.collateral?.gem)?.symbol;
+  }
+
+  get debtSymbol() {
+    return this.getAssetById(this.collateral?.dai)?.symbol;
+  }
+
+  get collateralLogo() {
+    return this.getAssetById(this.collateral?.gem)?.logo;
+  }
+
+  get debtLogo() {
+    return this.getAssetById(this.collateral?.dai)?.logo;
   }
 
   generateNewVault() {
@@ -52,5 +132,11 @@ export default class MarketItem extends Vue {
   align-self: center;
   margin-right: 2px;
   margin-left: 8px;
+}
+.z-index-2 {
+  z-index: 2;
+}
+.vertical-center {
+  vertical-align: middle;
 }
 </style>
