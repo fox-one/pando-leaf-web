@@ -5,11 +5,11 @@
       class="px-4 pb-2 f-bg-greyscale-7 f-caption"
     >
       <v-layout column>
-        <div>Total Collaterals</div>
+        <div>{{ $t("market.total-collaterals") }}</div>
         <div class="f-title-2">{{ total.collaterals }}</div>
       </v-layout>
       <v-layout column class="text-right">
-        <div>Total Supply</div>
+        <div>{{ $t("market.total-supply") }}</div>
         <div class="f-title-2">{{ total.supply }}</div>
       </v-layout>
     </v-layout>

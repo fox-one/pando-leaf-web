@@ -3,7 +3,7 @@
     <vault-stats :collateral="collateral" :vault="vault"></vault-stats>
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        How much to pay back?
+        {{ $t("form.payback.how-much") }}
       </div>
 
       <f-asset-amount-input
@@ -19,21 +19,24 @@
         class="f-caption f-blue my-2 ml-4"
         @click="requestLogin"
       >
-        Connect Wallet
+        {{ $t("connect.wallet") }}
       </div>
       <v-layout v-else justify-space-between>
         <div class="f-caption f-greyscale-3 my-2 ml-4">
-          Wallet Bal. {{ assetBalance }} {{ assetSymbol }}
+          {{ $t("form.info.wallet-balance") }} {{ assetBalance }}
+          {{ assetSymbol }}
         </div>
         <div class="f-caption f-blue my-2 mr-4" @click="amount = maxPayback">
-          Set Max
+          {{ $t("form.info.set-max") }}
         </div>
       </v-layout>
-      <f-button type="primary" class="mt-5" @click="confirm">Pay Back</f-button>
+      <f-button type="primary" class="mt-5" @click="confirm">{{
+        $t("form.payback.button.confirm")
+      }}</f-button>
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">
-      <div class="mt-4 mx-4 f-title-1">Predication</div>
+      <div class="mt-4 mx-4 f-title-1">{{ $t("form.predication") }}</div>
       <f-info-grid :window-size="2">
         <f-info-grid-item
           v-for="(item, ix) in predictions"
@@ -145,8 +148,10 @@ export default class PaybackForm extends Mixins(mixins.page) {
     if (ratio < 0) {
       ratioText = "N/A";
     }
+    let newDebt = debtAmount - decreasedDebt;
+    if (newDebt < 0) newDebt = 0;
     return {
-      debtAmount,
+      debtAmount: newDebt,
       price: this.$utils.number.toPrecision(price),
       ratio,
       ratioText,
@@ -156,17 +161,17 @@ export default class PaybackForm extends Mixins(mixins.page) {
   get predictions() {
     return [
       {
-        title: `${this.assetSymbol} Debt`,
+        title: this.$t("form.info.symbol-debt", { symbol: this.assetSymbol }),
         value: this.$utils.number.toPrecision(this.meta.debtAmount),
         valueUnit: this.assetSymbol,
       },
       {
-        title: `New Liquidation Price`,
+        title: this.$t("form.info.new-liquidation-price"),
         value: this.meta.price,
         valueUnit: "USD",
       },
       {
-        title: "New Collateralization Ratio",
+        title: this.$t("form.info.new-collateralization-ratio"),
         value: this.meta.ratioText,
         valueUnit: this.meta.ratio < 0 ? "" : "%",
         valueColor: this.$utils.helper.risk(

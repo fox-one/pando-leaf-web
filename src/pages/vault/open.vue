@@ -2,7 +2,7 @@
   <v-container class="pa-0">
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <div class="f-body-1 f-greyscale-3 mb-3 text-center">
-        How much {{ deposit.symbol }} would you deposit?
+        {{ $t("form.open.how-much-col", { symbol: depositSymbol }) }}
         <f-tooltip v-model="depositTips" bottom>
           <template #activator="{ on, attrs }">
             <v-icon
@@ -16,11 +16,15 @@
           </template>
           <div>
             <div class="f-body-1">
-              How much {{ depositSymbol }} would you like to lock in your Vault.
+              {{ $t("form.open.deposit.tooltip1", { symbol: depositSymbol }) }}
             </div>
             <div class="f-caption">
-              The amount of {{ depositSymbol }} you lock up determines how much
-              {{ mintSymbol }} you can generate.
+              {{
+                $t("form.open.deposit.tooltip2", {
+                  depositSymbol: depositSymbol,
+                  mintSymbol: mintSymbol,
+                })
+              }}
             </div>
           </div>
         </f-tooltip>
@@ -40,7 +44,7 @@
         class="f-caption f-blue my-2 ml-4"
         @click="requestLogin"
       >
-        Connect Wallet
+        {{ $t("connect.wallet") }}
       </div>
       <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
         Wallet Bal.<span class="f-blue" @click="depositAmount = depositBalance">
@@ -48,7 +52,7 @@
         >{{ depositSymbol }}
       </div>
       <div class="f-body-1 f-greyscale-3 my-3 text-center">
-        How much {{ mintSymbol }} would you generate?
+        {{ $t("form.open.how-much-dai", { symbol: mintSymbol }) }}
         <f-tooltip v-model="mintTips" bottom>
           <template #activator="{ on, attrs }">
             <v-icon
@@ -62,10 +66,10 @@
           </template>
           <div>
             <div class="f-body-1">
-              How much {{ mintSymbol }} would you like to generate?
+              {{ $t("form.open.dai.tooltip1", { symbol: mintSymbol }) }}
             </div>
             <div class="f-caption">
-              Generate an amount that is safely above the liquidation ratio.
+              {{ $t("form.open.dai.tooltip2") }}
             </div>
           </div>
         </f-tooltip>
@@ -85,7 +89,7 @@
         class="f-caption f-blue my-2 ml-4"
         @click="requestLogin"
       >
-        Connect Wallet
+        {{ $t("connect.wallet") }}
       </div>
       <!-- <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
         Max avail to generate<span
@@ -95,13 +99,13 @@
           {{ mintBalance }} </span
         >{{ mintSymbol }}
       </div> -->
-      <f-button type="primary" class="mt-5" @click="confirm"
-        >Deposit to Generate</f-button
-      >
+      <f-button type="primary" class="mt-5" @click="confirm">
+        {{ $t("form.open.button.confirm") }}
+      </f-button>
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">
-      <div class="mt-4 mx-4 f-title-1">Predication</div>
+      <div class="mt-4 mx-4 f-title-1">{{ $t("form.predication") }}</div>
       <f-info-grid :window-size="2">
         <f-info-grid-item
           v-for="(item, ix) in infos"
@@ -131,10 +135,8 @@ import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { Action, Getter, State } from "vuex-class";
 import { IAsset, ICollateral } from "~/services/types/vo";
-import { mdiAbTesting } from "@mdi/js";
 import { IActionsParams } from "~/services/types/dto";
 import { TransactionStatus } from "~/types";
-import { toast } from "~/utils/helper";
 
 @Component({
   components: {},
@@ -235,13 +237,13 @@ export default class GenerateVault extends Mixins(mixins.page) {
   get infos() {
     return [
       {
-        title: "Liquidation Price", // mint * mat / deposit
+        title: this.$t("form.info.liquidation-price"), // mint * mat / deposit
         value: this.meta.liquidationPrice,
         valueUnit: `${this.mint.symbol}`,
         hint: "Some description about profit.",
       },
       {
-        title: "Collateralization Ratio", // deposit * price / mint
+        title: this.$t("form.info.collateralization-ratio"), // deposit * price / mint
         value: this.meta.collateralizationRatioText,
         valueUnit: "%",
         valueColor: this.$utils.helper.risk(
@@ -251,12 +253,14 @@ export default class GenerateVault extends Mixins(mixins.page) {
         hint: "Some description about profit.",
       },
       {
-        title: `Current ${this.deposit?.symbol}/${this.mint?.symbol} Price`,
+        title: this.$t("form.info.current-symbol-price", {
+          symbol: `${this.deposit?.symbol}/${this.mint?.symbol}`,
+        }),
         value: this.meta.currentDepositPrice,
         valueUnit: `${this.mint.symbol}`,
       },
       {
-        title: "Minimum ratio",
+        title: this.$t("form.info.minimum-ratio"),
         value: this.$utils.number.toFixed(
           Number(this.collateral?.mat) * 100,
           2
@@ -264,12 +268,12 @@ export default class GenerateVault extends Mixins(mixins.page) {
         valueUnit: "%",
       },
       {
-        title: "Max available to Generate", // line- debt
+        title: this.$t("form.info.max-available-to-generate"), // line- debt
         value: this.meta.maxToGenerate,
         valueUnit: this.mint?.symbol,
       },
       {
-        title: "Stability Fee",
+        title: this.$t("form.info.stability-fee"),
         value: this.meta.stabilityFee,
         valueUnit: "%",
         hint: "Some description about profit.",

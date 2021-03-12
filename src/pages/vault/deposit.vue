@@ -3,7 +3,7 @@
     <vault-stats :collateral="collateral" :vault="vault"></vault-stats>
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        How much to deposit?
+        {{ $t("form.deposit.how-much") }}
       </div>
 
       <f-asset-amount-input
@@ -20,17 +20,19 @@
         class="f-caption f-blue my-2 ml-4"
         @click="requestLogin"
       >
-        Connect Wallet
+        {{ $t("connect.wallet") }}
       </div>
       <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
-        Wallet Bal.<span class="f-blue"> {{ assetBalance }} </span
-        >{{ assetSymbol }}
+        {{ $t("form.info.wallet-balance")
+        }}<span class="f-blue"> {{ assetBalance }} </span>{{ assetSymbol }}
       </div>
-      <f-button type="primary" class="mt-5" @click="confirm">Deposit</f-button>
+      <f-button type="primary" class="mt-5" @click="confirm">{{
+        $t("form.deposit.button.confirm")
+      }}</f-button>
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">
-      <div class="mt-4 mx-4 f-title-1">Predication</div>
+      <div class="mt-4 mx-4 f-title-1">{{ $t("form.predication") }}</div>
       <f-info-grid :window-size="2">
         <f-info-grid-item
           v-for="(item, ix) in predictions"
@@ -146,12 +148,12 @@ export default class DepositForm extends Mixins(mixins.page) {
   get predictions() {
     return [
       {
-        title: `New Liquidation Price`,
+        title: this.$t("form.info.new-liquidation-price"),
         value: this.meta.price,
         valueUnit: "USD",
       },
       {
-        title: "New Collateralization Ratio",
+        title: this.$t("form.info.new-collateralization-ratio"),
         value: this.meta.ratioText,
         valueUnit: "%",
         valueColor: this.$utils.helper.risk(

@@ -26,15 +26,17 @@
                 $icons.mdiHelpCircleOutline
               }}</v-icon>
             </template>
-            <div class="f-greyscale-4 f-caption">Collateral Ratio</div>
+            <div class="f-greyscale-4 f-caption">
+              {{ $t("me.vault-item.collateral-ratio") }}
+            </div>
           </f-tooltip>
         </v-layout>
         <v-layout v-if="inLiquidation" column class="red pl-4 my-4 ml-4">
           <div class="mt-2 f-caption">
-            You have reached minimum collateral ratio.
+            {{ $t("me.vault-item.in-liquidation-tips1") }}
           </div>
           <div class="mb-2 f-caption">
-            This vault is on the liquidation list.
+            {{ $t("me.vault-item.in-liquidation-tips2") }}
           </div>
         </v-layout>
         <f-info-grid :window-size="2" class="mt-2">
@@ -168,6 +170,7 @@ export default class MyVaultItem extends Vue {
     const price = Number(this.collateral?.price);
     const mininumRatio = Number(this.collateral?.mat);
     const max = (collateralAmount * price) / mininumRatio - debtAmount;
+    if (max < 0) return "0";
     return this.$utils.number.toPrecision(max);
   }
 
@@ -181,6 +184,7 @@ export default class MyVaultItem extends Vue {
     const price = Number(this.collateral?.price);
     const mininumRatio = Number(this.collateral?.mat);
     const max = collateralAmount - (mininumRatio * debtAmount) / price;
+    if (max < 0) return "0";
     return this.$utils.number.toPrecision(max);
   }
 
@@ -223,12 +227,16 @@ export default class MyVaultItem extends Vue {
   get infos() {
     return [
       {
-        title: `${this.collateralSymbol} Locked`,
+        title: this.$t("me.vault-item.symbol-locked", {
+          symbol: this.collateralSymbol,
+        }),
         value: this.$utils.number.toPrecision(this.vault?.ink),
         valueUnit: this.collateralSymbol,
       },
       {
-        title: `Outstanding ${this.debtSymbol} Debt`,
+        title: this.$t("me.vault-item.outstanding-symbol-debt", {
+          symbol: this.debtSymbol,
+        }),
         value: this.$utils.number.toPrecision(
           Number(this.vault?.art) * Number(this.collateral?.rate),
           undefined,
@@ -237,16 +245,16 @@ export default class MyVaultItem extends Vue {
         valueUnit: this.debtSymbol,
       },
       {
-        title: "Available to withdraw",
+        title: this.$t("me.vault-item.available-to-withdraw"),
         value: this.maxAvailableToWithdraw,
         valueUnit: this.collateralSymbol,
-        valueColor: Number(this.maxAvailableToWithdraw) < 0 ? "red" : "",
+        valueColor: this.inLiquidation ? "red" : "",
       },
       {
-        title: "Available to generate",
+        title: this.$t("me.vault-item.available-to-generate"),
         value: this.maxAvailableToGenerate,
         valueUnit: this.debtSymbol,
-        valueColor: Number(this.maxAvailableToGenerate) < 0 ? "red" : "",
+        valueColor: this.inLiquidation ? "red" : "",
       },
     ];
   }
@@ -254,12 +262,12 @@ export default class MyVaultItem extends Vue {
   get collapseInfos() {
     return [
       {
-        title: "Liquidation Price", // debt * ratio / collateral
+        title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
         value: this.meta?.liquidationPrice,
         valueUnit: "USD",
       },
       {
-        title: "Minimum ratio",
+        title: this.$t("form.info.minimum-ratio"),
         value: this.$utils.number.toFixed(
           Number(this.collateral?.mat) * 100,
           2
@@ -267,12 +275,14 @@ export default class MyVaultItem extends Vue {
         valueUnit: "%",
       },
       {
-        title: `Current ${this.collateralSymbol} price`,
+        title: this.$t("form.info.current-symbol-price", {
+          symbol: this.collateralSymbol,
+        }),
         value: this.collateral?.price,
         valueUnit: "USD",
       },
       {
-        title: "Stability fee",
+        title: this.$t("form.info.stability-fee"),
         value: this.meta?.stabilityFee,
         valueUnit: "%",
       },

@@ -83,22 +83,22 @@ export default class MarketItem extends Vue {
   get infos() {
     return [
       {
-        title: `Price`,
+        title: this.$t("market.item.price"),
         value: this.meta.price,
         valueUnit: this.debtSymbol,
       },
       {
-        title: `Collateral Rate`,
+        title: this.$t("market.item.collateral-rate"),
         value: this.meta.rate,
         valueUnit: "%",
       },
       {
-        title: "Max available",
+        title: this.$t("market.item.max-available"),
         value: this.meta.available,
         valueUnit: this.collateralSymbol,
       },
       {
-        title: "Collaterals",
+        title: this.$t("market.item.collaterals"),
         value: this.meta.collateralValue,
         valueUnit: "",
       },

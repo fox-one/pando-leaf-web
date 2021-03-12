@@ -1,7 +1,7 @@
 <template>
   <v-layout column class="f-bg-greyscale-7">
     <div class="mx-4 f-body-2 f-greyscale-3 text-center">
-      Current Vault Stats
+      {{ $t("form.info.vault-stats-title") }}
     </div>
     <f-info-grid :window-size="2">
       <f-info-grid-item
@@ -21,7 +21,7 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { Getter, State } from "vuex-class";
+import { Getter } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
 
 @Component
@@ -71,12 +71,12 @@ export default class VaultStats extends Vue {
   get infos() {
     return [
       {
-        title: "Liquidation Price", // debt * ratio / collateral
+        title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
         value: this.meta.liquidationPrice,
         valueUnit: "USD",
       },
       {
-        title: `Collateralization ratio`, //
+        title: this.$t("form.info.collateralization-ratio"), //
         value: this.meta.collateralizationRatioText,
         valueUnit: `%`,
         valueColor: this.$utils.helper.risk(
@@ -85,26 +85,28 @@ export default class VaultStats extends Vue {
         ),
       },
       {
-        title: `Current ${this.collateral?.name} price`,
+        title: this.$t("form.info.current-symbol-price", {
+          symbol: this.collateral?.name,
+        }),
         value: this.collateral?.price,
         valueUnit: "USD",
       },
       {
-        title: "Minimum ratio",
+        title: this.$t("form.info.minimum-ratio"),
         value: this.$utils.number.toFixed(
           Number(this.collateral?.mat) * 100,
           2
         ),
         valueUnit: "%",
-        hint: "Some description about profit.",
+        //        hint: "Some description about profit.",
       },
       {
-        title: "Liquidation penalty",
+        title: this.$t("form.info.liquidation-penalty"),
         value: this.meta.liquidationPenalty,
         valueUnit: "%",
       },
       {
-        title: "Stability fee",
+        title: this.$t("form.info.stability-fee"),
         value: this.meta.stabilityFee,
         valueUnit: "%",
       },
