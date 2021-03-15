@@ -26,9 +26,17 @@
         {{ $t("form.info.wallet-balance")
         }}<span class="f-blue"> {{ assetBalance }} </span>{{ assetSymbol }}
       </div>
-      <f-button type="primary" class="mt-5" @click="confirm">{{
-        $t("form.deposit.button.confirm")
-      }}</f-button>
+
+      <f-tip :type="validate.type" v-if="validate.tip !== null">{{
+        validate.tip
+      }}</f-tip>
+      <f-button
+        type="primary"
+        class="mt-5"
+        :disabled="validate.disabled"
+        @click="confirm"
+        >{{ $t("form.deposit.button.confirm") }}</f-button
+      >
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">
@@ -112,6 +120,35 @@ export default class DepositForm extends Mixins(mixins.page) {
 
   get vaultId() {
     return this.$route.query["id"];
+  }
+
+  get validate() {
+    if (this.amount === "") {
+      return {
+        disabled: true,
+        tip: null,
+      };
+    }
+    if (Number(this.amount || "0") === 0) {
+      return {
+        disabled: true,
+        type: "error",
+        tip: this.$t("form.validate.amount-zero"),
+      };
+    }
+    if (this.isLogged && Number(this.amount) > this.assetBalance) {
+      return {
+        disabled: true,
+        type: "error",
+        tip: this.$t("form.validate.insufficient-balance", {
+          symbol: this.assetSymbol,
+        }),
+      };
+    }
+    return {
+      disabled: false,
+      tip: null,
+    };
   }
 
   get meta() {

@@ -79,6 +79,9 @@
   "form.validate.below-liquidation-rate":"金库抵押物低于清算阈值",
   "form.validate.high-risk":"此生成的 {symbol} 数量将使金库处于清算风险中",
   "form.validate.medium-risk":"此生成的 {symbol} 数量将使金库接近清算风险",
+  "form.validate.amount-zero":"数量需要大于 0",
+  "form.validate.insufficient-balance":"{symbol} 余额不足",
+  "form.validate.pay-back-over":"无法偿还超过所欠的债务，您最多可以偿还所有未偿债务",
 
   "button.deposit":"存入",
   "button.withdraw":"取回",

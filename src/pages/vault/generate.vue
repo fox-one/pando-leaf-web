@@ -28,9 +28,16 @@
           {{ maxAvailable }} </span
         >{{ assetSymbol }}
       </div>
-      <f-button type="primary" class="mt-5" @click="confirm">{{
-        $t("form.generate.button.confirm")
-      }}</f-button>
+      <f-tip :type="validate.type" v-if="validate.tip !== null">{{
+        validate.tip
+      }}</f-tip>
+      <f-button
+        type="primary"
+        class="mt-5"
+        :disabled="validate.disabled"
+        @click="confirm"
+        >{{ $t("form.generate.button.confirm") }}</f-button
+      >
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">
@@ -67,7 +74,7 @@ import { Action, Getter, State } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
-import { TransactionStatus } from "~/types";
+import { RISK, TransactionStatus } from "~/types";
 import { ACTION_ASSET_ID } from "~/constants";
 
 @Component({
@@ -118,6 +125,75 @@ export default class GenerateForm extends Mixins(mixins.page) {
 
   get vaultId() {
     return this.$route.query["id"];
+  }
+
+  get validate() {
+    if (this.amount === "") {
+      return {
+        disabled: true,
+        tip: null,
+      };
+    }
+    if (Number(this.amount) === 0) {
+      return {
+        disabled: true,
+        type: "error",
+        tip: this.$t("form.validate.amount-zero"),
+      };
+    }
+    if (this.isLogged) {
+      const risk = this.$utils.helper.riskLevel(
+        this.meta.ratio,
+        this.collateral.mat
+      );
+      switch (risk) {
+        case RISK.HIGH:
+          if (Number(this.meta.ratio) < Number(this.collateral.mat)) {
+            // 抵押率低于清算线
+            return {
+              disabled: true,
+              type: "error",
+              tip: this.$t("form.validate.below-liquidation-rate"),
+            };
+          }
+          // 抵押率高于清算线，处于高风险区间
+          return {
+            disabled: false,
+            type: "error",
+            tip: this.$t("form.validate.high-risk", {
+              symbol: this.assetSymbol,
+            }),
+          };
+        // 中风险区间
+        case RISK.MEDIUM:
+          return {
+            disabled: false,
+            type: "warning",
+            tip: this.$t("form.validate.medium-risk", {
+              symbol: this.assetSymbol,
+            }),
+          };
+        // 低风险区间
+        case RISK.LOW:
+          return {
+            disabled: false,
+            type: "info",
+            tip: null,
+          };
+        // 抵押率 N/A
+        default:
+          return {
+            disabled: true,
+            type: "info",
+            tip: null,
+          };
+      }
+    }
+    return {
+      disabled: false,
+      type: "info",
+      tip: null,
+    };
   }
 
   get meta() {

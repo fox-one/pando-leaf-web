@@ -47,7 +47,8 @@
         {{ $t("connect.wallet") }}
       </div>
       <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
-        Wallet Bal.<span class="f-blue" @click="depositAmount = depositBalance">
+        {{ $t("form.info.wallet-balance")
+        }}<span class="f-blue" @click="depositAmount = depositBalance">
           {{ depositBalance }} </span
         >{{ depositSymbol }}
       </div>
@@ -257,7 +258,8 @@ export default class GenerateVault extends Mixins(mixins.page) {
       maxAvailableText,
     };
   }
-  // error,warning,info
+
+  // 表单校验
   get validate() {
     if (this.depositAmount === "" && this.mintAmount === "") {
       return {
