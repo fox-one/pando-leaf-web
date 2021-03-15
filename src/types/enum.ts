@@ -15,3 +15,10 @@ export enum TransactionStatus {
   OK = "OK",
   Abort = "Abort",
 }
+
+export enum RISK {
+  HIGH = "high",
+  MEDIUM = "medium",
+  LOW = "low",
+  NA = "n/a",
+}

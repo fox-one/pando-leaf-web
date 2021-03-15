@@ -42,10 +42,10 @@
   "market.item.collaterals":"抵押额",
 
   "form.open.how-much-col":"你打算存入多少 {symbol}?",
-  "form.open.deposit.tooltip1":"你打算存入并锁定多少 { symbol } 在金库中?",
-  "form.open.deposit.tooltip2":"你锁定的 { depositSymbol } 将决定你可以生成多少 { mintSymbol }.",
+  "form.open.deposit.tooltip1":"你打算存入并锁定多少 {symbol} 在金库中?",
+  "form.open.deposit.tooltip2":"你锁定的 {depositSymbol} 将决定你可以生成多少 {mintSymbol}.",
   "form.open.how-much-dai":"你打算生成多少 {symbol}?",
-  "form.open.dai.tooltip1":"你打算生成多少 { symbol }?",
+  "form.open.dai.tooltip1":"你打算生成多少 {symbol}?",
   "form.open.dai.tooltip2":"生成资产的数量需要确保抵押率高于清算线.",
   "form.open.button.confirm":"存入资产以生成",
   "form.deposit.how-much":"你要存入多少?",
@@ -72,6 +72,13 @@
   "form.info.new-liquidation-price":"新的价格",
   "form.info.new-collateralization-ratio":"新的抵押率",
   "form.info.symbol-debt":"{symbol} 债务",
+
+  "form.validate.deposit-empty":"金库需要存入资产作为抵押",
+  "form.validate.minimum-debt":"金库需要至少生成 {amount} {symbol}",
+  "form.validate.max-debt":"此类金库最多还能生成 {amount} {symbol}",
+  "form.validate.below-liquidation-rate":"金库抵押物低于清算阈值",
+  "form.validate.high-risk":"此生成的 {symbol} 数量将使金库处于清算风险中",
+  "form.validate.medium-risk":"此生成的 {symbol} 数量将使金库接近清算风险",
 
   "button.deposit":"存入",
   "button.withdraw":"取回",

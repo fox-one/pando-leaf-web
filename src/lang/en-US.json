@@ -42,10 +42,10 @@
   "market.item.collaterals":"Collaterals",
 
   "form.open.how-much-col":"How much {symbol} would you deposit?",
-  "form.open.deposit.tooltip1":"How much { symbol } would you like to lock in your Vault?",
-  "form.open.deposit.tooltip2":"The amount of { depositSymbol } you lock up determines how much { mintSymbol } you can generate.",
+  "form.open.deposit.tooltip1":"How much {symbol} would you like to lock in your Vault?",
+  "form.open.deposit.tooltip2":"The amount of {depositSymbol} you lock up determines how much {mintSymbol} you can generate.",
   "form.open.how-much-dai":"How much {symbol} would you generate?",
-  "form.open.dai.tooltip1":"How much { symbol } would you like to generate?",
+  "form.open.dai.tooltip1":"How much {symbol} would you like to generate?",
   "form.open.dai.tooltip2":"Generate an amount that is safely above the liquidation ratio.",
   "form.open.button.confirm":"Deposit to Generate",
   "form.deposit.how-much":"How much to deposit?",
@@ -73,6 +73,12 @@
   "form.info.new-collateralization-ratio":"New Collateralization Ratio",
   "form.info.symbol-debt":"{symbol} Debt",
 
+  "form.validate.deposit-empty":"A vault needs to deposit assets as collateral.",
+  "form.validate.minimum-debt":"A vault requires a minimum of {amount} {symbol} to be generated.",
+  "form.validate.max-debt":"This type of vault can generated up to {amount} {symbol}.",
+  "form.validate.below-liquidation-rate":"Vault's collaterals below liquidation threshold",
+  "form.validate.high-risk":"The amount of {symbol} you are generating is putting your Vault at risk of liquidation",
+  "form.validate.medium-risk":"The amount of {symbol} you are generating is putting your Vault on the verge of liquidation",
 
   "button.deposit":"Deposit",
   "button.withdraw":"Withdraw",

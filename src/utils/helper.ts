@@ -4,6 +4,8 @@ import i18n from "~/i18n";
 import { initApp } from "./app";
 import { v4 as uuid } from "uuid";
 import number from "./number";
+import { RISK } from "~/types";
+import { isJSDocDeprecatedTag } from "typescript";
 
 export function toast(vue: Vue, data: { message: string; color?: string }) {
   vue.$store.commit("app/SET_TOAST", data);
@@ -203,5 +205,19 @@ export function risk(currentRatio, minimumRatio) {
     return "orange";
   } else {
     return "green";
+  }
+}
+
+export function riskLevel(currentRatio, minimumRatio) {
+  const risk = Number(currentRatio) / Number(minimumRatio);
+  if (!number.isValid(risk)) return RISK.NA;
+  if (risk < 0) {
+    return RISK.NA;
+  } else if (risk <= 1.1) {
+    return RISK.HIGH;
+  } else if (risk <= 1.5) {
+    return RISK.MEDIUM;
+  } else {
+    return RISK.LOW;
   }
 }

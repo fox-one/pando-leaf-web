@@ -21,8 +21,8 @@
             <div class="f-caption">
               {{
                 $t("form.open.deposit.tooltip2", {
-                  depositSymbol: depositSymbol,
-                  mintSymbol: mintSymbol,
+                  depositsymbol: depositSymbol,
+                  mintsymbol: mintSymbol,
                 })
               }}
             </div>
@@ -91,15 +91,22 @@
       >
         {{ $t("connect.wallet") }}
       </div>
-      <!-- <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
-        Max avail to generate<span
-          class="f-blue"
-          @click="mintAmount = mintBalance"
-        >
-          {{ mintBalance }} </span
+      <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
+        {{ $t("form.info.max-available-to-generate")
+        }}<span class="f-blue" @click="mintAmount = meta.maxAvailable">
+          {{ meta.maxAvailableText || "0.00" }} </span
         >{{ mintSymbol }}
-      </div> -->
-      <f-button type="primary" class="mt-5" @click="confirm">
+      </div>
+
+      <f-tip :type="validate.type" v-if="validate.tip !== null">{{
+        validate.tip
+      }}</f-tip>
+      <f-button
+        type="primary"
+        class="mt-5"
+        :disabled="validate.disabled"
+        @click="confirm"
+      >
         {{ $t("form.open.button.confirm") }}
       </f-button>
     </v-layout>
@@ -136,7 +143,8 @@ import mixins from "@/mixins";
 import { Action, Getter, State } from "vuex-class";
 import { IAsset, ICollateral } from "~/services/types/vo";
 import { IActionsParams } from "~/services/types/dto";
-import { TransactionStatus } from "~/types";
+import { RISK, TransactionStatus } from "~/types";
+import BigNumber from "bignumber.js";
 
 @Component({
   components: {},
@@ -170,11 +178,11 @@ export default class GenerateVault extends Mixins(mixins.page) {
   }
 
   get depositSymbol() {
-    return this.deposit?.symbol || "";
+    return this.deposit?.symbol;
   }
 
   get mintSymbol() {
-    return this.mint?.symbol || "";
+    return this.mint?.symbol;
   }
 
   get appbar() {
@@ -195,12 +203,17 @@ export default class GenerateVault extends Mixins(mixins.page) {
   get meta() {
     const depositNum = Number(this.depositAmount);
     const mintNum = Number(this.mintAmount);
+    // 抵押率计算
     const collateralizationRatio =
       (depositNum * Number(this.collateral?.price)) / mintNum;
     let collateralizationRatioText = `${this.$utils.number.toFixed(
       collateralizationRatio * 100,
       2
     )}`;
+    if (!this.$utils.number.isValid(collateralizationRatio)) {
+      collateralizationRatioText = "-";
+    }
+    // 价格计算
     const liquidationPrice =
       (mintNum * Number(this.collateral?.mat || "0")) / depositNum;
     let liquidationPriceText = `${this.$utils.number.toPrecision(
@@ -212,16 +225,25 @@ export default class GenerateVault extends Mixins(mixins.page) {
     ) {
       liquidationPriceText = `-`;
     }
+    // fee
     const stabilityFee =
       this.$utils.number.toPrecision(Number(this.collateral.duty) - 1) * 100;
+    // 该类型最大可用额
     const maxToGenerate =
       Number(this.collateral.line) - Number(this.collateral.debt);
     const maxToGenerateText = this.$utils.number.toPrecision(maxToGenerate);
-    if (!this.$utils.number.isValid(collateralizationRatio)) {
-      collateralizationRatioText = "-";
-      // }else {
-      // collateralizationRatioText = `${this.$utils.number.toPercent(collateralizationRatio)}`
+    // 实际最大可用
+    let maxAvailable =
+      (depositNum * Number(this.collateral?.price || "0")) /
+        Number(this.collateral?.mat) || 0;
+    if (maxAvailable > maxToGenerate) {
+      maxAvailable = maxToGenerate;
     }
+    const maxAvailableText = this.$utils.number.toPrecision(
+      maxAvailable,
+      8,
+      BigNumber.ROUND_DOWN
+    );
     return {
       collateralizationRatio,
       collateralizationRatioText,
@@ -231,6 +253,110 @@ export default class GenerateVault extends Mixins(mixins.page) {
       )}`,
       stabilityFee: this.$utils.number.toFixed(stabilityFee, 2),
       maxToGenerate: maxToGenerateText,
+      maxAvailable,
+      maxAvailableText,
+    };
+  }
+  // error,warning,info
+  get validate() {
+    if (this.depositAmount === "" && this.mintAmount === "") {
+      return {
+        disabled: true,
+        type: "info",
+        tip: null,
+      };
+    }
+    if (
+      (this.depositAmount === "" && this.mintAmount !== "") ||
+      (this.depositAmount !== "" && this.mintAmount === "")
+    ) {
+      return {
+        disabled: true,
+        type: "error",
+        tip: null,
+      };
+    }
+    if (this.depositAmount !== "" && this.mintAmount !== "") {
+      const ma = Number(this.mintAmount || "0");
+      if (ma < Number(this.collateral.dust)) {
+        // mint 小于最小值
+        return {
+          disabled: true,
+          type: "error",
+          tip: this.$t("form.validate.minimum-debt", {
+            amount: this.collateral.dust,
+            symbol: this.mintSymbol,
+          }),
+        };
+      }
+      const max =
+        Number(this.collateral.line || "0") -
+        Number(this.collateral.debt || "0");
+      if (ma > max) {
+        // mint 大于最大值
+        return {
+          disabled: true,
+          type: "error",
+          tip: this.$t("form.validate.max-debt", {
+            amount: max,
+            symbol: this.mintSymbol,
+          }),
+        };
+      }
+      const risk = this.$utils.helper.riskLevel(
+        this.meta.collateralizationRatio,
+        this.collateral.mat
+      );
+      switch (risk) {
+        case RISK.HIGH:
+          if (
+            Number(this.meta.collateralizationRatio) <
+            Number(this.collateral.mat)
+          ) {
+            // 抵押率低于清算线
+            return {
+              disabled: true,
+              type: "error",
+              tip: this.$t("form.validate.below-liquidation-rate"),
+            };
+          }
+          // 抵押率高于清算线，处于高风险区间
+          return {
+            disabled: false,
+            type: "error",
+            tip: this.$t("form.validate.high-risk", {
+              symbol: this.mintSymbol,
+            }),
+          };
+        // 中风险区间
+        case RISK.MEDIUM:
+          return {
+            disabled: false,
+            type: "warning",
+            tip: this.$t("form.validate.medium-risk", {
+              symbol: this.mintSymbol,
+            }),
+          };
+        // 低风险区间
+        case RISK.LOW:
+          return {
+            disabled: false,
+            type: "info",
+            tip: null,
+          };
+        // 抵押率 N/A
+        default:
+          return {
+            disabled: true,
+            type: "info",
+            tip: null,
+          };
+      }
+    }
+    return {
+      disabled: false,
+      type: "info",
+      tip: null,
     };
   }
 
@@ -240,7 +366,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
         title: this.$t("form.info.liquidation-price"), // mint * mat / deposit
         value: this.meta.liquidationPrice,
         valueUnit: `${this.mint.symbol}`,
-        hint: "Some description about profit.",
+        // hint: "Some description about profit.",
       },
       {
         title: this.$t("form.info.collateralization-ratio"), // deposit * price / mint
@@ -250,7 +376,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
           this.meta.collateralizationRatio,
           this.collateral.mat
         ),
-        hint: "Some description about profit.",
+        // hint: "Some description about profit.",
       },
       {
         title: this.$t("form.info.current-symbol-price", {
@@ -276,7 +402,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
         title: this.$t("form.info.stability-fee"),
         value: this.meta.stabilityFee,
         valueUnit: "%",
-        hint: "Some description about profit.",
+        // hint: "Some description about profit.",
       },
     ];
   }
