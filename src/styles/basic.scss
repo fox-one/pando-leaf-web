@@ -47,9 +47,11 @@ a {
 .f-info-grid {
   .f-info-grid-inner {
     .f-info-grid-item {
-      .f-info-grid-item-value-wrapper {
-        .f-info-grid-item-value {
-          font-size: 16px;
+      .f-info-grid-item-content {
+        .f-info-grid-item-value-wrapper {
+          .f-info-grid-item-value {
+            font-size: 16px;
+          }
         }
       }
     }

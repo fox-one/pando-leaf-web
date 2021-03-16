@@ -71,6 +71,7 @@ export interface IVault {
   collateral_id: string; // uuid
   ink: string; // Total Deposited
   art: string; // Total Normalised Debt, debt = art * rate
+  identity_id: string;
 }
 
 export interface ITransaction {

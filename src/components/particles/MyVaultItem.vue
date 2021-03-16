@@ -14,7 +14,7 @@
             :logo="resize(debtLogo, 24)"
           ></f-mixin-asset-logo>
           <span class="f-title-2">{{
-            `${collateral.name} #${vault.id.substr(0, 4)}`
+            `${collateral.name} #${vault.identity_id}`
           }}</span>
           <v-spacer></v-spacer>
           <div :class="`mr-1 f-${risk}`">

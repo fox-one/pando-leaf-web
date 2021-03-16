@@ -17,7 +17,7 @@
           :logo="resize(debtLogo, 24)"
         ></f-mixin-asset-logo>
 
-        <span class="f-body-2 ml-2"> {{ meta.name }}</span>
+        <span class="f-title-2 ml-2"> {{ meta.name }}</span>
       </v-layout>
       <!-- <v-layout column class="ml-2"> -->
 

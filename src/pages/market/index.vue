@@ -1,16 +1,13 @@
 <template>
   <v-container class="pa-0">
-    <v-layout
-      justify-space-between
-      class="px-4 pb-2 f-bg-greyscale-7 f-caption"
-    >
+    <v-layout justify-space-between class="px-4 pb-2 f-bg-greyscale-7">
       <v-layout column>
-        <div>{{ $t("market.total-collaterals") }}</div>
-        <div class="f-title-2">{{ total.collaterals }}</div>
+        <div class="f-caption">{{ $t("market.total-collaterals") }}</div>
+        <h2>{{ total.collaterals }}</h2>
       </v-layout>
       <v-layout column class="text-right">
-        <div>{{ $t("market.total-supply") }}</div>
-        <div class="f-title-2">{{ total.supply }}</div>
+        <div class="f-caption">{{ $t("market.total-supply") }}</div>
+        <h2>{{ total.supply }}</h2>
       </v-layout>
     </v-layout>
     <market-item
