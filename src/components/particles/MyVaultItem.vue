@@ -6,12 +6,12 @@
           <f-mixin-asset-logo
             class="flex-grow-0 ml-4 mr-1 z-index-2"
             :size="24"
-            :logo="collateralLogo"
+            :logo="resize(collateralLogo, 24)"
           ></f-mixin-asset-logo>
           <f-mixin-asset-logo
             class="flex-grow-0 ml-n3 mr-1"
             :size="24"
-            :logo="debtLogo"
+            :logo="resize(debtLogo, 24)"
           ></f-mixin-asset-logo>
           <span class="f-title-2">{{
             `${collateral.name} #${vault.id.substr(0, 4)}`
@@ -134,6 +134,10 @@ export default class MyVaultItem extends Vue {
   @Getter("global/getAssetById") getAssetById;
 
   tooltip = false;
+
+  get resize() {
+    return this.$utils.helper.mixinImageResize;
+  }
 
   get collateral() {
     return this.getCollateral(this.vault?.collateral_id);

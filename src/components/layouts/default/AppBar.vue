@@ -27,7 +27,7 @@ class DefaultLayoutAppBar extends Vue {
 
   get avatar() {
     const avatar = this.$store.state.auth.avatar;
-    return avatar;
+    return this.$utils.helper.mixinImageResize(avatar);
   }
 
   get name() {

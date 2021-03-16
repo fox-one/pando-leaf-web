@@ -9,12 +9,12 @@
         <f-mixin-asset-logo
           class="flex-grow-0 z-index-2"
           :size="24"
-          :logo="collateralLogo"
+          :logo="resize(collateralLogo, 24)"
         ></f-mixin-asset-logo>
         <f-mixin-asset-logo
           class="flex-grow-0 ml-n2"
           :size="24"
-          :logo="debtLogo"
+          :logo="resize(debtLogo, 24)"
         ></f-mixin-asset-logo>
 
         <span class="f-body-2 ml-2"> {{ meta.name }}</span>
@@ -64,6 +64,10 @@ export default class MarketItem extends Vue {
   @Prop() collateral!: ICollateral;
   @State((state) => state.app.settings) settings;
   @Getter("global/getAssetById") getAssetById;
+
+  get resize() {
+    return this.$utils.helper.mixinImageResize;
+  }
 
   get meta() {
     const collateralValue =
