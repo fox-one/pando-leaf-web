@@ -129,7 +129,7 @@ export default class DepositForm extends Mixins(mixins.page) {
         tip: null,
       };
     }
-    if (Number(this.amount || "0") === 0) {
+    if (Number(this.amount || "0") <= 0) {
       return {
         disabled: true,
         type: "error",
