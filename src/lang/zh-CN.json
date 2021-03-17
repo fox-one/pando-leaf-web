@@ -79,7 +79,7 @@
   "form.info.minimum-ratio":"清算线",
   "form.info.liquidation-penalty":"清算罚金率",
   "form.info.max-available-to-generate":"最多可生成",
-  "form.info.stability-fee":"稳定费",
+  "form.info.stability-fee":"铸币利率",
   "form.predication":"预计",
   "form.info.new-liquidation-price":"新的价格",
   "form.info.new-collateralization-ratio":"新的抵押率",
