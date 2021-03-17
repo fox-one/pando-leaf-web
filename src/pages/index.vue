@@ -1,4 +1,4 @@
 <script>
-import market from "./market/index";
-export default market;
+import me from "./me";
+export default me;
 </script>
