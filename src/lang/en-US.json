@@ -41,6 +41,18 @@
   "market.item.max-available":"Max available",
   "market.item.collaterals":"Collaterals",
 
+  "form.title.open":"Open a new Vault",
+  "form.title.deposit":"Deposit to Vault",
+  "form.title.generate":"Generate more {symbol}",
+  "form.title.withdraw":"Withdraw from Vault's Collateral",
+  "form.title.payback":"Pay back {symbol}",
+
+  "form.hint.deposit-amount":"Deposit amount",
+  "form.hint.mint-amount":"Mint amount",
+  "form.hint.withdraw-amount":"Withdraw amount",
+  "form.hint.generate-amount":"Generate amount",
+  "form.hint.payback-amount":"Pay back amount",
+
   "form.open.how-much-col":"How much {symbol} would you deposit?",
   "form.open.deposit.tooltip1":"How much {symbol} would you like to lock in your Vault?",
   "form.open.deposit.tooltip2":"The amount of {depositSymbol} you lock up determines how much {mintSymbol} you can generate.",

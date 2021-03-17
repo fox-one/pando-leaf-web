@@ -8,7 +8,7 @@
 
       <f-asset-amount-input
         v-model="amount"
-        label="Generate amount"
+        :label="$t('form.hint.generate-amount')"
         :assets="[asset]"
         :asset.sync="asset"
         :selectable="false"
@@ -57,12 +57,12 @@
       </f-info-grid>
     </v-layout>
 
-    <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
+    <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
     <div class="mx-4 f-caption">
       Price of the pair tokens fluctuates due to change in supply and demand of
       the tokens. Investors are expected to take caution and take full
       responsibilities of their own investment decisions.
-    </div>
+    </div> -->
   </v-container>
 </template>
 
@@ -120,7 +120,8 @@ export default class GenerateForm extends Mixins(mixins.page) {
   }
 
   get title() {
-    return `Generate more ${this.assetSymbol}`;
+    const t = this.$t("form.title.generate", { symbol: this.assetSymbol });
+    return `${t}`;
   }
 
   get vaultId() {

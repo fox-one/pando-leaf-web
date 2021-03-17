@@ -41,6 +41,18 @@
   "market.item.max-available":"最大可用",
   "market.item.collaterals":"抵押额",
 
+  "form.title.open":"开启一个新的金库",
+  "form.title.deposit":"向金库中存入",
+  "form.title.generate":"生成更多 {symbol}",
+  "form.title.withdraw":"从抵押物中取回",
+  "form.title.payback":"偿还 {symbol}",
+
+  "form.hint.deposit-amount":"存入数量",
+  "form.hint.mint-amount":"生成数量",
+  "form.hint.withdraw-amount":"取回数量",
+  "form.hint.generate-amount":"生成数量",
+  "form.hint.payback-amount":"偿还数量",
+
   "form.open.how-much-col":"你打算存入多少 {symbol}?",
   "form.open.deposit.tooltip1":"你打算存入并锁定多少 {symbol} 在金库中?",
   "form.open.deposit.tooltip2":"你锁定的 {depositSymbol} 将决定你可以生成多少 {mintSymbol}.",

@@ -8,7 +8,7 @@
 
       <f-asset-amount-input
         v-model="amount"
-        label="Withdraw amount"
+        :label="$t('form.hint.withdraw-amount')"
         :assets="assets"
         :asset.sync="asset"
         :selectable="false"
@@ -57,12 +57,12 @@
       </f-info-grid>
     </v-layout>
 
-    <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
+    <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
     <div class="mx-4 f-caption">
       Price of the pair tokens fluctuates due to change in supply and demand of
       the tokens. Investors are expected to take caution and take full
       responsibilities of their own investment decisions.
-    </div>
+    </div> -->
   </v-container>
 </template>
 
@@ -127,7 +127,8 @@ export default class WithdrawForm extends Mixins(mixins.page) {
   }
 
   get title() {
-    return `Withdraw from Vault's Collateral`;
+    const t = this.$t("form.title.withdraw");
+    return `${t}`;
   }
 
   get vaultId() {

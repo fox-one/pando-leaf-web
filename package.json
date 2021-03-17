@@ -13,16 +13,15 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "yarn lint",
-    "dev": "nuxt-ts",
-    "build": "nuxt-ts build",
-    "start": "nuxt-ts start",
-    "generate": "nuxt-ts generate"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
   },
   "dependencies": {
     "@foxone/uikit": "^2.0.41-alpha.1",
     "@mdi/js": "^5.5.55",
     "@nuxt/types": "^2.14.6",
-    "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/google-analytics": "^2.2.2",

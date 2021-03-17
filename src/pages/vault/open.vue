@@ -21,8 +21,8 @@
             <div class="f-caption">
               {{
                 $t("form.open.deposit.tooltip2", {
-                  depositsymbol: depositSymbol,
-                  mintsymbol: mintSymbol,
+                  depositSymbol: depositSymbol,
+                  mintSymbol: mintSymbol,
                 })
               }}
             </div>
@@ -32,7 +32,7 @@
 
       <f-asset-amount-input
         v-model="depositAmount"
-        label="Deposit amount"
+        :label="$t('form.hint.deposit-amount')"
         :assets="[deposit]"
         :asset.sync="deposit"
         :selectable="false"
@@ -78,7 +78,7 @@
       <div class="f-caption f-greyscale-2"></div>
       <f-asset-amount-input
         v-model="mintAmount"
-        label="Mint amount"
+        :label="$t('form.hint.mint-amount')"
         :assets="[mint]"
         :asset.sync="mint"
         :selectable="false"
@@ -129,12 +129,12 @@
       </f-info-grid>
     </v-layout>
 
-    <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
+    <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
     <div class="mx-4 f-caption">
       Price of the pair tokens fluctuates due to change in supply and demand of
       the tokens. Investors are expected to take caution and take full
       responsibilities of their own investment decisions.
-    </div>
+    </div> -->
   </v-container>
 </template>
 
@@ -194,7 +194,8 @@ export default class GenerateVault extends Mixins(mixins.page) {
   }
 
   get title() {
-    return `Open a new Vault`;
+    const t = this.$t("form.title.open");
+    return `${t}`;
   }
 
   get vaultId() {

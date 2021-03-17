@@ -8,7 +8,7 @@
 
       <f-asset-amount-input
         v-model="amount"
-        label="Deposit amount"
+        :label="$t('form.hint.deposit-amount')"
         :assets="assets"
         :asset.sync="asset"
         :selectable="false"
@@ -56,12 +56,12 @@
       </f-info-grid>
     </v-layout>
 
-    <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
+    <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
     <div class="mx-4 f-caption">
       Price of the pair tokens fluctuates due to change in supply and demand of
       the tokens. Investors are expected to take caution and take full
       responsibilities of their own investment decisions.
-    </div>
+    </div> -->
   </v-container>
 </template>
 
@@ -115,7 +115,8 @@ export default class DepositForm extends Mixins(mixins.page) {
   }
 
   get title() {
-    return `Deposit to Vault`;
+    const t = this.$t("form.title.deposit");
+    return `${t}`;
   }
 
   get vaultId() {

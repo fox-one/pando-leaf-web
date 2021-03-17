@@ -47,7 +47,7 @@
           </v-btn>
         </v-layout>
       </v-container>
-      <div class="px-4 pt-4">
+      <div v-if="isLogged && haveVault" class="px-4 pt-4">
         <v-expansion-panels accordion flat>
           <my-vault-item
             class="mb-4 rounded-lg"
