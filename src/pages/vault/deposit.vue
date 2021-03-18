@@ -192,7 +192,9 @@ export default class DepositForm extends Mixins(mixins.page) {
       },
       {
         title: this.$t("form.info.new-collateralization-ratio"),
-        value: this.meta.ratioText,
+        value: this.$utils.number.isValid(this.meta.ratio)
+          ? this.meta.ratioText
+          : "N/A",
         valueUnit: "%",
         valueColor: this.$utils.helper.risk(
           this.meta.ratio,

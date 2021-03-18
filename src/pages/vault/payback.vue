@@ -193,7 +193,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
       (collateralAmount * Number(this.collateral?.price)) /
       (debtAmount - decreasedDebt);
     let ratioText = this.$utils.number.toPrecision(ratio * 100);
-    if (ratio < 0) {
+    if (ratio < 0 || !this.$utils.number.isValid(ratio)) {
       ratioText = "N/A";
     }
     let newDebt = debtAmount - decreasedDebt;

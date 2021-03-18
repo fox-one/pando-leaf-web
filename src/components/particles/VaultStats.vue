@@ -77,8 +77,12 @@ export default class VaultStats extends Vue {
       },
       {
         title: this.$t("form.info.collateralization-ratio"), //
-        value: this.meta.collateralizationRatioText,
-        valueUnit: `%`,
+        value: this.$utils.number.isValid(this.meta.collateralizationRatio)
+          ? this.meta.collateralizationRatioText
+          : "N/A",
+        valueUnit: this.$utils.number.isValid(this.meta.collateralizationRatio)
+          ? `%`
+          : "",
         valueColor: this.$utils.helper.risk(
           this.meta.collateralizationRatio,
           this.collateral.mat

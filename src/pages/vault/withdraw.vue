@@ -76,6 +76,7 @@ import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus } from "~/types";
 import { ACTION_ASSET_ID } from "~/constants";
+import number from "~/utils/number";
 
 @Component({
   components: {
@@ -190,8 +191,15 @@ export default class WithdrawForm extends Mixins(mixins.page) {
           };
         // 抵押率 N/A
         default:
+          if (Number(this.meta.ratio) < 0) {
+            return {
+              disabled: true,
+              type: "info",
+              tip: null,
+            };
+          }
           return {
-            disabled: true,
+            disabled: false,
             type: "info",
             tip: null,
           };
@@ -217,7 +225,9 @@ export default class WithdrawForm extends Mixins(mixins.page) {
       return {
         price: this.$utils.number.toPrecision(liquidationPrice),
         ratio: collateralizationRatio,
-        ratioText: this.$utils.number.toFixed(collateralizationRatio * 100, 2),
+        ratioText: number.isValid(collateralizationRatio)
+          ? this.$utils.number.toFixed(collateralizationRatio * 100, 2)
+          : "N/A",
       };
     }
     const decreasedCollateral = Number(this.amount);
@@ -229,13 +239,12 @@ export default class WithdrawForm extends Mixins(mixins.page) {
         Number(this.collateral?.price)) /
       debtAmount;
     let ratioText = this.$utils.number.toPrecision(ratio * 100);
-    if (ratio < 0) {
-      ratioText = "N/A";
-    }
     return {
-      price: this.$utils.number.toPrecision(price),
+      price: number.isValid(price)
+        ? this.$utils.number.toPrecision(price)
+        : "0",
       ratio,
-      ratioText,
+      ratioText: number.isValid(ratio) ? ratioText : "N/A",
     };
   }
 
@@ -249,7 +258,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
       {
         title: this.$t("form.info.new-collateralization-ratio"),
         value: this.meta.ratioText,
-        valueUnit: this.meta.ratio < 0 ? "" : "%",
+        valueUnit: "%",
         valueColor: this.$utils.helper.risk(
           this.meta.ratio,
           this.collateral.mat

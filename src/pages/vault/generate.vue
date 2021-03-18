@@ -183,6 +183,13 @@ export default class GenerateForm extends Mixins(mixins.page) {
           };
         // 抵押率 N/A
         default:
+          if (Number(this.meta.ratio) < 0) {
+            return {
+              disabled: true,
+              type: "info",
+              tip: null,
+            };
+          }
           return {
             disabled: true,
             type: "info",
