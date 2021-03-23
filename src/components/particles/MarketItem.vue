@@ -99,7 +99,7 @@ export default class MarketItem extends Vue {
       {
         title: this.$t("market.item.max-available"),
         value: this.meta.available,
-        valueUnit: this.collateralSymbol,
+        valueUnit: this.debtSymbol,
       },
       {
         title: this.$t("market.item.collaterals"),
