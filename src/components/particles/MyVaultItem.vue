@@ -268,7 +268,7 @@ export default class MyVaultItem extends Vue {
       {
         title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
         value: this.meta?.liquidationPrice,
-        valueUnit: "USD",
+        valueUnit: this.debtSymbol,
       },
       {
         title: this.$t("form.info.minimum-ratio"),
@@ -283,7 +283,7 @@ export default class MyVaultItem extends Vue {
           symbol: this.collateralSymbol,
         }),
         value: this.collateral?.price,
-        valueUnit: "USD",
+        valueUnit: this.debtSymbol,
       },
       {
         title: this.$t("form.info.stability-fee"),
