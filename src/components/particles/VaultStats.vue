@@ -36,7 +36,7 @@ export default class VaultStats extends Vue {
   }
 
   get debtAsset() {
-    return this.getAssetById(this.collateral?.mat);
+    return this.getAssetById(this.collateral?.dai);
   }
 
   get meta() {
@@ -73,7 +73,7 @@ export default class VaultStats extends Vue {
       {
         title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
         value: this.meta.liquidationPrice,
-        valueUnit: "USD",
+        valueUnit: this.debtAsset?.symbol,
       },
       {
         title: this.$t("form.info.collateralization-ratio"), //
@@ -89,11 +89,9 @@ export default class VaultStats extends Vue {
         ),
       },
       {
-        title: this.$t("form.info.current-symbol-price", {
-          symbol: this.collateral?.name,
-        }),
+        title: this.$t("form.info.current-price"),
         value: this.collateral?.price,
-        valueUnit: "USD",
+        valueUnit: this.debtAsset?.symbol,
       },
       {
         title: this.$t("form.info.minimum-ratio"),

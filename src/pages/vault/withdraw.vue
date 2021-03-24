@@ -249,11 +249,12 @@ export default class WithdrawForm extends Mixins(mixins.page) {
   }
 
   get predictions() {
+    const debtSymbol = this.getAssetById(this.collateral?.dai)?.symbol;
     return [
       {
         title: this.$t("form.info.new-liquidation-price"),
         value: this.meta.price,
-        valueUnit: "USD",
+        valueUnit: debtSymbol,
       },
       {
         title: this.$t("form.info.new-collateralization-ratio"),

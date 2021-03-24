@@ -6,12 +6,12 @@
           <f-mixin-asset-logo
             class="flex-grow-0 ml-4 mr-1 z-index-2"
             :size="24"
-            :logo="resize(collateralLogo, 24)"
+            :logo="collateralLogo"
           ></f-mixin-asset-logo>
           <f-mixin-asset-logo
             class="flex-grow-0 ml-n3 mr-1"
             :size="24"
-            :logo="resize(debtLogo, 24)"
+            :logo="debtLogo"
           ></f-mixin-asset-logo>
           <span class="f-title-2">{{
             `${collateral.name} #${vault.identity_id}`

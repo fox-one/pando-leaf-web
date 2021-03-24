@@ -9,12 +9,12 @@
         <f-mixin-asset-logo
           class="flex-grow-0 z-index-2"
           :size="24"
-          :logo="resize(collateralLogo, 24)"
+          :logo="collateralLogo"
         ></f-mixin-asset-logo>
         <f-mixin-asset-logo
           class="flex-grow-0 ml-n2"
           :size="24"
-          :logo="resize(debtLogo, 24)"
+          :logo="debtLogo"
         ></f-mixin-asset-logo>
 
         <span class="f-title-2 ml-2"> {{ meta.name }}</span>

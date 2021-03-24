@@ -107,6 +107,7 @@ const config: NuxtConfig = {
   },
   pwa: {
     workbox: {
+      enabled: false,
       runtimeCaching: [
         {
           urlPattern: /^(https:\/\/images\.mixin\.one\/|https:\/\/mixin-images\.zeromesh\.net\/).*$/,

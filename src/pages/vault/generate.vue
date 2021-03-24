@@ -238,7 +238,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
       {
         title: this.$t("form.info.new-liquidation-price"),
         value: this.meta.price,
-        valueUnit: "USD",
+        valueUnit: this.assetSymbol,
       },
       {
         title: this.$t("form.info.new-collateralization-ratio"),

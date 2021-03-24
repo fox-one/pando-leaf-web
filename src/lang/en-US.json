@@ -76,6 +76,7 @@
   "form.info.liquidation-price":"Liquidation Price",
   "form.info.collateralization-ratio":"Collateralization Ratio",
   "form.info.current-symbol-price":"Current {symbol} Price",
+  "form.info.current-price":"Current Price",
   "form.info.minimum-ratio":"Minimum Ratio",
   "form.info.liquidation-penalty":"Liquidation penalty",
   "form.info.max-available-to-generate":"Max available to Generate",
@@ -83,7 +84,7 @@
   "form.predication":"Predication",
   "form.info.new-liquidation-price":"New Liquidation Price",
   "form.info.new-collateralization-ratio":"New Collateralization Ratio",
-  "form.info.symbol-debt":"{symbol} Debt",
+  "form.info.symbol-debt":"Outstanding {symbol} Debt",
 
   "form.validate.deposit-empty":"A vault needs to deposit assets as collateral.",
   "form.validate.minimum-debt":"A vault requires a minimum of {amount} {symbol} to be generated.",
@@ -94,6 +95,7 @@
   "form.validate.amount-zero":"Amount must be greater than 0",
   "form.validate.insufficient-balance":"Insufficient {symbol} balance",
   "form.validate.pay-back-over":"Cannot pay back more than owed, You can repay all your outstanding debt",
+  "form.validate.remaining-dust-debt":"Remaining debt has to be no less than {amount} {symbol} or you can pay off all the debt",
 
   "button.deposit":"Deposit",
   "button.withdraw":"Withdraw",

@@ -136,7 +136,8 @@ export default class PaybackForm extends Mixins(mixins.page) {
         tip: null,
       };
     }
-    if (Number(this.amount) <= 0) {
+    const amountNum = Number(this.amount);
+    if (amountNum <= 0) {
       return {
         disabled: true,
         type: "error",
@@ -144,7 +145,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
       };
     }
     if (this.isLogged) {
-      if (Number(this.amount) > this.assetBalance) {
+      if (amountNum > this.assetBalance) {
         return {
           disabled: true,
           type: "error",
@@ -154,11 +155,22 @@ export default class PaybackForm extends Mixins(mixins.page) {
         };
       }
       const debtAmount = Number(this.maxPayback);
-      if (Number(this.amount) > debtAmount) {
+      if (amountNum > debtAmount) {
         return {
           disabled: true,
           type: "error",
           tip: this.$t("form.validate.pay-back-over"),
+        };
+      }
+      const leftDebt = debtAmount - amountNum;
+      if (leftDebt < Number(this.collateral?.dust) && leftDebt > 0) {
+        return {
+          disabled: true,
+          type: "error",
+          tip: this.$t("form.validate.remaining-dust-debt", {
+            amount: this.collateral.dust,
+            symbol: this.assetSymbol,
+          }),
         };
       }
     }
@@ -216,7 +228,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
       {
         title: this.$t("form.info.new-liquidation-price"),
         value: this.meta.price,
-        valueUnit: "USD",
+        valueUnit: this.assetSymbol,
       },
       {
         title: this.$t("form.info.new-collateralization-ratio"),

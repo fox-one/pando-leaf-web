@@ -222,7 +222,7 @@ export function riskLevel(currentRatio, minimumRatio) {
   }
 }
 
-export function mixinImageResize(logo: string, size = 32) {
+export function mixinImageResize(logo: string, size = 32 * 3) {
   const reg = /=s[0-9]{1,4}$/;
   if (reg.test(logo)) {
     return logo.replace(reg, `=s${size}`);
