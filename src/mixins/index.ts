@@ -1,6 +1,6 @@
 import page from "./page";
-import vaultFrom from "./vaultForm";
+import vault from "./vault";
 export default {
   page,
-  vaultFrom
+  vault
 };
