@@ -1,7 +1,7 @@
 <template>
   <v-layout column class="f-bg-greyscale-7">
     <div class="mx-4 f-body-2 f-greyscale-3 text-center">
-      {{ $t("form.info.vault-stats-title") }}
+      {{ gridTitle }}
     </div>
     <f-info-grid :window-size="2">
       <f-info-grid-item
@@ -30,6 +30,15 @@ export default class VaultStats extends Vue {
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Prop() vault!: IVault;
   @Prop() collateral!: ICollateral;
+  @Prop() title!: string;
+
+  get gridTitle() {
+    if (this.title !== null && this.title !== undefined) {
+      return this.title;
+    } else {
+      return this.$t("form.info.vault-stats-title");
+    }
+  }
 
   get collateralAsset() {
     return this.getAssetById(this.collateral?.gem);
