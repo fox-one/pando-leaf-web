@@ -3,10 +3,11 @@ export const isProduct = process.env.APP_ENV === "prod";
 export const GA = "";
 
 export const NODE_ENV = process.env.NODE_ENV;
-
 export const APP_TOKEN = process.env.TOKEN;
-
 export const APP_SCOPE = process.env.SCOPE;
+export const APP_ID = process.env.ID;
+export const APP_NAME = process.env.NAME;
+export const APP_AVATAR = process.env.AVATAR;
 
 export const MIXIN_HOST = "https://mixin-api.zeromesh.net/";
 

@@ -52,7 +52,7 @@
           <my-vault-item
             class="mb-4 rounded-lg"
             :key="vault.id"
-            v-for="vault in myVaults"
+            v-for="vault in sortedMyVaults"
             :vault="vault"
           ></my-vault-item>
         </v-expansion-panels>
@@ -65,7 +65,7 @@
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { Action, Getter, State } from "vuex-class";
-import { IVault } from "~/services/types/vo";
+import { ICollateral, IVault } from "~/services/types/vo";
 import MyVaultItem from "~/components/particles/MyVaultItem.vue";
 
 @Component({
@@ -100,6 +100,29 @@ export default class Me extends Mixins(mixins.page) {
       avatar: true,
       mixinImmersive: true,
     };
+  }
+
+  get sortedMyVaults() {
+    const sorted = Object.assign([], this.myVaults) as IVault[];
+    sorted.sort((a, b) => {
+      const aRisk = this.getRisk(a);
+      const bRisk = this.getRisk(b);
+      if (!this.$utils.number.isValid(aRisk)) return 1;
+      if (!this.$utils.number.isValid(bRisk)) return -1;
+      return Number(aRisk) - Number(bRisk);
+    });
+    return sorted;
+  }
+
+  getRisk(vault: IVault) {
+    const collateral = this.getCollateral(vault?.collateral_id) as ICollateral;
+    const debtAmount =
+      Number(vault?.art || "0") * Number(collateral?.rate || "1");
+    const collateralAmount = Number(vault?.ink);
+    const collateralizationRatio =
+      (collateralAmount * Number(collateral?.price)) / debtAmount;
+    const risk = collateralizationRatio / Number(collateral?.rate);
+    return risk;
   }
 
   get bottomNav() {

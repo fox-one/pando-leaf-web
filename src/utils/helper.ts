@@ -1,5 +1,13 @@
 import Vue from "vue";
-import { APP_SCOPE, APP_TOKEN, CONFIG, NODE_ENV } from "~/constants";
+import {
+  APP_AVATAR,
+  APP_ID,
+  APP_NAME,
+  APP_SCOPE,
+  APP_TOKEN,
+  CONFIG,
+  NODE_ENV,
+} from "~/constants";
 import i18n from "~/i18n";
 import { initApp } from "./app";
 import { v4 as uuid } from "uuid";
@@ -124,6 +132,9 @@ export function requestLogin(vue) {
   //   vue.$store?.commit("auth/SET_TOKEN", {
   //     token: APP_TOKEN,
   //     scope: APP_SCOPE,
+  //     id: APP_ID,
+  //     name: APP_NAME,
+  //     avatar: APP_AVATAR,
   //   });
   //   initApp(vue);
   //   return;

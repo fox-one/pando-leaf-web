@@ -1,5 +1,5 @@
 <template>
-  <f-app-bar class="custom-f-app-bar" v-bind="appbar" @back="handleBack">
+  <f-app-bar v-bind="appbar" v-if="!appbar.disabled" @back="handleBack">
     <v-layout v-if="appbar.avatar" align-center>
       <v-avatar class="ml-2" size="32">
         <v-img :src="avatar" :size="32"></v-img>
@@ -45,30 +45,4 @@ class DefaultLayoutAppBar extends Vue {
 }
 export default DefaultLayoutAppBar;
 </script>
-<style lang="scss" scoped>
-.custom-f-app-bar {
-  ::v-deep {
-    .f-app-bar-title {
-      display: block;
-      position: absolute;
-      left: 32px;
-      right: 40px;
-      &.left {
-        text-align: left;
-        padding-left: 4px !important;
-      }
-      &.left.no-back {
-        left: 8px;
-      }
-      &.center {
-        text-align: center;
-        padding-left: 0px !important;
-      }
-      &.center.no-back {
-        left: 0px;
-        right: 0px;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>
