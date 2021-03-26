@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { TransactionStatus } from "~/types/enum";
+import { TransactionStatus, VatAction } from "~/types/enum";
 
 export interface AuthResult {
   avatar: string;
@@ -83,5 +83,14 @@ export interface ITransaction {
   data: string;
   id: string;
   status: TransactionStatus;
+  vault_id: string;
+}
+
+export interface IVaultEvent {
+  action: VatAction;
+  created_at: string;
+  dart: string;
+  debt: string;
+  dink: string;
   vault_id: string;
 }

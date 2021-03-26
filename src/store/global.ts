@@ -1,12 +1,19 @@
 import Vue from "vue";
 import { MutationTree, GetterTree, ActionTree } from "vuex";
-import { IAsset, ICollateral, IMixinAsset, IVault } from "~/services/types/vo";
+import {
+  IAsset,
+  ICollateral,
+  IMixinAsset,
+  ITransaction,
+  IVault,
+} from "~/services/types/vo";
 
 const state = () => ({
   collaterals: [],
   walletAssets: {},
   assets: [],
   myVaults: [],
+  histories: [],
 });
 
 export type AssetsState = {

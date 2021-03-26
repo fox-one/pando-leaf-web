@@ -1,6 +1,7 @@
 {
   "app-name": "Pando",
   "connect.wallet": "Connect Wallet",
+  "empty": "No Data",
   "common.qr": "Please use Mixin Messenger or Reborn Platform scan to pay.",
   "common.close":"Close",
   "common.from": "From",
@@ -32,6 +33,13 @@
   "me.vault-item.available-to-generate":"Available to generate",
   "me.vault-item.in-liquidation-tips1":"You have reached minimum collateral ratio.",
   "me.vault-item.in-liquidation-tips2":"This vault is on the liquidation list.",
+
+  "vault.detail.history":"History",
+  "vault.event.action.vatopen":"Open Vault",
+  "vault.event.action.vatdeposit":"Deposit",
+  "vault.event.action.vatwithdraw":"Withdraw",
+  "vault.event.action.vatpayback":"Payback",
+  "vault.event.action.vatgenerate":"Generate",
 
   "market.total-collaterals":"Total Collaterals",
   "market.total-supply":"Total Supply",

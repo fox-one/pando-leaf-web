@@ -1,6 +1,7 @@
 {
   "app-name": "Pando",
   "connect.wallet": "连接钱包",
+  "empty": "没有数据",
   "common.qr": "请使用 Mixin Messenger 或 新生大讲堂 App 扫码支付",
   "common.close":"关闭",
   "common.from": "From",
@@ -32,6 +33,13 @@
   "me.vault-item.available-to-generate":"可生成",
   "me.vault-item.in-liquidation-tips1":"已触达清算线.",
   "me.vault-item.in-liquidation-tips2":"这个金库将在清算列表中列出.",
+
+  "vault.detail.history":"历史记录",
+  "vault.event.action.vatopen":"创建金库",
+  "vault.event.action.vatdeposit":"充值",
+  "vault.event.action.vatwithdraw":"提取",
+  "vault.event.action.vatpayback":"还款",
+  "vault.event.action.vatgenerate":"铸币",
 
   "market.total-collaterals":"总抵押",
   "market.total-supply":"总供应",

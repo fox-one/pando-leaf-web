@@ -22,3 +22,11 @@ export enum RISK {
   LOW = "low",
   NA = "n/a",
 }
+
+export enum VatAction {
+  VatOpen = "VatOpen", // 创建金库
+  VatDeposit = "VatDeposit", // 充值
+  VatWithdraw = "VatWithdraw", // 提取
+  VatPayback = "VatPayback", // 还款
+  VatGenerate = "VatGenerate", // 铸币
+}
