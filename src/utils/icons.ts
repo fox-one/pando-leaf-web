@@ -8,6 +8,8 @@ import {
   mdiLock,
   mdiLockOpen,
   mdiCloseThick,
+  mdiInformationVariant,
+  mdiPlus,
 } from "@mdi/js";
 
 export default {
@@ -20,4 +22,6 @@ export default {
   mdiLock,
   mdiLockOpen,
   mdiCloseThick,
+  mdiInformationVariant,
+  mdiPlus,
 };

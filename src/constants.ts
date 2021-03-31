@@ -1,3 +1,7 @@
+import pkg from "../package.json";
+
+export const VERSION = pkg.version;
+
 export const isProduct = process.env.APP_ENV === "prod";
 
 export const GA = "";

@@ -109,6 +109,9 @@
   "button.withdraw":"取回",
   "button.generate":"生成",
   "button.pay-back":"偿还",
+  "button.detail":"详情",
+
+  "tip.no-collaterals":"正在获取抵押物数据,请稍等或尝试刷新页面.",
 
   "errorcode.-1": "网络错误",
   "errorcode.404": "资源不存在",

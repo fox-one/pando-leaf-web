@@ -52,7 +52,7 @@
   "form.title.open":"Open a new Vault",
   "form.title.deposit":"Deposit to Vault",
   "form.title.generate":"Generate more {symbol}",
-  "form.title.withdraw":"Withdraw from Vault's Collateral",
+  "form.title.withdraw":"Withdraw from Vault",
   "form.title.payback":"Pay back {symbol}",
 
   "form.hint.deposit-amount":"Deposit amount",
@@ -109,6 +109,9 @@
   "button.withdraw":"Withdraw",
   "button.generate":"Generate",
   "button.pay-back":"Pay back",
+  "button.detail":"Details",
+
+  "tip.no-collaterals":"Obtaining collaterals list data, please wait a moment or try refreshing the page.",
   
   "errorcode.-1": "NETWORK ERROR",
   "errorcode.404": "CANNOT FIND RESOURCE",

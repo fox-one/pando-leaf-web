@@ -56,8 +56,23 @@
             :vault="vault"
           ></my-vault-item>
         </v-expansion-panels>
+        <div style="height: 60px"></div>
+        <div class="version-block f-caption text--secondary">{{ version }}</div>
       </div>
     </v-layout>
+    <v-fab-transition>
+      <v-btn
+        class="fab-btn"
+        bottom
+        right
+        fab
+        elevation="2"
+        color="primary"
+        @click="openNewVault"
+      >
+        <v-icon>{{ $icons.mdiPlus }}</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </v-container>
 </template>
 
@@ -67,6 +82,7 @@ import mixins from "@/mixins";
 import { Action, Getter, State } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
 import MyVaultItem from "~/components/particles/MyVaultItem.vue";
+import { VERSION } from "~/constants";
 
 @Component({
   components: {
@@ -75,6 +91,7 @@ import MyVaultItem from "~/components/particles/MyVaultItem.vue";
 })
 export default class Me extends Mixins(mixins.page) {
   @State((state) => state.global.myVaults) myVaults!: IVault[];
+  @State((state) => state.global.collaterals) collaterals!: ICollateral[];
   @Getter("auth/isLogged") isLogged!: boolean;
   @Getter("global/haveVault") haveVault!: boolean;
   @Getter("global/getCollateral") getCollateral;
@@ -85,6 +102,10 @@ export default class Me extends Mixins(mixins.page) {
   get title() {
     const s = this.$t("tab.me");
     return `${s}`;
+  }
+
+  get version() {
+    return VERSION;
   }
 
   get appbar() {
@@ -184,6 +205,16 @@ export default class Me extends Mixins(mixins.page) {
     this.syncMyVaults();
   }
 
+  openNewVault() {
+    if (this.collaterals.length === 0) {
+      this.$utils.helper.toast(this, {
+        message: `this.$t('tip.no-collaterals')`,
+      });
+      return;
+    }
+    this.$router.push(`/vault/open?id=${this.collaterals[0].id}`);
+  }
+
   mockVaults() {
     this.$store.commit("global/SET_MY_VAULTS", [
       {
@@ -215,5 +246,19 @@ export default class Me extends Mixins(mixins.page) {
       }
     }
   }
+}
+.version-block {
+  padding-bottom: constant(safe-area-inset-bottom) + 10px;
+  padding-bottom: env(safe-area-inset-bottom) + 10px;
+  text-align: center;
+}
+.fab-btn {
+  z-index: 3;
+  position: fixed;
+  float: right;
+  bottom: 16px;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  right: 16px;
 }
 </style>

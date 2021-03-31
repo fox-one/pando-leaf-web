@@ -82,18 +82,6 @@
           <v-btn
             text
             :disabled="inLiquidation"
-            :min-height="68"
-            class="f-actionbar-button-label f-caption f-weight-m"
-            @click="toWithdraw"
-          >
-            <v-layout column justify-center align-center>
-              <v-icon color="primary">{{ $icons.mdiMinusCircle }}</v-icon>
-              <div class="caption">{{ $t("button.withdraw") }}</div>
-            </v-layout>
-          </v-btn>
-          <v-btn
-            text
-            :disabled="inLiquidation"
             class="f-actionbar-button-label f-caption f-weight-m"
             :min-height="68"
             @click="toGenerate"
@@ -112,6 +100,18 @@
             <v-layout column justify-center align-center>
               <v-icon color="deep-orange">{{ $icons.mdiLockOpen }}</v-icon>
               <div class="caption">{{ $t("button.pay-back") }}</div>
+            </v-layout>
+          </v-btn>
+          <v-btn
+            text
+            :disabled="inLiquidation"
+            :min-height="68"
+            class="f-actionbar-button-label f-caption f-weight-m"
+            @click="toDetail"
+          >
+            <v-layout column justify-center align-center>
+              <v-icon color="primary">{{ $icons.mdiMinusCircle }}</v-icon>
+              <div class="caption">{{ $t("button.detail") }}</div>
             </v-layout>
           </v-btn>
         </v-layout>
@@ -303,6 +303,9 @@ export default class MyVaultItem extends Vue {
   }
   toPayback() {
     this.$router.push(`/vault/payback?id=${this.vault.id}`);
+  }
+  toDetail() {
+    this.$router.push(`/vault/detail?id=${this.vault.id}`);
   }
 }
 </script>
