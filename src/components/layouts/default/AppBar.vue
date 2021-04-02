@@ -6,7 +6,7 @@
       </v-avatar>
       <h4 class="mx-2">Hi, {{ name }}</h4>
       <v-spacer />
-      <v-btn fab x-small color="primary" @click="toMarket">
+      <v-btn fab x-small elevation="0" color="primary" @click="toMarket">
         <v-icon> {{ $icons.mdiGoogleAnalytics }}</v-icon>
       </v-btn>
     </v-layout>
