@@ -1,36 +1,47 @@
 <template>
-  <v-layout column class="py-3">
-    <v-layout align-center class="f-body-1">
-      <span>{{ meta.actionText }}</span>
-      <v-spacer />
-      <span class="text-right f-caption">{{ meta.time }}</span>
+  <div>
+    <template v-if="isOpen">
+      <v-layout column class="py-3">
+        <v-layout align-center class="f-body-1">
+          <span>{{ $t("vault.event.action.vatgenerate") }}</span>
+          <v-spacer />
+          <span class="text-right f-caption">{{ meta.time }}</span>
+        </v-layout>
+        <div>
+          {{
+            `Withdrew ${this.history.dink.replace("-", "")} ${
+              this.meta.collateralSymbol
+            } from Vault`
+          }}
+        </div>
+      </v-layout>
+
+      <v-divider />
+
+      <v-layout column class="py-3">
+        <v-layout align-center class="f-body-1">
+          <span>{{ $t("vault.event.action.vatdeposit") }}</span>
+          <v-spacer />
+          <span class="text-right f-caption">{{ meta.time }}</span>
+        </v-layout>
+        <div>
+          {{
+            `Deposited ${this.history.dink} ${this.meta.collateralSymbol} into Vault`
+          }}
+        </div>
+      </v-layout>
+
+      <v-divider />
+    </template>
+    <v-layout column class="py-3">
+      <v-layout align-center class="f-body-1">
+        <span>{{ meta.actionText }}</span>
+        <v-spacer />
+        <span class="text-right f-caption">{{ meta.time }}</span>
+      </v-layout>
+      <div>{{ meta.actionContent }}</div>
     </v-layout>
-    <div>{{ meta.actionContent }}</div>
-    <!-- <v-layout align-center class="mt-1">
-      <f-mixin-asset-logo
-        class="flex-grow-0"
-        :size="20"
-        :logo="meta.collateralLogo"
-      ></f-mixin-asset-logo>
-      <span class="f-body-2 font-weight-bold f-greyscale-1 ml-2">{{
-        meta.collateralSymbol
-      }}</span>
-      <span class="ml-1 f-caption f-greyscale-3">{{ meta.dink }}</span>
-      <v-spacer />
-      <span class="f-caption f-greyscale-3">{{ meta.time }}</span>
-    </v-layout>
-    <v-layout align-center class="mt-1">
-      <f-mixin-asset-logo
-        class="flex-grow-0"
-        :size="20"
-        :logo="meta.debtLogo"
-      ></f-mixin-asset-logo>
-      <span class="f-body-2 font-weight-bold f-greyscale-1 ml-2">{{
-        meta.debtSymbol
-      }}</span>
-      <span class="ml-1 f-caption f-greyscale-3">{{ meta.debt }}</span>
-    </v-layout> -->
-  </v-layout>
+  </div>
 </template>
 
 <script lang="ts" scoped>
@@ -45,6 +56,10 @@ export default class HistoryItem extends Vue {
   @Prop() collateral!: ICollateral;
   @Prop() vault!: IVault;
   @Getter("global/getAssetById") getAssetById;
+
+  get isOpen() {
+    return this.history.action === VatAction.VatOpen;
+  }
 
   get meta() {
     const collateralAsset = this.getAssetById(this.collateral?.gem);

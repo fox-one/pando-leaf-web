@@ -110,7 +110,7 @@
             @click="toDetail"
           >
             <v-layout column justify-center align-center>
-              <v-icon color="primary">{{ $icons.mdiMinusCircle }}</v-icon>
+              <v-icon color="primary">{{ $icons.mdiInformation }}</v-icon>
               <div class="caption">{{ $t("button.detail") }}</div>
             </v-layout>
           </v-btn>

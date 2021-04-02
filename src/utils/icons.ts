@@ -9,7 +9,10 @@ import {
   mdiLockOpen,
   mdiCloseThick,
   mdiInformationVariant,
+  mdiInformation,
   mdiPlus,
+  mdiChevronRight,
+  mdiChevronDown,
 } from "@mdi/js";
 
 export default {
@@ -24,4 +27,7 @@ export default {
   mdiCloseThick,
   mdiInformationVariant,
   mdiPlus,
+  mdiChevronRight,
+  mdiChevronDown,
+  mdiInformation,
 };

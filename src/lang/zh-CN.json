@@ -15,6 +15,7 @@
   "common.on-ok":"我已了解",
   "common.done":"完成",
   "common.amount":"数量",
+  "common.detail":"详情",
   "common.checking-payment":"查询结果中...",
   
   "tab.me":"我的",
@@ -41,15 +42,19 @@
   "vault.event.action.vatpayback":"还款",
   "vault.event.action.vatgenerate":"铸币",
 
+  "market.overview":"市场总览",
   "market.total-collaterals":"总抵押",
   "market.total-supply":"总供应",
+  "market.total-collateralization":"总抵押率",
 
   "market.item.price":"价格",
   "market.item.collateral-rate":"抵押率",
-  "market.item.max-available":"最大可用",
+  "market.item.max-available":"最多还可提供",
   "market.item.collaterals":"抵押额",
+  "market.item.total-asset-symbol":"全部 {symbol}",
+  "market.item.symbol-debt":"{symbol} 总债务",
 
-  "form.title.open":"开启一个新的金库",
+  "form.title.open":"新建金库 {name}",
   "form.title.deposit":"向金库中存入",
   "form.title.generate":"生成更多 {symbol}",
   "form.title.withdraw":"从抵押物中取回",

@@ -1,5 +1,23 @@
 <template>
   <v-container class="pa-0">
+    <f-app-bar
+      v-bind="appbar"
+      @back="handleBack"
+      class="desktop-support market-app-bar"
+    >
+      <v-layout align-center justify-center @click="toast">
+        <!-- <v-avatar class="ml-2 z-index-2" size="32">
+          <v-img :src="deposit.logo" :size="32"></v-img>
+        </v-avatar>
+        <v-avatar class="ml-n3" size="32">
+          <v-img :src="mint.logo" :size="32"></v-img>
+        </v-avatar> -->
+        <h4 class="mx-2">{{ appbar.title }}</h4>
+        <v-icon>
+          {{ $icons.mdiChevronDown }}
+        </v-icon>
+      </v-layout>
+    </f-app-bar>
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <div class="f-body-1 f-greyscale-3 mb-3 text-center">
         {{ $t("form.open.how-much-col", { symbol: depositSymbol }) }}
@@ -128,7 +146,10 @@
         ></f-info-grid-item>
       </f-info-grid>
     </v-layout>
-
+    <market-select-modal
+      :show.sync="showSelectModal"
+      :current.sync="collateral"
+    />
     <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
     <div class="mx-4 f-caption">
       Price of the pair tokens fluctuates due to change in supply and demand of
@@ -139,16 +160,17 @@
 </template>
 
 <script lang="ts" scoped>
-import { Component, Mixins } from "vue-property-decorator";
+import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { Action, Getter, State } from "vuex-class";
 import { IAsset, ICollateral } from "~/services/types/vo";
 import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus } from "~/types";
+import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
 import BigNumber from "bignumber.js";
 
 @Component({
-  components: {},
+  components: { MarketSelectModal },
 })
 export default class GenerateVault extends Mixins(mixins.page) {
   @Getter("auth/isLogged") isLogged;
@@ -166,6 +188,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
   selectable = true;
   precision = 8;
 
+  showSelectModal = false;
   collateral = {} as ICollateral;
   deposit = ({} as any) as IAsset;
   mint = ({} as any) as IAsset;
@@ -187,18 +210,30 @@ export default class GenerateVault extends Mixins(mixins.page) {
   }
 
   get appbar() {
+    const state = this.$store.state;
+    const appbar = state.app.appbar;
+    const isDark = state.app.settings.dark;
+
     return {
+      ...appbar,
+      disabled: true,
       back: true,
       align: "center",
+      title: this.collateral.name,
+      customContent: true,
+      mixinImmersive: false,
+      color: isDark ? "#000000" : "#FFFFFF",
     };
   }
 
   get title() {
-    const t = this.$t("form.title.open");
+    const t = this.$t("form.title.open", {
+      name: this.collateral.name,
+    });
     return `${t}`;
   }
 
-  get vaultId() {
+  get queryId() {
     return this.$route.query["id"];
   }
 
@@ -410,8 +445,20 @@ export default class GenerateVault extends Mixins(mixins.page) {
     ];
   }
 
+  @Watch("collateral")
+  onCollateralChange(newVal, oldVal) {
+    this.$router.replace({
+      query: {
+        id: newVal.id,
+      },
+    });
+    this.deposit = this.getAssetById(newVal?.gem);
+    this.mint = this.getAssetById(newVal?.dai);
+    this.updateWalletAsset(newVal);
+  }
+
   mounted() {
-    if (!this.vaultId) {
+    if (!this.queryId) {
       this.$utils.helper.toast(this, {
         message: "Collateral ID not found.",
         color: "red",
@@ -419,19 +466,27 @@ export default class GenerateVault extends Mixins(mixins.page) {
       this.$router.replace("/");
     }
     this.follow_id = this.$utils.helper.uuidV4();
-    this.collateral = this.getCollateral(this.vaultId);
+    this.collateral = this.getCollateral(this.queryId);
     this.deposit = this.getAssetById(this.collateral?.gem);
     this.mint = this.getAssetById(this.collateral?.dai);
     this.updateWalletAsset();
+  }
+
+  toast() {
+    this.showSelectModal = !this.showSelectModal;
+  }
+
+  handleBack() {
+    this.$router.back();
   }
 
   destroy() {
     clearInterval(0);
   }
 
-  updateWalletAsset() {
-    this.syncWalletAsset(this.collateral.gem);
-    this.syncWalletAsset(this.collateral.dai);
+  updateWalletAsset(collateral = this.collateral) {
+    this.syncWalletAsset(collateral.gem);
+    this.syncWalletAsset(collateral.dai);
   }
 
   requestLogin() {
@@ -495,6 +550,9 @@ export default class GenerateVault extends Mixins(mixins.page) {
 }
 </script>
 <style lang="scss" scoped>
+.z-index-2 {
+  z-index: 2;
+}
 .icon-tips {
   vertical-align: middle;
 }

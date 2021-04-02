@@ -40,7 +40,10 @@
         infinite-scroll-distance="10"
       >
         <template v-for="(item, index) in histories">
-          <v-divider :key="index" v-if="index !== 0" />
+          <v-divider
+            :key="`${item.action}_${item.created_at}`"
+            v-if="index !== 0"
+          />
           <div :key="index" style="overflow: hidden">
             <history-item
               :history="item"
@@ -162,8 +165,8 @@ export default class VaultDetail extends Mixins(mixins.vault) {
       });
       const transactions = res?.data?.events || [];
       this.histories = [...this.histories, ...transactions];
-      this.has_next = res?.data?.pagination.has_next || false;
-      this.cursor = res?.data?.pagination.next_cursor || null;
+      this.has_next = res?.data?.pagination?.has_next || false;
+      this.cursor = res?.data?.pagination?.next_cursor || null;
     } catch (error) {
       this.$utils.helper.errorHandler(this, error);
     }

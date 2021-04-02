@@ -15,6 +15,7 @@
   "common.on-ok":"Confirm",
   "common.done":"Done",
   "common.amount":"Amount",
+  "common.detail":"Detail",
   "common.checking-payment":"Checking...",
 
   "tab.me":"Me",
@@ -41,15 +42,19 @@
   "vault.event.action.vatpayback":"Payback",
   "vault.event.action.vatgenerate":"Generate",
 
+  "market.overview":"Market Overview",
   "market.total-collaterals":"Total Collaterals",
   "market.total-supply":"Total Supply",
+  "market.total-collateralization":"Total Collateralization",
 
   "market.item.price":"Price",
   "market.item.collateral-rate":"Collateral Rate",
   "market.item.max-available":"Max available",
   "market.item.collaterals":"Collaterals",
+  "market.item.total-asset-symbol":"Total {symbol}",
+  "market.item.symbol-debt":"{symbol} Debt",
 
-  "form.title.open":"Open a new Vault",
+  "form.title.open":"Open a {name} Vault",
   "form.title.deposit":"Deposit to Vault",
   "form.title.generate":"Generate more {symbol}",
   "form.title.withdraw":"Withdraw from Vault",

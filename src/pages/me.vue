@@ -119,7 +119,7 @@ export default class Me extends Mixins(mixins.page) {
       back: false,
       customContent: true,
       avatar: true,
-      mixinImmersive: true,
+      mixinImmersive:  this.$utils.helper.isMixin(),
     };
   }
 

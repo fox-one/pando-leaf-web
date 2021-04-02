@@ -128,17 +128,17 @@ export function genPaymentUrl(data: {
 }
 
 export function requestLogin(vue) {
-  // if (NODE_ENV === "development" && APP_TOKEN) {
-  //   vue.$store?.commit("auth/SET_TOKEN", {
-  //     token: APP_TOKEN,
-  //     scope: APP_SCOPE,
-  //     id: APP_ID,
-  //     name: APP_NAME,
-  //     avatar: APP_AVATAR,
-  //   });
-  //   initApp(vue);
-  //   return;
-  // }
+  if (NODE_ENV === "development" && APP_TOKEN) {
+    vue.$store?.commit("auth/SET_TOKEN", {
+      token: APP_TOKEN,
+      scope: APP_SCOPE,
+      id: APP_ID,
+      name: APP_NAME,
+      avatar: APP_AVATAR,
+    });
+    initApp(vue);
+    return;
+  }
   const host = window.location.origin;
   const redirectUrl = encodeURIComponent(host + "/#/auth/");
   localStorage.setItem("authPath", window.location.href);

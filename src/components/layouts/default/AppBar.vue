@@ -5,6 +5,10 @@
         <v-img :src="avatar" :size="32"></v-img>
       </v-avatar>
       <h4 class="mx-2">Hi, {{ name }}</h4>
+      <v-spacer />
+      <v-btn fab x-small color="primary" @click="toMarket">
+        <v-icon> {{ $icons.mdiGoogleAnalytics }}</v-icon>
+      </v-btn>
     </v-layout>
   </f-app-bar>
 </template>
@@ -33,6 +37,10 @@ class DefaultLayoutAppBar extends Vue {
   get name() {
     const name = this.$store.state.auth.name;
     return name;
+  }
+
+  toMarket() {
+    this.$router.push("/market");
   }
 
   handleBack() {

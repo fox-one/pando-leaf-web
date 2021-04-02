@@ -1,11 +1,7 @@
 <template>
-  <v-layout
-    @click="generateNewVault"
-    align-center
-    class="pt-3 f-bg-greyscale-7"
-  >
+  <v-layout align-center class="f-bg-greyscale-7">
     <v-layout column>
-      <v-layout align-center class="ml-4">
+      <v-row align-center class="ma-4">
         <f-mixin-asset-logo
           class="flex-grow-0 z-index-2"
           :size="24"
@@ -18,39 +14,42 @@
         ></f-mixin-asset-logo>
 
         <span class="f-title-2 ml-2"> {{ meta.name }}</span>
-      </v-layout>
-      <!-- <v-layout column class="ml-2"> -->
 
-      <!-- <v-layout row class="ma-0" justify-space-between align-center>
-        <span class="f-body-2"> {{ meta.name }}</span>
-        <div class="f-greyscale-1 f-body-2 font-weight-bold">
-          ${{ meta.collateralValue }}
-        </div>
-      </v-layout>
-      <v-layout row class="ma-0" justify-space-between align-center>
-        <div class="f-greyscale-3 f-body-2">
-          {{ meta.available }}
-        </div>
-        <div class="f-greyscale-1 f-body-2">
-          {{ meta.rate }}
-        </div>
-      </v-layout> -->
-      <!-- </v-layout> -->
-      <v-spacer />
-      <f-info-grid :window-size="2">
-        <f-info-grid-item
+        <v-spacer />
+        <!-- <v-btn
+          text
+          class="f-caption primary--text align-self-center"
+          @click="toMarketDetail"
+        >
+          <span class="f-caption">{{ $t("common.detail") }}</span>
+          <v-icon color="primary" size="14">{{
+            $icons.mdiChevronRight
+          }}</v-icon>
+        </v-btn> -->
+      </v-row>
+      <v-divider />
+      <v-row class="ma-0 pa-4">
+        <v-col
+          class="mx-0 mb-2 pa-0"
+          cols="12"
+          xs="6"
+          sm="6"
+          md="4"
+          lg="3"
           v-for="(item, ix) in infos"
           :key="ix"
-          :index="ix"
-          :title="item.title"
-          :value="item.value"
-          :value-unit="item.valueUnit"
-          :value-color="item.valueColor"
-          :hint="item.hint"
-        ></f-info-grid-item>
-      </f-info-grid>
+        >
+          <div class="f-caption">{{ item.title }}</div>
+          <h2>
+            {{ item.value
+            }}<span v-if="item.valueUnit" class="f-caption text--secondary">{{
+              item.valueUnit
+            }}</span>
+          </h2>
+        </v-col>
+      </v-row>
     </v-layout>
-    <v-icon class="icon" size="20">{{ "$vuetify.icons.iconListArrow" }}</v-icon>
+    <!-- <v-icon class="icon" size="20">{{ "$vuetify.icons.iconListArrow" }}</v-icon> -->
   </v-layout>
 </template>
 
@@ -80,12 +79,24 @@ export default class MarketItem extends Vue {
       price: this.collateral.price,
       available: this.$utils.number.toShort(available),
       rate: this.$utils.number.toFixed(rate * 100, 2),
+      collateralAmount: this.collateral.ink,
+      debtAmount: this.collateral.debt,
       collateralValue: "$" + this.$utils.number.toPrecision(collateralValue),
     };
   }
 
   get infos() {
     return [
+      {
+        title: this.$t("market.item.total-asset-symbol", {
+          symbol: this.collateralSymbol,
+        }),
+        value: this.meta.collateralAmount,
+        valueUnit: this.collateralSymbol,
+      },
+      // {
+
+      // },
       {
         title: this.$t("market.item.price"),
         value: this.meta.price,
@@ -97,14 +108,16 @@ export default class MarketItem extends Vue {
         valueUnit: "%",
       },
       {
-        title: this.$t("market.item.max-available"),
-        value: this.meta.available,
+        title: this.$t("market.item.symbol-debt", {
+          symbol: this.debtSymbol,
+        }),
+        value: this.meta.debtAmount,
         valueUnit: this.debtSymbol,
       },
       {
-        title: this.$t("market.item.collaterals"),
-        value: this.meta.collateralValue,
-        valueUnit: "",
+        title: this.$t("market.item.max-available"),
+        value: this.meta.available,
+        valueUnit: this.debtSymbol,
       },
     ];
   }
@@ -123,6 +136,10 @@ export default class MarketItem extends Vue {
 
   get debtLogo() {
     return this.getAssetById(this.collateral?.dai)?.logo;
+  }
+
+  toMarketDetail() {
+    this.$router.push(`/market/${this.collateral.id}`);
   }
 
   generateNewVault() {

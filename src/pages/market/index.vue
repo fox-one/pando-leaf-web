@@ -1,21 +1,42 @@
 <template>
-  <v-container class="pa-0">
-    <v-layout justify-space-between class="px-4 pb-2 f-bg-greyscale-7">
-      <v-layout column>
-        <div class="f-caption">{{ $t("market.total-collaterals") }}</div>
-        <h2>{{ total.collaterals }}</h2>
+  <v-container class="pa-0 desktop-support">
+    <f-app-bar v-bind="appbar" class="desktop-support market-app-bar">
+      <v-layout align-center>
+        <v-avatar class="ml-2" size="32">
+          <v-img :src="logo" :size="32"></v-img>
+        </v-avatar>
+        <h4 class="mx-2">{{ appbar.title }}</h4>
+        <v-spacer />
+        <v-btn fab x-small color="primary" @click="toTrade">
+          <v-icon>{{ $icons.mdiAccount }}</v-icon>
+        </v-btn>
       </v-layout>
-      <v-layout column class="text-right">
-        <div class="f-caption">{{ $t("market.total-supply") }}</div>
-        <h2>{{ total.supply }}</h2>
-      </v-layout>
+    </f-app-bar>
+    <v-layout column class="px-4 f-bg-greyscale-7">
+      <div class="f-title-2 ma-4">{{ $t("market.overview") }}</div>
+      <v-divider />
+      <v-row class="ma-0 pa-4">
+        <v-col class="ma-0 pa-0" cols="12" xs="6" sm="6" md="4" lg="3">
+          <div class="f-caption">{{ $t("market.total-collaterals") }}</div>
+          <h2>{{ total.collaterals }}</h2>
+        </v-col>
+        <v-col class="ma-0 pa-0" cols="12" xs="6" sm="6" md="4" lg="3">
+          <div class="f-caption">{{ $t("market.total-supply") }}</div>
+          <h2>{{ total.supply }}</h2>
+        </v-col>
+        <v-col class="ma-0 pa-0" cols="12" xs="6" sm="6" md="4" lg="3">
+          <div class="f-caption">
+            {{ $t("market.total-collateralization") }}
+          </div>
+          <h2>{{ total.collaterilazation }}</h2>
+        </v-col>
+      </v-row>
+      <market-item
+        v-for="item in collaterals"
+        :collateral="item"
+        :key="item.id"
+      ></market-item>
     </v-layout>
-    <market-item
-      class="my-2"
-      v-for="item in collaterals"
-      :collateral="item"
-      :key="item.id"
-    ></market-item>
   </v-container>
 </template>
 
@@ -25,6 +46,8 @@ import mixins from "@/mixins";
 import { Action, Getter, State } from "vuex-class";
 import MarketItem from "@/components/particles/MarketItem.vue";
 import { ICollateral } from "~/services/types/vo";
+
+const logo = require("../../static/android-chrome-192x192.png");
 
 @Component({
   components: {
@@ -36,16 +59,23 @@ export default class Market extends Mixins(mixins.page) {
   @Getter("auth/isLogged") isLogged;
   @Getter("global/getAssetById") getAssetById;
   @Action("global/syncWallets") syncWallets;
+  get appbar() {
+    const state = this.$store.state;
+    const appbar = state.app.appbar;
+    const isDark = state.app.settings.dark;
 
-  get title() {
-    const s = this.$t("tab.market");
-    return `${s}`;
+    return {
+      ...appbar,
+      title: "Pando Leaf",
+      customContent: true,
+      mixinImmersive: this.$utils.helper.isMixin(),
+      disabled: true,
+      color: isDark ? "#000000" : "#FFFFFF",
+    };
   }
 
-  get appbar() {
-    return {
-      back: false,
-    };
+  get logo() {
+    return logo;
   }
 
   get bottomNav() {
@@ -74,7 +104,12 @@ export default class Market extends Mixins(mixins.page) {
     return {
       collaterals: "$" + this.$utils.number.toShort(col),
       supply: "$" + this.$utils.number.toShort(dai),
+      collaterilazation: this.$utils.number.toPercent(col / dai),
     };
+  }
+
+  toTrade() {
+    this.$router.replace("/me");
   }
 
   mounted() {
@@ -86,6 +121,10 @@ export default class Market extends Mixins(mixins.page) {
 </script>
 
 <style lang="scss" scoped>
+.desktop-support {
+  max-width: 1100px !important;
+}
+
 .market-table-title {
   opacity: 0.5;
   font-weight: normal;
@@ -97,5 +136,10 @@ export default class Market extends Mixins(mixins.page) {
   float: right;
   right: 30px;
   transform: translateY(52px);
+}
+.market-app-bar {
+  width: 100% !important;
+  left: unset !important;
+  right: unset !important;
 }
 </style>
