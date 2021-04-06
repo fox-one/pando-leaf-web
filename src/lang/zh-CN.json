@@ -39,10 +39,16 @@
   "vault.detail.collateral":"抵押",
   "vault.detail.debt":"债务",
   "vault.event.action.vatopen":"创建金库",
-  "vault.event.action.vatdeposit":"充值",
-  "vault.event.action.vatwithdraw":"提取",
+  "vault.event.action.vatdeposit":"存入",
+  "vault.event.action.vatwithdraw":"取出",
   "vault.event.action.vatpayback":"还款",
   "vault.event.action.vatgenerate":"铸币",
+
+  "vault.event.content.vatopen":"创建金库 #{id}",
+  "vault.event.content.vatdeposit":"存入 {amount} {symbol}",
+  "vault.event.content.vatwithdraw":"取出 {amount} {symbol}",
+  "vault.event.content.vatpayback":"还款 {amount} {symbol}",
+  "vault.event.content.vatgenerate":"铸币 {amount} {symbol}",
 
   "market.overview":"市场总览",
   "market.total-collaterals":"总抵押",

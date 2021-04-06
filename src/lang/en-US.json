@@ -38,11 +38,17 @@
   "vault.detail.history":"History",
   "vault.detail.collateral":"Collateral",
   "vault.detail.debt":"Debt",
-  "vault.event.action.vatopen":"Open Vault",
+  "vault.event.action.vatopen":"Open a Vault",
   "vault.event.action.vatdeposit":"Deposit",
   "vault.event.action.vatwithdraw":"Withdraw",
   "vault.event.action.vatpayback":"Payback",
   "vault.event.action.vatgenerate":"Generate",
+
+  "vault.event.content.vatopen":"Opened a new Vault with id #{id}",
+  "vault.event.content.vatdeposit":"Deposited {amount} {symbol} into Vault",
+  "vault.event.content.vatwithdraw":"Withdraw {amount} {symbol} from Vault",
+  "vault.event.content.vatpayback":"Payback {amount} {symbol} into Vault",
+  "vault.event.content.vatgenerate":"Generated new {amount} {symbol} from Vault",
 
   "market.overview":"Market Overview",
   "market.total-collaterals":"Total Collaterals",

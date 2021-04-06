@@ -9,9 +9,10 @@
         </v-layout>
         <div>
           {{
-            `Generated ${this.history.debt.replace("-", "")} new ${
-              this.meta.debtSymbol
-            } from Vault`
+            this.$t("vault.event.content.vatgenerate", {
+              amount: this.history.debt.replace("-", ""),
+              symbol: this.meta.debtSymbol,
+            })
           }}
         </div>
       </v-layout>
@@ -26,7 +27,10 @@
         </v-layout>
         <div>
           {{
-            `Deposited ${this.history.dink} ${this.meta.collateralSymbol} into Vault`
+            this.$t("vault.event.content.vatdeposit", {
+              amount: this.history.dink,
+              symbol: this.meta.collateralSymbol,
+            })
           }}
         </div>
       </v-layout>
@@ -64,32 +68,39 @@ export default class HistoryItem extends Vue {
   get meta() {
     const collateralAsset = this.getAssetById(this.collateral?.gem);
     const debtAsset = this.getAssetById(this.collateral?.dai);
-    let actionContent = "";
+    let actionContent;
     switch (this.history.action) {
       case VatAction.VatOpen:
-        actionContent = `Opened a new Vault with id ${this.vault.identity_id}`;
+        actionContent = this.$t("vault.event.content.vatopen", {
+          id: this.vault.identity_id,
+        });
         break;
       case VatAction.VatDeposit:
-        actionContent = `Deposited ${this.history.dink.replace("-", "")} ${
-          collateralAsset.symbol
-        } into Vault`;
+        actionContent = this.$t("vault.event.content.vatdeposit", {
+          amount: this.history.dink.replace("-", ""),
+          symbol: collateralAsset.symbol,
+        });
         break;
       case VatAction.VatWithdraw:
-        actionContent = `Withdrew ${this.history.dink.replace("-", "")} ${
-          collateralAsset.symbol
-        } from Vault`;
+        actionContent = this.$t("vault.event.content.vatwithdraw", {
+          amount: this.history.dink.replace("-", ""),
+          symbol: collateralAsset.symbol,
+        });
         break;
       case VatAction.VatPayback:
-        actionContent = `Payback ${this.history.debt.replace("-", "")} ${
-          debtAsset.symbol
-        } into Vault`;
+        actionContent = this.$t("vault.event.content.vatpayback", {
+          amount: this.history.debt.replace("-", ""),
+          symbol: debtAsset.symbol,
+        });
         break;
       case VatAction.VatGenerate:
-        actionContent = `Generated ${this.history.debt.replace("-", "")} new ${
-          debtAsset.symbol
-        } from Vault`;
+        actionContent = this.$t("vault.event.content.vatgenerate", {
+          amount: this.history.debt.replace("-", ""),
+          symbol: debtAsset.symbol,
+        });
         break;
       default:
+        actionContent = "";
         break;
     }
     return {
