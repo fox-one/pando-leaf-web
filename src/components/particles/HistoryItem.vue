@@ -9,8 +9,8 @@
         </v-layout>
         <div>
           {{
-            `Withdrew ${this.history.dink.replace("-", "")} ${
-              this.meta.collateralSymbol
+            `Generated ${this.history.debt.replace("-", "")} new ${
+              this.meta.debtSymbol
             } from Vault`
           }}
         </div>
@@ -70,7 +70,9 @@ export default class HistoryItem extends Vue {
         actionContent = `Opened a new Vault with id ${this.vault.identity_id}`;
         break;
       case VatAction.VatDeposit:
-        actionContent = `Deposited ${this.history.dink} ${collateralAsset.symbol} into Vault`;
+        actionContent = `Deposited ${this.history.dink.replace("-", "")} ${
+          collateralAsset.symbol
+        } into Vault`;
         break;
       case VatAction.VatWithdraw:
         actionContent = `Withdrew ${this.history.dink.replace("-", "")} ${
@@ -78,7 +80,9 @@ export default class HistoryItem extends Vue {
         } from Vault`;
         break;
       case VatAction.VatPayback:
-        actionContent = `Payback ${this.history.debt} ${debtAsset.symbol} into Vault`;
+        actionContent = `Payback ${this.history.debt.replace("-", "")} ${
+          debtAsset.symbol
+        } into Vault`;
         break;
       case VatAction.VatGenerate:
         actionContent = `Generated ${this.history.debt.replace("-", "")} new ${

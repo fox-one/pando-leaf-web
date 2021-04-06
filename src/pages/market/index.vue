@@ -7,7 +7,14 @@
         </v-avatar>
         <h4 class="mx-2">{{ appbar.title }}</h4>
         <v-spacer />
-        <v-btn fab x-small color="primary" @click="toTrade">
+        <v-btn
+          fab
+          x-small
+          elevation="0"
+          color="primary"
+          class="mr-1"
+          @click="toTrade"
+        >
           <v-icon>{{ $icons.mdiAccount }}</v-icon>
         </v-btn>
       </v-layout>
