@@ -7,7 +7,7 @@
             :size="48"
             :logo="collateralAsset.logo"
           ></f-mixin-asset-logo>
-          <div class="f-title-3 ml-4">抵押</div>
+          <div class="f-title-3 ml-4">{{ $t("vault.detail.collateral") }}</div>
         </v-layout>
         <div class="f-body-1">
           {{ collateralAmount }} {{ collateralAsset.symbol }}
@@ -19,7 +19,7 @@
             :size="48"
             :logo="debtAsset.logo"
           ></f-mixin-asset-logo>
-          <div class="f-title-3 ml-4">债务</div>
+          <div class="f-title-3 ml-4">{{ $t("vault.detail.debt") }}</div>
         </v-layout>
         <div class="f-body-1">{{ debtAmount }} {{ debtAsset.symbol }}</div>
       </v-layout>
@@ -60,7 +60,6 @@
     </div>
     <div style="height: 100px"></div>
     <f-action-bar
-      class="mx-2 my-4"
       fixed
       @click="handleActionClick"
       :actions="actionButtons"

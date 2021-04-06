@@ -36,6 +36,8 @@
   "me.vault-item.in-liquidation-tips2":"这个金库将在清算列表中列出.",
 
   "vault.detail.history":"历史记录",
+  "vault.detail.collateral":"抵押",
+  "vault.detail.debt":"债务",
   "vault.event.action.vatopen":"创建金库",
   "vault.event.action.vatdeposit":"充值",
   "vault.event.action.vatwithdraw":"提取",

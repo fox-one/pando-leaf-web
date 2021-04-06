@@ -36,6 +36,8 @@
   "me.vault-item.in-liquidation-tips2":"This vault is on the liquidation list.",
 
   "vault.detail.history":"History",
+  "vault.detail.collateral":"Collateral",
+  "vault.detail.debt":"Debt",
   "vault.event.action.vatopen":"Open Vault",
   "vault.event.action.vatdeposit":"Deposit",
   "vault.event.action.vatwithdraw":"Withdraw",
