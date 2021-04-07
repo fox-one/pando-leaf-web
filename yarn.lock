@@ -895,10 +895,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@foxone/uikit@^2.0.41-alpha.1":
-  version "2.0.43"
-  resolved "https://registry.npm.taobao.org/@foxone/uikit/download/@foxone/uikit-2.0.43.tgz#1484ef207b2b6f5c7d5b782760c873ea5219a866"
-  integrity sha1-FITvIHsrb1x9W3gnYMhz6lIZqGY=
+"@foxone/uikit@^2.0.51":
+  version "2.0.51"
+  resolved "https://registry.npm.taobao.org/@foxone/uikit/download/@foxone/uikit-2.0.51.tgz#8e744aff90db4277dec8d3233286c55d0874e637"
+  integrity sha1-jnRK/5DbQnfeyNMjMobFXQh05jc=
   dependencies:
     animate.css "^4.1.0"
     bignumber.js "^9.0.0"

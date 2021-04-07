@@ -13,6 +13,7 @@ import {
   mdiPlus,
   mdiChevronRight,
   mdiChevronDown,
+  mdiSubdirectoryArrowRight,
 } from "@mdi/js";
 
 export default {
@@ -30,4 +31,5 @@ export default {
   mdiChevronRight,
   mdiChevronDown,
   mdiInformation,
+  mdiSubdirectoryArrowRight,
 };

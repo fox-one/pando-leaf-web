@@ -1,7 +1,32 @@
 <template>
   <v-container class="pa-0">
-    <vault-stats :collateral="collateral" :vault="vault"></vault-stats>
+    <vault-stats
+      :collateral="collateral"
+      :vault="vault"
+      :amount="amount"
+      :type="vaultStatsType"
+    ></vault-stats>
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
+      <!-- <div class="f-greyscale-3 f-body-1 mb-3 text-center">
+        {{ $t("form.info.symbol-debt", { symbol: assetSymbol }) }}
+      </div> -->
+
+      <!-- <v-layout align-center>
+        <v-avatar>
+          <v-img :src="asset.logo"></v-img>
+        </v-avatar>
+        <v-layout class="ml-2">
+          <v-layout align-baseline>
+            <div class="f-body-1 font-weight-bold">
+              {{ $utils.number.toPrecision(this.meta.debtAmount) }}
+            </div>
+            <div class="f-caption font-weight-medium">
+              {{ assetSymbol }}
+            </div>
+          </v-layout>
+        </v-layout>
+      </v-layout> -->
+
       <div class="f-greyscale-3 f-body-1 mb-3 text-center">
         {{ $t("form.payback.how-much") }}
       </div>
@@ -76,7 +101,7 @@ import { Action, Getter, State } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
-import { TransactionStatus } from "~/types";
+import { TransactionStatus, VatAction } from "~/types";
 
 @Component({
   components: {
@@ -93,6 +118,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
   @Action("global/syncMyVaults") syncMyVaults;
   @State((state) => state.auth.id) user_id!: string;
 
+  vaultStatsType = VatAction.VatPayback;
   collateral = {} as ICollateral;
   vault = {} as IVault;
   asset = {} as IAsset;

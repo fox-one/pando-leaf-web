@@ -1,6 +1,11 @@
 <template>
   <v-container class="pa-0">
-    <vault-stats :collateral="collateral" :vault="vault"></vault-stats>
+    <vault-stats
+      :collateral="collateral"
+      :vault="vault"
+      :amount="amount"
+      :type="vaultStatsType"
+    ></vault-stats>
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <div class="f-greyscale-3 f-body-1 mb-3 text-center">
         {{ $t("form.withdraw.how-much") }}
@@ -40,23 +45,6 @@
       >
     </v-layout>
 
-    <v-layout column class="my-4 f-bg-greyscale-7">
-      <div class="mt-4 mx-4 f-title-1">{{ $t("form.predication") }}</div>
-      <f-info-grid :window-size="2">
-        <f-info-grid-item
-          v-for="(item, ix) in predictions"
-          :key="ix"
-          :index="ix"
-          :title="item.title"
-          :value="item.value"
-          :value-unit="item.valueUnit"
-          :value-color="item.valueColor"
-          :value-custom-color="item.valueCustomColor"
-          :hint="item.hint"
-        ></f-info-grid-item>
-      </f-info-grid>
-    </v-layout>
-
     <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
     <div class="mx-4 f-caption">
       Price of the pair tokens fluctuates due to change in supply and demand of
@@ -74,7 +62,7 @@ import { Action, Getter, State } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
-import { RISK, TransactionStatus } from "~/types";
+import { RISK, TransactionStatus, VatAction } from "~/types";
 import { ACTION_ASSET_ID } from "~/constants";
 import number from "~/utils/number";
 
@@ -93,6 +81,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
   @Action("global/syncMyVaults") syncMyVaults;
   @State((state) => state.auth.id) user_id!: string;
 
+  vaultStatsType = VatAction.VatWithdraw;
   collateral = {} as ICollateral;
   vault = {} as IVault;
   asset = {} as IAsset;
