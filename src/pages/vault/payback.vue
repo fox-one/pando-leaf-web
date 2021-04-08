@@ -7,26 +7,6 @@
       :type="vaultStatsType"
     ></vault-stats>
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <!-- <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        {{ $t("form.info.symbol-debt", { symbol: assetSymbol }) }}
-      </div> -->
-
-      <!-- <v-layout align-center>
-        <v-avatar>
-          <v-img :src="asset.logo"></v-img>
-        </v-avatar>
-        <v-layout class="ml-2">
-          <v-layout align-baseline>
-            <div class="f-body-1 font-weight-bold">
-              {{ $utils.number.toPrecision(this.meta.debtAmount) }}
-            </div>
-            <div class="f-caption font-weight-medium">
-              {{ assetSymbol }}
-            </div>
-          </v-layout>
-        </v-layout>
-      </v-layout> -->
-
       <div class="f-greyscale-3 f-body-1 mb-3 text-center">
         {{ $t("form.payback.how-much") }}
       </div>
@@ -65,23 +45,6 @@
         @click="confirm"
         >{{ $t("form.payback.button.confirm") }}</f-button
       >
-    </v-layout>
-
-    <v-layout column class="my-4 f-bg-greyscale-7">
-      <div class="mt-4 mx-4 f-title-1">{{ $t("form.predication") }}</div>
-      <f-info-grid :window-size="2">
-        <f-info-grid-item
-          v-for="(item, ix) in predictions"
-          :key="ix"
-          :index="ix"
-          :title="item.title"
-          :value="item.value"
-          :value-unit="item.valueUnit"
-          :value-color="item.valueColor"
-          :value-custom-color="item.valueCustomColor"
-          :hint="item.hint"
-        ></f-info-grid-item>
-      </f-info-grid>
     </v-layout>
 
     <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>

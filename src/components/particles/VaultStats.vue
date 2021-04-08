@@ -4,6 +4,7 @@
       {{ gridTitle }}
     </div>
     <f-info-grid :window-size="2">
+      <!-- 自定义价格UI -->
       <f-info-grid-item>
         <div class="f-info-grid-item-content">
           <div
@@ -22,7 +23,7 @@
             </div>
           </div>
           <div
-            v-if="showChanged"
+            v-if="showChange"
             class="flex f-info-grid-item-value-wrapper f-greyscale-1 f-body-2 d-flex"
           >
             <v-icon size="14">{{ $icons.mdiSubdirectoryArrowRight }}</v-icon>
@@ -40,6 +41,7 @@
           </div>
         </div>
       </f-info-grid-item>
+      <!-- 自定义抵押率UI -->
       <f-info-grid-item>
         <div class="f-info-grid-item-content">
           <div
@@ -62,7 +64,7 @@
             </div>
           </div>
           <div
-            v-if="showChanged"
+            v-if="showChange"
             class="flex f-info-grid-item-value-wrapper f-greyscale-1 f-body-2 d-flex"
           >
             <v-icon size="14">{{ $icons.mdiSubdirectoryArrowRight }}</v-icon>
@@ -81,7 +83,7 @@
         </div>
       </f-info-grid-item>
       <f-info-grid-item
-        v-for="(item, ix) in infos.slice(2, 6)"
+        v-for="(item, ix) in infos.slice(2, 4)"
         :key="ix"
         :index="ix"
         :title="item.title"
@@ -91,6 +93,49 @@
         :value-custom-color="item.valueCustomColor"
         :hint="item.hint"
       ></f-info-grid-item>
+      <!-- 自定义抵押率UI -->
+      <f-info-grid-item>
+        <div class="f-info-grid-item-content">
+          <div
+            class="f-info-grid-item-title f-greyscale-3 f-caption d-flex align-center"
+          >
+            {{ infos[4].title }}
+          </div>
+          <div
+            class="flex f-info-grid-item-value-wrapper f-greyscale-1 f-body-2 d-flex"
+          >
+            <div
+              :class="
+                'f-info-grid-item-value ' + `${infos[4].valueColor}--text`
+              "
+            >
+              {{ infos[4].value }}<span></span>
+            </div>
+            <div class="f-info-grid-item-value-unit">
+              {{ infos[4].valueUnit }}
+            </div>
+          </div>
+          <div
+            v-if="showChange && showDebtChange"
+            class="flex f-info-grid-item-value-wrapper f-greyscale-1 f-body-2 d-flex"
+          >
+            <v-icon size="14">{{ $icons.mdiSubdirectoryArrowRight }}</v-icon>
+            <div :class="'f-info-grid-item-value ' + `primary--text`">
+              {{ infos[4].changedValue }}<span></span>
+            </div>
+            <div class="f-info-grid-item-value-unit">
+              {{ infos[4].valueUnit }}
+            </div>
+          </div>
+        </div>
+      </f-info-grid-item>
+      <f-info-grid-item
+        :title="infos[5].title"
+        :value="infos[5].value"
+        :value-unit="infos[5].valueUnit"
+        :value-color="infos[5].valueColor"
+        :value-custom-color="infos[5].valueCustomColor"
+      />
     </f-info-grid>
   </v-layout>
 </template>
@@ -127,10 +172,16 @@ export default class VaultStats extends Vue {
     return this.getAssetById(this.collateral?.dai);
   }
 
-  get showChanged() {
+  get showChange() {
     return (
       this.$utils.number.isValid(Number(this.amount)) &&
       Number(this.amount) !== 0
+    );
+  }
+
+  get showDebtChange() {
+    return (
+      this.type === VatAction.VatPayback || this.type === VatAction.VatGenerate
     );
   }
 
@@ -157,7 +208,8 @@ export default class VaultStats extends Vue {
     let changedPrice;
     let changedRatio;
     let changedRisk;
-    if (this.showChanged) {
+    let changedAmount;
+    if (this.showChange) {
       const diffAmount = Number(this.amount);
       switch (this.type) {
         case VatAction.VatDeposit:
@@ -192,6 +244,7 @@ export default class VaultStats extends Vue {
             changedRatio,
             this.collateral.mat
           );
+          changedAmount = debtAmount + diffAmount;
           break;
         case VatAction.VatPayback:
           changedPrice =
@@ -203,6 +256,8 @@ export default class VaultStats extends Vue {
             changedRatio,
             this.collateral.mat
           );
+          changedAmount = debtAmount - diffAmount;
+          if (changedAmount < 0) changedAmount = 0;
           break;
         default:
           break;
@@ -210,6 +265,7 @@ export default class VaultStats extends Vue {
     }
 
     return {
+      debtAmount,
       liquidationPrice: this.$utils.number.toPrecision(liquidationPrice),
       collateralizationRatio,
       collateralizationRatioText,
@@ -223,6 +279,7 @@ export default class VaultStats extends Vue {
           ? "N/A"
           : this.$utils.number.toFixed(changedRatio * 100, 4),
       changedRisk,
+      changedAmount,
     };
   }
 
@@ -265,9 +322,13 @@ export default class VaultStats extends Vue {
         //        hint: "Some description about profit.",
       },
       {
-        title: this.$t("form.info.liquidation-penalty"),
-        value: this.meta.liquidationPenalty,
-        valueUnit: "%",
+        // title: this.$t("form.info.liquidation-penalty"),
+        title: this.$t("form.info.symbol-debt", {
+          symbol: this.debtAsset?.symbol,
+        }),
+        value: this.$utils.number.toShort(this.meta.debtAmount),
+        valueUnit: this.debtAsset?.symbol,
+        changedValue: this.$utils.number.toShort(this.meta.changedAmount),
       },
       {
         title: this.$t("form.info.stability-fee"),
