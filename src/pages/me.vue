@@ -48,7 +48,7 @@
         </v-layout>
       </v-container>
       <div v-if="isLogged && haveVault" class="px-4 pt-4">
-        <v-expansion-panels accordion flat>
+        <v-expansion-panels accordion flat v-model="expanded" multiple>
           <my-vault-item
             class="mb-4 rounded-lg"
             :key="vault.id"
@@ -78,7 +78,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from "vue-property-decorator";
+import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { Action, Getter, State } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
@@ -100,6 +100,17 @@ export default class Me extends Mixins(mixins.page) {
   @Action("global/syncMyVaults") syncMyVaults;
 
   loading = true;
+  expanded = [0];
+
+  @Watch("expanded")
+  onExpandedChange(nVal: any[], oVal: any[]) {
+    if (nVal.length === oVal.length || nVal.length === 1 || nVal.length === 0)
+      return;
+    const filtered = nVal.filter((v) => !oVal.includes(v));
+    console.log("oldVal: " + oVal, "newVal: " + nVal, "filtered: " + filtered);
+    this.expanded = filtered;
+  }
+
   get title() {
     const s = this.$t("tab.me");
     return `${s}`;

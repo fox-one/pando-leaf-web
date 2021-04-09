@@ -1,12 +1,16 @@
 <template>
   <f-bottom-sheet v-model="visible">
-    <template #title> 选择一个金库类型 </template>
+    <template #title> {{ $t("vault.selector.title") }} </template>
     <template #subheader>
       <f-input v-model="filter" label="search"></f-input>
     </template>
     <v-layout class="px-4" justify-space-between>
-      <div class="ml-11">抵押率</div>
-      <div>手续费/拍卖罚金</div>
+      <div class="ml-11">{{ $t("vault.selector.min-collateral-ratio") }}</div>
+      <div>
+        {{ $t("vault.selector.stability-fee") }}/{{
+          $t("vault.selector.liquidation-penalty")
+        }}
+      </div>
     </v-layout>
     <v-divider class="px-4" />
     <v-list height="500">

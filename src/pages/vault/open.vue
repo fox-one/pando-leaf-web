@@ -355,7 +355,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
             return {
               disabled: true,
               type: "error",
-              tip: this.$t("form.validate.below-liquidation-rate"),
+              tip: this.$t("form.validate.insufficient-collaterals"),
             };
           }
           // 抵押率高于清算线，处于高风险区间

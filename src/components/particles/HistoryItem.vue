@@ -3,7 +3,9 @@
     <template v-if="isOpen">
       <v-layout column class="py-3">
         <v-layout align-center class="f-body-1">
-          <span>{{ $t("vault.event.action.vatgenerate") }}</span>
+          <span class="font-weight-bold">{{
+            $t("vault.event.action.vatgenerate")
+          }}</span>
           <v-spacer />
           <span class="text-right f-caption">{{ meta.time }}</span>
         </v-layout>
@@ -21,7 +23,9 @@
 
       <v-layout column class="py-3">
         <v-layout align-center class="f-body-1">
-          <span>{{ $t("vault.event.action.vatdeposit") }}</span>
+          <span class="font-weight-bold">{{
+            $t("vault.event.action.vatdeposit")
+          }}</span>
           <v-spacer />
           <span class="text-right f-caption">{{ meta.time }}</span>
         </v-layout>
@@ -39,7 +43,7 @@
     </template>
     <v-layout column class="py-3">
       <v-layout align-center class="f-body-1">
-        <span>{{ meta.actionText }}</span>
+        <span class="font-weight-bold">{{ meta.actionText }}</span>
         <v-spacer />
         <span class="text-right f-caption">{{ meta.time }}</span>
       </v-layout>
