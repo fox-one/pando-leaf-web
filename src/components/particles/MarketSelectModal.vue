@@ -2,6 +2,9 @@
   <f-bottom-sheet v-model="visible">
     <template #title> {{ $t("vault.selector.title") }} </template>
     <template #subheader>
+      <div class="f-caption text-center">
+        如果只是想铸币更多，可以在抵押物充足的已有金库进行
+      </div>
       <f-input v-model="filter" label="search"></f-input>
     </template>
     <v-layout class="px-4" justify-space-between>

@@ -114,6 +114,8 @@
   "form.info.new-collateralization-ratio":"New Collateralization Ratio",
   "form.info.symbol-debt":"Outstanding {symbol} Debt",
 
+  "form.tooltip.":"",
+
   "form.validate.deposit-empty":"A vault needs to deposit assets as collateral.",
   "form.validate.minimum-debt":"A vault requires a minimum of {amount} {symbol} to be generated.",
   "form.validate.max-debt":"This type of vault can generated up to {amount} {symbol}.",

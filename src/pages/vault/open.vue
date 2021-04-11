@@ -21,7 +21,7 @@
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <div class="f-body-1 f-greyscale-3 mb-3 text-center">
         {{ $t("form.open.how-much-col", { symbol: depositSymbol }) }}
-        <f-tooltip v-model="depositTips" bottom>
+        <f-tooltip v-model="depositTips" bottom @focus="focusChange">
           <template #activator="{ on, attrs }">
             <v-icon
               class="icon-tips"
@@ -470,6 +470,10 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.deposit = this.getAssetById(this.collateral?.gem);
     this.mint = this.getAssetById(this.collateral?.dai);
     this.updateWalletAsset();
+  }
+
+  focusChange(focus) {
+    console.log("focusChange:", focus);
   }
 
   toast() {

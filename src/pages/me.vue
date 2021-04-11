@@ -74,6 +74,10 @@
       <v-icon>{{ $icons.mdiPlus }}</v-icon>
     </v-btn>
     <!-- </v-fab-transition> -->
+    <market-select-modal
+      :show.sync="showSelectModal"
+      v-on:update:current="onSelect"
+    />
   </v-container>
 </template>
 
@@ -83,11 +87,13 @@ import mixins from "@/mixins";
 import { Action, Getter, State } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
 import MyVaultItem from "~/components/particles/MyVaultItem.vue";
+import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
 import { VERSION } from "~/constants";
 
 @Component({
   components: {
     MyVaultItem,
+    MarketSelectModal,
   },
 })
 export default class Me extends Mixins(mixins.page) {
@@ -101,6 +107,8 @@ export default class Me extends Mixins(mixins.page) {
 
   loading = true;
   expanded = [0];
+  showSelectModal = false;
+  collateral = {} as ICollateral;
 
   @Watch("expanded")
   onExpandedChange(nVal: any[], oVal: any[]) {
@@ -224,7 +232,11 @@ export default class Me extends Mixins(mixins.page) {
       });
       return;
     }
-    this.$router.push(`/vault/open?id=${this.collaterals[0].id}`);
+    if (this.collaterals.length === 1) {
+      this.$router.push(`/vault/open?id=${this.collaterals[0].id}`);
+      return;
+    }
+    this.showSelectModal = true;
   }
 
   mockVaults() {
@@ -237,6 +249,11 @@ export default class Me extends Mixins(mixins.page) {
         art: "120", // Total Normalised Debt, debt = art * rate
       } as IVault,
     ]);
+  }
+
+  onSelect(col) {
+    this.showSelectModal = false;
+    this.$router.push(`/vault/open?id=${col.id}`);
   }
 
   clearVaults() {
