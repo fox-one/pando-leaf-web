@@ -40,6 +40,7 @@
   "vault.detail.debt":"债务",
 
   "vault.selector.title":"选择一个金库类型",
+  "vault.selector.tips":"如果您仅打算铸币更多，可以选择在现有超额抵押的金库中进行",
   "vault.selector.min-collateral-ratio":"最低抵押率",
   "vault.selector.stability-fee":"铸币利率",
   "vault.selector.liquidation-penalty":"清算罚金",
