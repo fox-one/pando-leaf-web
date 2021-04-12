@@ -24,8 +24,21 @@
         <div class="f-body-1">{{ debtAmount }} {{ debtAsset.symbol }}</div>
       </v-layout>
     </v-layout>
+    <f-info-grid class="mt-4 f-bg-greyscale-7" :window-size="2">
+      <f-info-grid-item
+        v-for="(item, ix) in infos"
+        :key="ix"
+        :index="ix"
+        :title="item.title"
+        :value="item.value"
+        :value-unit="item.valueUnit"
+        :value-color="item.valueColor"
+        :value-custom-color="item.valueCustomColor"
+        :hint="item.hint"
+      ></f-info-grid-item>
+    </f-info-grid>
     <vault-stats
-      class="my-4"
+      class="mb-4 custom-info-grid"
       :title="''"
       :vault="vault"
       :collateral="collateral"
@@ -108,6 +121,44 @@ export default class VaultDetail extends Mixins(mixins.vault) {
     );
   }
 
+  get infos() {
+    const debtAmount =
+      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
+    const collateralAmount = Number(this.vault?.ink);
+    const price = Number(this.collateral?.price);
+    const mininumRatio = Number(this.collateral?.mat);
+    const maxDebtAvaileble =
+      (collateralAmount * price) / mininumRatio - debtAmount;
+    const maxDebtAvailebleText = this.$utils.number.toPrecision(
+      maxDebtAvaileble,
+      8,
+      BigNumber.ROUND_DOWN
+    );
+
+    if (debtAmount === 0) {
+      return this.vault?.ink;
+    }
+    const maxWithdrawAvaileble =
+      collateralAmount - (mininumRatio * debtAmount) / price;
+    const maxWithdrawAvailebleText = this.$utils.number.toPrecision(
+      maxWithdrawAvaileble,
+      8,
+      BigNumber.ROUND_DOWN
+    );
+    return [
+      {
+        title: this.$t("form.info.available-to-withdraw"),
+        value: maxWithdrawAvailebleText,
+        valueUnit: this.collateralAsset?.symbol,
+      },
+      {
+        title: this.$t("form.info.available-to-generate"),
+        value: maxDebtAvailebleText,
+        valueUnit: this.debtAsset?.symbol,
+      },
+    ];
+  }
+
   actionButtons = [
     {
       text: this.$t("button.deposit"),
@@ -179,6 +230,15 @@ export default class VaultDetail extends Mixins(mixins.vault) {
 </script>
 
 <style lang="scss" scoped>
+.custom-info-grid {
+  ::v-deep {
+    .f-info-grid {
+      .f-info-grid-inner {
+        padding-top: 0px !important;
+      }
+    }
+  }
+}
 .top-view-item {
   flex-grow: 1;
   flex-shrink: 0;

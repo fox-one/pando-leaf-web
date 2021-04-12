@@ -113,6 +113,13 @@
   "form.info.new-liquidation-price":"新的清算价格",
   "form.info.new-collateralization-ratio":"新的抵押率",
   "form.info.symbol-debt":"剩余 {symbol} 债务",
+  "form.info.available-to-withdraw":"可取回",
+  "form.info.available-to-generate":"可生成",
+
+  "form.tooltip.liquidation-price":"金库被清算时抵押资产与贷款资产的相对价格。可以通过增加抵押资产或者偿还贷款的方式降低清算价格。",
+  "form.tooltip.collateralization-ratio":"抵押率 = （抵押资产数量 x 当前价格）/贷款数量 x 100",
+  "form.tooltip.minimum-ratio":"金库被清算的抵押率临界值",
+  "form.tooltip.stability-fee":"以年化利率的形式体现的，对当前金库贷款金额收取的费用",
 
   "form.validate.deposit-empty":"金库需要存入资产作为抵押",
   "form.validate.minimum-debt":"金库需要至少生成 {amount} {symbol}",

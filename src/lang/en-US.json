@@ -113,8 +113,13 @@
   "form.info.new-liquidation-price":"New Liquidation Price",
   "form.info.new-collateralization-ratio":"New Collateralization Ratio",
   "form.info.symbol-debt":"Outstanding {symbol} Debt",
+  "form.info.available-to-withdraw":"Available to withdraw",
+  "form.info.available-to-generate":"Available to generate",
 
-  "form.tooltip.":"",
+  "form.tooltip.liquidation-price":"The price at which a Vault becomes vulnerable to liquidation. You can lower the liquidation price by adding more collaterals or repaying your loan to the Vault.",
+  "form.tooltip.collateralization-ratio":"CR = (Collateral amount x Current Price) / Generated debt amount x 100",
+  "form.tooltip.minimum-ratio":"Minimum required collateralization level of a Vault before it is subject to liquidation.",
+  "form.tooltip.stability-fee":"A fee added to the outstanding debt of a Vault. Expressed in the form of annualized interest rate.",
 
   "form.validate.deposit-empty":"A vault needs to deposit assets as collateral.",
   "form.validate.minimum-debt":"A vault requires a minimum of {amount} {symbol} to be generated.",

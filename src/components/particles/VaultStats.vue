@@ -289,6 +289,7 @@ export default class VaultStats extends Vue {
         title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
         value: this.meta.liquidationPrice,
         valueUnit: this.debtAsset?.symbol,
+        hint: this.$t("form.tooltip.liquidation-price"),
         changedValue: this.meta.changedPrice,
         changedValueColor: this.meta.changedRisk,
       },
@@ -304,6 +305,7 @@ export default class VaultStats extends Vue {
           this.meta.collateralizationRatio,
           this.collateral.mat
         ),
+        hint: this.$t("form.tooltip.collateralization-ratio"),
         changedValue: this.meta.changedRatio,
         changedValueColor: this.meta.changedRisk,
       },
@@ -319,7 +321,7 @@ export default class VaultStats extends Vue {
           4
         ),
         valueUnit: "%",
-        //        hint: "Some description about profit.",
+        hint: this.$t("form.tooltip.minimum-ratio"),
       },
       {
         // title: this.$t("form.info.liquidation-penalty"),
@@ -334,6 +336,7 @@ export default class VaultStats extends Vue {
         title: this.$t("form.info.stability-fee"),
         value: this.meta.stabilityFee,
         valueUnit: "%",
+        hint: this.$t("form.tooltip.stability-fee"),
       },
     ];
   }
