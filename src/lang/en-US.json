@@ -44,6 +44,7 @@
   "vault.selector.min-collateral-ratio":"Minimum Collateral Ratio",
   "vault.selector.stability-fee":"Stability Fee",
   "vault.selector.liquidation-penalty":"Liquidation Penalty",
+  "vault.selector.search":"Enter the keywords of the vault to search",
 
   "vault.event.action.vatopen":"Open a Vault",
   "vault.event.action.vatdeposit":"Deposit",

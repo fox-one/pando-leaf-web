@@ -1,89 +1,11 @@
 <template>
   <v-layout column class="f-bg-greyscale-7">
-    <div class="mx-4 f-body-2 f-greyscale-3 text-center">
+    <div v-if="gridTitle" class="mx-4 mt-4 mb-2 f-title-3 f-greyscale-1">
       {{ gridTitle }}
     </div>
     <f-info-grid :window-size="2">
-      <!-- 自定义价格UI -->
-      <f-info-grid-item>
-        <div class="f-info-grid-item-content">
-          <div
-            class="f-info-grid-item-title f-greyscale-3 f-caption d-flex align-center"
-          >
-            {{ infos[0].title }}
-          </div>
-          <div
-            class="flex f-info-grid-item-value-wrapper f-greyscale-1 f-body-2 d-flex"
-          >
-            <div class="f-info-grid-item-value">
-              {{ infos[0].value }}
-            </div>
-            <div class="f-info-grid-item-value-unit">
-              {{ infos[0].valueUnit }}
-            </div>
-          </div>
-          <div
-            v-if="showChange"
-            class="flex f-info-grid-item-value-wrapper f-greyscale-1 f-body-2 d-flex"
-          >
-            <v-icon size="14">{{ $icons.mdiSubdirectoryArrowRight }}</v-icon>
-            <div
-              :class="
-                'f-info-grid-item-value ' +
-                `${infos[0].changedValueColor}--text`
-              "
-            >
-              {{ infos[0].changedValue }}
-            </div>
-            <div class="f-info-grid-item-value-unit">
-              {{ infos[0].valueUnit }}
-            </div>
-          </div>
-        </div>
-      </f-info-grid-item>
-      <!-- 自定义抵押率UI -->
-      <f-info-grid-item>
-        <div class="f-info-grid-item-content">
-          <div
-            class="f-info-grid-item-title f-greyscale-3 f-caption d-flex align-center"
-          >
-            {{ infos[1].title }}
-          </div>
-          <div
-            class="flex f-info-grid-item-value-wrapper f-greyscale-1 f-body-2 d-flex"
-          >
-            <div
-              :class="
-                'f-info-grid-item-value ' + `${infos[1].valueColor}--text`
-              "
-            >
-              {{ infos[1].value }}<span></span>
-            </div>
-            <div class="f-info-grid-item-value-unit">
-              {{ infos[1].valueUnit }}
-            </div>
-          </div>
-          <div
-            v-if="showChange"
-            class="flex f-info-grid-item-value-wrapper f-greyscale-1 f-body-2 d-flex"
-          >
-            <v-icon size="14">{{ $icons.mdiSubdirectoryArrowRight }}</v-icon>
-            <div
-              :class="
-                'f-info-grid-item-value ' +
-                `${infos[1].changedValueColor}--text`
-              "
-            >
-              {{ infos[1].changedValue }}<span></span>
-            </div>
-            <div class="f-info-grid-item-value-unit">
-              {{ infos[1].valueUnit }}
-            </div>
-          </div>
-        </div>
-      </f-info-grid-item>
-      <f-info-grid-item
-        v-for="(item, ix) in infos.slice(2, 4)"
+      <value-changed-info-grid-item
+        v-for="(item, ix) in infos"
         :key="ix"
         :index="ix"
         :title="item.title"
@@ -91,51 +13,12 @@
         :value-unit="item.valueUnit"
         :value-color="item.valueColor"
         :value-custom-color="item.valueCustomColor"
+        :showChange="item.showChange"
+        :changed-value="item.changedValue"
+        :changed-value-color="item.changedValueColor"
+        :disable-changed-icon="item.disableChangedIcon"
         :hint="item.hint"
-      ></f-info-grid-item>
-      <!-- 自定义抵押率UI -->
-      <f-info-grid-item>
-        <div class="f-info-grid-item-content">
-          <div
-            class="f-info-grid-item-title f-greyscale-3 f-caption d-flex align-center"
-          >
-            {{ infos[4].title }}
-          </div>
-          <div
-            class="flex f-info-grid-item-value-wrapper f-greyscale-1 f-body-2 d-flex"
-          >
-            <div
-              :class="
-                'f-info-grid-item-value ' + `${infos[4].valueColor}--text`
-              "
-            >
-              {{ infos[4].value }}<span></span>
-            </div>
-            <div class="f-info-grid-item-value-unit">
-              {{ infos[4].valueUnit }}
-            </div>
-          </div>
-          <div
-            v-if="showChange && showDebtChange"
-            class="flex f-info-grid-item-value-wrapper f-greyscale-1 f-body-2 d-flex"
-          >
-            <v-icon size="14">{{ $icons.mdiSubdirectoryArrowRight }}</v-icon>
-            <div :class="'f-info-grid-item-value ' + `primary--text`">
-              {{ infos[4].changedValue }}<span></span>
-            </div>
-            <div class="f-info-grid-item-value-unit">
-              {{ infos[4].valueUnit }}
-            </div>
-          </div>
-        </div>
-      </f-info-grid-item>
-      <f-info-grid-item
-        :title="infos[5].title"
-        :value="infos[5].value"
-        :value-unit="infos[5].valueUnit"
-        :value-color="infos[5].valueColor"
-        :value-custom-color="infos[5].valueCustomColor"
-      />
+      ></value-changed-info-grid-item>
     </f-info-grid>
   </v-layout>
 </template>
@@ -145,19 +28,26 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import { Getter } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
 import { VatAction } from "~/types";
+import ValueChangedInfoGridItem from "~/components/particles/ValueChangedInfoGridItem.vue";
 
-@Component
+@Component({
+  components: {
+    ValueChangedInfoGridItem,
+  },
+})
 export default class VaultStats extends Vue {
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Prop() vault!: IVault;
   @Prop() collateral!: ICollateral;
-  @Prop() title!: string;
+  @Prop({ type: String, default: undefined }) title!: string;
   @Prop() amount!: string;
   @Prop() type!: VatAction;
+  @Prop({ type: Boolean, default: true }) showDebt;
+  @Prop({ type: Boolean, default: false }) showPenalty;
 
   get gridTitle() {
-    if (this.title !== null && this.title !== undefined) {
+    if (this.title !== undefined) {
       return this.title;
     } else {
       return this.$t("form.info.vault-stats-title");
@@ -284,7 +174,7 @@ export default class VaultStats extends Vue {
   }
 
   get infos() {
-    return [
+    const infos = [
       {
         title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
         value: this.meta.liquidationPrice,
@@ -292,6 +182,7 @@ export default class VaultStats extends Vue {
         hint: this.$t("form.tooltip.liquidation-price"),
         changedValue: this.meta.changedPrice,
         changedValueColor: this.meta.changedRisk,
+        showChange: this.showChange,
       },
       {
         title: this.$t("form.info.collateralization-ratio"), //
@@ -308,6 +199,7 @@ export default class VaultStats extends Vue {
         hint: this.$t("form.tooltip.collateralization-ratio"),
         changedValue: this.meta.changedRatio,
         changedValueColor: this.meta.changedRisk,
+        showChange: this.showChange,
       },
       {
         title: this.$t("form.info.current-price"),
@@ -323,7 +215,9 @@ export default class VaultStats extends Vue {
         valueUnit: "%",
         hint: this.$t("form.tooltip.minimum-ratio"),
       },
-      {
+    ] as any[];
+    if (this.showDebt) {
+      infos.push({
         // title: this.$t("form.info.liquidation-penalty"),
         title: this.$t("form.info.symbol-debt", {
           symbol: this.debtAsset?.symbol,
@@ -331,14 +225,23 @@ export default class VaultStats extends Vue {
         value: this.$utils.number.toShort(this.meta.debtAmount),
         valueUnit: this.debtAsset?.symbol,
         changedValue: this.$utils.number.toShort(this.meta.changedAmount),
-      },
-      {
-        title: this.$t("form.info.stability-fee"),
-        value: this.meta.stabilityFee,
+        showChange: this.showChange && this.showDebtChange,
+      });
+    }
+    if (this.showPenalty) {
+      infos.push({
+        title: this.$t("form.info.liquidation-penalty"),
+        value: this.meta.liquidationPenalty,
         valueUnit: "%",
-        hint: this.$t("form.tooltip.stability-fee"),
-      },
-    ];
+      });
+    }
+    infos.push({
+      title: this.$t("form.info.stability-fee"),
+      value: this.meta.stabilityFee,
+      valueUnit: "%",
+      hint: this.$t("form.tooltip.stability-fee"),
+    });
+    return infos;
   }
 }
 </script>

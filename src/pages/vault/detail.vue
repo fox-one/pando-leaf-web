@@ -42,6 +42,8 @@
       :title="''"
       :vault="vault"
       :collateral="collateral"
+      :show-debt="false"
+      show-penalty
     />
     <div class="px-4">
       <div class="f-greyscale-1 f-title-1 mb-4">

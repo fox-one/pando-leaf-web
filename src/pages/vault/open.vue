@@ -21,16 +21,11 @@
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <div class="f-body-1 f-greyscale-3 mb-3 text-center">
         {{ $t("form.open.how-much-col", { symbol: depositSymbol }) }}
-        <f-tooltip v-model="depositTips" bottom @focus="focusChange">
+        <f-tooltip v-model="depositTips" bottom>
           <template #activator="{ on, attrs }">
-            <v-icon
-              class="icon-tips"
-              @click="depositTips = !depositTips"
-              v-on="on"
-              v-bind="attrs"
-              size="20"
-              >{{ $icons.mdiHelpCircleOutline }}</v-icon
-            >
+            <v-icon class="icon-tips" v-on="on" v-bind="attrs" size="20">{{
+              $icons.mdiHelpCircleOutline
+            }}</v-icon>
           </template>
           <div>
             <div class="f-body-1">
@@ -74,14 +69,9 @@
         {{ $t("form.open.how-much-dai", { symbol: mintSymbol }) }}
         <f-tooltip v-model="mintTips" bottom>
           <template #activator="{ on, attrs }">
-            <v-icon
-              class="icon-tips"
-              @click="mintTips = !mintTips"
-              v-on="on"
-              v-bind="attrs"
-              size="20"
-              >{{ $icons.mdiHelpCircleOutline }}</v-icon
-            >
+            <v-icon class="icon-tips" v-on="on" v-bind="attrs" size="20">{{
+              $icons.mdiHelpCircleOutline
+            }}</v-icon>
           </template>
           <div>
             <div class="f-body-1">

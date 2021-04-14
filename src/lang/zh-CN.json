@@ -44,6 +44,7 @@
   "vault.selector.min-collateral-ratio":"最低抵押率",
   "vault.selector.stability-fee":"铸币利率",
   "vault.selector.liquidation-penalty":"清算罚金",
+  "vault.selector.search":"请输入要搜索的金库",
 
   "vault.event.action.vatopen":"创建金库",
   "vault.event.action.vatdeposit":"存入",
@@ -97,7 +98,7 @@
   "form.payback.how-much":"你要偿还多少?",
   "form.payback.button.confirm":"偿还",
 
-  "form.info.vault-stats-title":"金库当前状态",
+  "form.info.vault-stats-title":"金库状态",
   "form.info.wallet-balance":"钱包余额",
   "form.info.set-max":"设为最大值",
   "form.info.max-available":"最大可用",

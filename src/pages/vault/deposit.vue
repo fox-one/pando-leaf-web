@@ -1,11 +1,5 @@
 <template>
   <v-container class="pa-0">
-    <vault-stats
-      :collateral="collateral"
-      :vault="vault"
-      :amount="amount"
-      :type="vaultStatsType"
-    ></vault-stats>
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <div class="f-greyscale-3 f-body-1 mb-3 text-center">
         {{ $t("form.deposit.how-much") }}
@@ -43,6 +37,14 @@
         >{{ $t("form.deposit.button.confirm") }}</f-button
       >
     </v-layout>
+
+    <vault-stats
+      class="my-4"
+      :collateral="collateral"
+      :vault="vault"
+      :amount="amount"
+      :type="vaultStatsType"
+    ></vault-stats>
 
     <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
     <div class="mx-4 f-caption">

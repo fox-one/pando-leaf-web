@@ -13,7 +13,6 @@ import { initApp } from "./app";
 import { v4 as uuid } from "uuid";
 import number from "./number";
 import { RISK } from "~/types";
-import { isJSDocDeprecatedTag } from "typescript";
 
 export function toast(vue: Vue, data: { message: string; color?: string }) {
   vue.$store.commit("app/SET_TOAST", data);

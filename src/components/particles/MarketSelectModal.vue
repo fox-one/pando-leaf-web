@@ -5,7 +5,7 @@
       <div class="f-caption text-center">
         {{ $t("vault.selector.tips") }}
       </div>
-      <f-input v-model="filter" label="search"></f-input>
+      <f-input v-model="filter" :label="$t('vault.selector.search')"></f-input>
     </template>
     <v-layout class="px-4" justify-space-between>
       <div class="ml-11">{{ $t("vault.selector.min-collateral-ratio") }}</div>
