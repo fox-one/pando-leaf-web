@@ -1,6 +1,5 @@
 import { NuxtConfig } from "@nuxt/types";
 import i18n from "./src/i18n";
-import { isProduct, GA } from "./src/constants";
 
 const config: NuxtConfig = {
   ssr: false,
@@ -53,6 +52,7 @@ const config: NuxtConfig = {
     "~/plugins/components.ts",
     "~/plugins/property.ts",
     "~/plugins/lib.ts",
+    "~/plugins/ga.ts",
   ],
   buildModules: [
     "@nuxtjs/eslint-module",
@@ -67,7 +67,6 @@ const config: NuxtConfig = {
   ],
   modules: [
     "@nuxtjs/axios",
-    "@nuxtjs/google-analytics",
     "@nuxtjs/dotenv",
     [
       "nuxt-i18n",
@@ -83,14 +82,6 @@ const config: NuxtConfig = {
     ],
     "@nuxtjs/pwa",
   ],
-  googleAnalytics: {
-    id: GA,
-    dev: false,
-    debug: {
-      enabled: !isProduct,
-      sendHitTask: isProduct,
-    },
-  },
   vuetify: {
     customVariables: ["~/styles/_variables.scss"],
     defaultAssets: false,

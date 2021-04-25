@@ -3,15 +3,27 @@ import { NuxtAppOptions } from "@nuxt/types";
 import { AxiosRequestConfig } from "axios";
 import Http from "~/utils/http";
 import createApis from "./index";
+import { v4 as uuid } from "uuid";
 
 function generateStructureInterceptor(app: NuxtAppOptions) {
   return [
     (res) => {
-      if (res?.data?.code) {
+      const reqId = res?.headers?.["x-request-id"];
+      const resId = res?.config?.headers?.["x-request-id"];
+      if (reqId && resId && reqId !== resId) {
+        return Promise.reject(
+          new Error(
+            `X-Request-Id Not Match: request: ${res.headers["x-request-id"]}; response: ${res.config.headers["x-request-id"]}`
+          )
+        );
+      }
+      if (res && res.data && res.data.code) {
         return Promise.reject(res.data);
       }
       if (res?.data?.error?.code === 401) {
-        app.store?.dispatch("auth/logout");
+        if (res.data.error.code === 401) {
+          app.store?.dispatch("auth/logout");
+        }
         return Promise.reject(res.data.error);
       }
       return res.data;
@@ -48,6 +60,7 @@ function generateI18nInterceptor(app: NuxtAppOptions) {
     (configs) => {
       const locale = app.$utils.helper.getLocale();
       configs.headers["Accept-Language"] = locale;
+      configs.headers["x-request-id"] = uuid();
       return configs;
     },
   ];
