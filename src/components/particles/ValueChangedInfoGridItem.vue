@@ -10,7 +10,7 @@
             <v-btn
               icon
               x-small
-              ripple="false"
+              :ripple="false"
               color="f-greyscale-3"
               v-bind="attrs"
               v-on="on"
@@ -39,7 +39,7 @@
           v-if="showToggle"
           icon
           x-small
-          ripple="false"
+          :ripple="false"
           color="f-greyscale-3"
           @click="toggle"
         >
@@ -93,7 +93,7 @@ export default class ValueChangedInfoGridItem extends Vue {
 
   @Prop({ type: String, default: "" }) changedValueColor!: string;
 
-  @Prop({ type: Boolean, default: "" }) disableChangedIcon!: boolean;
+  @Prop({ type: Boolean, default: false }) disableChangedIcon!: boolean;
 
   @Prop({ type: Boolean, default: false }) showToggle!: boolean;
 

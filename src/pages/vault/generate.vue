@@ -102,7 +102,8 @@ export default class GenerateForm extends Mixins(mixins.page) {
     const collateralAmount = Number(this.vault?.ink);
     const price = Number(this.collateral?.price);
     const mininumRatio = Number(this.collateral?.mat);
-    const max = (collateralAmount * price) / mininumRatio - debtAmount;
+    const max =
+      (collateralAmount * price) / mininumRatio - debtAmount - 0.00000001;
     return this.$utils.number.toPrecision(max, 8, BigNumber.ROUND_DOWN);
   }
 
