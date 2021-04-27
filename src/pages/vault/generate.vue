@@ -87,6 +87,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncWalletAsset") syncWalletAsset;
   @Action("global/syncMyVaults") syncMyVaults;
+  @Action("global/syncMarkets") syncMarkets;
   @State((state) => state.auth.id) user_id!: string;
   @Ref("cmodal") cmodal;
 
@@ -267,7 +268,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
     this.updateWalletAsset();
   }
 
-  destroy() {
+  destroyed() {
     clearInterval(0);
   }
 

@@ -176,6 +176,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncWalletAsset") syncWalletAsset;
   @Action("global/syncMyVaults") syncMyVaults;
+  @Action("global/syncMarkets") syncMarkets;
   @State((state) => state.auth.id) user_id!: string;
   @Ref("cmodal") cmodal;
 
@@ -455,6 +456,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.updateWalletAsset(newVal);
   }
 
+  intervalid = 0;
   mounted() {
     if (!this.queryId) {
       this.$utils.helper.toast(this, {
@@ -468,6 +470,16 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.deposit = this.getAssetById(this.collateral?.gem);
     this.mint = this.getAssetById(this.collateral?.dai);
     this.updateWalletAsset();
+    this.intervalid = (setInterval(async () => {
+      await this.syncMarkets();
+      this.updateWalletAsset();
+      this.collateral = this.getCollateral(this.queryId);
+    }, 5000) as any) as number;
+  }
+
+  destroyed() {
+    clearInterval(0);
+    clearInterval(this.intervalid);
   }
 
   focusChange(focus) {
@@ -480,10 +492,6 @@ export default class GenerateVault extends Mixins(mixins.page) {
 
   handleBack() {
     this.$router.back();
-  }
-
-  destroy() {
-    clearInterval(0);
   }
 
   updateWalletAsset(collateral = this.collateral) {

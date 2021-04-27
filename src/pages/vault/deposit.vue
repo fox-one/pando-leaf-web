@@ -77,6 +77,7 @@ export default class DepositForm extends Mixins(mixins.page) {
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncWalletAsset") syncWalletAsset;
   @Action("global/syncMyVaults") syncMyVaults;
+  @Action("global/syncMarkets") syncMarkets;
   @State((state) => state.auth.id) user_id!: string;
 
   vaultStatsType = VatAction.VatDeposit;
@@ -196,6 +197,7 @@ export default class DepositForm extends Mixins(mixins.page) {
     ];
   }
 
+  intervalid = 0;
   mounted() {
     if (!this.vaultId) {
       this.$utils.helper.toast(this, {
@@ -209,9 +211,16 @@ export default class DepositForm extends Mixins(mixins.page) {
     this.collateral = this.getCollateral(this.vault.collateral_id);
     this.asset = this.getAssetById(this.collateral.gem);
     this.updateWalletAsset();
+    this.intervalid = (setInterval(async () => {
+      await this.syncMyVaults();
+      await this.syncMarkets();
+      this.vault = this.getVault(this.vaultId);
+      this.collateral = this.getCollateral(this.vault.collateral_id);
+    }, 5000) as any) as number;
   }
 
-  destroy() {
+  destroyed() {
+    clearInterval(this.intervalid);
     clearInterval(0);
   }
 
