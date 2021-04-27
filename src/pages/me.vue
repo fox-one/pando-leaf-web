@@ -5,7 +5,7 @@
         v-if="!isLogged"
         rounded
         large
-        block
+        class="ma-4"
         depressed
         color="primary"
         @click="handleLogin"
