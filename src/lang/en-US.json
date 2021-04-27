@@ -140,6 +140,15 @@
   "button.pay-back":"Pay back",
   "button.detail":"Details",
 
+  "notice.title": "Liquidation Warning",
+  "notice.current-rate":"Collateral rate after transaction",
+  "notice.liquidation-rate":"Liquidation ratio, reaches this you will be liquidation",
+  "notice.cancel": "Cancel",
+  "notice.confirm": "Continue",
+  "notice.content.p1": "The current collateral rate has reached ",
+  "notice.content.p2": ", After this transaction is executed, collateral rate will close to the liquidation rate, when the collateral rate reaches the liquidation rate, the collateral will be liquidation shortly.",
+  "notice.content.p3": "YOU CAN'T UNDO THE TRANSACTION, PLEASE CONFIRM CAREFULLY BEFORE PAYING.",
+
   "tip.no-collaterals":"Obtaining collaterals list data, please wait a moment or try refreshing the page.",
   
   "errorcode.-1": "NETWORK ERROR",

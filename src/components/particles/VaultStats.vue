@@ -29,6 +29,7 @@ import { Getter } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
 import { VatAction } from "~/types";
 import ValueChangedInfoGridItem from "~/components/particles/ValueChangedInfoGridItem.vue";
+import BigNumber from "bignumber.js";
 
 @Component({
   components: {
@@ -222,9 +223,17 @@ export default class VaultStats extends Vue {
         title: this.$t("form.info.symbol-debt", {
           symbol: this.debtAsset?.symbol,
         }),
-        value: this.$utils.number.toShort(this.meta.debtAmount),
+        value: this.$utils.number.toPrecision(
+          this.meta.debtAmount,
+          8,
+          BigNumber.ROUND_UP
+        ),
         valueUnit: this.debtAsset?.symbol,
-        changedValue: this.$utils.number.toShort(this.meta.changedAmount),
+        changedValue: this.$utils.number.toPrecision(
+          this.meta.changedAmount,
+          8,
+          BigNumber.ROUND_UP
+        ),
         showChange: this.showChange && this.showDebtChange,
       });
     }

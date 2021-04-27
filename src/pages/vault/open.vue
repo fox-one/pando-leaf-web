@@ -114,7 +114,7 @@
         type="primary"
         class="mt-5"
         :disabled="validate.disabled"
-        @click="confirm"
+        @click="requestConfirm"
       >
         {{ $t("form.open.button.confirm") }}
       </f-button>
@@ -140,6 +140,13 @@
       :show.sync="showSelectModal"
       :current.sync="collateral"
     />
+
+    <base-confirm-modal
+      ref="cmodal"
+      @confirm="confirm"
+      :current-rate="this.meta.collateralizationRatio * 100"
+      :liquidation-rate="Number(this.collateral.mat) * 100"
+    />
     <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
     <div class="mx-4 f-caption">
       Price of the pair tokens fluctuates due to change in supply and demand of
@@ -150,7 +157,7 @@
 </template>
 
 <script lang="ts" scoped>
-import { Component, Mixins, Watch } from "vue-property-decorator";
+import { Component, Mixins, Ref, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { Action, Getter, State } from "vuex-class";
 import { IAsset, ICollateral } from "~/services/types/vo";
@@ -170,6 +177,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
   @Action("global/syncWalletAsset") syncWalletAsset;
   @Action("global/syncMyVaults") syncMyVaults;
   @State((state) => state.auth.id) user_id!: string;
+  @Ref("cmodal") cmodal;
 
   depositAmount = "";
   depositTips = false;
@@ -487,6 +495,16 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.$utils.helper.requestLogin(this);
   }
 
+  requestConfirm() {
+    if (
+      (this.meta.collateralizationRatio - Number(this.collateral.mat)) * 100 <
+      61
+    ) {
+      this.cmodal.show();
+      return;
+    }
+    this.confirm();
+  }
   follow_id = "";
   async confirm() {
     const request = {
