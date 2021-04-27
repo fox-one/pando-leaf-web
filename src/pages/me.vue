@@ -38,7 +38,7 @@
           <v-btn
             class="mt-4"
             color="primary"
-            @click="generateVault"
+            @click="openNewVault"
             :min-width="220"
             rounded
             depressed
@@ -228,7 +228,7 @@ export default class Me extends Mixins(mixins.page) {
   openNewVault() {
     if (this.collaterals.length === 0) {
       this.$utils.helper.toast(this, {
-        message: `this.$t('tip.no-collaterals')`,
+        message: `${this.$t("tip.no-collaterals")}`,
       });
       return;
     }
@@ -237,18 +237,6 @@ export default class Me extends Mixins(mixins.page) {
       return;
     }
     this.showSelectModal = true;
-  }
-
-  mockVaults() {
-    this.$store.commit("global/SET_MY_VAULTS", [
-      {
-        id: "e40060ae-fb63-3b6b-8c17-72550ffa5a5d",
-        created_at: "2021-03-03T08:56:34Z",
-        collateral_id: "176f8903-27c4-5a47-aaf1-1a50b9d3e4e1",
-        ink: "1", // Total Deposited
-        art: "120", // Total Normalised Debt, debt = art * rate
-      } as IVault,
-    ]);
   }
 
   onSelect(col) {
