@@ -265,8 +265,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
     const stabilityFee =
       this.$utils.number.toPrecision(Number(this.collateral.duty) - 1) * 100;
     // 该类型最大可用额
-    const maxToGenerate =
-      Number(this.collateral.line) - Number(this.collateral.debt);
+    const maxToGenerate = this.$utils.collateral.maxAvailable(this.collateral);
     const maxToGenerateText = this.$utils.number.toPrecision(maxToGenerate);
     // 实际最大可用
     let maxAvailable =
@@ -315,6 +314,18 @@ export default class GenerateVault extends Mixins(mixins.page) {
     }
     if (this.depositAmount !== "" && this.mintAmount !== "") {
       const ma = Number(this.mintAmount || "0");
+      const max = this.$utils.collateral.maxAvailable(this.collateral);
+      if (ma > max) {
+        // mint 大于最大值
+        return {
+          disabled: true,
+          type: "error",
+          tip: this.$t("form.validate.max-debt", {
+            amount: this.$utils.number.toPrecision(max),
+            symbol: this.mintSymbol,
+          }),
+        };
+      }
       if (ma < Number(this.collateral.dust)) {
         // mint 小于最小值
         return {
@@ -322,20 +333,6 @@ export default class GenerateVault extends Mixins(mixins.page) {
           type: "error",
           tip: this.$t("form.validate.minimum-debt", {
             amount: this.collateral.dust,
-            symbol: this.mintSymbol,
-          }),
-        };
-      }
-      const max =
-        Number(this.collateral.line || "0") -
-        Number(this.collateral.debt || "0");
-      if (ma > max) {
-        // mint 大于最大值
-        return {
-          disabled: true,
-          type: "error",
-          tip: this.$t("form.validate.max-debt", {
-            amount: max,
             symbol: this.mintSymbol,
           }),
         };
@@ -431,7 +428,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
         valueUnit: "%",
       },
       {
-        title: this.$t("form.info.max-available-to-generate"), // line- debt
+        title: this.$t("form.info.market-debt-ceiling"), // line- debt
         value: this.meta.maxToGenerate,
         valueUnit: this.mint?.symbol,
       },

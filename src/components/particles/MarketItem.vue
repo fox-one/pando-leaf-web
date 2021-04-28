@@ -71,16 +71,15 @@ export default class MarketItem extends Vue {
   get meta() {
     const collateralValue =
       Number(this.collateral.ink) * Number(this.collateral.price);
-    const available =
-      Number(this.collateral.line) - Number(this.collateral.debt);
-    const rate = collateralValue / Number(this.collateral.debt);
+    const available = this.$utils.collateral.maxAvailable(this.collateral);
+    const rate = collateralValue / Number(this.collateral.art);
     return {
       name: this.collateral.name,
       price: this.collateral.price,
       available: this.$utils.number.toShort(available),
       rate: this.$utils.number.toFixed(rate * 100, 2),
       collateralAmount: this.collateral.ink,
-      debtAmount: this.collateral.debt,
+      debtAmount: Number(this.collateral.art) * Number(this.collateral.rate),
       collateralValue: "$" + this.$utils.number.toPrecision(collateralValue),
     };
   }

@@ -175,7 +175,8 @@ export default class MyVaultItem extends Vue {
     const mininumRatio = Number(this.collateral?.mat);
     const max = (collateralAmount * price) / mininumRatio - debtAmount;
     if (max < 0) return "0";
-    return this.$utils.number.toPrecision(max);
+    const catMax = this.$utils.collateral.maxAvailable(this.collateral);
+    return this.$utils.number.toPrecision(Math.min(max, catMax));
   }
 
   get maxAvailableToWithdraw() {

@@ -113,7 +113,12 @@ export default class GenerateForm extends Mixins(mixins.page) {
     const mininumRatio = Number(this.collateral?.mat);
     const max =
       (collateralAmount * price) / mininumRatio - debtAmount - 0.00000001;
-    return this.$utils.number.toPrecision(max, 8, BigNumber.ROUND_DOWN);
+    const catMax = this.$utils.collateral.maxAvailable(this.collateral);
+    return this.$utils.number.toPrecision(
+      Math.min(max, catMax),
+      8,
+      BigNumber.ROUND_DOWN
+    );
   }
 
   get assetSymbol() {
@@ -141,6 +146,19 @@ export default class GenerateForm extends Mixins(mixins.page) {
         disabled: true,
         type: "error",
         tip: this.$t("form.validate.amount-zero"),
+      };
+    }
+    const ma = Number(this.amount || "0");
+    const max = this.$utils.collateral.maxAvailable(this.collateral);
+    if (ma > max) {
+      // mint 大于最大值
+      return {
+        disabled: true,
+        type: "error",
+        tip: this.$t("form.validate.max-debt", {
+          amount: this.$utils.number.toPrecision(max),
+          symbol: this.assetSymbol,
+        }),
       };
     }
     if (this.isLogged) {
