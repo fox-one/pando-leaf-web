@@ -1,6 +1,5 @@
 {
   "app-name": "Pando",
-  "connect.wallet": "连接钱包",
   "empty": "没有数据",
   "common.qr": "请使用 Mixin Messenger 或 新生大讲堂 App 扫码支付",
   "common.close":"关闭",
@@ -17,7 +16,19 @@
   "common.amount":"数量",
   "common.detail":"详情",
   "common.checking-payment":"查询结果中...",
-  
+
+  "connect.fennec": "连接到 Fennec",
+  "connect.fennec.detected": "检测到 Fennec，点击按钮连接",
+  "connect.others": "连接其它钱包",
+  "connect.wallet": "连接钱包",
+  "connect.wallets": "连接钱包",
+  "connect.wallets.hint": "点击连接到你的 Mixin Network 钱包",
+  "initing": "初始化",
+  "install": "安装",
+  "install.wallets.hint": "没有钱包？选择一个安装",
+  "wallet.category.browser": "Chrome 浏览器钱包",
+  "wallet.category.mobile": "iOS & 安卓钱包",
+
   "tab.me":"我的",
   "tab.market":"市场",
 

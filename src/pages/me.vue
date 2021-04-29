@@ -1,17 +1,16 @@
 <template>
   <v-container class="pa-0" fluid>
     <v-layout column fill-height class="pa-0 custom-info-grid">
-      <v-btn
+      <base-connect-wallet-btn
         v-if="!isLogged"
         rounded
         large
-        class="ma-4"
         depressed
         color="primary"
         @click="handleLogin"
       >
         {{ $t("connect.wallet") }}
-      </v-btn>
+      </base-connect-wallet-btn>
       <v-layout justify-space-between>
         <v-layout v-if="isLogged" column class="pa-4 f-bg-greyscale-7">
           <div class="f-caption f-greyscale-3">
@@ -55,6 +54,7 @@
             v-for="vault in sortedMyVaults"
             :vault="vault"
           ></my-vault-item>
+          300.0223
         </v-expansion-panels>
         <div style="height: 60px"></div>
         <div class="version-block f-caption text--secondary">{{ version }}</div>
@@ -196,7 +196,7 @@ export default class Me extends Mixins(mixins.page) {
   }
 
   mounted() {
-    this.checkLogin();
+    // this.checkLogin();
     try {
       this.syncMyVaults();
     } catch (e) {

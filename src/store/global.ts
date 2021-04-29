@@ -1,12 +1,6 @@
 import Vue from "vue";
 import { MutationTree, GetterTree, ActionTree } from "vuex";
-import {
-  IAsset,
-  ICollateral,
-  IMixinAsset,
-  ITransaction,
-  IVault,
-} from "~/services/types/vo";
+import { IAsset, ICollateral, IMixinAsset, IVault } from "~/services/types/vo";
 
 const state = () => ({
   collaterals: [],
@@ -80,6 +74,19 @@ const actions: ActionTree<AssetsState, any> = {
     const response = await this.$http.getAssetFromMixin(id);
     commit("SET_WALLET_ASSET", { id, data: response?.data });
   },
+
+  async loadFennecWalletAssets({ commit }, { fennec }) {
+    const walletAssets = await fennec?.getAssets();
+    commit("SET_WALLET_ASSETS", walletAssets || []);
+  },
+
+  async loadFennecWalletAsset({ commit }, { fennec, assetId }) {
+    const walletAsset = await fennec?.getAsset(assetId);
+    if (walletAsset) {
+      commit("SET_WALLET_ASSET", { id: assetId, walletAsset });
+    }
+  },
+
   async syncMyVaults({ commit }) {
     const response = await this.$http.getMyVaults();
     commit("SET_MY_VAULTS", response?.data?.vaults);

@@ -13,6 +13,7 @@ import { initApp } from "./app";
 import { v4 as uuid } from "uuid";
 import number from "./number";
 import { RISK } from "~/types";
+import { IActionsParams } from "~/services/types/dto";
 
 export function toast(vue: Vue, data: { message: string; color?: string }) {
   vue.$store.commit("app/SET_TOAST", data);
@@ -61,6 +62,12 @@ export function trimDecimalZero(num): string {
   return num;
 }
 
+export function isDesktop() {
+  return !navigator.userAgent.match(
+    /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
+  );
+}
+
 export function getMixinContext() {
   let ctx: any = {};
   const win: any = window;
@@ -101,8 +108,8 @@ export function isDarkTheme() {
   return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
 }
 
-export function getToken(app) {
-  return app.store.getters["auth/getToken"];
+export function getToken(store) {
+  return store.getters["auth/getToken"];
 }
 
 export function getLocale() {
@@ -126,8 +133,22 @@ export function genPaymentUrl(data: {
   return `mixin://pay?recipient=${recipient}&asset=${assetId}&amount=${amount}&trace=${traceId}&memo=${memo}`;
 }
 
+export async function requestPayment(vm: Vue, params: IActionsParams) {
+  const resp = await vm.$http.postActions(params);
+  // connected to Fennec?
+  if (vm.$fennec.connected) {
+    return await vm.$fennec.multisigsPayment({ code: resp?.data?.code });
+  }
+  // not connected to Fennec
+  if (vm.$utils.helper.isDesktop()) {
+    return resp.data?.code_url;
+  } else {
+    window.location.href = `${resp.data?.code_url}`;
+  }
+}
+
 export function requestLogin(vue) {
-  if (NODE_ENV === "development" && APP_TOKEN) {
+  if (APP_TOKEN) {
     vue.$store?.commit("auth/SET_TOKEN", {
       token: APP_TOKEN,
       scope: APP_SCOPE,
@@ -238,4 +259,27 @@ export function mixinImageResize(logo: string, size = 32 * 3) {
     return logo.replace(reg, `=s${size}`);
   }
   return logo;
+}
+
+export async function loadWalletAssets(vue: Vue) {
+  const store = vue.$store;
+  if (vue.$fennec.connected) {
+    return store.dispatch("global/loadFennecWalletAssets", {
+      fennec: vue.$fennec,
+    });
+  } else {
+    return store.dispatch("global/loadMixinWalletAssets");
+  }
+}
+
+export async function loadWalletAsset(vue: Vue, assetId: string) {
+  const store = vue.$store;
+  if (vue.$fennec.connected) {
+    return store.dispatch("global/loadFennecWalletAsset", {
+      fennec: vue.$fennec,
+      assetId,
+    });
+  } else {
+    return store.dispatch("global/loadMixinWalletAsset", assetId);
+  }
 }

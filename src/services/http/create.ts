@@ -46,7 +46,16 @@ function generateStructureInterceptor(app: NuxtAppOptions) {
 function generateAuthInterceptor(app: NuxtAppOptions) {
   return [
     (configs) => {
-      const token = app.$utils.helper.getToken(app);
+      let token = "";
+      if (configs.token) {
+        token = configs.token;
+      } else {
+        if (app.$fennec.connected) {
+          token = app.$fennec.getToken();
+        } else {
+          token = app.$utils.helper.getToken(app.store);
+        }
+      }
       if (token) {
         configs.headers.Authorization = `Bearer ${token}`;
       }

@@ -8,6 +8,7 @@ const state = () => ({
   id: "",
   name: "",
   avatar: "",
+  fennecToken: "",
 });
 
 export type AuthState = {
@@ -16,11 +17,12 @@ export type AuthState = {
   id: string;
   name: string;
   avatar: string;
+  fennecToken: string;
 };
 
 const getters: GetterTree<AuthState, any> = {
   isLogged(state) {
-    return Boolean(state.token);
+    return Boolean(state.token) || Boolean(state.fennecToken);
   },
   getToken(state) {
     return state.token;
@@ -37,6 +39,9 @@ const mutations: MutationTree<AuthState> = {
     state.id = data.id;
     state.name = data.name;
     state.avatar = data.avatar;
+  },
+  SET_FENNEC_TOKEN(state, data: { token: string; scope: string }) {
+    state.fennecToken = data.token;
   },
 };
 

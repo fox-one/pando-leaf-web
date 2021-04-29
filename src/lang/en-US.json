@@ -1,6 +1,5 @@
 {
   "app-name": "Pando",
-  "connect.wallet": "Connect Wallet",
   "empty": "No Data",
   "common.qr": "Please use Mixin Messenger or Reborn Platform scan to pay.",
   "common.close":"Close",
@@ -17,6 +16,18 @@
   "common.amount":"Amount",
   "common.detail":"Detail",
   "common.checking-payment":"Checking...",
+
+  "connect.fennec": "Connect Fennec",
+  "connect.fennec.detected": "Fennec detected. Tap to connect",
+  "connect.others": "Connect other wallets",
+  "connect.wallet": "Connect Wallet",
+  "connect.wallets": "Connect Wallet",
+  "connect.wallets.hint": "Tap to connect with your Mixin Network wallets",
+  "initing": "Initiating",
+  "install": "Install",
+  "install.wallets.hint": "No wallet yet? Install one of the following wallets",
+  "wallet.category.browser": "Chrome Extension Wallet",
+  "wallet.category.mobile": "iOS & Android Wallet",
 
   "tab.me":"Me",
   "tab.market":"Market",

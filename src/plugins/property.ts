@@ -4,6 +4,7 @@ import createWsService from "~/services/socket/create";
 import utils from "@/utils";
 import { CONFIG, APP_TOKEN, NODE_ENV, APP_SCOPE } from "~/constants";
 import Socket from "~/utils/socket";
+import Fennec from "~/utils/fennec";
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -12,6 +13,7 @@ declare module "vue/types/vue" {
     $ws: ReturnType<typeof createWsService>;
     $socket: Socket;
     $icons: typeof utils.icons;
+    $fennec: Fennec;
   }
 }
 
@@ -40,6 +42,7 @@ const plugin: Plugin = ({ app }, inject) => {
   // inject("ws", createWsService(app, CONFIG.WS_BASE));
   inject("utils", utils);
   inject("icons", utils.icons);
+  inject("fennec", new Fennec(app));
   if (NODE_ENV === "development" && APP_TOKEN) {
     app.store?.commit("auth/SET_TOKEN", { token: APP_TOKEN, scope: APP_SCOPE });
   }
