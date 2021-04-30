@@ -165,6 +165,7 @@ import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus } from "~/types";
 import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
 import BigNumber from "bignumber.js";
+import { isDesktop } from "~/utils/helper";
 
 @Component({
   components: { MarketSelectModal },
@@ -174,7 +175,6 @@ export default class GenerateVault extends Mixins(mixins.page) {
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getWalletAssetById") getWalletAssetById;
-  @Action("global/syncWalletAsset") syncWalletAsset;
   @Action("global/syncMyVaults") syncMyVaults;
   @Action("global/syncMarkets") syncMarkets;
   @State((state) => state.auth.id) user_id!: string;
@@ -492,8 +492,8 @@ export default class GenerateVault extends Mixins(mixins.page) {
   }
 
   updateWalletAsset(collateral = this.collateral) {
-    this.syncWalletAsset(collateral.gem);
-    this.syncWalletAsset(collateral.dai);
+    this.$utils.helper.loadWalletAsset(this, collateral.gem);
+    this.$utils.helper.loadWalletAsset(this, collateral.dai);
   }
 
   requestLogin() {
@@ -526,20 +526,17 @@ export default class GenerateVault extends Mixins(mixins.page) {
         this.mintAmount,
       ],
     } as IActionsParams;
-    const resposne = await this.$http.postActions(request);
-    if (resposne.data?.code_url) {
-      window.location.assign(resposne.data.code_url);
-      if (!this.$utils.helper.isMixin()) {
-        this.$utils.helper.showPayDialog(this, {
-          paymentUrl: resposne.data.code_url,
-        });
-      } else {
-        this.$utils.helper.showPaying(this, {
-          timer: this.$utils.helper.uuidV4(),
-        });
-      }
-      this.checkTransaction(this.follow_id);
+    const url = await this.$utils.helper.requestPayment(this, request);
+    if (url && isDesktop() && !this.$fennec.connected) {
+      this.$utils.helper.showPayDialog(this, {
+        paymentUrl: url,
+      });
+    } else {
+      this.$utils.helper.showPaying(this, {
+        timer: this.$utils.helper.uuidV4(),
+      });
     }
+    this.checkTransaction(this.follow_id);
   }
 
   checkTransaction(follow_id: string) {

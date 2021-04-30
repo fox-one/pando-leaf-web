@@ -73,6 +73,7 @@ import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus, VatAction } from "~/types";
 import { ACTION_ASSET_ID } from "~/constants";
 import number from "~/utils/number";
+import { isDesktop } from "~/utils/helper";
 
 @Component({
   components: {
@@ -85,7 +86,6 @@ export default class WithdrawForm extends Mixins(mixins.page) {
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getVault") getVault;
   @Getter("global/getWalletAssetById") getWalletAssetById;
-  @Action("global/syncWalletAsset") syncWalletAsset;
   @Action("global/syncMarkets") syncMarkets;
   @Action("global/syncMyVaults") syncMyVaults;
   @State((state) => state.auth.id) user_id!: string;
@@ -297,8 +297,8 @@ export default class WithdrawForm extends Mixins(mixins.page) {
   }
 
   updateWalletAsset() {
-    this.syncWalletAsset(this.collateral.gem);
-    this.syncWalletAsset(this.collateral.dai);
+    this.$utils.helper.loadWalletAsset(this, this.collateral.gem);
+    this.$utils.helper.loadWalletAsset(this, this.collateral.dai);
   }
 
   requestLogin() {
@@ -322,20 +322,17 @@ export default class WithdrawForm extends Mixins(mixins.page) {
       asset_id: ACTION_ASSET_ID,
       parameters: ["bit", "33", "uuid", this.vaultId, "decimal", this.amount],
     } as IActionsParams;
-    const resposne = await this.$http.postActions(request);
-    if (resposne.data?.code_url) {
-      window.location.assign(resposne.data.code_url);
-      if (!this.$utils.helper.isMixin()) {
-        this.$utils.helper.showPayDialog(this, {
-          paymentUrl: resposne.data.code_url,
-        });
-      } else {
-        this.$utils.helper.showPaying(this, {
-          timer: this.$utils.helper.uuidV4(),
-        });
-      }
-      this.checkTransaction(this.follow_id);
+    const url = await this.$utils.helper.requestPayment(this, request);
+    if (url && isDesktop() && !this.$fennec.connected) {
+      this.$utils.helper.showPayDialog(this, {
+        paymentUrl: url,
+      });
+    } else {
+      this.$utils.helper.showPaying(this, {
+        timer: this.$utils.helper.uuidV4(),
+      });
     }
+    this.checkTransaction(this.follow_id);
   }
 
   checkTransaction(follow_id: string) {

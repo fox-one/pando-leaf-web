@@ -21,8 +21,6 @@ export default class VaultPage extends Mixins(PageView) {
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getVault") getVault;
-  @Action("global/syncWallets") syncWallets;
-  @Action("global/syncWalletAsset") syncWalletAsset;
   @Action("global/syncMarkets") syncMarkets;
 
   beforeMount() {
@@ -52,11 +50,11 @@ export default class VaultPage extends Mixins(PageView) {
   }
 
   updateWalletAssets() {
-    this.syncWallets();
+    this.$utils.helper.loadWalletAssets(this);
   }
 
   updateVaultsAssets() {
-    this.syncWalletAsset(this.collateralAsset?.id);
-    this.syncWalletAsset(this.debtAsset?.id);
+    this.$utils.helper.loadWalletAsset(this, this.collateralAsset?.id);
+    this.$utils.helper.loadWalletAsset(this, this.debtAsset?.id);
   }
 }

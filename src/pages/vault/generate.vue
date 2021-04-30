@@ -86,7 +86,6 @@ export default class GenerateForm extends Mixins(mixins.page) {
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getVault") getVault;
   @Getter("global/getWalletAssetById") getWalletAssetById;
-  @Action("global/syncWalletAsset") syncWalletAsset;
   @Action("global/syncMyVaults") syncMyVaults;
   @Action("global/syncMarkets") syncMarkets;
   @State((state) => state.auth.id) user_id!: string;
@@ -292,8 +291,8 @@ export default class GenerateForm extends Mixins(mixins.page) {
   }
 
   updateWalletAsset() {
-    this.syncWalletAsset(this.collateral.gem);
-    this.syncWalletAsset(this.collateral.dai);
+    this.$utils.helper.loadWalletAsset(this, this.collateral.gem);
+    this.$utils.helper.loadWalletAsset(this, this.collateral.dai);
   }
 
   requestLogin() {

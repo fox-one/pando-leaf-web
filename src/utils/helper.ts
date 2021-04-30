@@ -268,7 +268,7 @@ export async function loadWalletAssets(vue: Vue) {
       fennec: vue.$fennec,
     });
   } else {
-    return store.dispatch("global/loadMixinWalletAssets");
+    return store.dispatch("global/syncWallets");
   }
 }
 
@@ -280,6 +280,6 @@ export async function loadWalletAsset(vue: Vue, assetId: string) {
       assetId,
     });
   } else {
-    return store.dispatch("global/loadMixinWalletAsset", assetId);
+    return store.dispatch("global/syncWalletAsset", assetId);
   }
 }

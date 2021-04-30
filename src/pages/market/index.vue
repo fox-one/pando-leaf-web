@@ -65,7 +65,6 @@ export default class Market extends Mixins(mixins.page) {
   @State((state) => state.global.collaterals) collaterals!: ICollateral[];
   @Getter("auth/isLogged") isLogged;
   @Getter("global/getAssetById") getAssetById;
-  @Action("global/syncWallets") syncWallets;
   get appbar() {
     const state = this.$store.state;
     const appbar = state.app.appbar;
@@ -121,7 +120,7 @@ export default class Market extends Mixins(mixins.page) {
 
   mounted() {
     if (this.isLogged) {
-      this.syncWallets();
+      this.$utils.helper.loadWalletAssets(this);
     }
   }
 }
