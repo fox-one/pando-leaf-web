@@ -3,7 +3,7 @@
     <default-layout-app-bar />
     <v-main>
       <!-- <base-ws-connect-bar /> -->
-      <nuxt style="max-width: 660px" />
+      <nuxt style="max-width: 1200px" />
     </v-main>
     <!-- <default-layout-bottom-nav /> -->
     <default-layout-modals />
@@ -15,6 +15,7 @@ import { Component, Vue } from "vue-property-decorator";
 import AppBar from "./AppBar.vue";
 import BottomNav from "./BottomNav.vue";
 import Modals from "./Modals.vue";
+import vconsole from "vconsole";
 
 @Component({
   name: "default-layout",
@@ -24,6 +25,10 @@ import Modals from "./Modals.vue";
     "default-layout-bottom-nav": BottomNav,
   },
 })
-class DefaultLayout extends Vue {}
+class DefaultLayout extends Vue {
+  mounted() {
+    var vConsole = new vconsole();
+  }
+}
 export default DefaultLayout;
 </script>

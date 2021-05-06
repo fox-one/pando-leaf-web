@@ -27,7 +27,9 @@
           <h2>{{ total.debts }}</h2>
         </v-layout>
       </v-layout>
-
+      <div class="py-2" v-if="loading">
+        <f-loading :loading="loading"></f-loading>
+      </div>
       <v-container v-if="isLogged && !haveVault" fill-height>
         <v-layout column align-center justify-center>
           <h3 class="f-greyscale-2">{{ $t("me.no-vault-1") }}</h3>
@@ -54,7 +56,6 @@
             v-for="vault in sortedMyVaults"
             :vault="vault"
           ></my-vault-item>
-          300.0223
         </v-expansion-panels>
         <div style="height: 60px"></div>
         <div class="version-block f-caption text--secondary">{{ version }}</div>
@@ -197,13 +198,15 @@ export default class Me extends Mixins(mixins.page) {
 
   mounted() {
     // this.checkLogin();
-    try {
-      this.syncMyVaults();
-    } catch (e) {
-      this.loading = false;
-    } finally {
-      this.loading = false;
-    }
+    this.loading = true;
+    this.syncMyVaults()
+      .then((res) => {
+        this.loading = false;
+      })
+      .catch((err) => {
+        console.log(this.isLogged);
+        this.loading = false;
+      });
   }
 
   checkLogin() {

@@ -23,6 +23,7 @@ function generateStructureInterceptor(app: NuxtAppOptions) {
       if (res?.data?.error?.code === 401) {
         if (res.data.error.code === 401) {
           app.store?.dispatch("auth/logout");
+          app.store?.dispatch("global/clear");
         }
         return Promise.reject(res.data.error);
       }
@@ -33,6 +34,7 @@ function generateStructureInterceptor(app: NuxtAppOptions) {
         const status = error.response.status;
         if (status === 401) {
           app.store?.dispatch("auth/logout");
+          app.store?.dispatch("global/clear");
         }
         const { code, message } = error.response.data;
         return Promise.reject({ status, code, message });

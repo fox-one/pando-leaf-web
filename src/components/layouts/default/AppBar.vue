@@ -51,8 +51,10 @@ class DefaultLayoutAppBar extends Vue {
   }
 
   handleBack() {
-    if (window.history.length <= 1) {
-      this.$router.push({ name: "index" });
+    console.log("handleBack", window.history.length);
+    if (window.history.length <= 2) {
+      this.$router.options;
+      this.$router.replace({ name: "index" });
     } else {
       this.$router.back();
     }

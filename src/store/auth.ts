@@ -39,6 +39,7 @@ const mutations: MutationTree<AuthState> = {
     state.id = data.id;
     state.name = data.name;
     state.avatar = data.avatar;
+    state.fennecToken = "";
   },
   SET_FENNEC_TOKEN(state, data: { token: string; scope: string }) {
     state.fennecToken = data.token;
@@ -51,8 +52,13 @@ const actions: ActionTree<AuthState, any> = {
     commit("SET_TOKEN", res.data);
   },
   logout({ dispatch, commit }) {
-    commit("SET_TOKEN", { token: "", scope: "", id: "", name: "", avatar: "" });
-    commit("global/clear");
+    commit("SET_TOKEN", {
+      token: "",
+      scope: "",
+      id: "",
+      name: "",
+      avatar: "",
+    });
   },
 };
 

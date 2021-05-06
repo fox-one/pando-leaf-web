@@ -1,13 +1,18 @@
 import Vue from "vue";
 import { MutationTree, GetterTree, ActionTree } from "vuex";
-import { IAsset, ICollateral, IMixinAsset, IVault } from "~/services/types/vo";
+import {
+  IAsset,
+  ICollateral,
+  IMixinAsset,
+  ITransaction,
+  IVault,
+} from "~/services/types/vo";
 
 const state = () => ({
   collaterals: [],
   walletAssets: {},
   assets: [],
   myVaults: [],
-  histories: [],
 });
 
 export type AssetsState = {
@@ -55,6 +60,12 @@ const mutations: MutationTree<AssetsState> = {
   SET_MY_VAULTS(state, data: IVault[]) {
     state.myVaults = data;
   },
+  CLEAR(state) {
+    state.collaterals = [];
+    state.myVaults = [];
+    state.walletAssets = new Map();
+    state.assets = [];
+  },
 };
 
 const actions: ActionTree<AssetsState, any> = {
@@ -92,7 +103,7 @@ const actions: ActionTree<AssetsState, any> = {
     commit("SET_MY_VAULTS", response?.data?.vaults);
   },
   clear({ commit }) {
-    commit("SET_WALLET_ASSETS", []);
+    commit("CLEAR");
   },
 };
 

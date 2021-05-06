@@ -17,7 +17,7 @@ const config: NuxtConfig = {
       },
       {
         name: "format-detection",
-        content: "telephone=no, date=no, address=no, email=no, url=no",
+        content: "telephone=no,email=no,address=no",
       },
       {
         hid: "description",

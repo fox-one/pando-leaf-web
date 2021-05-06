@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, Ref } from "vue-property-decorator";
 import { Getter } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
 import { VatAction } from "~/types";
@@ -172,6 +172,33 @@ export default class VaultStats extends Vue {
       changedRisk,
       changedAmount,
     };
+  }
+
+  updateInfoGrid = () => {
+    const fInfoGrid = document.getElementsByClassName("f-info-grid");
+    const fInner = document.getElementsByClassName("f-info-grid-inner");
+    const gridWidth = fInfoGrid[0].clientWidth;
+    fInner[0].setAttribute(
+      "style",
+      `transform: translateX(0vw); width: ${gridWidth}px;`
+    );
+    const items = document.getElementsByClassName("f-info-grid-item");
+    let itemWidth = gridWidth / 2;
+    if (gridWidth >= 768) itemWidth = gridWidth * 0.3;
+    if (gridWidth >= 1200) itemWidth = gridWidth / 4;
+    for (let index = 0; index < items.length; index++) {
+      const element = items[index];
+      element.setAttribute("style", `width:${itemWidth}px`);
+    }
+  };
+
+  mounted() {
+    this.updateInfoGrid();
+    window.addEventListener("resize", this.updateInfoGrid);
+  }
+
+  beforeDestroy() {
+    window.removeEventListener("resize", this.updateInfoGrid);
   }
 
   get infos() {
