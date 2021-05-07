@@ -107,6 +107,21 @@
         >{{ mintSymbol }}
       </div>
 
+      <v-slider
+        v-model="percent"
+        :tick-labels="ticksLabels"
+        ticks="always"
+        :tick-size="16"
+        track-color="#EEEEEE"
+        background-color="transparent"
+        :color="thumbColor"
+        :thumb-color="thumbColor"
+        step="1"
+        class="percent-slider ma-4"
+        :min="0"
+        :max="100"
+      ></v-slider>
+
       <f-tip :type="validate.type" v-if="validate.tip !== null">{{
         validate.tip
       }}</f-tip>
@@ -189,11 +204,28 @@ export default class GenerateVault extends Mixins(mixins.page) {
   mintTips = false;
   selectable = true;
   precision = 8;
+  percent = 30;
 
   showSelectModal = false;
   collateral = {} as ICollateral;
   deposit = ({} as any) as IAsset;
   mint = ({} as any) as IAsset;
+
+  get ticksLabels() {
+    return Array.apply(null, { length: 101 } as any).map((v, k) => {
+      if (k === 60 || k === 80 || k === 100) {
+        return `${k}%`;
+      }
+
+      return "";
+    });
+  }
+
+  get thumbColor() {
+    if (this.percent <= 60) return "#00ceb7";
+    if (this.percent < 80) return "#f7a34a";
+    return "#e23a3a";
+  }
 
   get depositBalance() {
     return this.getWalletAssetById(this.deposit?.id)?.balance;
@@ -445,6 +477,11 @@ export default class GenerateVault extends Mixins(mixins.page) {
     ];
   }
 
+  @Watch("percent")
+  onPercent(newVal) {
+    console.log("percent", newVal);
+  }
+
   @Watch("collateral")
   onCollateralChange(newVal, oldVal) {
     if (newVal?.id === oldVal?.id) return;
@@ -574,5 +611,48 @@ export default class GenerateVault extends Mixins(mixins.page) {
 }
 .icon-tips {
   vertical-align: middle;
+}
+.percent-slider {
+  ::v-deep {
+    .v-slider__track-container {
+      height: 8px;
+    }
+    .v-slider__thumb {
+      width: 16px;
+      height: 16px;
+      left: -8px;
+    }
+    .v-slider__tick {
+      opacity: 0;
+      .v-slider__tick-label {
+        transform: translate(-8px, 8px) !important;
+      }
+    }
+    .v-slider__tick:nth-of-type(61n) {
+      opacity: 1;
+      width: 16px !important;
+      height: 16px !important;
+      border-radius: 100%;
+      background-color: #00ceb7;
+      top: calc(50% - 8px) !important;
+    }
+    .v-slider__tick:nth-of-type(81n) {
+      opacity: 1;
+      width: 16px !important;
+      height: 16px !important;
+      border-radius: 100%;
+      background-color: #f7a34a;
+      top: calc(50% - 8px) !important;
+      left: 1px;
+    }
+    .v-slider__tick:nth-of-type(101n) {
+      opacity: 1;
+      width: 16px !important;
+      height: 16px !important;
+      border-radius: 100%;
+      background-color: #e23a3a;
+      top: calc(50% - 8px) !important;
+    }
+  }
 }
 </style>
