@@ -63,7 +63,7 @@ const actions: ActionTree<AuthState, any> = {
       avatar: res?.data?.avatar_url,
     });
   },
-  logout({ dispatch, commit }) {
+  logout({ commit }) {
     commit("SET_TOKEN", {
       token: "",
       scope: "",

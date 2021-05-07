@@ -30,6 +30,7 @@ import { ICollateral, IVault } from "~/services/types/vo";
 import { VatAction } from "~/types";
 import ValueChangedInfoGridItem from "~/components/particles/ValueChangedInfoGridItem.vue";
 import BigNumber from "bignumber.js";
+import { debounce } from "~/utils/helper";
 
 @Component({
   components: {
@@ -175,6 +176,7 @@ export default class VaultStats extends Vue {
   }
 
   updateInfoGrid = () => {
+    console.log("onResize");
     const fInfoGrid = document.getElementsByClassName("f-info-grid");
     const fInner = document.getElementsByClassName("f-info-grid-inner");
     const gridWidth = fInfoGrid[0].clientWidth;
@@ -192,13 +194,15 @@ export default class VaultStats extends Vue {
     }
   };
 
+  resizeEventListener = debounce(this.updateInfoGrid, 200);
+
   mounted() {
     this.updateInfoGrid();
-    window.addEventListener("resize", this.updateInfoGrid);
+    window.addEventListener("resize", this.resizeEventListener);
   }
 
   beforeDestroy() {
-    window.removeEventListener("resize", this.updateInfoGrid);
+    window.removeEventListener("resize", this.resizeEventListener);
   }
 
   get infos() {

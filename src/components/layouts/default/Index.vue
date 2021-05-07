@@ -15,7 +15,6 @@ import { Component, Vue } from "vue-property-decorator";
 import AppBar from "./AppBar.vue";
 import BottomNav from "./BottomNav.vue";
 import Modals from "./Modals.vue";
-import vconsole from "vconsole";
 
 @Component({
   name: "default-layout",
@@ -26,9 +25,7 @@ import vconsole from "vconsole";
   },
 })
 class DefaultLayout extends Vue {
-  mounted() {
-    var vConsole = new vconsole();
-  }
+  mounted() {}
 }
 export default DefaultLayout;
 </script>
