@@ -163,6 +163,10 @@
 
   "tip.no-collaterals":"Obtaining collaterals list data, please wait a moment or try refreshing the page.",
   
+  "risk.warnings":"Risk Wainings",
+  "risk.warnings.content1":"Pando takes collateral cryptocurrencies to generate assets. Your collateralization ratio has to be above the liquidation ratio, or your collaterals will be liquidated. Price slumps of the collateralized asset will result in steep decrease of the collateralization ratio. Please pay attention to the changes of it.",
+  "risk.warnings.content2":"When you are at risk of liquidation, you can raise your collateralization ratio by depositing more collaterals or paying back some of your loan.",
+
   "errorcode.-1": "NETWORK ERROR",
   "errorcode.404": "CANNOT FIND RESOURCE",
   "errorcode.403": "ACCESS DENIED",

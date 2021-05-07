@@ -20,8 +20,15 @@ export default class Fennec {
       this.installed = true;
       this.#ext = ext;
       this.#token = app.store?.state?.auth?.fennecToken;
-      if (this.#token) this.connected = true;
+      if (this.#token) {
+        this.connected = true;
+        this.reconnect("Pando Leaf");
+      }
     }
+  }
+
+  public async reconnect(origin: string) {
+    this.connect(origin);
   }
 
   public available() {

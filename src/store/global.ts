@@ -1,12 +1,6 @@
 import Vue from "vue";
 import { MutationTree, GetterTree, ActionTree } from "vuex";
-import {
-  IAsset,
-  ICollateral,
-  IMixinAsset,
-  ITransaction,
-  IVault,
-} from "~/services/types/vo";
+import { IAsset, ICollateral, IMixinAsset, IVault } from "~/services/types/vo";
 
 const state = () => ({
   collaterals: [],
@@ -94,7 +88,7 @@ const actions: ActionTree<AssetsState, any> = {
   async loadFennecWalletAsset({ commit }, { fennec, assetId }) {
     const walletAsset = await fennec?.getAsset(assetId);
     if (walletAsset) {
-      commit("SET_WALLET_ASSET", { id: assetId, walletAsset });
+      commit("SET_WALLET_ASSET", { id: assetId, data: walletAsset });
     }
   },
 

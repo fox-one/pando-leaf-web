@@ -147,12 +147,15 @@
       :current-rate="this.meta.collateralizationRatio * 100"
       :liquidation-rate="Number(this.collateral.mat) * 100"
     />
-    <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
-    <div class="mx-4 f-caption">
-      Price of the pair tokens fluctuates due to change in supply and demand of
-      the tokens. Investors are expected to take caution and take full
-      responsibilities of their own investment decisions.
-    </div> -->
+    <div class="mx-4 mt-4 f-caption f-greyscale-1 font-weight-bold">
+      {{ $t("risk.warnings") }}
+    </div>
+    <div class="mx-4 f-caption f-greyscale-3">
+      {{ $t("risk.warnings.content1") }}
+    </div>
+    <div class="mx-4 f-caption f-greyscale-3">
+      {{ $t("risk.warnings.content2") }}
+    </div>
   </v-container>
 </template>
 
@@ -400,7 +403,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
         title: this.$t("form.info.liquidation-price"), // mint * mat / deposit
         value: this.meta.liquidationPrice,
         valueUnit: `${this.mint.symbol}`,
-        // hint: "Some description about profit.",
+        hint: this.$t("form.tooltip.liquidation-price"),
       },
       {
         title: this.$t("form.info.collateralization-ratio"), // deposit * price / mint
@@ -410,7 +413,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
           this.meta.collateralizationRatio,
           this.collateral.mat
         ),
-        // hint: "Some description about profit.",
+        hint: this.$t("form.tooltip.collateralization-ratio"),
       },
       {
         title: this.$t("form.info.current-symbol-price", {
@@ -426,6 +429,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
           2
         ),
         valueUnit: "%",
+        hint: this.$t("form.tooltip.minimum-ratio"),
       },
       {
         title: this.$t("form.info.market-debt-ceiling"), // line- debt
@@ -436,13 +440,14 @@ export default class GenerateVault extends Mixins(mixins.page) {
         title: this.$t("form.info.stability-fee"),
         value: this.meta.stabilityFee,
         valueUnit: "%",
-        // hint: "Some description about profit.",
+        hint: this.$t("form.tooltip.stability-fee"),
       },
     ];
   }
 
   @Watch("collateral")
   onCollateralChange(newVal, oldVal) {
+    if (newVal?.id === oldVal?.id) return;
     this.$router.replace({
       query: {
         id: newVal.id,

@@ -10,6 +10,7 @@ import {
 } from "../types/dto";
 import {
   AuthResult,
+  IAsset,
   ICollateral,
   IMixinAsset,
   ITransaction,
@@ -27,7 +28,7 @@ export default function (http: Http) {
     listCollaterals(): Promise<BaseRes<{ collaterals: ICollateral[] }>> {
       return http.get("/cats");
     },
-    getAssets(): Promise<BaseRes<{ assets: IMixinAsset[] }>> {
+    getAssets(): Promise<BaseRes<{ assets: IAsset[] }>> {
       return http.get("/assets");
     },
     getMyVaults(): Promise<BaseRes<{ vaults: IVault[] }>> {
