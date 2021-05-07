@@ -41,8 +41,12 @@ const mutations: MutationTree<AuthState> = {
     state.avatar = data.avatar;
     state.fennecToken = "";
   },
+  SET_ME(state, { id, name, avatar }) {
+    (state.id = id), (state.name = name), (state.avatar = avatar);
+  },
   SET_FENNEC_TOKEN(state, data: { token: string; scope: string }) {
     state.fennecToken = data.token;
+    state.scope = data.scope;
   },
 };
 
@@ -50,6 +54,14 @@ const actions: ActionTree<AuthState, any> = {
   async login({ commit }, code) {
     const res = await this.$http.auth(code);
     commit("SET_TOKEN", res.data);
+  },
+  async getMe({ commit }) {
+    const res = await this.$http.getMe();
+    commit("SET_ME", {
+      id: res?.data?.user_id,
+      name: res?.data?.full_name,
+      avatar: res?.data?.avatar_url,
+    });
   },
   logout({ dispatch, commit }) {
     commit("SET_TOKEN", {

@@ -19,6 +19,8 @@ export default class Fennec {
     if (ext) {
       this.installed = true;
       this.#ext = ext;
+      this.#token = app.store?.state?.auth?.fennecToken;
+      if (this.#token) this.connected = true;
     }
   }
 
@@ -39,7 +41,6 @@ export default class Fennec {
         token,
         scope: "PROFILE:READ ASSETS:READ",
       });
-      console.log(token);
       this.#token = token;
       this.connected = true;
     }

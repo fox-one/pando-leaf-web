@@ -131,10 +131,12 @@ class ConnectWalletBtn extends Vue {
 
   async authFennec() {
     if (this.isFennecDetected) {
-      await this.$fennec.connect("4swap");
+      await this.$fennec.connect("Pando Leaf");
       await this.$utils.helper.loadWalletAssets(this);
       this.show = false;
-      this.$store.dispatch("global/getMe");
+      this.$store.dispatch("auth/getMe");
+      this.$store.dispatch("global/syncMarkets");
+      this.$store.dispatch("global/syncMyVaults");
     } else {
       this.$utils.helper.requestLogin(this);
     }

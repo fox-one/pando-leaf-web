@@ -15,6 +15,7 @@ import {
   ITransaction,
   IVault,
 } from "../types/vo";
+import { MIXIN_HOST } from "~/constants";
 
 export default function (http: Http) {
   return {
@@ -84,6 +85,9 @@ export default function (http: Http) {
     },
     getPublic() {
       return http.get("/hc");
+    },
+    getMe(): Promise<any> {
+      return http.get(`${MIXIN_HOST}me`);
     },
     config(options: AxiosRequestConfig) {
       http.config(options);

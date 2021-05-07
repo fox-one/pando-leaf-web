@@ -24,6 +24,7 @@ declare module "@nuxt/types" {
     $ws: ReturnType<typeof createWsService>;
     $socket: Socket;
     $icons: typeof utils.icons;
+    $fennec: Fennec;
   }
 }
 
@@ -34,6 +35,7 @@ declare module "vuex/types/index" {
     $ws: ReturnType<typeof createWsService>;
     $socket: Socket;
     $icons: typeof utils.icons;
+    $fennec: Fennec;
   }
 }
 
