@@ -479,7 +479,26 @@ export default class GenerateVault extends Mixins(mixins.page) {
 
   @Watch("percent")
   onPercent(newVal) {
-    console.log("percent", newVal);
+    if (!this.$utils.number.isValid(Number(this.depositAmount))) return;
+    if (this.modMint) return;
+    this.mintAmount = this.$utils.number.toPrecision(
+      (newVal / 100) * this.meta.maxAvailable,
+      8
+    );
+  }
+
+  modMint = false;
+
+  @Watch("mintAmount")
+  onMintChanged(newVal) {
+    this.modMint = true;
+    const newPercent = Number(newVal) / Number(this.meta.maxAvailable);
+    if (this.$utils.number.isValid(newPercent)) {
+      this.percent = newPercent * 100;
+    }
+    this.$utils.helper.debounce(() => {
+      this.modMint = false;
+    }, 17)();
   }
 
   @Watch("collateral")
@@ -519,10 +538,6 @@ export default class GenerateVault extends Mixins(mixins.page) {
   destroyed() {
     clearInterval(0);
     clearInterval(this.intervalid);
-  }
-
-  focusChange(focus) {
-    console.log("focusChange:", focus);
   }
 
   toast() {
