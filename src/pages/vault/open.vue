@@ -107,9 +107,13 @@
         >{{ mintSymbol }}
       </div>
 
-      <risk-slider class="ma-4" :percent.sync="percent" />
+      <risk-slider
+        :amount="depositAmount"
+        class="ma-4"
+        :percent.sync="percent"
+      />
 
-      <f-tip :type="validate.type" v-if="validate.tip !== null">{{
+      <f-tip class="mt-2" :type="validate.type" v-if="validate.tip !== null">{{
         validate.tip
       }}</f-tip>
       <f-button

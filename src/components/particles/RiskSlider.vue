@@ -3,6 +3,7 @@
     v-model="value"
     :tick-labels="ticksLabels"
     ticks="always"
+    :disabled="disabled"
     :tick-size="16"
     track-color="#c4c4c4"
     background-color="transparent"
@@ -16,11 +17,12 @@
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, PropSync, Watch } from "vue-property-decorator";
+import { Vue, Component, PropSync, Watch, Prop } from "vue-property-decorator";
 
 @Component
 export default class RiskSlider extends Vue {
   @PropSync("percent") value;
+  @Prop() amount;
 
   get ticksLabels() {
     return Array.apply(null, { length: 101 } as any).map((v, k) => {
@@ -35,6 +37,20 @@ export default class RiskSlider extends Vue {
       }
       return "";
     });
+  }
+
+  get disabled() {
+    return !(
+      this.$utils.number.isValid(Number(this.amount)) &&
+      Number(this.amount) !== 0
+    );
+  }
+
+  @Watch("disabled")
+  onDisabled(v) {
+    if (v && this.value !== 0) {
+      this.value = 0;
+    }
   }
 
   @Watch("value")

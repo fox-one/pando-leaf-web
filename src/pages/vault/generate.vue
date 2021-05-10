@@ -28,7 +28,7 @@
         >{{ assetSymbol }}
       </div>
 
-      <risk-slider class="ma-4" :percent.sync="percent" />
+      <percent-slider class="ma-4" :percent.sync="percent" />
 
       <f-tip :type="validate.type" v-if="validate.tip !== null">{{
         validate.tip
@@ -72,7 +72,7 @@ import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter, State } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
-import RiskSlider from "@/components/particles/RiskSlider.vue";
+import PercentSlider from "@/components/particles/PercentSlider.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus, VatAction } from "~/types";
@@ -82,7 +82,7 @@ import { isDesktop } from "~/utils/helper";
 @Component({
   components: {
     VaultStats,
-    RiskSlider,
+    PercentSlider,
   },
 })
 export default class GenerateForm extends Mixins(mixins.page) {
