@@ -27,6 +27,9 @@
           {{ maxAvailable }} </span
         >{{ assetSymbol }}
       </div>
+
+      <risk-slider class="ma-4" :percent.sync="percent" />
+
       <f-tip :type="validate.type" v-if="validate.tip !== null">{{
         validate.tip
       }}</f-tip>
@@ -64,11 +67,12 @@
 </template>
 
 <script lang="ts" scoped>
-import { Component, Mixins, Ref } from "vue-property-decorator";
+import { Component, Mixins, Ref, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter, State } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
+import RiskSlider from "@/components/particles/RiskSlider.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus, VatAction } from "~/types";
@@ -78,6 +82,7 @@ import { isDesktop } from "~/utils/helper";
 @Component({
   components: {
     VaultStats,
+    RiskSlider,
   },
 })
 export default class GenerateForm extends Mixins(mixins.page) {
@@ -97,6 +102,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
   asset = {} as IAsset;
   amount = "";
   precision = 8;
+  percent = 0;
 
   get appbar() {
     return {
@@ -269,6 +275,30 @@ export default class GenerateForm extends Mixins(mixins.page) {
         ),
       },
     ];
+  }
+
+  @Watch("percent")
+  onPercent(newVal) {
+    if (!this.$utils.number.isValid(Number(this.amount))) return;
+    if (this.modAmount) return;
+    this.amount = this.$utils.number.toPrecision(
+      (newVal / 100) * this.maxAvailable,
+      8
+    );
+  }
+
+  modAmount = false;
+
+  @Watch("amount")
+  onMintChanged(newVal) {
+    this.modAmount = true;
+    const newPercent = Number(newVal) / Number(this.maxAvailable);
+    if (this.$utils.number.isValid(newPercent)) {
+      this.percent = newPercent * 100;
+    }
+    this.$utils.helper.debounce(() => {
+      this.modAmount = false;
+    }, 10)();
   }
 
   mounted() {
