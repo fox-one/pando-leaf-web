@@ -109,7 +109,7 @@ export function isDarkTheme() {
 }
 
 export function getToken(store) {
-  return store.getters["auth/getToken"];
+  return store?.getters["auth/getToken"];
 }
 
 export function getLocale() {
@@ -148,7 +148,7 @@ export async function requestPayment(vm: Vue, params: IActionsParams) {
 }
 
 export function requestLogin(vue) {
-  if (APP_TOKEN) {
+  if (NODE_ENV === "development" && APP_TOKEN) {
     vue.$store?.commit("auth/SET_TOKEN", {
       token: APP_TOKEN,
       scope: APP_SCOPE,
