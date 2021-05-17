@@ -141,6 +141,8 @@
   "form.validate.below-liquidation-rate":"Insufficient collaterals to generate the amount.",
   "form.validate.high-risk":"The amount of {symbol} you are generating will subject your Vault to liquidation.",
   "form.validate.medium-risk":"The amount of {symbol} you are generating is putting your Vault at risk of liquidation.",
+  "form.validate.high-risk-withdraw":"The amount of {symbol} you are withdraw will subject your Vault to liquidation.",
+  "form.validate.medium-risk-withdraw":"The amount of {symbol} you are withdraw is putting your Vault at risk of liquidation.",
   "form.validate.amount-zero":"Amount must be greater than 0",
   "form.validate.insufficient-balance":"Insufficient {symbol} balance",
   "form.validate.pay-back-over":"Cannot pay back more than owed, You can repay all your outstanding debt",

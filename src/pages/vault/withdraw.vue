@@ -176,7 +176,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
           return {
             disabled: false,
             type: "error",
-            tip: this.$t("form.validate.high-risk", {
+            tip: this.$t("form.validate.high-risk-withdraw", {
               symbol: this.assetSymbol,
             }),
           };
@@ -185,7 +185,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
           return {
             disabled: false,
             type: "warning",
-            tip: this.$t("form.validate.medium-risk", {
+            tip: this.$t("form.validate.medium-risk-withdraw", {
               symbol: this.assetSymbol,
             }),
           };

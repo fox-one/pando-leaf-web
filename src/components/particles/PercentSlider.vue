@@ -24,7 +24,7 @@ export default class PercentSlider extends Vue {
 
   get ticksLabels() {
     return Array.apply(null, { length: 101 } as any).map((v, k) => {
-      if (k % 20 === 0 && k !== 100) {
+      if (k % 20 === 0) {
         return `${k}%`;
       }
       return "";
@@ -48,19 +48,27 @@ export default class PercentSlider extends Vue {
       opacity: 0;
       .v-slider__tick-label {
         text-align: center;
-        transform: translate(calc(-50% + 8px), 8px) !important;
+        transform: translate(calc(-50%), 8px);
       }
     }
-    .v-slider__tick:nth-of-type(21),
+    .v-slider__tick :nth-of-type(1),
+    :nth-of-type(21),
     :nth-of-type(41),
     :nth-of-type(61),
-    :nth-of-type(81) {
+    :nth-of-type(81),
+    :nth-of-type(101) {
       opacity: 1;
       width: 16px !important;
       height: 16px !important;
       border-radius: 100%;
       background-color: #c4c4c4;
-      top: calc(50% - 8px) !important;
+      top: calc(50% - 8px);
+      .v-slider__tick-label {
+        background-color: transparent;
+        text-align: center;
+        top: calc(50%);
+        transform: translate(calc(-50%), 16px);
+      }
     }
     .v-slider__tick--filled {
       background-color: var(--v-primary-base) !important;
