@@ -1,4 +1,4 @@
-import { ITransaction, IVaultEvent } from "./vo";
+import { IFlip, ITransaction, IVaultEvent } from "./vo";
 
 export interface IMixinResponse<T> {
   data: T;
@@ -30,4 +30,9 @@ export interface IActionsParams {
   asset_id: string;
   amount: string;
   parameters: string[];
+}
+
+export interface PagedFlips {
+  pagination: Pagination;
+  flips: IFlip[];
 }

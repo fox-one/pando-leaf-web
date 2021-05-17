@@ -30,3 +30,7 @@ export enum VatAction {
   VatPayback = "VatPayback", // 还款
   VatGenerate = "VatGenerate", // 铸币
 }
+
+export enum FlipAction {
+  FlipDeal = "FlipDeal",
+}

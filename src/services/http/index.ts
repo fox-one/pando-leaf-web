@@ -4,14 +4,15 @@ import {
   BaseRes,
   IActionsParams,
   IMixinResponse,
+  PagedFlips,
   PagedTransactions,
   PagedVaultEvents,
-  Pagination,
 } from "../types/dto";
 import {
   AuthResult,
   IAsset,
   ICollateral,
+  IFlip,
   IMixinAsset,
   ITransaction,
   IVault,
@@ -70,6 +71,22 @@ export default function (http: Http) {
     },
     getTransaction(follow_id: string): Promise<BaseRes<ITransaction>> {
       return http.get(`/transactions/${follow_id}`);
+    },
+    getFlips({
+      cursor,
+      limit,
+    }: {
+      cursor: string | null;
+      limit: number;
+    }): Promise<BaseRes<PagedFlips>> {
+      let url = `/flips?limit=${limit}`;
+      if (cursor !== null && cursor !== undefined) {
+        url += `&cursor=${cursor}`;
+      }
+      return http.get(url);
+    },
+    getFlip(id: string): Promise<BaseRes<IFlip>> {
+      return http.get(`/flips/${id}`);
     },
     postActions(
       params: IActionsParams

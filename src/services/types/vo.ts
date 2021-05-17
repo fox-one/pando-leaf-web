@@ -94,3 +94,18 @@ export interface IVaultEvent {
   dink: string;
   vault_id: string;
 }
+
+export interface IFlip {
+  guy: string;
+  action: VatAction;
+  art: string;
+  bid: string;
+  collateral_id: string;
+  created_at: string;
+  end: string;
+  id: string;
+  lot: string;
+  tab: string;
+  tic: string;
+  vault_id: string;
+}
