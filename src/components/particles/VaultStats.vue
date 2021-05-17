@@ -176,7 +176,6 @@ export default class VaultStats extends Vue {
   }
 
   updateInfoGrid = () => {
-    console.log("onResize");
     const fInfoGrid = document.getElementsByClassName("f-info-grid");
     const fInner = document.getElementsByClassName("f-info-grid-inner");
     const gridWidth = fInfoGrid[0].clientWidth;

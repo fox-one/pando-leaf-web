@@ -46,12 +46,8 @@ export default class PercentSlider extends Vue {
     }
     .v-slider__tick {
       opacity: 0;
-      .v-slider__tick-label {
-        text-align: center;
-        transform: translate(calc(-50%), 8px);
-      }
     }
-    .v-slider__tick :nth-of-type(1),
+    .v-slider__tick:nth-of-type(1),
     :nth-of-type(21),
     :nth-of-type(41),
     :nth-of-type(61),
@@ -66,8 +62,8 @@ export default class PercentSlider extends Vue {
       .v-slider__tick-label {
         background-color: transparent;
         text-align: center;
-        top: calc(50%);
-        transform: translate(calc(-50%), 16px);
+        top: calc(50%) !important;
+        transform: translate(calc(-50% + 8px), 16px) !important;
       }
     }
     .v-slider__tick--filled {
