@@ -4,9 +4,13 @@
       <f-loading :loading="loading"></f-loading>
     </div>
     <div>
-      <f-panel v-for="flip in flips" :key="flip.id" class="mb-4">
-        {{ JSON.stringify(flip) }}
-      </f-panel>
+      <auction-item
+        v-for="flip in flips"
+        :key="flip.id"
+        :flip="flip"
+        class="mb-4"
+      >
+      </auction-item>
     </div>
   </v-container>
 </template>
@@ -15,9 +19,12 @@
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IFlip } from "~/services/types/vo";
+import AuctionItem from "~/components/particles/AuctionItem.vue";
 
 @Component({
-  components: {},
+  components: {
+    AuctionItem,
+  },
 })
 export default class MarketDetail extends Mixins(mixins.page) {
   loading = false;
@@ -27,6 +34,10 @@ export default class MarketDetail extends Mixins(mixins.page) {
 
   mounted() {
     this.requestFlips();
+  }
+
+  get title() {
+    return "拍卖";
   }
 
   async requestFlips() {
