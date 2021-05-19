@@ -26,7 +26,7 @@ import AuctionItem from "~/components/particles/AuctionItem.vue";
     AuctionItem,
   },
 })
-export default class MarketDetail extends Mixins(mixins.page) {
+export default class AuctionsPage extends Mixins(mixins.page) {
   loading = false;
   has_next = true;
   cursor = null as string | null;

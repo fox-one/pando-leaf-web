@@ -172,6 +172,8 @@
   "risk.label.80":"80% Risky",
   "risk.label.100":"100% Danger",
 
+  "auction.button.confirm":"Bidding",
+
   "errorcode.-1": "NETWORK ERROR",
   "errorcode.404": "CANNOT FIND RESOURCE",
   "errorcode.403": "ACCESS DENIED",
