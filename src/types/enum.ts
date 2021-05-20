@@ -33,4 +33,12 @@ export enum VatAction {
 
 export enum FlipAction {
   FlipDeal = "FlipDeal",
+  FlipBid = "FlipBid",
+  FlipKick = "FlipKick",
+}
+
+export enum FlipRequestAction {
+  FlipKick = "41",
+  FlipBid = "42",
+  FlipDeal = "43",
 }

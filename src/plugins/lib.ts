@@ -1,6 +1,7 @@
 import Vue from "vue";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import duration from "dayjs/plugin/duration";
 import "dayjs/locale/zh";
 import "animate.css";
 import UIKit from "@foxone/uikit";
@@ -11,6 +12,7 @@ import "echarts/lib/component/markLine";
 import infiniteScroll from "vue-infinite-scroll";
 
 dayjs.extend(relativeTime);
+dayjs.extend(duration);
 Vue.use(infiniteScroll);
 Vue.use(UIKit);
 Vue.component(VeLine.name, VeLine);

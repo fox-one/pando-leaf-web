@@ -32,6 +32,13 @@ export default class AuctionsPage extends Mixins(mixins.page) {
   cursor = null as string | null;
   flips = [] as IFlip[];
 
+  get appbar() {
+    return {
+      align: "center",
+      back: true,
+    };
+  }
+
   mounted() {
     this.requestFlips();
   }

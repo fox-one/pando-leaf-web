@@ -544,6 +544,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
     }
     this.confirm();
   }
+
   follow_id = "";
   async confirm() {
     const request = {
@@ -557,7 +558,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
         "uuid",
         this.collateral.id,
         "decimal",
-        this.mintAmount,
+        this.$utils.number.toPrecision(this.mintAmount, 8),
       ],
     } as IActionsParams;
     const url = await this.$utils.helper.requestPayment(this, request);
