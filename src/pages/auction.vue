@@ -49,7 +49,7 @@
       </v-layout>
     </f-panel>
 
-    <f-panel v-if="!meta.isDone" class="ma-4">
+    <f-panel v-if="!meta.isDone" class="mt-4 mx-4">
       <v-layout column>
         <v-layout v-if="meta.isStage1" column>
           <div class="f-caption">
@@ -105,14 +105,31 @@
         </v-btn>
       </v-layout>
     </f-panel>
+    <div v-if="events && events.length !== 0" class="f-body-1 mx-6 my-2">
+      {{ "拍卖历史记录" }}
+    </div>
+    <f-panel v-if="events && events.length !== 0" class="mx-4 py-0">
+      <template v-for="(event, index) in events">
+        <v-divider
+          :key="`${event.lot}_${event.bid}_${event.created_at}`"
+          v-if="index !== 0"
+        />
+        <auction-history-item
+          :key="`${event.lot}_${event.bid}_${event.created_at}`"
+          :flipEvent="event"
+          :flip="flip"
+        ></auction-history-item>
+      </template>
+    </f-panel>
   </v-layout>
 </template>
 
 <script lang="ts" scoped>
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
-import { IAsset, ICollateral, IFlip } from "~/services/types/vo";
+import { IAsset, ICollateral, IFlip, IFlipEvent } from "~/services/types/vo";
 import AuctionItem from "~/components/particles/AuctionItem.vue";
+import AuctionHistoryItem from "~/components/particles/AuctionHistoryItem.vue";
 import { Action, Getter, State } from "vuex-class";
 import { FlipAction, FlipRequestAction, TransactionStatus } from "~/types";
 import { IActionsParams } from "~/services/types/dto";
@@ -123,6 +140,7 @@ import dayjs from "dayjs";
 @Component({
   components: {
     AuctionItem,
+    AuctionHistoryItem,
   },
 })
 export default class AuctionDetail extends Mixins(mixins.page) {
@@ -134,6 +152,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
 
   loading = false;
   flip = {} as IFlip;
+  events = [] as IFlipEvent[];
   amount = "";
   follow_id = "";
   countDownTimer = 0;
@@ -202,10 +221,21 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   mounted() {
     this.syncMarkets();
     this.requestFlip(true);
+    this.requestEvents();
     this.follow_id = this.$utils.helper.uuidV4();
     this.intervalId = setInterval(() => {
+      if (this.flip?.action === FlipAction.FlipDeal) {
+        clearInterval(this.intervalId);
+        return;
+      }
       this.requestFlip();
+      this.requestEvents();
     }, 5000);
+  }
+
+  async requestEvents() {
+    const res = await this.$http.getFlipEvents(this.flipId);
+    this.events = res?.data?.events?.reverse();
   }
 
   beforeDestory() {

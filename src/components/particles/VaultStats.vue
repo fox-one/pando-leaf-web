@@ -216,7 +216,7 @@ export default class VaultStats extends Vue {
 
   get isValidOracle() {
     const next = this.$utils.time.oracleNext(this.gemOracle, this.daiOracle);
-    return next && next.peek_at && dayjs(next.peek_at).isBefore(Date.now());
+    return next && next.peek_at && dayjs(next.peek_at).isAfter(Date.now());
   }
 
   get infos() {
@@ -256,10 +256,12 @@ export default class VaultStats extends Vue {
           "",
         showChange: this.isValidOracle,
         hint: this.isValidOracle
-          ? `下一价格将于${this.$utils.time.format(
-              this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
-                ?.peek_at
-            )}被系统确认`
+          ? this.$t("form.info.oracle-price", {
+              time: this.$utils.time.format(
+                this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
+                  ?.peek_at
+              ),
+            })
           : null,
       },
       {

@@ -103,6 +103,20 @@ export default class HistoryItem extends Vue {
           symbol: debtAsset.symbol,
         });
         break;
+      case VatAction.FlipKick:
+        actionContent = this.$t("vault.event.content.flipkick", {
+          collateral: `${this.history.dink.replace("-", "")} ${
+            collateralAsset?.symbol
+          }`,
+          debt: `${this.history.debt.replace("-", "")} ${debtAsset?.symbol}`,
+        });
+        break;
+      case VatAction.FlipBid:
+        actionContent = this.$t("vault.event.content.flipbid", {
+          amount: this.history.dink.replace("-", ""),
+          symbol: collateralAsset?.symbol,
+        });
+        break;
       default:
         actionContent = "";
         break;

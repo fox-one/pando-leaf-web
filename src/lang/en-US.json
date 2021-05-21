@@ -63,12 +63,16 @@
   "vault.event.action.vatwithdraw":"Withdraw",
   "vault.event.action.vatpayback":"Payback",
   "vault.event.action.vatgenerate":"Generate",
+  "vault.event.action.flipkick":"Start liquidation auction",
+  "vault.event.action.flipbid":"Auction balance refund",
 
   "vault.event.content.vatopen":"Opened a new Vault with id #{id}",
   "vault.event.content.vatdeposit":"Deposited {amount} {symbol} into Vault",
   "vault.event.content.vatwithdraw":"Withdraw {amount} {symbol} from Vault",
   "vault.event.content.vatpayback":"Payback {amount} {symbol} into Vault",
   "vault.event.content.vatgenerate":"Generated new {amount} {symbol} from Vault",
+  "vault.event.content.flipkick":"{collateral} has been auctioned to wipe out {debt} debt",
+  "vault.event.content.flipbid":"{amount} {symbol} refund of bid collateral",
 
   "market.overview":"Market Overview",
   "market.total-collaterals":"Total Collaterals",
@@ -129,6 +133,7 @@
   "form.info.symbol-debt":"Outstanding {symbol} Debt",
   "form.info.available-to-withdraw":"Available to withdraw",
   "form.info.available-to-generate":"Available to generate",
+  "form.info.oracle-price":"Current price in Pando is not the real-time market price of the asset, instead it delayed 60 minutes - that's why you will see the \"Next Price\". This design is to allow time to mitigate the risk of liquidation from sudden decrease in the collateral ratio as a result of the extreme market volatility. Next price will be confirmed at {time}.",
 
   "form.tooltip.liquidation-price":"The price at which a Vault becomes vulnerable to liquidation. You can lower the liquidation price by adding more collaterals or repaying your loan to the Vault.",
   "form.tooltip.collateralization-ratio":"CR = (Collateral amount x Current Price) / Generated debt amount x 100",

@@ -117,6 +117,14 @@ export interface IFlip {
   collateral_id: string;
 }
 
+export interface IFlipEvent {
+  action: FlipAction;
+  bid: string; // 当前的偿还债务的出价
+  created_at: string;
+  flip_id: string;
+  lot: string; // 对于竞标拍卖物数量的出价
+}
+
 export interface IOracle {
   asset_id: string;
   current: string;

@@ -345,6 +345,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
 
   follow_id = "";
   async confirm() {
+    this.follow_id = this.$utils.helper.uuidV4()
     const request = {
       user_id: this.user_id,
       follow_id: this.follow_id,

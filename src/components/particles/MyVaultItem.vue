@@ -277,10 +277,12 @@ export default class MyVaultItem extends Vue {
           "",
         showChange: this.isValidOracle,
         hint: this.isValidOracle
-          ? `下一价格将于${this.$utils.time.format(
-              this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
-                ?.peek_at
-            )}被系统确认`
+          ? this.$t("form.info.oracle-price", {
+              time: this.$utils.time.format(
+                this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
+                  ?.peek_at
+              ),
+            })
           : null,
       },
       {

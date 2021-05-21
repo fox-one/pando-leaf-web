@@ -13,6 +13,7 @@ import {
   IAsset,
   ICollateral,
   IFlip,
+  IFlipEvent,
   IMixinAsset,
   IOracle,
   ITransaction,
@@ -88,6 +89,9 @@ export default function (http: Http) {
     },
     getFlip(id: string): Promise<BaseRes<IFlip>> {
       return http.get(`/flips/${id}`);
+    },
+    getFlipEvents(id: string): Promise<BaseRes<{ events: IFlipEvent[] }>> {
+      return http.get(`/flips/${id}/events`);
     },
     oracles(): Promise<BaseRes<{ oracles: IOracle[] }>> {
       return http.get("/oracles");
