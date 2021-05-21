@@ -14,6 +14,7 @@ import {
   ICollateral,
   IFlip,
   IMixinAsset,
+  IOracle,
   ITransaction,
   IVault,
 } from "../types/vo";
@@ -87,6 +88,9 @@ export default function (http: Http) {
     },
     getFlip(id: string): Promise<BaseRes<IFlip>> {
       return http.get(`/flips/${id}`);
+    },
+    oracles(): Promise<BaseRes<{ oracles: IOracle[] }>> {
+      return http.get("/oracles");
     },
     postActions(
       params: IActionsParams

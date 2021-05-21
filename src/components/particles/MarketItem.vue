@@ -46,6 +46,12 @@
               item.valueUnit
             }}</span>
           </h2>
+          <h4 v-if="item.exTitle">
+            {{ item.exTitle }} {{ item.exValue
+            }}<span v-if="item.valueUnit" class="f-caption text--secondary">{{
+              item.exValueUnit
+            }}</span>
+          </h4>
         </v-col>
       </v-row>
     </v-layout>
@@ -54,18 +60,26 @@
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop } from "vue-property-decorator";
-import { Getter, State } from "vuex-class";
-import { ICollateral } from "~/services/types/vo";
+import dayjs from "dayjs";
+import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+import { Action, Getter, State } from "vuex-class";
+import { ICollateral, IOracle } from "~/services/types/vo";
 
 @Component
 export default class MarketItem extends Vue {
   @Prop() collateral!: ICollateral;
   @State((state) => state.app.settings) settings;
   @Getter("global/getAssetById") getAssetById;
+  @Getter("oracle/findByAssetId") getOracle!: (id) => IOracle;
+  @Action("oracle/sync") syncOracles;
+  @Action("global/syncMarkets") syncMarkets;
 
   get resize() {
     return this.$utils.helper.mixinImageResize;
+  }
+
+  get oracle() {
+    return this.getOracle(this.collateral.gem);
   }
 
   get meta() {
@@ -93,13 +107,13 @@ export default class MarketItem extends Vue {
         value: this.meta.collateralAmount,
         valueUnit: this.collateralSymbol,
       },
-      // {
-
-      // },
       {
         title: this.$t("market.item.price"),
         value: this.meta.price,
         valueUnit: this.debtSymbol,
+        exTitle: this.isValidOracle ? "Next: " : "",
+        exValue: this.oracle?.next,
+        exValueUnit: `(将于:${this.countDownText}后生效)`,
       },
       {
         title: this.$t("market.item.collateral-rate"),
@@ -135,6 +149,42 @@ export default class MarketItem extends Vue {
 
   get debtLogo() {
     return this.getAssetById(this.collateral?.dai)?.logo;
+  }
+
+  get isValidOracle() {
+    return dayjs(this.oracle?.peek_at)
+      .add(this.oracle?.hop, "second")
+      .isAfter(Date.now());
+  }
+
+  @Watch("oracle")
+  onOracleUpdate(newVal: IOracle) {
+    if (newVal) {
+      clearInterval(this.countId);
+      this.countDownTimer =
+        dayjs(newVal.peek_at).add(newVal.hop, "second").diff(Date.now()) / 1000;
+      this.startCountDown();
+    }
+  }
+
+  countDownTimer = 0;
+  countDownText = "";
+  countId = 0 as any;
+
+  startCountDown() {
+    if (this.countDownTimer <= 0) return;
+    clearInterval(this.countId);
+    this.countId = setInterval(() => {
+      this.countDownTimer = this.countDownTimer - 1;
+      this.countDownText = dayjs
+        .duration(this.countDownTimer, "seconds")
+        .format("HH:mm:ss");
+      if (this.countDownTimer <= 0) {
+        clearInterval(this.countId);
+        this.syncMarkets();
+        this.syncOracles();
+      }
+    }, 1000);
   }
 
   toMarketDetail() {

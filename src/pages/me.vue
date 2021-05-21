@@ -105,6 +105,7 @@ export default class Me extends Mixins(mixins.page) {
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
+  @Action("oracle/sync") syncOracles;
 
   loading = true;
   expanded = [0];

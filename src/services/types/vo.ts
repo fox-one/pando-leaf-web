@@ -116,3 +116,13 @@ export interface IFlip {
   vault_id: string;
   collateral_id: string;
 }
+
+export interface IOracle {
+  asset_id: string;
+  current: string;
+  governors: string[];
+  hop: number;
+  next: string;
+  peek_at: string;
+  threshold: number;
+}

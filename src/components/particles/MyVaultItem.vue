@@ -40,7 +40,7 @@
           </div>
         </v-layout>
         <f-info-grid :window-size="2" class="mt-2">
-          <f-info-grid-item
+          <value-changed-info-grid-item
             v-for="(item, ix) in infos"
             :key="ix"
             :index="ix"
@@ -48,8 +48,10 @@
             :value="item.value"
             :value-unit="item.valueUnit"
             :value-color="item.valueColor"
+            :changed-value="item.changedValue"
+            :show-change="item.showChange"
             :hint="item.hint"
-          ></f-info-grid-item>
+          ></value-changed-info-grid-item>
         </f-info-grid>
       </v-layout>
     </v-expansion-panel-header>
@@ -124,19 +126,29 @@
 import BigNumber from "bignumber.js";
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
-import { ICollateral, IVault } from "~/services/types/vo";
+import { ICollateral, IOracle, IVault } from "~/services/types/vo";
+import ValueChangedInfoGridItem from "./ValueChangedInfoGridItem.vue";
 
-@Component
+@Component({
+  components: {
+    ValueChangedInfoGridItem,
+  },
+})
 export default class MyVaultItem extends Vue {
   @Prop() vault!: IVault;
   @State((state) => state.app.settings) settings;
   @Getter("global/getCollateral") getCollateral!: (id) => ICollateral;
   @Getter("global/getAssetById") getAssetById;
+  @Getter("oracle/findByAssetId") getOracleByAssetId!: (id) => IOracle;
 
   tooltip = false;
 
   get resize() {
     return this.$utils.helper.mixinImageResize;
+  }
+
+  get oraclePrice() {
+    return this.getOracleByAssetId(this.collateral?.gem);
   }
 
   get collateral() {
@@ -250,10 +262,18 @@ export default class MyVaultItem extends Vue {
         valueUnit: this.debtSymbol,
       },
       {
-        title: this.$t("me.vault-item.available-to-withdraw"),
-        value: this.maxAvailableToWithdraw,
-        valueUnit: this.collateralSymbol,
-        valueColor: this.inLiquidation ? "red" : "",
+        title: this.$t("form.info.current-symbol-price", {
+          symbol: this.collateralSymbol,
+        }),
+        value: this.collateral?.price,
+        valueUnit: this.debtSymbol,
+        changedValue: this.oraclePrice?.next || "",
+        showChange: Boolean(this.oraclePrice),
+        hint: this.oraclePrice?.peek_at
+          ? `下一价格将于${this.$utils.time.toRelative(
+              this.oraclePrice?.peek_at
+            )}被系统确认`
+          : null,
       },
       {
         title: this.$t("me.vault-item.available-to-generate"),
@@ -264,8 +284,18 @@ export default class MyVaultItem extends Vue {
     ];
   }
 
+  timeToNow() {
+    //
+  }
+
   get collapseInfos() {
     return [
+      {
+        title: this.$t("me.vault-item.available-to-withdraw"),
+        value: this.maxAvailableToWithdraw,
+        valueUnit: this.collateralSymbol,
+        valueColor: this.inLiquidation ? "red" : "",
+      },
       {
         title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
         value: this.meta?.liquidationPrice,
@@ -278,13 +308,6 @@ export default class MyVaultItem extends Vue {
           2
         ),
         valueUnit: "%",
-      },
-      {
-        title: this.$t("form.info.current-symbol-price", {
-          symbol: this.collateralSymbol,
-        }),
-        value: this.collateral?.price,
-        valueUnit: this.debtSymbol,
       },
       {
         title: this.$t("form.info.stability-fee"),

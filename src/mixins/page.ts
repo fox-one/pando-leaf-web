@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import { Mutation } from "vuex-class";
+import { Action, Mutation } from "vuex-class";
 
 export interface Page extends Vue {
   title: string;
@@ -35,6 +35,8 @@ export default class PageView extends Vue {
 
   @Mutation("app/SET_BOTTOM_NAV") setBottomNav;
 
+  @Action("oracle/sync") syncOracles;
+
   get title() {
     return "";
   }
@@ -45,6 +47,10 @@ export default class PageView extends Vue {
 
   get bottomNav() {
     return "";
+  }
+
+  mounted() {
+    this.syncOracles();
   }
 
   setLang() {
