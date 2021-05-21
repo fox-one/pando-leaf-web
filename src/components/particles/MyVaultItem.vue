@@ -148,8 +148,12 @@ export default class MyVaultItem extends Vue {
     return this.$utils.helper.mixinImageResize;
   }
 
-  get oraclePrice() {
+  get gemOracle() {
     return this.getOracleByAssetId(this.collateral?.gem);
+  }
+
+  get daiOracle() {
+    return this.getOracleByAssetId(this.collateral?.dai);
   }
 
   get collateral() {
@@ -268,14 +272,14 @@ export default class MyVaultItem extends Vue {
         }),
         value: this.collateral?.price,
         valueUnit: this.debtSymbol,
-        changedValue: this.oraclePrice?.next || "",
+        changedValue:
+          this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.price ||
+          "",
         showChange: this.isValidOracle,
         hint: this.isValidOracle
-          ? `下一价格将于${this.$utils.time.toRelative(
-              dayjs(this.oraclePrice?.peek_at).add(
-                this.oraclePrice?.hop,
-                "seconds"
-              )
+          ? `下一价格将于${this.$utils.time.format(
+              this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
+                ?.peek_at
             )}被系统确认`
           : null,
       },
@@ -289,11 +293,8 @@ export default class MyVaultItem extends Vue {
   }
 
   get isValidOracle() {
-    return (
-      dayjs(this.oraclePrice?.peek_at)
-        .add(this.oraclePrice?.hop, "seconds")
-        .isAfter(Date.now()) && this.oraclePrice?.threshold !== 0
-    );
+    const next = this.$utils.time.oracleNext(this.gemOracle, this.daiOracle);
+    return next && next.peek_at && dayjs(next.peek_at).isBefore(Date.now());
   }
 
   get collapseInfos() {

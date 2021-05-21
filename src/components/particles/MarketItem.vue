@@ -78,8 +78,12 @@ export default class MarketItem extends Vue {
     return this.$utils.helper.mixinImageResize;
   }
 
-  get oracle() {
+  get gemOracle() {
     return this.getOracle(this.collateral.gem);
+  }
+
+  get daiOracle() {
+    return this.getOracle(this.collateral.dai);
   }
 
   get meta() {
@@ -112,7 +116,8 @@ export default class MarketItem extends Vue {
         value: this.meta.price,
         valueUnit: this.debtSymbol,
         exTitle: this.isValidOracle ? "Next: " : "",
-        exValue: this.oracle?.next,
+        exValue: this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
+          ?.price,
         exValueUnit: `(将于:${this.countDownText}后生效)`,
       },
       {
@@ -152,17 +157,18 @@ export default class MarketItem extends Vue {
   }
 
   get isValidOracle() {
-    return dayjs(this.oracle?.peek_at)
-      .add(this.oracle?.hop, "second")
-      .isAfter(Date.now());
+    const next = this.$utils.time.oracleNext(this.gemOracle, this.daiOracle);
+    return next && next.peek_at && dayjs(next.peek_at).isAfter(Date.now());
   }
 
-  @Watch("oracle")
+  @Watch("gemOracle")
   onOracleUpdate(newVal: IOracle) {
-    if (newVal) {
+    if (newVal && this.isValidOracle) {
       clearInterval(this.countId);
       this.countDownTimer =
-        dayjs(newVal.peek_at).add(newVal.hop, "second").diff(Date.now()) / 1000;
+        this.$utils.time
+          .oracleNext(this.gemOracle, this.daiOracle)
+          .peek_at.diff(Date.now()) / 1000;
       this.startCountDown();
     }
   }
