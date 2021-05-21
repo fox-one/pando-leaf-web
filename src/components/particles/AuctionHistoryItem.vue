@@ -6,7 +6,7 @@
         <v-spacer />
         <span class="text-right f-caption">{{ meta.time }}</span>
       </v-layout>
-      <div>{{ meta.actionContent }}</div>
+      <div class="f-body-2">{{ meta.actionContent }}</div>
     </v-layout>
   </div>
 </template>

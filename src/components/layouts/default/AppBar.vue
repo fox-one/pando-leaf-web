@@ -6,16 +6,32 @@
       </v-avatar>
       <h4 class="mx-2">Hi, {{ name }}</h4>
       <v-spacer />
-      <v-btn
-        fab
-        x-small
-        elevation="0"
-        color="primary"
-        class="mr-1"
-        @click="toMarket"
-      >
-        <v-icon> {{ $icons.mdiGoogleAnalytics }}</v-icon>
-      </v-btn>
+      <f-bottom-sheet v-model="showMenu">
+        <template #activator="{ on }">
+          <v-btn
+            fab
+            x-small
+            elevation="0"
+            color="primary"
+            class="mr-1"
+            v-on="on"
+          >
+            <v-icon> {{ $icons.mdiGoogleAnalytics }}</v-icon>
+          </v-btn>
+        </template>
+        <template #title> {{ $t("common.menu") }} </template>
+        <f-list>
+          <f-list-item
+            v-for="(item, index) in menuItems"
+            :key="item.title"
+            :title="item.title"
+            :subtitle="item.subtitle"
+            :value="item.value"
+            @click="clickItem(item, index)"
+          >
+          </f-list-item>
+        </f-list>
+      </f-bottom-sheet>
     </v-layout>
   </f-app-bar>
 </template>
@@ -25,6 +41,7 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 class DefaultLayoutAppBar extends Vue {
+  showMenu = false;
   get appbar() {
     const state = this.$store.state;
     const appbar = state.app.appbar;
@@ -46,7 +63,35 @@ class DefaultLayoutAppBar extends Vue {
     return name;
   }
 
+  menuItems = [
+    {
+      title: this.$t("menu.market"),
+    },
+    {
+      title: this.$t("menu.auction"),
+    },
+  ];
+
+  clickItem(menu, index) {
+    if (index === 0) {
+      this.toMarket();
+    }
+    if (index === 1) {
+      this.toAuctions();
+    }
+  }
+
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
+  }
+
+  toAuctions() {
+    this.toggleMenu();
+    this.$router.push("/auctions");
+  }
+
   toMarket() {
+    this.toggleMenu();
     this.$router.push("/market");
   }
 

@@ -17,6 +17,7 @@
   "common.amount":"Amount",
   "common.detail":"Detail",
   "common.checking-payment":"Checking...",
+  "common.menu":"Menu",
 
   "connect.fennec": "Connect Fennec",
   "connect.fennec.detected": "Fennec detected. Tap to connect",
@@ -29,6 +30,9 @@
   "install.wallets.hint": "No wallet yet? Install one of the following wallets",
   "wallet.category.browser": "Chrome Extension Wallet",
   "wallet.category.mobile": "iOS & Android Wallet",
+
+  "menu.market":"Market data explorer",
+  "menu.auction":"Liquidation auctions",
 
   "tab.me":"Me",
   "tab.market":"Market",

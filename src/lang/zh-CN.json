@@ -17,6 +17,7 @@
   "common.amount":"数量",
   "common.detail":"详情",
   "common.checking-payment":"查询结果中...",
+  "common.menu":"菜单",
 
   "connect.fennec": "连接到 Fennec",
   "connect.fennec.detected": "检测到 Fennec，点击按钮连接",
@@ -29,6 +30,9 @@
   "install.wallets.hint": "没有钱包？选择一个安装",
   "wallet.category.browser": "Chrome 浏览器钱包",
   "wallet.category.mobile": "iOS & 安卓钱包",
+
+  "menu.market":"市场行情数据",
+  "menu.auction":"清算拍卖",
 
   "tab.me":"我的",
   "tab.market":"市场",
