@@ -26,11 +26,12 @@
 <script lang="ts" scoped>
 import { Vue, Component, Prop, Ref } from "vue-property-decorator";
 import { Getter } from "vuex-class";
-import { ICollateral, IVault } from "~/services/types/vo";
+import { ICollateral, IOracle, IVault } from "~/services/types/vo";
 import { VatAction } from "~/types";
 import ValueChangedInfoGridItem from "~/components/particles/ValueChangedInfoGridItem.vue";
 import BigNumber from "bignumber.js";
 import { debounce } from "~/utils/helper";
+import dayjs from "dayjs";
 
 @Component({
   components: {
@@ -40,6 +41,7 @@ import { debounce } from "~/utils/helper";
 export default class VaultStats extends Vue {
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getWalletAssetById") getWalletAssetById;
+  @Getter("oracle/findByAssetId") getOracleByAssetId!: (id) => IOracle;
   @Prop() vault!: IVault;
   @Prop() collateral!: ICollateral;
   @Prop({ type: String, default: undefined }) title!: string;
@@ -54,6 +56,10 @@ export default class VaultStats extends Vue {
     } else {
       return this.$t("form.info.vault-stats-title");
     }
+  }
+
+  get oraclePrice() {
+    return this.getOracleByAssetId(this.collateral?.gem);
   }
 
   get collateralAsset() {
@@ -204,6 +210,14 @@ export default class VaultStats extends Vue {
     window.removeEventListener("resize", this.resizeEventListener);
   }
 
+  get isValidOracle() {
+    return (
+      dayjs(this.oraclePrice?.peek_at)
+        .add(this.oraclePrice?.hop, "seconds")
+        .isAfter(Date.now()) && this.oraclePrice?.threshold !== 0
+    );
+  }
+
   get infos() {
     const infos = [
       {
@@ -236,6 +250,16 @@ export default class VaultStats extends Vue {
         title: this.$t("form.info.current-price"),
         value: this.collateral?.price,
         valueUnit: this.debtAsset?.symbol,
+        changedValue: this.oraclePrice?.next || "",
+        showChange: this.isValidOracle,
+        hint: this.isValidOracle
+          ? `下一价格将于${this.$utils.time.toRelative(
+              dayjs(this.oraclePrice?.peek_at).add(
+                this.oraclePrice?.hop,
+                "seconds"
+              )
+            )}被系统确认`
+          : null,
       },
       {
         title: this.$t("form.info.minimum-ratio"),

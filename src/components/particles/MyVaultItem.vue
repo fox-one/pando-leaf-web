@@ -124,6 +124,7 @@
 
 <script lang="ts" scoped>
 import BigNumber from "bignumber.js";
+import dayjs from "dayjs";
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
 import { ICollateral, IOracle, IVault } from "~/services/types/vo";
@@ -268,10 +269,13 @@ export default class MyVaultItem extends Vue {
         value: this.collateral?.price,
         valueUnit: this.debtSymbol,
         changedValue: this.oraclePrice?.next || "",
-        showChange: Boolean(this.oraclePrice),
-        hint: this.oraclePrice?.peek_at
+        showChange: this.isValidOracle,
+        hint: this.isValidOracle
           ? `下一价格将于${this.$utils.time.toRelative(
-              this.oraclePrice?.peek_at
+              dayjs(this.oraclePrice?.peek_at).add(
+                this.oraclePrice?.hop,
+                "seconds"
+              )
             )}被系统确认`
           : null,
       },
@@ -284,8 +288,12 @@ export default class MyVaultItem extends Vue {
     ];
   }
 
-  timeToNow() {
-    //
+  get isValidOracle() {
+    return (
+      dayjs(this.oraclePrice?.peek_at)
+        .add(this.oraclePrice?.hop, "seconds")
+        .isAfter(Date.now()) && this.oraclePrice?.threshold !== 0
+    );
   }
 
   get collapseInfos() {
