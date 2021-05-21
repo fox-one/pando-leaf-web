@@ -115,10 +115,12 @@ export default class MarketItem extends Vue {
         title: this.$t("market.item.price"),
         value: this.meta.price,
         valueUnit: this.debtSymbol,
-        exTitle: this.isValidOracle ? "Next: " : "",
+        exTitle: this.isValidOracle ? this.$t("market.item.oracle-next") : "",
         exValue: this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
           ?.price,
-        exValueUnit: `(将于:${this.countDownText}后生效)`,
+        exValueUnit: this.$t("market.item.oracle-content", {
+          time: this.countDownText,
+        }),
       },
       {
         title: this.$t("market.item.collateral-rate"),
@@ -173,6 +175,18 @@ export default class MarketItem extends Vue {
     }
   }
 
+  @Watch("daiOracle")
+  onDaiOracleUpdate(newVal: IOracle) {
+    if (newVal && this.isValidOracle) {
+      clearInterval(this.countId);
+      this.countDownTimer =
+        this.$utils.time
+          .oracleNext(this.gemOracle, this.daiOracle)
+          .peek_at.diff(Date.now()) / 1000;
+      this.startCountDown();
+    }
+  }
+
   countDownTimer = 0;
   countDownText = "";
   countId = 0 as any;
@@ -187,7 +201,7 @@ export default class MarketItem extends Vue {
           .peek_at.diff(Date.now()) / 1000;
       this.countDownText = dayjs
         .duration(this.countDownTimer, "seconds")
-        .format("HH:mm:ss");
+        .format("mm:ss");
       if (this.countDownTimer <= 0) {
         clearInterval(this.countId);
         this.syncMarkets();

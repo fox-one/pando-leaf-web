@@ -85,6 +85,8 @@
   "market.item.collaterals":"Collaterals",
   "market.item.total-asset-symbol":"Total {symbol}",
   "market.item.symbol-debt":"{symbol} Debt",
+  "market.item.oracle-next":"Next:",
+  "market.item.oracle-content":"(will be confirm after {time})",
 
   "form.title.open":"Open a {name} Vault",
   "form.title.deposit":"Deposit to Vault",
@@ -133,7 +135,7 @@
   "form.info.symbol-debt":"Outstanding {symbol} Debt",
   "form.info.available-to-withdraw":"Available to withdraw",
   "form.info.available-to-generate":"Available to generate",
-  "form.info.oracle-price":"Current price in Pando is not the real-time market price of the asset, instead it delayed 60 minutes - that's why you will see the \"Next Price\". This design is to allow time to mitigate the risk of liquidation from sudden decrease in the collateral ratio as a result of the extreme market volatility. Next price will be confirmed at {time}.",
+  "form.info.oracle-price":"Current price in Pando is not the real-time market price of the asset, instead it delayed 30 minutes - that's why you will see the \"Next Price\". This design is to allow time to mitigate the risk of liquidation from sudden decrease in the collateral ratio as a result of the extreme market volatility. Next price will be confirmed at {time}.",
 
   "form.tooltip.liquidation-price":"The price at which a Vault becomes vulnerable to liquidation. You can lower the liquidation price by adding more collaterals or repaying your loan to the Vault.",
   "form.tooltip.collateralization-ratio":"CR = (Collateral amount x Current Price) / Generated debt amount x 100",

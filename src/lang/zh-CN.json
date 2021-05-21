@@ -86,6 +86,8 @@
   "market.item.collaterals":"抵押额",
   "market.item.total-asset-symbol":"全部 {symbol}",
   "market.item.symbol-debt":"{symbol} 总债务",
+  "market.item.oracle-next":"下一价格:",
+  "market.item.oracle-content":"(将于 {time} 后生效)",
 
   "form.title.open":"新建金库 {name}",
   "form.title.deposit":"向金库中存入",
@@ -134,7 +136,7 @@
   "form.info.symbol-debt":"剩余 {symbol} 债务",
   "form.info.available-to-withdraw":"可取回",
   "form.info.available-to-generate":"可生成",
-  "form.info.oracle-price":"当前价格相对市场实时价格滞后60分钟，下一价格的设置是为了给您一定时间应对因突发市场价格剧烈变动带来爆仓的风险。\r\n\r\n价格将于 {time} 发生变动",
+  "form.info.oracle-price":"当前价格相对市场实时价格滞后30分钟，下一价格的设置是为了给您一定时间应对因突发市场价格剧烈变动带来爆仓的风险。\r\n\r\n价格将于 {time} 发生变动",
 
   "form.tooltip.liquidation-price":"金库被清算时抵押资产与贷款资产的相对价格。可以通过增加抵押资产或者偿还贷款的方式降低清算价格。",
   "form.tooltip.collateralization-ratio":"抵押率 = （抵押资产数量 x 当前价格）/贷款数量 x 100",

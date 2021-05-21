@@ -127,6 +127,7 @@ export default class Market extends Mixins(mixins.page) {
     }
     this.intervalId = setInterval(() => {
       this.syncMarkets();
+      this.syncOracles();
     }, 3000);
     this.syncMarkets();
   }
