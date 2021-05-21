@@ -119,11 +119,20 @@ export default class Market extends Mixins(mixins.page) {
     this.$router.replace("/me");
   }
 
+  intervalId = 0 as any;
+
   mounted() {
     if (this.isLogged) {
       this.$utils.helper.loadWalletAssets(this);
     }
+    this.intervalId = setInterval(() => {
+      this.syncMarkets();
+    }, 3000);
     this.syncMarkets();
+  }
+
+  beforeDestroy() {
+    clearInterval(this.intervalId);
   }
 }
 </script>

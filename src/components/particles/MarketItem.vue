@@ -181,7 +181,10 @@ export default class MarketItem extends Vue {
     if (this.countDownTimer <= 0) return;
     clearInterval(this.countId);
     this.countId = setInterval(() => {
-      this.countDownTimer = this.countDownTimer - 1;
+      this.countDownTimer =
+        this.$utils.time
+          .oracleNext(this.gemOracle, this.daiOracle)
+          .peek_at.diff(Date.now()) / 1000;
       this.countDownText = dayjs
         .duration(this.countDownTimer, "seconds")
         .format("HH:mm:ss");
@@ -190,7 +193,7 @@ export default class MarketItem extends Vue {
         this.syncMarkets();
         this.syncOracles();
       }
-    }, 1000);
+    }, 100);
   }
 
   toMarketDetail() {

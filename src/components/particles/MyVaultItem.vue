@@ -294,7 +294,7 @@ export default class MyVaultItem extends Vue {
 
   get isValidOracle() {
     const next = this.$utils.time.oracleNext(this.gemOracle, this.daiOracle);
-    return next && next.peek_at && dayjs(next.peek_at).isBefore(Date.now());
+    return next && next.peek_at && dayjs(next.peek_at).isAfter(Date.now());
   }
 
   get collapseInfos() {

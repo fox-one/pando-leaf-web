@@ -177,7 +177,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     if (this.meta.isStage1)
       return `出价多少 ${this.debtAsset?.symbol} 以竞标抵押物 ${this.auctionAsset?.symbol}`;
     if (this.meta.isStage2)
-      return `愿意只竞标多少 ${this.auctionAsset?.symbol}，并偿付全额 ${this.debtAsset?.symbol} 债务`;
+      return `竞标多少 ${this.auctionAsset?.symbol}，偿付全额 ${this.debtAsset?.symbol} 债务`;
     return "";
   }
 
@@ -198,11 +198,18 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   format(duration) {
     return dayjs.duration(duration, "seconds").format("HH:mm:ss");
   }
-
+  intervalId = 0 as any;
   mounted() {
     this.syncMarkets();
     this.requestFlip(true);
     this.follow_id = this.$utils.helper.uuidV4();
+    this.intervalId = setInterval(() => {
+      this.requestFlip();
+    }, 5000);
+  }
+
+  beforeDestory() {
+    clearInterval(this.intervalId);
   }
 
   countId = 0 as any;
@@ -211,7 +218,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     if (this.countDownTimer <= 0) return;
     clearInterval(this.countId);
     this.countId = setInterval(() => {
-      this.countDownTimer = this.countDownTimer - 1;
+      this.countDownTimer = dayjs(this.flip.tic).diff(dayjs(), "seconds");
       this.countDownText = this.format(this.countDownTimer);
       if (this.countDownTimer <= 0) {
         clearInterval(this.countId);
