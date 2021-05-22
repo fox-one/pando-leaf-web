@@ -279,7 +279,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
       user_id: this.user_id,
       follow_id: this.follow_id,
       amount: this.amount,
-      asset_id: ACTION_ASSET_ID,
+      asset_id: this.debtAsset?.id,
       parameters: [
         "bit",
         FlipRequestAction.FlipBid,
@@ -308,7 +308,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
       user_id: this.user_id,
       follow_id: this.follow_id,
       amount: this.flip.tab,
-      asset_id: ACTION_ASSET_ID,
+      asset_id: this.debtAsset?.id,
       parameters: [
         "bit",
         FlipRequestAction.FlipBid,
