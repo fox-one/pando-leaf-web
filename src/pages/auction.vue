@@ -63,6 +63,13 @@
             }}
           </div>
         </v-layout>
+        <f-input
+          v-if="meta.isStage1"
+          v-model="inputDebtAmount"
+          class="my-2"
+          type="number"
+          :label="hintLabel1"
+        ></f-input>
         <v-layout v-if="meta.isStage2" column>
           <div class="f-caption">
             当前为<span class="f-body-1 font-weight-bold primary--text"
@@ -76,10 +83,11 @@
           </div>
         </v-layout>
         <f-input
-          v-model="amount"
+          v-if="meta.isStage2"
+          v-model="inputCollateralAmount"
           class="my-2"
           type="number"
-          :label="hintLabel"
+          :label="hintLabel2"
         ></f-input>
         <base-connect-wallet-btn
           v-if="!isLogged"
@@ -95,7 +103,7 @@
           v-else
           rounded
           depressed
-          :disabled="!amount"
+          :disabled="confirmDisabled"
           color="primary"
           style="height: 48px"
           @click="bidding"
@@ -110,10 +118,7 @@
     </div>
     <f-panel v-if="events && events.length !== 0" class="mx-4 py-0">
       <template v-for="(event, index) in events">
-        <v-divider
-          :key="`${event.lot}_${event.bid}_${event.created_at}`"
-          v-if="index !== 0"
-        />
+        <v-divider :key="`${index}_divider`" v-if="index !== 0" />
         <auction-history-item
           :key="`${event.lot}_${event.bid}_${event.created_at}`"
           :flipEvent="event"
@@ -121,6 +126,7 @@
         ></auction-history-item>
       </template>
     </f-panel>
+    <div style="hieght: 70px"></div>
   </v-layout>
 </template>
 
@@ -153,7 +159,8 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   loading = false;
   flip = {} as IFlip;
   events = [] as IFlipEvent[];
-  amount = "";
+  inputDebtAmount = "";
+  inputCollateralAmount = "";
   follow_id = "";
   countDownTimer = 0;
   countDownText = "";
@@ -192,12 +199,22 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     return this.$route.query["id"] as string;
   }
 
-  get hintLabel() {
-    if (this.meta.isStage1)
-      return `出价多少 ${this.debtAsset?.symbol} 以竞标抵押物 ${this.auctionAsset?.symbol}`;
-    if (this.meta.isStage2)
-      return `竞标多少 ${this.auctionAsset?.symbol}，偿付全额 ${this.debtAsset?.symbol} 债务`;
-    return "";
+  get hintLabel1() {
+    return `出价多少 ${this.debtAsset?.symbol} 以竞标抵押物 ${this.auctionAsset?.symbol}`;
+  }
+
+  get hintLabel2() {
+    return `竞标多少 ${this.auctionAsset?.symbol}，偿付全额 ${this.debtAsset?.symbol} 债务`;
+  }
+
+  get confirmDisabled() {
+    if (this.meta.isStage1) {
+      return !this.inputDebtAmount;
+    }
+    if (this.meta.isStage2) {
+      return !this.inputCollateralAmount;
+    }
+    return true;
   }
 
   get meta() {
@@ -230,7 +247,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
       }
       this.requestFlip();
       this.requestEvents();
-    }, 5000);
+    }, 3000);
   }
 
   async requestEvents() {
@@ -238,8 +255,9 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     this.events = res?.data?.events?.reverse();
   }
 
-  beforeDestory() {
+  beforeDestroy() {
     clearInterval(this.intervalId);
+    clearInterval(this.countId);
   }
 
   countId = 0 as any;
@@ -278,7 +296,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     const request = {
       user_id: this.user_id,
       follow_id: this.follow_id,
-      amount: this.amount,
+      amount: this.inputDebtAmount,
       asset_id: this.debtAsset?.id,
       parameters: [
         "bit",
@@ -315,7 +333,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
         "uuid",
         this.flipId,
         "decimal",
-        this.amount,
+        this.inputCollateralAmount,
       ],
     } as IActionsParams;
     const url = await this.$utils.helper.requestPayment(this, request);
@@ -350,10 +368,6 @@ export default class AuctionDetail extends Mixins(mixins.page) {
         });
       }
     }, 3000);
-  }
-
-  beforeDestroy() {
-    clearInterval(this.countId);
   }
 
   bidding() {

@@ -1,85 +1,91 @@
 <template>
-  <v-layout column>
-    <v-layout class="f-bg-greyscale-7">
-      <v-layout column flex-grow-1 class="pa-4 top-view-item">
-        <v-layout align-center>
-          <f-mixin-asset-logo
-            :size="48"
-            :logo="collateralAsset.logo"
-          ></f-mixin-asset-logo>
-          <div class="f-title-3 ml-4">{{ $t("vault.detail.collateral") }}</div>
-        </v-layout>
-        <div class="f-body-1">
-          {{ collateralAmount }} {{ collateralAsset.symbol }}
-        </div>
-      </v-layout>
-      <v-layout column flex-grow-1 class="pa-4 top-view-item">
-        <v-layout align-center>
-          <f-mixin-asset-logo
-            :size="48"
-            :logo="debtAsset.logo"
-          ></f-mixin-asset-logo>
-          <div class="f-title-3 ml-4">{{ $t("vault.detail.debt") }}</div>
-        </v-layout>
-        <div class="f-body-1">{{ debtAmount }} {{ debtAsset.symbol }}</div>
-      </v-layout>
-    </v-layout>
-    <f-info-grid class="mt-4 f-bg-greyscale-7" :window-size="2">
-      <f-info-grid-item
-        v-for="(item, ix) in infos"
-        :key="ix"
-        :index="ix"
-        :title="item.title"
-        :value="item.value"
-        :value-unit="item.valueUnit"
-        :value-color="item.valueColor"
-        :value-custom-color="item.valueCustomColor"
-        :hint="item.hint"
-      ></f-info-grid-item>
-    </f-info-grid>
-    <vault-stats
-      class="mb-4 custom-info-grid"
-      :title="''"
-      :vault="vault"
-      :collateral="collateral"
-      :show-debt="false"
-      show-penalty
-    />
-    <div class="px-4">
-      <div class="f-greyscale-1 f-title-1 mb-4">
-        {{ $t("vault.detail.history") }}
-      </div>
-      <f-panel
-        class="py-0"
-        v-infinite-scroll="requestTx"
-        infinite-scroll-distance="10"
-      >
-        <template v-for="(item, index) in histories">
-          <v-divider
-            :key="`${item.action}_${item.created_at}`"
-            v-if="index !== 0"
-          />
-          <div :key="index" style="overflow: hidden">
-            <history-item
-              :history="item"
-              :vault="vault"
-              :collateral="collateral"
-            ></history-item>
+  <v-container class="pa-0" fluid>
+    <v-layout column>
+      <v-layout class="f-bg-greyscale-7">
+        <v-layout column flex-grow-1 class="pa-4 top-view-item">
+          <v-layout align-center>
+            <f-mixin-asset-logo
+              :size="48"
+              :logo="collateralAsset.logo"
+            ></f-mixin-asset-logo>
+            <div class="f-title-3 ml-4">
+              {{ $t("vault.detail.collateral") }}
+            </div>
+          </v-layout>
+          <div class="f-body-1">
+            {{ collateralAmount }} {{ collateralAsset.symbol }}
           </div>
-        </template>
-        <f-loading class="my-4" v-if="loading" :loading="loading" />
-        <template v-else-if="histories.length === 0">
-          <base-empty-section />
-        </template>
-      </f-panel>
-    </div>
-    <div style="height: 100px"></div>
-    <f-action-bar
-      fixed
-      @click="handleActionClick"
-      :actions="actionButtons"
-    ></f-action-bar>
-  </v-layout>
+        </v-layout>
+        <v-layout column flex-grow-1 class="pa-4 top-view-item">
+          <v-layout align-center>
+            <f-mixin-asset-logo
+              :size="48"
+              :logo="debtAsset.logo"
+            ></f-mixin-asset-logo>
+            <div class="f-title-3 ml-4">{{ $t("vault.detail.debt") }}</div>
+          </v-layout>
+          <div class="f-body-1">{{ debtAmount }} {{ debtAsset.symbol }}</div>
+        </v-layout>
+      </v-layout>
+      <v-layout class="f-bg-greyscale-7">
+        <f-info-grid-item
+          class="top-view-item"
+          v-for="(item, ix) in infos"
+          :key="ix"
+          :index="ix"
+          :title="item.title"
+          :value="item.value"
+          :value-unit="item.valueUnit"
+          :value-color="item.valueColor"
+          :value-custom-color="item.valueCustomColor"
+          :hint="item.hint"
+        ></f-info-grid-item>
+      </v-layout>
+
+      <vault-stats
+        class="mb-4 pt-4 mt-4 custom-info-grid"
+        :title="''"
+        :vault="vault"
+        :collateral="collateral"
+        :show-debt="false"
+        show-penalty
+      />
+      <div class="px-4">
+        <div class="f-greyscale-1 f-title-1 mb-4">
+          {{ $t("vault.detail.history") }}
+        </div>
+        <f-panel
+          class="py-0"
+          v-infinite-scroll="requestTx"
+          infinite-scroll-distance="10"
+        >
+          <template v-for="(item, index) in histories">
+            <v-divider
+              :key="`${item.action}_${item.created_at}`"
+              v-if="index !== 0"
+            />
+            <div :key="index" style="overflow: hidden">
+              <history-item
+                :history="item"
+                :vault="vault"
+                :collateral="collateral"
+              ></history-item>
+            </div>
+          </template>
+          <f-loading class="my-4" v-if="loading" :loading="loading" />
+          <template v-else-if="histories.length === 0">
+            <base-empty-section />
+          </template>
+        </f-panel>
+      </div>
+      <div style="height: 100px"></div>
+      <f-action-bar
+        fixed
+        @click="handleActionClick"
+        :actions="actionButtons"
+      ></f-action-bar>
+    </v-layout>
+  </v-container>
 </template>
 
 <script lang="ts" scoped>

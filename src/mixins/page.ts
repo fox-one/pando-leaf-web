@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import { Action, Mutation } from "vuex-class";
+import { Action, Getter, Mutation, State } from "vuex-class";
 
 export interface Page extends Vue {
   title: string;
@@ -37,6 +37,12 @@ export default class PageView extends Vue {
 
   @Action("oracle/sync") syncOracles;
 
+  @Action("auth/getMe") getMe;
+
+  @State((state) => state.auth.id) user_id;
+
+  @Getter("auth/isLogged") isLogged;
+
   get title() {
     return "";
   }
@@ -51,6 +57,9 @@ export default class PageView extends Vue {
 
   mounted() {
     this.syncOracles();
+    if (this.isLogged && !this.user_id) {
+      this.getMe();
+    }
   }
 
   setLang() {

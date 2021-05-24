@@ -19,7 +19,7 @@
             :logo="meta.auctionLogo"
           ></f-mixin-asset-logo>
           <v-layout column class="ml-2">
-            <div class="f-caption">{{ `抵押物 ${auctionAsset.symbol}` }}</div>
+            <div class="f-caption">{{ `抵押物 ${meta.auctionSymbol}` }}</div>
             <div class="f-body-1">{{ flip.lot }}</div>
           </v-layout>
         </v-layout>
@@ -29,7 +29,7 @@
             :logo="meta.debtLogo"
           ></f-mixin-asset-logo>
           <v-layout column class="ml-2">
-            <div class="f-caption">{{ `债务 ${debtAsset.symbol}` }}</div>
+            <div class="f-caption">{{ `债务 ${meta.debtSymbol}` }}</div>
             <div class="f-body-1">{{ flip.bid }}</div>
           </v-layout>
         </v-layout>
@@ -75,6 +75,8 @@ export default class AuctionItem extends Vue {
       chop: this.$utils.number.toPercent(Number(this.collateral?.chop) - 1),
       auctionLogo: this.auctionAsset?.logo,
       debtLogo: this.debtAsset?.logo,
+      auctionSymbol: this.auctionAsset?.symbol,
+      debtSymbol: this.debtAsset?.symbol,
       isDone,
     };
   }

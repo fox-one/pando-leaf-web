@@ -49,6 +49,8 @@ export default class Fennec {
       });
       this.#token = token;
       this.connected = true;
+      this.#app.store?.dispatch("global/syncMyVaults");
+      this.#app.store?.dispatch("auth/getMe");
     }
   }
 

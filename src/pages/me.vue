@@ -114,7 +114,11 @@ export default class Me extends Mixins(mixins.page) {
 
   @Watch("expanded")
   onExpandedChange(nVal: any[], oVal: any[]) {
-    if (nVal.length === oVal.length || nVal.length === 1 || nVal.length === 0)
+    if (
+      nVal?.length === oVal?.length ||
+      nVal?.length === 1 ||
+      nVal?.length === 0
+    )
       return;
     const filtered = nVal.filter((v) => !oVal.includes(v));
     console.log("oldVal: " + oVal, "newVal: " + nVal, "filtered: " + filtered);
@@ -184,7 +188,7 @@ export default class Me extends Mixins(mixins.page) {
       const collateral = this.getCollateral(v.collateral_id);
       const colAsset = this.getAssetById(collateral?.gem);
       const colAmount = Number(v.ink || "0");
-      const daiAmount = Number(v.art || "0") * Number(collateral.rate || "1");
+      const daiAmount = Number(v.art || "0") * Number(collateral?.rate || "1");
       const colPrice = Number(colAsset?.price || "0");
       const daiAsset = this.getAssetById(collateral?.dai);
       const daiPrice = Number(daiAsset?.price || "0");
@@ -195,6 +199,17 @@ export default class Me extends Mixins(mixins.page) {
       collaterals: `$${this.$utils.number.toShort(col)}`,
       debts: `$${this.$utils.number.toShort(dai)}`,
     };
+  }
+
+  created() {
+    if (this.$route.query["r"] === "auction") {
+      if (this.$route.query["id"]) {
+        this.$router.replace(`/auction?id=${this.$route.query["id"]}`);
+        
+      } else {
+        this.$router.replace("/auctions");
+      }
+    }
   }
 
   mounted() {
@@ -214,6 +229,15 @@ export default class Me extends Mixins(mixins.page) {
     if (!this.isLogged) {
       this.$utils.helper.requestLogin(this);
     } else {
+      this.loading = true;
+      this.syncMyVaults()
+        .then((res) => {
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(this.isLogged);
+          this.loading = false;
+        });
     }
   }
 
