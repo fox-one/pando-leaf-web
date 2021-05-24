@@ -112,15 +112,22 @@ export default class VaultDetail extends Mixins(mixins.vault) {
   }
 
   get collateralAmount() {
-    return this.vault.ink;
+    return this.vault?.ink;
   }
 
   get debtAmount() {
     return this.$utils.number.toPrecision(
-      Number(this.vault.art) * Number(this.collateral.rate),
+      Number(this.vault?.art) * Number(this.collateral?.rate),
       8,
       BigNumber.ROUND_UP
     );
+  }
+
+  get meta() {
+    return {
+      collateralAmount: Number(this.collateralAmount),
+      debtAmount: Number(this.vault?.art) * Number(this.collateral?.rate),
+    };
   }
 
   get infos() {
@@ -138,7 +145,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
     );
 
     if (debtAmount === 0) {
-      return this.vault?.ink;
+      return [];
     }
     const maxWithdrawAvaileble =
       collateralAmount - (mininumRatio * debtAmount) / price;
@@ -161,44 +168,49 @@ export default class VaultDetail extends Mixins(mixins.vault) {
     ];
   }
 
-  actionButtons = [
-    {
-      text: this.$t("button.deposit"),
-      icon: this.$icons.mdiPlusCircle,
-      size: "22",
-      color: "primary",
-      onClick: (id) => {
-        this.$router.push(`/vault/deposit?id=${id}`);
+  get actionButtons() {
+    return [
+      {
+        text: this.$t("button.deposit"),
+        icon: this.$icons.mdiPlusCircle,
+        size: "22",
+        color: "primary",
+        onClick: (id) => {
+          this.$router.push(`/vault/deposit?id=${id}`);
+        },
       },
-    },
-    {
-      text: this.$t("button.withdraw"),
-      icon: this.$icons.mdiMinusCircle,
-      size: "22",
-      color: "primary",
-      onClick: (id) => {
-        this.$router.push(`/vault/withdraw?id=${id}`);
+      {
+        text: this.$t("button.withdraw"),
+        icon: this.$icons.mdiMinusCircle,
+        size: "22",
+        color: this.meta?.collateralAmount === 0 ? "grey" : "primary",
+        onClick: (id) => {
+          if (this.meta?.collateralAmount === 0) return;
+          this.$router.push(`/vault/withdraw?id=${id}`);
+        },
       },
-    },
-    {
-      text: this.$t("button.generate"),
-      icon: this.$icons.mdiLock,
-      size: "22",
-      color: "green",
-      onClick: (id) => {
-        this.$router.push(`/vault/generate?id=${id}`);
+      {
+        text: this.$t("button.generate"),
+        icon: this.$icons.mdiLock,
+        size: "22",
+        color: this.meta?.collateralAmount === 0 ? "grey" : "green",
+        onClick: (id) => {
+          if (this.meta?.collateralAmount === 0) return;
+          this.$router.push(`/vault/generate?id=${id}`);
+        },
       },
-    },
-    {
-      text: this.$t("button.pay-back"),
-      icon: this.$icons.mdiLockOpen,
-      size: "22",
-      color: "deep-orange",
-      onClick: (id) => {
-        this.$router.push(`/vault/payback?id=${id}`);
+      {
+        text: this.$t("button.pay-back"),
+        icon: this.$icons.mdiLockOpen,
+        size: "22",
+        color: this.meta?.debtAmount === 0 ? "grey" : "deep-orange",
+        onClick: (id) => {
+          if (this.meta?.debtAmount === 0) return;
+          this.$router.push(`/vault/payback?id=${id}`);
+        },
       },
-    },
-  ];
+    ];
+  }
 
   mounted() {
     this.requestTx();

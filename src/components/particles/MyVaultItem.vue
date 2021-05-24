@@ -83,7 +83,7 @@
           </v-btn>
           <v-btn
             text
-            :disabled="inLiquidation"
+            :disabled="inLiquidation || meta.collateralAmount === 0"
             class="f-actionbar-button-label f-caption f-weight-m"
             :min-height="68"
             @click="toGenerate"
@@ -95,6 +95,7 @@
           </v-btn>
           <v-btn
             text
+            :disabled="meta.debtAmount === 0"
             :min-height="68"
             class="f-actionbar-button-label f-caption f-weight-m"
             @click="toPayback"
@@ -106,7 +107,6 @@
           </v-btn>
           <v-btn
             text
-            :disabled="inLiquidation"
             :min-height="68"
             class="f-actionbar-button-label f-caption f-weight-m"
             @click="toDetail"
@@ -232,6 +232,8 @@ export default class MyVaultItem extends Vue {
       collateralizationRatio,
       collateralizationRatioText,
       stabilityFee,
+      debtAmount,
+      collateralAmount,
     };
   }
 
