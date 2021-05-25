@@ -67,14 +67,16 @@ class DefaultLayoutAppBar extends Vue {
     return name;
   }
 
-  menuItems = [
-    {
-      title: this.$t("menu.market"),
-    },
-    {
-      title: this.$t("menu.auction"),
-    },
-  ];
+  get menuItems() {
+    return [
+      {
+        title: this.$t("menu.market"),
+      },
+      {
+        title: this.$t("menu.auction"),
+      },
+    ];
+  }
 
   clickItem(menu, index) {
     if (index === 0) {
@@ -100,7 +102,6 @@ class DefaultLayoutAppBar extends Vue {
   }
 
   handleBack() {
-    console.log("handleBack", window.history.length);
     if (window.history.length <= 2) {
       this.$router.options;
       this.$router.replace({ name: "index" });
