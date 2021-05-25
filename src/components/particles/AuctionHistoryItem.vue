@@ -28,15 +28,30 @@ export default class HistoryItem extends Vue {
     const collateral = this.getCollateral(this.flip?.collateral_id);
     const collateralAsset = this.getAssetById(collateral?.gem);
     const debtAsset = this.getAssetById(collateral?.dai);
-    let actionText = "竞标出价";
-    let actionContent = `出价以 ${this.flipEvent.bid} ${debtAsset?.symbol} 竞购 ${this.flipEvent.lot} ${collateralAsset?.symbol}`;
+    let actionText = this.$t("auction.history.bid.title");
+    let actionContent = this.$t("auction.history.bid.content", {
+      debtamount: this.flipEvent.bid,
+      debtsymbol: debtAsset?.symbol,
+      colamount: this.flipEvent.lot,
+      colsymbol: collateralAsset?.symbol,
+    });
     if (this.flipEvent.action === FlipAction.FlipKick) {
-      actionText = "拍卖开始";
-      actionContent = `起价为以 ${this.flipEvent.bid} ${debtAsset?.symbol} 竞购 ${this.flipEvent.lot} ${collateralAsset?.symbol}`;
+      actionText = this.$t("auction.history.kick.title");
+      actionContent = this.$t("auction.history.kick.content", {
+        debtamount: this.flipEvent.bid,
+        debtsymbol: debtAsset?.symbol,
+        colamount: this.flipEvent.lot,
+        colsymbol: collateralAsset?.symbol,
+      });
     }
     if (this.flipEvent.action === FlipAction.FlipDeal) {
-      actionText = "拍卖成交";
-      actionContent = `成交价为以 ${this.flipEvent.bid} ${debtAsset?.symbol} 竞购 ${this.flipEvent.lot} ${collateralAsset?.symbol}`;
+      actionText = this.$t("auction.history.deal.title");
+      actionContent = this.$t("auction.history.deal.content", {
+        debtamount: this.flipEvent.bid,
+        debtsymbol: debtAsset?.symbol,
+        colamount: this.flipEvent.lot,
+        colsymbol: collateralAsset?.symbol,
+      });
     }
     return {
       actionText,

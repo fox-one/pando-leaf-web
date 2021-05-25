@@ -3,14 +3,20 @@
     <f-panel column class="pa-0 f-bg-greyscale-7">
       <v-layout align-center justify-space-between class="ma-2">
         <div class="f-body-2 font-weight-bold">
-          {{ "拍卖类型 " }} {{ meta.colType }}
+          {{ $t("auction.item.collateral-type") }} {{ meta.colType }}
         </div>
-        <div class="f-caption">{{ meta.isDone ? "已结束" : "拍卖中" }}</div>
+        <div class="f-caption">
+          {{
+            meta.isDone
+              ? $t("auction.item.status.done")
+              : $t("auction.item.status.in-auction")
+          }}
+        </div>
       </v-layout>
       <v-divider />
       <v-layout column class="ma-2">
         <v-layout align-center justify-space-between class="f-caption mb-2">
-          <div>{{ "拍卖详情" }}</div>
+          <div>{{ $t("auction.item.info") }}</div>
           <div>{{ $t("form.info.liquidation-penalty") }} {{ meta.chop }}</div>
         </v-layout>
         <v-layout align-center class="mb-2" style="flex: 1">
@@ -19,7 +25,13 @@
             :logo="meta.auctionLogo"
           ></f-mixin-asset-logo>
           <v-layout column class="ml-2">
-            <div class="f-caption">{{ `抵押物 ${meta.auctionSymbol}` }}</div>
+            <div class="f-caption">
+              {{
+                $t("auction.item.collateral-symbol", {
+                  symbol: meta.auctionSymbol,
+                })
+              }}
+            </div>
             <div class="f-body-1">{{ flip.lot }}</div>
           </v-layout>
         </v-layout>
@@ -29,15 +41,19 @@
             :logo="meta.debtLogo"
           ></f-mixin-asset-logo>
           <v-layout column class="ml-2">
-            <div class="f-caption">{{ `债务 ${meta.debtSymbol}` }}</div>
+            <div class="f-caption">
+              {{ $t("auction.item.debt-symbol", { symbol: meta.debtSymbol }) }}
+            </div>
             <div class="f-body-1">{{ flip.bid }}</div>
           </v-layout>
         </v-layout>
       </v-layout>
       <v-divider />
       <v-layout class="f-caption ma-2" justify-space-between>
-        <div>{{ "结束时间" }}</div>
-        <div>{{ meta.isDone ? dayjs(flip.tic) : dayjs(flip.tic) }}</div>
+        <div>{{ $t("auction.item.end-time") }}</div>
+        <div>
+          {{ meta.isDone ? doneTime(flip.tic) : inAuctionTime(flip.tic) }}
+        </div>
       </v-layout>
     </f-panel>
   </div>
@@ -81,8 +97,12 @@ export default class AuctionItem extends Vue {
     };
   }
 
-  dayjs(time) {
-    return this.$utils.time.toRelative(time);
+  doneTime(time) {
+    return this.$utils.time.format(time);
+  }
+
+  inAuctionTime(time) {
+    return this.$utils.time.format(time);
   }
 
   toDetail(flip: IFlip) {

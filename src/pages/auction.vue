@@ -6,22 +6,28 @@
 
     <v-layout column v-if="!loading" class="f-bg-greyscale-7">
       <f-tip v-if="!meta.isDone" class="ma-4">{{ auctionStatus }}</f-tip>
-      <div v-if="meta.isDone" class="text-center text-h4 my-4">竞拍已结束</div>
+      <div v-if="meta.isDone" class="text-center text-h4 my-4">
+        {{ $t("auction.status.end") }}
+      </div>
       <v-layout v-else column>
-        <div class="f-body-2 ml-4">拍卖将于</div>
+        <div class="f-body-2 ml-4">{{ $t("auction.status.timer-prev") }}</div>
         <div class="text-center text-h3 mb-4">
           {{ countDownText }}
         </div>
-        <div class="f-body-2 text-right mr-4 mb-4">后结束</div>
+        <div class="f-body-2 text-right mr-4 mb-4">
+          {{ $t("auction.status.timer-shuffix") }}
+        </div>
       </v-layout>
       <v-divider />
     </v-layout>
 
-    <div class="f-body-1 mx-6 my-2">{{ "当前状态" }}</div>
+    <div class="f-body-1 mx-6 my-2">
+      {{ $t("auction.label.current-state") }}
+    </div>
     <f-panel class="pa-0 mx-4">
       <v-layout>
         <v-layout column style="flex: 1" class="pl-4 pb-4">
-          <div class="my-4 f-caption">{{ "竞标抵押物" }}</div>
+          <div class="my-4 f-caption">{{ $t("auction.label.collateral") }}</div>
           <v-layout align-center>
             <f-mixin-asset-logo
               :size="32"
@@ -34,7 +40,7 @@
           <div class="f-body-1 mt-1">{{ flip.lot }}</div>
         </v-layout>
         <v-layout column style="flex: 1" class="pl-4 pb-4">
-          <div class="my-4 f-caption">{{ "竞标出价" }}</div>
+          <div class="my-4 f-caption">{{ $t("auction.label.debt") }}</div>
           <v-layout align-center>
             <f-mixin-asset-logo
               :size="32"
@@ -53,13 +59,18 @@
       <v-layout column>
         <v-layout v-if="meta.isStage1" column>
           <div class="f-caption">
-            当前为<span class="f-body-1 font-weight-bold primary--text"
-              >竞标出价阶段</span
-            >
+            {{ $t("auction.label.stage-prev")
+            }}<span class="f-body-1 font-weight-bold primary--text">{{
+              $t("auction.label.stage-price")
+            }}</span>
           </div>
           <div class="f-caption mt-2">
             {{
-              `每次加价不得少于当前出价的${begText}，最高出价 ${flip.tab} ${debtAsset.symbol}`
+              $t("auction.rule.stage-price", {
+                beg: begText,
+                amount: flip.tab,
+                symbol: debtAsset.symbol,
+              })
             }}
           </div>
         </v-layout>
@@ -72,13 +83,16 @@
         ></f-input>
         <v-layout v-if="meta.isStage2" column>
           <div class="f-caption">
-            当前为<span class="f-body-1 font-weight-bold primary--text"
-              >竞标抵押物阶段</span
-            >
+            {{ $t("auction.label.stage-prev")
+            }}<span class="f-body-1 font-weight-bold primary--text">{{
+              $t("auction.label.stage-collateral")
+            }}</span>
           </div>
           <div class="f-caption mt-2">
             {{
-              `每次减少对于抵押物的竞量，减量幅度为${begText}，出价将意味着您愿意偿付全部债务，只竞标抵押物中的一部分`
+              $t("auction.rule.stage-collateral", {
+                beg: begText,
+              })
             }}
           </div>
         </v-layout>
@@ -114,7 +128,7 @@
       </v-layout>
     </f-panel>
     <div v-if="events && events.length !== 0" class="f-body-1 mx-6 my-2">
-      {{ "拍卖历史记录" }}
+      {{ $t("auction.history") }}
     </div>
     <f-panel v-if="events && events.length !== 0" class="mx-4 py-0">
       <template v-for="(event, index) in events">
@@ -126,7 +140,7 @@
         ></auction-history-item>
       </template>
     </f-panel>
-    <div style="hieght: 70px"></div>
+    <div style="height: 70px"></div>
   </v-layout>
 </template>
 
@@ -139,7 +153,6 @@ import AuctionHistoryItem from "~/components/particles/AuctionHistoryItem.vue";
 import { Action, Getter, State } from "vuex-class";
 import { FlipAction, FlipRequestAction, TransactionStatus } from "~/types";
 import { IActionsParams } from "~/services/types/dto";
-import { ACTION_ASSET_ID } from "~/constants";
 import { isDesktop } from "~/utils/helper";
 import dayjs from "dayjs";
 
@@ -173,9 +186,9 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   }
 
   get auctionStatus() {
-    if (this.meta.isDone) return "竞标已结束";
-    if (this.meta.isStage1) return "竞标出价阶段";
-    if (this.meta.isStage2) return "竞标抵押物阶段";
+    if (this.meta.isDone) return this.$t("auction.status.end");
+    if (this.meta.isStage1) return this.$t("auction.label.stage-price");
+    if (this.meta.isStage2) return this.$t("auction.label.stage-collateral");
     return "";
   }
 
@@ -200,11 +213,17 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   }
 
   get hintLabel1() {
-    return `出价多少 ${this.debtAsset?.symbol} 以竞标抵押物 ${this.auctionAsset?.symbol}`;
+    return this.$t("auction.hint.stage-price", {
+      debtsymbol: this.debtAsset?.symbol,
+      colsymbol: this.auctionAsset?.symbol,
+    });
   }
 
   get hintLabel2() {
-    return `竞标多少 ${this.auctionAsset?.symbol}，偿付全额 ${this.debtAsset?.symbol} 债务`;
+    return this.$t("auction.hint.stage-collateral", {
+      debtsymbol: this.debtAsset?.symbol,
+      colsymbol: this.auctionAsset?.symbol,
+    });
   }
 
   get confirmDisabled() {
@@ -380,7 +399,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   }
 
   get title() {
-    return `拍卖详情`;
+    return `${this.$t("auction.title.details")}`;
   }
 }
 </script>
