@@ -14,7 +14,7 @@
             :logo="debtLogo"
           ></f-mixin-asset-logo>
           <span class="f-title-2">{{
-            `${collateral.name} #${vault.identity_id}`
+            `${collateralName} #${vault.identity_id}`
           }}</span>
           <v-spacer></v-spacer>
           <div :class="`mr-1 f-${risk}`">
@@ -158,6 +158,10 @@ export default class MyVaultItem extends Vue {
 
   get collateral() {
     return this.getCollateral(this.vault?.collateral_id);
+  }
+
+  get collateralName() {
+    return this.collateral?.name;
   }
 
   get collateralAsset() {
