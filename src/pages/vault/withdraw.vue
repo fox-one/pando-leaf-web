@@ -62,6 +62,7 @@
       :current-rate="this.meta.ratio * 100"
       :liquidation-rate="Number(this.collateral.mat) * 100"
     />
+    <need-cnb-modal :visible.sync="needCnb" />
   </v-container>
 </template>
 
@@ -72,6 +73,7 @@ import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter, State } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
 import PercentSlider from "@/components/particles/PercentSlider.vue";
+import NeedCnbModal from "@/components/particles/NeedCnbModal.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus, VatAction } from "~/types";
@@ -83,6 +85,7 @@ import { isDesktop } from "~/utils/helper";
   components: {
     VaultStats,
     PercentSlider,
+    NeedCnbModal,
   },
 })
 export default class WithdrawForm extends Mixins(mixins.page) {
@@ -335,7 +338,19 @@ export default class WithdrawForm extends Mixins(mixins.page) {
     this.$utils.helper.requestLogin(this);
   }
 
+  needCnb = false;
+  checkCNB() {
+    if (this.isLogged && this.canReadAsset) {
+      if (Number(this.getAssetById(ACTION_ASSET_ID)?.balance) <= 0) {
+        this.needCnb = true;
+        return true;
+      }
+    }
+    return false;
+  }
+
   requestConfirm() {
+    if (this.checkCNB()) return;
     if ((this.meta.ratio - Number(this.collateral.mat)) * 100 < 61) {
       this.cmodal.show();
       return;
@@ -345,7 +360,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
 
   follow_id = "";
   async confirm() {
-    this.follow_id = this.$utils.helper.uuidV4()
+    this.follow_id = this.$utils.helper.uuidV4();
     const request = {
       user_id: this.user_id,
       follow_id: this.follow_id,

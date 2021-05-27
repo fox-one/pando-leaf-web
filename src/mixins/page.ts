@@ -43,6 +43,8 @@ export default class PageView extends Vue {
 
   @Getter("auth/isLogged") isLogged;
 
+  @Getter("auth/canReadAsset") canReadAsset;
+
   get title() {
     return "";
   }

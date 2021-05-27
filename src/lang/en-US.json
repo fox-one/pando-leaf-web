@@ -173,6 +173,13 @@
   "notice.content.p1": "The current collateral rate has reached ",
   "notice.content.p2": ", After this transaction is executed, collateral rate will close to the liquidation rate, when the collateral rate reaches the liquidation rate, the collateral will be liquidation shortly.",
   "notice.content.p3": "YOU CAN'T UNDO THE TRANSACTION, PLEASE CONFIRM CAREFULLY BEFORE PAYING.",
+  "notice.cnb.title":"",
+  "notice.cnb.content1-0":"",
+  "notice.cnb.content1-1":" is needed to finish this action. You are paying basically ",
+  "notice.cnb.content1-2":" value but the transaction is necessary for action verification and recording on-chain.",
+  "notice.cnb.content2-1":"We've detected you have ",
+  "notice.cnb.content2-2":" CNB balance in your wallet. Please get some CNB before continuing.",
+  "notice.to-4swap":"Go get in 4swap",
 
   "tip.no-collaterals":"Obtaining collaterals list data, please wait a moment or try refreshing the page.",
   
