@@ -44,7 +44,7 @@ export default class AuctionsPage extends Mixins(mixins.page) {
   }
 
   get title() {
-    return `${this.$t('auctions.title')}`;
+    return `${this.$t("auctions.title")}`;
   }
 
   async requestFlips() {

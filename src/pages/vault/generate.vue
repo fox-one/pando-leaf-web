@@ -93,7 +93,6 @@ export default class GenerateForm extends Mixins(mixins.page) {
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
   @Action("global/syncMarkets") syncMarkets;
-  @State((state) => state.auth.id) user_id!: string;
   @Ref("cmodal") cmodal;
 
   vaultStatsType = VatAction.VatGenerate;

@@ -182,13 +182,11 @@ import { isDesktop } from "~/utils/helper";
   components: { MarketSelectModal, RiskSlider },
 })
 export default class GenerateVault extends Mixins(mixins.page) {
-  @Getter("auth/isLogged") isLogged;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
   @Action("global/syncMarkets") syncMarkets;
-  @State((state) => state.auth.id) user_id!: string;
   @Ref("cmodal") cmodal;
 
   depositAmount = "";

@@ -89,14 +89,12 @@ import { isDesktop } from "~/utils/helper";
   },
 })
 export default class WithdrawForm extends Mixins(mixins.page) {
-  @Getter("auth/isLogged") isLogged;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getVault") getVault;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncMarkets") syncMarkets;
   @Action("global/syncMyVaults") syncMyVaults;
-  @State((state) => state.auth.id) user_id!: string;
   @Ref("cmodal") cmodal;
 
   vaultStatsType = VatAction.VatWithdraw;

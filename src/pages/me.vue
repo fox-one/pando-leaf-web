@@ -205,7 +205,6 @@ export default class Me extends Mixins(mixins.page) {
     if (this.$route.query["r"] === "auction") {
       if (this.$route.query["id"]) {
         this.$router.replace(`/auction?id=${this.$route.query["id"]}`);
-        
       } else {
         this.$router.replace("/auctions");
       }
