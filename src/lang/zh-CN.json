@@ -18,6 +18,7 @@
   "common.detail":"详情",
   "common.checking-payment":"查询结果中...",
   "common.menu":"菜单",
+  "common.action-success":"操作成功",
 
   "connect.fennec": "连接到 Fennec",
   "connect.fennec.detected": "检测到 Fennec，点击按钮连接",
@@ -230,5 +231,28 @@
   "errorcode.404": "资源不存在",
   "errorcode.403":"没有访问权限",
   "errorcode.401": "请登录",
-  "errorcode.fallback": "网络错误"
+  "errorcode.fallback": "网络错误",
+
+  "errorcode.Cat/bad-data":"参数不合法",
+  "errorcode.Cat/not-authorized":"没有权限操作",
+  "errorcode.Cat/not-live":"抵押品未开启",
+
+  "errorcode.Vat/bad-data":"参数不合法",
+  "errorcode.Vat/not-live":"抵押品未开启",
+  "errorcode.Vat/not-authorized":"没有权限操作",
+  "errorcode.Vat/ceiling-exceeded":"总债务超出上限",
+  "errorcode.Vat/not-safe":"抵押率不足",
+  "errorcode.Vat/dust":"剩余债务低于限值",
+
+  "errorcode.Flip/bad-data":"参数不合法",
+  "errorcode.Flip/not-live":"抵押品未开启",
+  "errorcode.Flip/not-authorized":"没有权限操作",
+  "errorcode.Flip/not-finished":"拍卖没有结束",
+  "errorcode.Flip/finished-tic":"拍卖出价已结束",
+  "errorcode.Flip/finished-end":"拍卖已结束",
+  "errorcode.Flip/bid-not-match":"出价不匹配",
+  "errorcode.Flip/lot-not-lower": "竞价失败",
+  "errorcode.Flip/insufficient-decrease": "加价幅度不够",
+  "errorcode.Flip/bid-not-higher": "竞价失败",
+  "errorcode.Flip/insufficient-increase": "加价幅度不够"
 }

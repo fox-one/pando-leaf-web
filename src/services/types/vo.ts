@@ -88,6 +88,7 @@ export interface ITransaction {
   collateral_id: string;
   created_at: string;
   data: string;
+  msg: string;
   id: string;
   status: TransactionStatus;
   vault_id: string;

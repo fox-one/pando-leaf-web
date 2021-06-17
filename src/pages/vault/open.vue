@@ -587,11 +587,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
         this.syncMyVaults();
         this.$utils.helper.hidePaying(this);
         this.$utils.helper.hidePaymentDialog(this);
-        this.$utils.helper.toast(this, {
-          message: "New Vault has been created.",
-          color: "success",
-        });
-        this.$router.replace("/me");
+        this.$utils.helper.handleTxResult(this, response.data);
       }
     }, 3000);
   }

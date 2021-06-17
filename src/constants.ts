@@ -13,7 +13,7 @@ export const APP_ID = process.env.ID;
 export const APP_NAME = process.env.NAME;
 export const APP_AVATAR = process.env.AVATAR;
 
-export const MIXIN_HOST = "https://mixin-api.zeromesh.net/";
+export const MIXIN_HOST = "https://api.mixin.one/";
 
 export const CONFIG = isProduct
   ? {

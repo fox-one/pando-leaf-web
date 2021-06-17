@@ -59,9 +59,11 @@ export default class PageView extends Vue {
 
   mounted() {
     this.syncOracles();
-    if (this.isLogged && !this.user_id) {
-      this.getMe();
-    }
+    setTimeout(() => {
+      if (this.isLogged && !this.user_id) {
+        this.getMe();
+      }
+    }, 200);
   }
 
   setLang() {

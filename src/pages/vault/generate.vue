@@ -31,13 +31,9 @@
       <f-tip :type="validate.type" v-if="validate.tip !== null">{{
         validate.tip
       }}</f-tip>
-      <f-button
-        type="primary"
-        class="mt-5"
-        :disabled="validate.disabled"
-        @click="requestConfirm"
-        >{{ $t("form.generate.button.confirm") }}</f-button
-      >
+      <f-button type="primary" class="mt-5" @click="requestConfirm">{{
+        $t("form.generate.button.confirm")
+      }}</f-button>
     </v-layout>
 
     <vault-stats
@@ -398,11 +394,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
         this.syncMyVaults();
         this.$utils.helper.hidePaying(this);
         this.$utils.helper.hidePaymentDialog(this);
-        this.$utils.helper.toast(this, {
-          message: "Generate finish.",
-          color: "success",
-        });
-        this.$router.replace("/me");
+        this.$utils.helper.handleTxResult(this, response.data);
       }
     }, 3000);
   }

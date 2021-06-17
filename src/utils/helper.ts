@@ -12,8 +12,9 @@ import i18n from "~/i18n";
 import { initApp } from "./app";
 import { v4 as uuid } from "uuid";
 import number from "./number";
-import { RISK } from "~/types";
+import { RISK, TransactionStatus } from "~/types";
 import { IActionsParams } from "~/services/types/dto";
+import { ITransaction } from "~/services/types/vo";
 
 export function toast(vue: Vue, data: { message: string; color?: string }) {
   vue.$store.commit("app/SET_TOAST", data);
@@ -38,6 +39,22 @@ export function errorHandler(
     message: i18nMessage.includes("errorcode.") ? message : i18nMessage,
     color: "error",
   });
+}
+
+export function handleTxResult(vue: Vue, tx: ITransaction) {
+  if (tx?.status === TransactionStatus.OK) {
+    vue.$utils.helper.toast(vue, {
+      message: vue.$t("common.action-success") as string,
+      color: "success",
+    });
+    vue.$router.replace("/me");
+  }
+  if (tx?.status === TransactionStatus.Abort) {
+    vue.$utils.helper.toast(vue, {
+      message: vue.$t(`errorcode.${tx.msg}`) as string,
+      color: "error",
+    });
+  }
 }
 
 export function demandPrecision(value: number): number {
