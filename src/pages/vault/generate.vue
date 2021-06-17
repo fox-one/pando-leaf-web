@@ -31,9 +31,13 @@
       <f-tip :type="validate.type" v-if="validate.tip !== null">{{
         validate.tip
       }}</f-tip>
-      <f-button type="primary" class="mt-5" @click="requestConfirm">{{
-        $t("form.generate.button.confirm")
-      }}</f-button>
+      <f-button
+        type="primary"
+        class="mt-5"
+        :disabled="validate.disabled"
+        @click="requestConfirm"
+        >{{ $t("form.generate.button.confirm") }}</f-button
+      >
     </v-layout>
 
     <vault-stats
