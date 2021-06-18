@@ -247,6 +247,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   get meta() {
     const isDone =
       this.flip.action === FlipAction.FlipDeal || this.countDownTimer <= 0;
+    // console.log(this.flip.action, this.countDownTimer);
     const isStage1 = Number(this.flip.bid) < Number(this.flip.tab);
     const isStage2 = this.flip.bid === this.flip.tab;
     const collateralPrice = this.getAssetById(this.collateral?.gem)?.price;
@@ -298,7 +299,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   countId = 0 as any;
 
   startCountDown() {
-    if (this.countDownTimer <= 0) return;
+    // if (this.countDownTimer <= 0) return;
     clearInterval(this.countId);
     this.countId = setInterval(() => {
       this.countDownTimer = dayjs(this.flip.tic).diff(dayjs(), "seconds");
