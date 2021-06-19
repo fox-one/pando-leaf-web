@@ -23,9 +23,7 @@
       </div>
       <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
         {{ $t("form.info.max-available") }}
-        <span class="f-blue" @click="amount = maxAvailable">
-          {{ maxAvailable }} </span
-        >{{ assetSymbol }}
+        <span> {{ maxAvailable }} </span>{{ assetSymbol }}
       </div>
 
       <percent-slider class="ma-4" :percent.sync="percent" />
@@ -57,6 +55,7 @@
       :liquidation-rate="Number(this.collateral.mat) * 100"
     />
 
+    <need-cnb-modal :visible.sync="needCnb" />
     <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
     <div class="mx-4 f-caption">
       Price of the pair tokens fluctuates due to change in supply and demand of
@@ -73,6 +72,7 @@ import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter, State } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
 import PercentSlider from "@/components/particles/PercentSlider.vue";
+import NeedCnbModal from "@/components/particles/NeedCnbModal.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus, VatAction } from "~/types";
@@ -83,17 +83,16 @@ import { isDesktop } from "~/utils/helper";
   components: {
     VaultStats,
     PercentSlider,
+    NeedCnbModal,
   },
 })
 export default class GenerateForm extends Mixins(mixins.page) {
-  @Getter("auth/isLogged") isLogged;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getVault") getVault;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
   @Action("global/syncMarkets") syncMarkets;
-  @State((state) => state.auth.id) user_id!: string;
   @Ref("cmodal") cmodal;
 
   vaultStatsType = VatAction.VatGenerate;
@@ -154,8 +153,21 @@ export default class GenerateForm extends Mixins(mixins.page) {
         tip: this.$t("form.validate.amount-zero"),
       };
     }
+    const debtAmount =
+      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
     const ma = Number(this.amount || "0");
     const max = this.$utils.collateral.maxAvailable(this.collateral);
+    if (ma + debtAmount < Number(this.collateral.dust)) {
+      // mint 小于最小值
+      return {
+        disabled: true,
+        type: "error",
+        tip: this.$t("form.validate.minimum-debt", {
+          amount: this.collateral.dust,
+          symbol: this.assetSymbol,
+        }),
+      };
+    }
     if (ma > max) {
       // mint 大于最大值
       return {
@@ -320,6 +332,17 @@ export default class GenerateForm extends Mixins(mixins.page) {
     clearInterval(0);
   }
 
+  needCnb = false;
+  checkCNB() {
+    if (this.isLogged && this.canReadAsset) {
+      if (Number(this.getAssetById(ACTION_ASSET_ID)?.balance) <= 0) {
+        this.needCnb = true;
+        return true;
+      }
+    }
+    return false;
+  }
+
   updateWalletAsset() {
     this.$utils.helper.loadWalletAsset(this, this.collateral.gem);
     this.$utils.helper.loadWalletAsset(this, this.collateral.dai);
@@ -330,6 +353,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
   }
 
   requestConfirm() {
+    if (this.checkCNB()) return;
     if ((this.meta.ratio - Number(this.collateral.mat)) * 100 < 61) {
       this.cmodal.show();
       return;
@@ -374,11 +398,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
         this.syncMyVaults();
         this.$utils.helper.hidePaying(this);
         this.$utils.helper.hidePaymentDialog(this);
-        this.$utils.helper.toast(this, {
-          message: "Generate finish.",
-          color: "success",
-        });
-        this.$router.replace("/me");
+        this.$utils.helper.handleTxResult(this, response.data);
       }
     }, 3000);
   }

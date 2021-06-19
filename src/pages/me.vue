@@ -100,12 +100,10 @@ import { VERSION } from "~/constants";
 export default class Me extends Mixins(mixins.page) {
   @State((state) => state.global.myVaults) myVaults!: IVault[];
   @State((state) => state.global.collaterals) collaterals!: ICollateral[];
-  @Getter("auth/isLogged") isLogged!: boolean;
   @Getter("global/haveVault") haveVault!: boolean;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
-  @Action("oracle/sync") syncOracles;
 
   loading = true;
   expanded = [0];
@@ -205,7 +203,6 @@ export default class Me extends Mixins(mixins.page) {
     if (this.$route.query["r"] === "auction") {
       if (this.$route.query["id"]) {
         this.$router.replace(`/auction?id=${this.$route.query["id"]}`);
-        
       } else {
         this.$router.replace("/auctions");
       }
@@ -215,14 +212,16 @@ export default class Me extends Mixins(mixins.page) {
   mounted() {
     // this.checkLogin();
     this.loading = true;
-    this.syncMyVaults()
-      .then((res) => {
-        this.loading = false;
-      })
-      .catch((err) => {
-        console.log(this.isLogged);
-        this.loading = false;
-      });
+    setTimeout(() => {
+      console.log("isLogged:", this.isLogged);
+      this.syncMyVaults()
+        .then((res) => {
+          this.loading = false;
+        })
+        .catch((err) => {
+          this.loading = false;
+        });
+    }, 200);
   }
 
   checkLogin() {

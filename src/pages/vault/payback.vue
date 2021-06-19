@@ -74,14 +74,12 @@ import { isDesktop } from "~/utils/helper";
   },
 })
 export default class PaybackForm extends Mixins(mixins.page) {
-  @Getter("auth/isLogged") isLogged;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getVault") getVault;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncMarkets") syncMarkets;
   @Action("global/syncMyVaults") syncMyVaults;
-  @State((state) => state.auth.id) user_id!: string;
 
   vaultStatsType = VatAction.VatPayback;
   collateral = {} as ICollateral;
@@ -305,11 +303,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
         this.syncMyVaults();
         this.$utils.helper.hidePaying(this);
         this.$utils.helper.hidePaymentDialog(this);
-        this.$utils.helper.toast(this, {
-          message: "Payback finish.",
-          color: "success",
-        });
-        this.$router.replace("/me");
+        this.$utils.helper.handleTxResult(this, response.data);
       }
     }, 3000);
   }

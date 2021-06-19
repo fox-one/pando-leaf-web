@@ -157,7 +157,7 @@ import mixins from "@/mixins";
 import { IAsset, ICollateral, IFlip, IFlipEvent } from "~/services/types/vo";
 import AuctionItem from "~/components/particles/AuctionItem.vue";
 import AuctionHistoryItem from "~/components/particles/AuctionHistoryItem.vue";
-import { Action, Getter, State } from "vuex-class";
+import { Action, Getter } from "vuex-class";
 import { FlipAction, FlipRequestAction, TransactionStatus } from "~/types";
 import { IActionsParams } from "~/services/types/dto";
 import { isDesktop } from "~/utils/helper";
@@ -172,10 +172,8 @@ import dayjs from "dayjs";
 export default class AuctionDetail extends Mixins(mixins.page) {
   @Getter("global/getCollateral") getCollateral!: (id) => ICollateral;
   @Getter("global/getAssetById") getAssetById!: (id) => IAsset;
-  @Getter("auth/isLogged") isLogged;
   @Action("global/syncMarkets") syncMarkets;
   @Action("global/syncAssets") syncAssets;
-  @State((state) => state.auth.id) user_id!: string;
 
   loading = false;
   flip = {} as IFlip;
@@ -303,6 +301,12 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     clearInterval(this.countId);
     this.countId = setInterval(() => {
       this.countDownTimer = dayjs(this.flip.tic).diff(dayjs(), "seconds");
+      if (
+        dayjs(this.flip.tic).unix() === 0 ||
+        dayjs(this.flip.tic).isAfter(dayjs(this.flip.end))
+      ) {
+        this.countDownTimer = dayjs(this.flip.end).diff(dayjs(), "seconds");
+      }
       this.countDownText = this.format(this.countDownTimer);
       if (this.countDownTimer <= 0) {
         clearInterval(this.countId);
@@ -316,6 +320,12 @@ export default class AuctionDetail extends Mixins(mixins.page) {
       const res = await this.$http.getFlip(this.flipId);
       this.flip = res.data;
       this.countDownTimer = dayjs(this.flip.tic).diff(dayjs(), "seconds");
+      if (
+        dayjs(this.flip.tic).unix() === 0 ||
+        dayjs(this.flip.tic).isAfter(dayjs(this.flip.end))
+      ) {
+        this.countDownTimer = dayjs(this.flip.end).diff(dayjs(), "seconds");
+      }
       this.countDownText = this.format(this.countDownTimer);
       this.startCountDown();
     } catch (error) {

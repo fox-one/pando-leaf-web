@@ -4,6 +4,7 @@ import { AxiosRequestConfig } from "axios";
 import Http from "~/utils/http";
 import createApis from "./index";
 import { v4 as uuid } from "uuid";
+import { CONFIG } from "~/constants";
 
 function generateStructureInterceptor(app: NuxtAppOptions) {
   return [
@@ -71,6 +72,7 @@ function generateI18nInterceptor(app: NuxtAppOptions) {
     (configs) => {
       const locale = app.$utils.helper.getLocale();
       configs.headers["Accept-Language"] = locale;
+      configs.headers["Access-Control-Allow-Origin"] = "*";
       configs.headers["x-request-id"] = uuid();
       return configs;
     },

@@ -52,7 +52,7 @@
       <v-layout class="f-caption ma-2" justify-space-between>
         <div>{{ $t("auction.item.end-time") }}</div>
         <div>
-          {{ meta.isDone ? doneTime(flip.tic) : inAuctionTime(flip.tic) }}
+          {{ meta.endTime }}
         </div>
       </v-layout>
     </f-panel>
@@ -60,6 +60,7 @@
 </template>
 
 <script lang="ts" scoped>
+import dayjs from "dayjs";
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Getter } from "vuex-class";
 import { IAsset, ICollateral, IFlip } from "~/services/types/vo";
@@ -85,6 +86,18 @@ export default class AuctionItem extends Vue {
 
   get meta() {
     const isDone = this.flip.action === FlipAction.FlipDeal;
+    let endTime;
+    if (isDone) {
+      endTime = this.$utils.time.format(this.flip?.tic);
+    } else {
+      if (dayjs(this.flip.tic).unix() === 0) {
+        endTime = this.$utils.time.format(this.flip?.tic);
+      } else {
+        endTime = dayjs(this.flip.tic).isBefore(dayjs(this.flip.end))
+          ? this.$utils.time.format(this.flip.tic)
+          : this.$utils.time.format(this.flip.end);
+      }
+    }
     return {
       title: this.flip.vault_id,
       colType: this.collateral?.name,
@@ -94,6 +107,7 @@ export default class AuctionItem extends Vue {
       auctionSymbol: this.auctionAsset?.symbol,
       debtSymbol: this.debtAsset?.symbol,
       isDone,
+      endTime,
     };
   }
 

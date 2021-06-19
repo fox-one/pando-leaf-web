@@ -10,9 +10,7 @@
     <v-layout class="px-4" justify-space-between>
       <div class="ml-11">{{ $t("vault.selector.min-collateral-ratio") }}</div>
       <div>
-        {{ $t("vault.selector.stability-fee") }}/{{
-          $t("vault.selector.liquidation-penalty")
-        }}
+        {{ $t("vault.selector.stability-fee") }}
       </div>
     </v-layout>
     <v-divider class="px-4" />
@@ -35,14 +33,14 @@
               :size="24"
               :logo="debtLogo(item)"
             ></f-mixin-asset-logo>
-            <v-layout column>
-              <v-layout justify-space-between>
+            <v-layout justify-space-between>
+              <v-layout column>
                 <div class="f-title-2">{{ item.name }}</div>
-                <div>{{ normalize(item).duty }}</div>
-              </v-layout>
-              <v-layout justify-space-between>
                 <div>{{ normalize(item).mat }}</div>
-                <div>{{ normalize(item).chop }}</div>
+              </v-layout>
+              <v-layout column align-end justify-center>
+                <div>{{ normalize(item).duty }}</div>
+                <!-- <div>{{ normalize(item).chop }}</div> -->
               </v-layout>
             </v-layout>
           </v-layout>

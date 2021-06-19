@@ -25,6 +25,4 @@ export default class MarketDetail extends Mixins(mixins.page) {
   }
 }
 </script>
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

@@ -182,13 +182,11 @@ import { isDesktop } from "~/utils/helper";
   components: { MarketSelectModal, RiskSlider },
 })
 export default class GenerateVault extends Mixins(mixins.page) {
-  @Getter("auth/isLogged") isLogged;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
   @Action("global/syncMarkets") syncMarkets;
-  @State((state) => state.auth.id) user_id!: string;
   @Ref("cmodal") cmodal;
 
   depositAmount = "";
@@ -589,11 +587,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
         this.syncMyVaults();
         this.$utils.helper.hidePaying(this);
         this.$utils.helper.hidePaymentDialog(this);
-        this.$utils.helper.toast(this, {
-          message: "New Vault has been created.",
-          color: "success",
-        });
-        this.$router.replace("/me");
+        this.$utils.helper.handleTxResult(this, response.data);
       }
     }, 3000);
   }

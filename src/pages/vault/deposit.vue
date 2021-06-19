@@ -23,7 +23,9 @@
       </div>
       <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
         {{ $t("form.info.wallet-balance")
-        }}<span class="f-blue"> {{ assetBalance }} </span>{{ assetSymbol }}
+        }}<span class="f-blue" @click="amount = assetBalance">
+          {{ assetBalance }} </span
+        >{{ assetSymbol }}
       </div>
 
       <f-tip :type="validate.type" v-if="validate.tip !== null">{{
@@ -71,14 +73,12 @@ import { isDesktop } from "~/utils/helper";
   },
 })
 export default class DepositForm extends Mixins(mixins.page) {
-  @Getter("auth/isLogged") isLogged;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Getter("global/getVault") getVault;
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
   @Action("global/syncMarkets") syncMarkets;
-  @State((state) => state.auth.id) user_id!: string;
 
   vaultStatsType = VatAction.VatDeposit;
   collateral = {} as ICollateral;
@@ -270,11 +270,7 @@ export default class DepositForm extends Mixins(mixins.page) {
         this.syncMyVaults();
         this.$utils.helper.hidePaying(this);
         this.$utils.helper.hidePaymentDialog(this);
-        this.$utils.helper.toast(this, {
-          message: "Deposit finish.",
-          color: "success",
-        });
-        this.$router.replace("/me");
+        this.$utils.helper.handleTxResult(this, response.data);
       }
     }, 3000);
   }

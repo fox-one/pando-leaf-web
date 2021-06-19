@@ -18,6 +18,7 @@
   "common.detail":"Detail",
   "common.checking-payment":"Checking...",
   "common.menu":"Menu",
+  "common.action-success":"Success",
 
   "connect.fennec": "Connect Fennec",
   "connect.fennec.detected": "Fennec detected. Tap to connect",
@@ -173,6 +174,13 @@
   "notice.content.p1": "The current collateral rate has reached ",
   "notice.content.p2": ", After this transaction is executed, collateral rate will close to the liquidation rate, when the collateral rate reaches the liquidation rate, the collateral will be liquidation shortly.",
   "notice.content.p3": "YOU CAN'T UNDO THE TRANSACTION, PLEASE CONFIRM CAREFULLY BEFORE PAYING.",
+  "notice.cnb.title":"",
+  "notice.cnb.content1-0":"",
+  "notice.cnb.content1-1":" is needed to finish this action. You are paying basically ",
+  "notice.cnb.content1-2":" value but the transaction is necessary for action verification and recording on-chain.",
+  "notice.cnb.content2-1":"We've detected you have ",
+  "notice.cnb.content2-2":" CNB balance in your wallet. Please get some CNB before continuing.",
+  "notice.to-4swap":"Go get in 4swap",
 
   "tip.no-collaterals":"Obtaining collaterals list data, please wait a moment or try refreshing the page.",
   
@@ -222,5 +230,28 @@
   "errorcode.404": "CANNOT FIND RESOURCE",
   "errorcode.403": "ACCESS DENIED",
   "errorcode.401": "AUTH REQUIRED",
-  "errorcode.fallback": "NETWORK ERROR"
+  "errorcode.fallback": "NETWORK ERROR",
+
+  "errorcode.Cat/bad-data":"bad data",
+  "errorcode.Cat/not-authorized":"not authorized",
+  "errorcode.Cat/not-live":"collateral not live",
+
+  "errorcode.Vat/bad-data":"bad data",
+  "errorcode.Vat/not-live":"collateral not live",
+  "errorcode.Vat/not-authorized":"not authorized",
+  "errorcode.Vat/ceiling-exceeded":"debt ceiling exceeded",
+  "errorcode.Vat/not-safe":"vault not safe",
+  "errorcode.Vat/dust":"remain debt too little",
+
+  "errorcode.Flip/bad-data":"bad data",
+  "errorcode.Flip/not-live":"collateral not live",
+  "errorcode.Flip/not-authorized":"not authorized",
+  "errorcode.Flip/not-finished":"auction not end",
+  "errorcode.Flip/finished-tic":"auction ended",
+  "errorcode.Flip/finished-end":"auction ended",
+  "errorcode.Flip/bid-not-match": "bid not match",
+  "errorcode.Flip/lot-not-lower":  "lot not lower",
+  "errorcode.Flip/insufficient-decrease": "insufficient decrease for lot",
+  "errorcode.Flip/bid-not-higher": "bid not higher",
+  "errorcode.Flip/insufficient-increase": "insufficient-increase for bid"
 }
