@@ -72,7 +72,6 @@ function generateI18nInterceptor(app: NuxtAppOptions) {
     (configs) => {
       const locale = app.$utils.helper.getLocale();
       configs.headers["Accept-Language"] = locale;
-      configs.headers["Access-Control-Allow-Origin"] = "*";
       configs.headers["x-request-id"] = uuid();
       return configs;
     },
