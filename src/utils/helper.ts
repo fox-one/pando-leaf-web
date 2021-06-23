@@ -47,7 +47,7 @@ export function handleTxResult(vue: Vue, tx: ITransaction) {
       message: vue.$t("common.action-success") as string,
       color: "success",
     });
-    vue.$router.replace("/me");
+    vue.$router.replace("/");
   }
   if (tx?.status === TransactionStatus.Abort) {
     vue.$utils.helper.toast(vue, {

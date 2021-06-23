@@ -43,6 +43,10 @@ export default class AuctionsPage extends Mixins(mixins.page) {
     this.requestFlips();
   }
 
+  get bottomNav() {
+    return "auctions";
+  }
+
   get title() {
     return `${this.$t("auctions.title")}`;
   }

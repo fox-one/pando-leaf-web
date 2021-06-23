@@ -17,6 +17,15 @@ const icons = {
     iconListArrow: {
       component: "icon-list-arrow",
     },
+    iconHome: {
+      component: "icon-home",
+    },
+    iconMarket: {
+      component: "icon-market",
+    },
+    iconAuctions: {
+      component: "icon-auctions",
+    },
   },
 };
 
@@ -33,7 +42,7 @@ export default function ({ store }) {
       },
       themes: {
         light: {
-          primary: "#E4AF77",
+          primary: "#000000",
           orange: "#FFA800",
         },
         dark: {

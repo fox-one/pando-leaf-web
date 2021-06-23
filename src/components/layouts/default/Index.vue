@@ -5,7 +5,7 @@
       <!-- <base-ws-connect-bar /> -->
       <nuxt style="max-width: 1200px" />
     </v-main>
-    <!-- <default-layout-bottom-nav /> -->
+    <default-layout-bottom-nav />
     <default-layout-modals />
   </v-app>
 </template>
@@ -24,8 +24,6 @@ import Modals from "./Modals.vue";
     "default-layout-bottom-nav": BottomNav,
   },
 })
-class DefaultLayout extends Vue {
-  mounted() {}
-}
+class DefaultLayout extends Vue {}
 export default DefaultLayout;
 </script>

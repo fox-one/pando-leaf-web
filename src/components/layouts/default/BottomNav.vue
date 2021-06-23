@@ -24,16 +24,22 @@ class DefaultLayoutBottomNav extends Vue {
   get navItems() {
     return [
       {
+        text: this.$t("tab.home"),
+        icon: "$vuetify.icon.iconHome",
+        path: "home",
+        value: "home",
+      },
+      {
         text: this.$t("tab.market"),
-        icon: this.$icons.mdiGoogleAnalytics,
+        icon: "$vuetify.icon.iconMarket",
         path: "market",
         value: "market",
       },
       {
-        text: this.$t("tab.me"),
-        icon: this.$icons.mdiAccount,
-        path: "me",
-        value: "me",
+        text: this.$t("tab.auctions"),
+        icon: "$vuetify.icon.iconAuctions",
+        path: "auctions",
+        value: "auctions",
       },
     ];
   }

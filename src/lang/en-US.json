@@ -35,8 +35,9 @@
   "menu.market":"Market data explorer",
   "menu.auction":"Liquidation auctions",
 
-  "tab.me":"Me",
+  "tab.home":"Home",
   "tab.market":"Market",
+  "tab.auctions":"Auctions",
 
   "me.total-collaterals":"Your total collaterals",
   "me.total-debts":"Your total debts",

@@ -63,7 +63,6 @@ const logo = require("../../static/android-chrome-192x192.png");
 })
 export default class Market extends Mixins(mixins.page) {
   @State((state) => state.global.collaterals) collaterals!: ICollateral[];
-  @Getter("auth/isLogged") isLogged;
   @Getter("global/getAssetById") getAssetById;
   @Action("global/syncMarkets") syncMarkets;
   get appbar() {
@@ -116,7 +115,7 @@ export default class Market extends Mixins(mixins.page) {
   }
 
   toTrade() {
-    this.$router.replace("/me");
+    this.$router.replace("/");
   }
 
   intervalId = 0 as any;

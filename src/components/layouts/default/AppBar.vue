@@ -4,7 +4,6 @@
       <v-avatar class="ml-2" size="32">
         <v-img :src="avatar" :size="32"></v-img>
       </v-avatar>
-      <h4 class="mx-2">Hi, {{ name }}</h4>
       <v-spacer />
       <f-bottom-sheet
         v-model="showMenu"

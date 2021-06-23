@@ -119,12 +119,11 @@ export default class Me extends Mixins(mixins.page) {
     )
       return;
     const filtered = nVal.filter((v) => !oVal.includes(v));
-    console.log("oldVal: " + oVal, "newVal: " + nVal, "filtered: " + filtered);
     this.expanded = filtered;
   }
 
   get title() {
-    const s = this.$t("tab.me");
+    const s = this.$t("tab.home");
     return `${s}`;
   }
 
@@ -171,7 +170,7 @@ export default class Me extends Mixins(mixins.page) {
   }
 
   get bottomNav() {
-    return "me";
+    return "home";
   }
 
   get total() {

@@ -1,4 +1,4 @@
 <script>
-import me from "./me";
-export default me;
+import home from "./home";
+export default home;
 </script>
