@@ -26,6 +26,12 @@ const icons = {
     iconAuctions: {
       component: "icon-auctions",
     },
+    iconPointerRight: {
+      component: "icon-pointer-right",
+    },
+    iconQuestion: {
+      component: "icon-question",
+    },
   },
 };
 

@@ -1,10 +1,6 @@
 <template>
   <v-container class="pa-0">
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        {{ $t("form.deposit.how-much") }}
-      </div>
-
       <f-asset-amount-input
         v-model="amount"
         :label="$t('form.hint.deposit-amount')"
@@ -14,46 +10,43 @@
         :precision="precision"
       >
       </f-asset-amount-input>
-      <div
-        v-if="!isLogged"
-        class="f-caption f-blue my-2 ml-4"
-        @click="requestLogin"
-      >
+      <div v-if="!isLogged" class="f-caption f-blue mt-2" @click="requestLogin">
         {{ $t("connect.wallet") }}
       </div>
-      <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
-        {{ $t("form.info.wallet-balance")
-        }}<span class="f-blue" @click="amount = assetBalance">
-          {{ assetBalance }} </span
-        >{{ assetSymbol }}
+      <div v-else class="f-caption f-greyscale-3 mt-2">
+        {{ $t("form.info.wallet-balance") }} {{ assetBalance }}
+        {{ assetSymbol }}
+        <span
+          class="f-black text-decoration-underline ml-1 font-weight-bold"
+          @click="amount = assetBalance"
+          >MAX
+        </span>
       </div>
 
       <f-tip :type="validate.type" v-if="validate.tip !== null">{{
         validate.tip
       }}</f-tip>
-      <f-button
-        type="primary"
-        class="mt-5"
-        :disabled="validate.disabled"
-        @click="confirm"
-        >{{ $t("form.deposit.button.confirm") }}</f-button
-      >
+      <div class="my-8 text-center">
+        <v-btn
+          rounded
+          depressed
+          color="primary"
+          height="56px"
+          class="px-8"
+          :disabled="validate.disabled"
+          @click="confirm"
+          >{{ $t("form.deposit.button.confirm") }}</v-btn
+        >
+      </div>
     </v-layout>
 
-    <vault-stats
+    <prediction
       class="my-4"
       :collateral="collateral"
       :vault="vault"
       :amount="amount"
       :type="vaultStatsType"
-    ></vault-stats>
-
-    <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
-    <div class="mx-4 f-caption">
-      Price of the pair tokens fluctuates due to change in supply and demand of
-      the tokens. Investors are expected to take caution and take full
-      responsibilities of their own investment decisions.
-    </div> -->
+    ></prediction>
   </v-container>
 </template>
 
@@ -61,8 +54,9 @@
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
-import { Action, Getter, State } from "vuex-class";
+import { Action, Getter } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
+import Prediction from "@/components/particles/Prediction.vue";
 import { IActionsParams } from "~/services/types/dto";
 import { TransactionStatus, VatAction } from "~/types";
 import { isDesktop } from "~/utils/helper";
@@ -70,6 +64,7 @@ import { isDesktop } from "~/utils/helper";
 @Component({
   components: {
     VaultStats,
+    Prediction,
   },
 })
 export default class DepositForm extends Mixins(mixins.page) {

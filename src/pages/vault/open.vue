@@ -19,28 +19,8 @@
       </v-layout>
     </f-app-bar>
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <div class="f-body-1 f-greyscale-3 mb-3 text-center">
+      <div class="f-caption mb-4 mt-10 f-greyscale-3">
         {{ $t("form.open.how-much-col", { symbol: depositSymbol }) }}
-        <f-tooltip v-model="depositTips" bottom>
-          <template #activator="{ on, attrs }">
-            <v-icon class="icon-tips" v-on="on" v-bind="attrs" size="20">{{
-              $icons.mdiHelpCircleOutline
-            }}</v-icon>
-          </template>
-          <div>
-            <div class="f-body-1">
-              {{ $t("form.open.deposit.tooltip1", { symbol: depositSymbol }) }}
-            </div>
-            <div class="f-caption">
-              {{
-                $t("form.open.deposit.tooltip2", {
-                  depositSymbol: depositSymbol,
-                  mintSymbol: mintSymbol,
-                })
-              }}
-            </div>
-          </div>
-        </f-tooltip>
       </div>
 
       <f-asset-amount-input
@@ -54,35 +34,18 @@
       </f-asset-amount-input>
       <div
         v-if="!isLogged"
-        class="f-caption f-blue my-2 ml-4"
+        class="f-caption f-blue mt-2 ml-4"
         @click="requestLogin"
       >
         {{ $t("connect.wallet") }}
       </div>
-      <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
+      <div v-else class="f-caption f-greyscale-3 mt-2 ml-4">
         {{ $t("form.info.wallet-balance")
         }}<span class="f-blue" @click="depositAmount = depositBalance">
           {{ depositBalance }} </span
         >{{ depositSymbol }}
       </div>
-      <div class="f-body-1 f-greyscale-3 my-3 text-center">
-        {{ $t("form.open.how-much-dai", { symbol: mintSymbol }) }}
-        <f-tooltip v-model="mintTips" bottom>
-          <template #activator="{ on, attrs }">
-            <v-icon class="icon-tips" v-on="on" v-bind="attrs" size="20">{{
-              $icons.mdiHelpCircleOutline
-            }}</v-icon>
-          </template>
-          <div>
-            <div class="f-body-1">
-              {{ $t("form.open.dai.tooltip1", { symbol: mintSymbol }) }}
-            </div>
-            <div class="f-caption">
-              {{ $t("form.open.dai.tooltip2") }}
-            </div>
-          </div>
-        </f-tooltip>
-      </div>
+      <div class="f-caption mb-4 mt-10 f-greyscale-3">Generate</div>
       <div class="f-caption f-greyscale-2"></div>
       <f-asset-amount-input
         v-model="mintAmount"
@@ -153,10 +116,10 @@
       :current-rate="this.meta.collateralizationRatio * 100"
       :liquidation-rate="Number(this.collateral.mat) * 100"
     />
-    <div class="mx-4 mt-4 f-caption f-greyscale-1 font-weight-bold">
+    <div class="mx-4 mt-6 f-title-1 f-greyscale-1 font-weight-bold">
       {{ $t("risk.warnings") }}
     </div>
-    <div class="mx-4 f-caption f-greyscale-3">
+    <div class="mx-4 mt-6 f-caption f-greyscale-3">
       {{ $t("risk.warnings.content1") }}
     </div>
     <div class="mx-4 f-caption f-greyscale-3">
@@ -175,11 +138,12 @@ import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus } from "~/types";
 import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
 import RiskSlider from "~/components/particles/RiskSlider.vue";
+import Prediction from "@/components/particles/Prediction.vue";
 import BigNumber from "bignumber.js";
 import { isDesktop } from "~/utils/helper";
 
 @Component({
-  components: { MarketSelectModal, RiskSlider },
+  components: { MarketSelectModal, RiskSlider, Prediction },
 })
 export default class GenerateVault extends Mixins(mixins.page) {
   @Getter("global/getCollateral") getCollateral;

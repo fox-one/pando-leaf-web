@@ -40,13 +40,13 @@
       >
     </v-layout>
 
-    <vault-stats
+    <prediction
       class="my-4"
       :collateral="collateral"
       :vault="vault"
       :amount="amount"
       :type="vaultStatsType"
-    ></vault-stats>
+    ></prediction>
 
     <base-confirm-modal
       ref="cmodal"
@@ -69,8 +69,9 @@
 import { Component, Mixins, Ref, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
-import { Action, Getter, State } from "vuex-class";
+import { Action, Getter } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
+import Prediction from "@/components/particles/Prediction.vue";
 import PercentSlider from "@/components/particles/PercentSlider.vue";
 import NeedCnbModal from "@/components/particles/NeedCnbModal.vue";
 import BigNumber from "bignumber.js";
@@ -84,6 +85,7 @@ import { isDesktop } from "~/utils/helper";
     VaultStats,
     PercentSlider,
     NeedCnbModal,
+    Prediction,
   },
 })
 export default class GenerateForm extends Mixins(mixins.page) {

@@ -40,13 +40,13 @@
         >{{ $t("form.payback.button.confirm") }}</f-button
       >
     </v-layout>
-    <vault-stats
+    <prediction
       class="my-4"
       :collateral="collateral"
       :vault="vault"
       :amount="amount"
       :type="vaultStatsType"
-    ></vault-stats>
+    ></prediction>
 
     <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
     <div class="mx-4 f-caption">
@@ -61,8 +61,9 @@
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
-import { Action, Getter, State } from "vuex-class";
+import { Action, Getter } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
+import Prediction from "@/components/particles/Prediction.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
 import { TransactionStatus, VatAction } from "~/types";
@@ -71,6 +72,7 @@ import { isDesktop } from "~/utils/helper";
 @Component({
   components: {
     VaultStats,
+    Prediction,
   },
 })
 export default class PaybackForm extends Mixins(mixins.page) {
