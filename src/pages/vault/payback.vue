@@ -1,11 +1,8 @@
 <template>
   <v-container class="pa-0">
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        {{ $t("form.payback.how-much") }}
-      </div>
-
       <f-asset-amount-input
+        class="mt-6"
         v-model="amount"
         :label="$t('form.hint.payback-amount')"
         :asset.sync="asset"
@@ -21,24 +18,32 @@
         {{ $t("connect.wallet") }}
       </div>
       <v-layout v-else justify-space-between>
-        <div class="f-caption f-greyscale-3 my-2 ml-4">
+        <div class="f-caption f-greyscale-3 my-2">
           {{ $t("form.info.wallet-balance") }} {{ assetBalance }}
           {{ assetSymbol }}
-        </div>
-        <div class="f-caption f-blue my-2 mr-4" @click="amount = maxPayback">
-          {{ $t("form.info.set-max") }}
+          <span
+            class="f-black text-decoration-underline ml-1 font-weight-bold"
+            @click="amount = maxPayback"
+          >
+            MAX
+          </span>
         </div>
       </v-layout>
       <f-tip :type="validate.type" v-if="validate.tip !== null">{{
         validate.tip
       }}</f-tip>
-      <f-button
-        type="primary"
-        class="mt-5"
-        :disabled="validate.disabled"
-        @click="confirm"
-        >{{ $t("form.payback.button.confirm") }}</f-button
-      >
+      <div class="my-8 text-center">
+        <v-btn
+          rounded
+          depressed
+          color="primary"
+          height="56px"
+          class="px-8"
+          :disabled="validate.disabled"
+          @click="confirm"
+          >{{ $t("form.payback.button.confirm") }}</v-btn
+        >
+      </div>
     </v-layout>
     <prediction
       class="my-4"

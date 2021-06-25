@@ -1,12 +1,9 @@
 <template>
   <v-container class="pa-0">
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        {{ $t("form.withdraw.how-much") }}
-      </div>
-
       <f-asset-amount-input
         v-model="amount"
+        class="mt-6"
         :label="$t('form.hint.withdraw-amount')"
         :assets="assets"
         :asset.sync="asset"
@@ -21,11 +18,14 @@
       >
         {{ $t("connect.wallet") }}
       </div>
-      <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
-        {{ $t("form.info.max-available")
-        }}<span class="f-blue" @click="amount = maxAvailable">
-          {{ maxAvailable }} </span
-        >{{ assetSymbol }}
+      <div v-else class="f-caption f-greyscale-3 my-2">
+        {{ $t("form.info.available-to-withdraw") }}
+        {{ maxAvailable }} {{ assetSymbol }}
+        <span
+          class="f-black text-decoration-underline ml-1 font-weight-bold"
+          @click="amount = maxAvailable"
+          >MAX
+        </span>
       </div>
 
       <percent-slider class="ma-4" :percent.sync="percent" />
@@ -33,13 +33,18 @@
       <f-tip :type="validate.type" v-if="validate.tip !== null">{{
         validate.tip
       }}</f-tip>
-      <f-button
-        type="primary"
-        class="mt-5"
-        :disabled="validate.disabled"
-        @click="requestConfirm"
-        >{{ $t("form.withdraw.button.confirm") }}</f-button
-      >
+      <div class="my-8 text-center">
+        <v-btn
+          rounded
+          depressed
+          color="primary"
+          height="56px"
+          class="px-8"
+          :disabled="validate.disabled"
+          @click="requestConfirm"
+          >{{ $t("form.withdraw.button.confirm") }}</v-btn
+        >
+      </div>
     </v-layout>
 
     <prediction
