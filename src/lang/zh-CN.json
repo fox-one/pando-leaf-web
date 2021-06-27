@@ -55,7 +55,7 @@
   "vault.selector.min-collateral-ratio": "最低抵押率",
   "vault.selector.stability-fee": "铸币利率",
   "vault.selector.liquidation-penalty": "清算罚金",
-  "vault.selector.search": "请输入要搜索的金库",
+  "vault.selector.search": "金库类型",
   "vault.event.action.vatopen": "创建金库",
   "vault.event.action.vatdeposit": "存入",
   "vault.event.action.vatwithdraw": "取出",

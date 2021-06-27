@@ -5,6 +5,7 @@
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click')"
   >
     <circle
       cx="11"
@@ -34,7 +35,7 @@ class IconSearch extends Vue {
   @State((state) => state.app.settings.dark) isDark;
 
   get color() {
-    return this.isDark ? "#ffffff" : "#000000";
+    return this.isDark ? "#636466" : "#cccccc";
   }
 }
 export default IconSearch;
