@@ -32,6 +32,9 @@ const icons = {
     iconQuestion: {
       component: "icon-question",
     },
+    iconSearch: {
+      component: "icon-search",
+    },
   },
 };
 

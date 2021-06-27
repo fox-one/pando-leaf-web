@@ -1,6 +1,13 @@
 <template>
-  <f-bottom-sheet v-model="visible">
-    <template #title> {{ $t("vault.selector.title") }} </template>
+  <f-bottom-sheet v-model="visible" class="sheet">
+    <template #title>
+      <div class="title text-center">
+        <icon-search class="title-search" />
+        <span>
+          {{ $t("vault.selector.title") }}
+        </span>
+      </div>
+    </template>
     <template #subheader>
       <div class="f-caption text-center">
         {{ $t("vault.selector.tips") }}
@@ -53,9 +60,14 @@
 <script lang="ts" scoped>
 import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
+import AddVaultCardItem from "./AddVaultCardItem.vue";
 import { ICollateral } from "~/services/types/vo";
 
-@Component
+@Component({
+  components: {
+    AddVaultCardItem,
+  },
+})
 export default class MarketSelectModal extends Vue {
   @PropSync("show") visible!: boolean;
   @PropSync("current") collateral!: ICollateral;
@@ -100,4 +112,15 @@ export default class MarketSelectModal extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.title {
+  position: relative;
+  width: 100%;
+  &-search {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+}
+</style>
