@@ -1,11 +1,8 @@
 <template>
   <v-container class="pa-0">
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        {{ $t("form.generate.how-much") }}
-      </div>
-
       <f-asset-amount-input
+        class="mt-6"
         v-model="amount"
         :label="$t('form.hint.generate-amount')"
         :assets="[asset]"
@@ -21,7 +18,7 @@
       >
         {{ $t("connect.wallet") }}
       </div>
-      <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
+      <div v-else class="f-caption f-greyscale-3 my-2">
         {{ $t("form.info.max-available") }}
         <span> {{ maxAvailable }} </span>{{ assetSymbol }}
       </div>
@@ -31,13 +28,18 @@
       <f-tip :type="validate.type" v-if="validate.tip !== null">{{
         validate.tip
       }}</f-tip>
-      <f-button
-        type="primary"
-        class="mt-5"
-        :disabled="validate.disabled"
-        @click="requestConfirm"
-        >{{ $t("form.generate.button.confirm") }}</f-button
-      >
+      <div class="my-8 text-center">
+        <v-btn
+          rounded
+          depressed
+          color="primary"
+          height="56px"
+          class="px-8"
+          :disabled="validate.disabled"
+          @click="requestConfirm"
+          >{{ $t("form.generate.button.confirm") }}</v-btn
+        >
+      </div>
     </v-layout>
 
     <prediction

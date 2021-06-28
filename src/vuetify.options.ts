@@ -35,6 +35,21 @@ const icons = {
     iconSearch: {
       component: "icon-search",
     },
+    iconDeposit: {
+      component: "icon-deposit",
+    },
+    iconWithdraw: {
+      component: "icon-withdraw",
+    },
+    iconPayback: {
+      component: "icon-payback",
+    },
+    iconGenerate: {
+      component: "icon-generate",
+    },
+    iconMoreInfo: {
+      component: "icon-more-info",
+    },
   },
 };
 
@@ -55,7 +70,7 @@ export default function ({ store }) {
           orange: "#FFA800",
         },
         dark: {
-          primary: "#E4AF77",
+          primary: "#000000",
           orange: "#f08b04",
         },
       },

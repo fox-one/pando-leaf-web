@@ -2,6 +2,7 @@
   <v-container class="pa-0">
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
       <f-asset-amount-input
+        class="mt-6"
         v-model="amount"
         :label="$t('form.hint.deposit-amount')"
         :assets="assets"
