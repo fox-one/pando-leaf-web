@@ -12,39 +12,31 @@
         </div>
         <f-input
           v-model="filter"
-          :clearable="true"
-          :label="$t('vault.selector.search')"
+          @focus="handleFocus(true)"
+          @blur="handleFocus(false)"
+          class="search"
+          :label="$t('common.search')"
         >
-          <template #prependInner>
+          <template v-if="prependInner" #prependInner>
             <icon-search class="mt-1 mr-2" />
           </template>
         </f-input>
       </div>
     </template>
-    <v-layout class="px-4" justify-space-between>
-      <div class="ml-11">{{ $t("vault.selector.min-collateral-ratio") }}</div>
-      <div>
-        {{ $t("vault.selector.stability-fee") }}
-      </div>
-    </v-layout>
-    <v-divider class="px-4" />
     <v-list height="500">
       <v-list-item
         v-for="(item, index) in filtedItems"
+        class="card-item"
         :key="index"
-        @click="bindItem(item)"
       >
-        <v-layout column>
-          <v-divider v-if="index !== 0" />
-          <add-vault-card-item :item="item" />
-        </v-layout>
+        <add-vault-card-item :item="item" @add="bindItem(item)" />
       </v-list-item>
     </v-list>
   </f-bottom-sheet>
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
+import { Vue, Component, PropSync } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
 import AddVaultCardItem from "./AddVaultCardItem.vue";
 import { ICollateral } from "~/services/types/vo";
@@ -62,8 +54,14 @@ export default class MarketSelectModal extends Vue {
 
   filter = "";
 
+  isFocus = false;
+
   get filtedItems() {
     return this.collaterals?.filter((item) => item.name.includes(this.filter));
+  }
+
+  get prependInner() {
+    return !this.filter && !this.isFocus;
   }
 
   collateralSymbol(col) {
@@ -95,12 +93,39 @@ export default class MarketSelectModal extends Vue {
     this.$emit("change", false);
     this.collateral = item;
   }
+
+  handleFocus(bool: boolean) {
+    this.isFocus = bool;
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.theme--dark.v-application {
+  .search {
+    &:hover {
+      background-color: #36383b;
+    }
+  }
+}
+
 .title {
   position: relative;
   width: 100%;
+}
+
+.search {
+  overflow: hidden;
+  border-radius: 8px;
+  &:hover {
+    background-color: #ebebeb;
+  }
+}
+
+.card-item {
+  &:nth-of-type(1) {
+    margin-top: 0;
+  }
+  margin-top: 16px;
 }
 </style>
