@@ -244,15 +244,15 @@ export function hidePaymentDialog(vue: Vue) {
 
 export function risk(currentRatio, minimumRatio) {
   const risk = Number(currentRatio) / Number(minimumRatio);
-  if (!number.isValid(risk)) return "greyscale-1";
+  if (!number.isValid(risk)) return "greyscale-7";
   if (risk < 0) {
-    return "greyscale-1";
+    return "greyscale-7";
   } else if (risk <= 1.1) {
-    return "red";
+    return "lightRed";
   } else if (risk <= 1.5) {
-    return "orange";
+    return "lightOrange";
   } else {
-    return "green";
+    return "lightGreen";
   }
 }
 

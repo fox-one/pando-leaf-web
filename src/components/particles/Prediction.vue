@@ -4,21 +4,6 @@
       {{ gridTitle }}
     </div>
     <div>
-      <!-- <value-changed-info-grid-item
-        v-for="(item, ix) in infos"
-        :key="ix"
-        :index="ix"
-        :title="item.title"
-        :value="item.value"
-        :value-unit="item.valueUnit"
-        :value-color="item.valueColor"
-        :value-custom-color="item.valueCustomColor"
-        :showChange="item.showChange"
-        :changed-value="item.changedValue"
-        :changed-value-color="item.changedValueColor"
-        :disable-changed-icon="item.disableChangedIcon"
-        :hint="item.hint"
-      ></value-changed-info-grid-item> -->
       <div
         class="mx-4 f-body-2"
         v-for="(item, ix) in infos"
