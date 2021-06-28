@@ -35,8 +35,11 @@
                 {{ `= ${flip.lot} ${meta.auctionSymbol}` }}
               </div>
             </v-layout>
-            <div class="f-title-3 ml-8">
+            <div class="f-title-3 mt-3 ml-8">
               ≈ {{ meta.colValue }} {{ meta.debtSymbol }}
+            </div>
+            <div v-if="!meta.isDone" class="f-caption mt-3 ml-8 f-greyscale-3">
+              {{ `${$t("form.info.current-price")}: ${meta.curPrice}` }}
             </div>
           </v-layout>
           <v-divider class="my-4" />
@@ -52,14 +55,33 @@
             </v-layout>
           </v-layout>
           <v-layout v-else column>
-            <v-layout v-if="meta.isStage1" column>
-              <div class="f-caption">
-                {{ $t("auction.label.stage-prev") }}
-                <span class="f-body-1 font-weight-bold primary--text">
-                  {{ $t("auction.label.stage-price") }}
-                </span>
-              </div>
-              <div class="f-caption mt-2">
+            <div class="f-body-2">
+              {{
+                $t(
+                  meta.isStage1
+                    ? "auction.label.stage.title.debt"
+                    : "auction.label.stage.title.collateral"
+                )
+              }}
+            </div>
+            <v-layout>
+              <f-input
+                v-if="meta.isStage1"
+                v-model="inputDebtAmount"
+                class="my-2"
+                type="number"
+                :label="hintLabel1"
+              />
+              <f-input
+                v-if="meta.isStage2"
+                v-model="inputCollateralAmount"
+                class="my-2"
+                type="number"
+                :label="hintLabel2"
+              />
+            </v-layout>
+
+            <!-- <div class="f-caption mt-2">
                 {{
                   $t("auction.rule.stage-price", {
                     beg: begText,
@@ -67,37 +89,16 @@
                     symbol: meta.debtSymbol,
                   })
                 }}
-              </div>
-            </v-layout>
-            <f-input
-              v-if="meta.isStage1"
-              v-model="inputDebtAmount"
-              class="my-2"
-              type="number"
-              :label="hintLabel1"
-            />
-            <v-layout v-if="meta.isStage2" column>
-              <div class="f-caption">
-                {{ $t("auction.label.stage-prev") }}
-                <span class="f-body-1 font-weight-bold primary--text">
-                  {{ $t("auction.label.stage-collateral") }}
-                </span>
-              </div>
-              <div class="f-caption mt-2">
+              </div> -->
+
+            <!-- <div class="f-caption mt-2">
                 {{
                   $t("auction.rule.stage-collateral", {
                     beg: begText,
                   })
                 }}
-              </div>
-            </v-layout>
-            <f-input
-              v-if="meta.isStage2"
-              v-model="inputCollateralAmount"
-              class="my-2"
-              type="number"
-              :label="hintLabel2"
-            />
+              </div> -->
+
             <base-connect-wallet-btn
               v-if="!isLogged"
               rounded
@@ -257,15 +258,21 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     const colValue = this.$utils.number.toPrecision(
       (Number(collateralPrice) * Number(this.flip?.lot)) / Number(debtPrice)
     );
+    const auctionSymbol = this.auctionAsset?.symbol;
+    const debtSymbol = this.debtAsset?.symbol;
+    const curPrice = `1${debtSymbol} = ${this.$utils.number.toPrecision(
+      +debtPrice / +collateralPrice
+    )}${auctionSymbol}`;
     return {
       isDone,
       auctionLogo: this.auctionAsset?.logo,
       debtLogo: this.debtAsset?.logo,
-      auctionSymbol: this.auctionAsset?.symbol,
-      debtSymbol: this.debtAsset?.symbol,
+      auctionSymbol,
+      debtSymbol,
       isStage1,
       isStage2,
       colValue,
+      curPrice,
     };
   }
 
