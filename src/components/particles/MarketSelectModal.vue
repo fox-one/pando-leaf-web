@@ -17,8 +17,8 @@
           class="search"
           :label="$t('common.search')"
         >
-          <template v-if="prependInner" #prependInner>
-            <icon-search class="mt-1 mr-2" />
+          <template #prependInner>
+            <icon-search v-show="prependInner" class="mt-1 mr-2" />
           </template>
         </f-input>
       </div>
@@ -103,6 +103,7 @@ export default class MarketSelectModal extends Vue {
 <style lang="scss" scoped>
 .theme--dark.v-application {
   .search {
+    &:focus,
     &:hover {
       background-color: #36383b;
     }
@@ -117,6 +118,7 @@ export default class MarketSelectModal extends Vue {
 .search {
   overflow: hidden;
   border-radius: 8px;
+  &:focus,
   &:hover {
     background-color: #ebebeb;
   }

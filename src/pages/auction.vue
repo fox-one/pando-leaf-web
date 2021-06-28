@@ -5,145 +5,139 @@
         <f-loading :loading="loading"></f-loading>
       </div>
 
-      <v-layout column v-if="!loading" class="f-bg-greyscale-7">
-        <f-tip v-if="!meta.isDone" class="ma-4">{{ auctionStatus }}</f-tip>
-        <div v-if="meta.isDone" class="text-center text-h4 my-4">
-          {{ $t("auction.status.end") }}
+      <v-layout
+        v-else
+        align-center
+        justify-space-between
+        class="pa-4 f-body-2 statusbar"
+        :class="auctionStatus.bgcls"
+      >
+        <div class="text-center">
+          {{ auctionStatus.title }}
         </div>
-        <v-layout v-else column>
-          <div class="f-body-2 ml-4">{{ $t("auction.status.timer-prev") }}</div>
-          <div class="text-center text-h3 mb-4">
-            {{ countDownText }}
-          </div>
-          <div class="f-body-2 text-right mr-4 mb-4">
-            {{ $t("auction.status.timer-shuffix") }}
-          </div>
-        </v-layout>
-        <v-divider />
+        <div v-if="!meta.isDone" class="text-center statusbar-right">
+          <span class="ml-2 statusbar-right-ends">
+            {{ $t("auction.statusbar.ends") }}
+          </span>
+          {{ countDownText }}
+        </div>
       </v-layout>
 
-      <div class="f-body-1 mx-6 my-2">
-        {{ $t("auction.label.current-state") }}
-      </div>
-      <f-panel class="pa-0 mx-4">
-        <v-layout>
-          <v-layout column style="flex: 1" class="pl-4 pb-4">
-            <div class="my-4 f-caption">
+      <f-panel class="collateral pa-4 no-border-radius f-greyscale-1">
+        <v-layout column>
+          <v-layout column>
+            <div class="f-body-2 f-greyscale-3 mb-4">
               {{ $t("auction.label.collateral") }}
             </div>
             <v-layout align-center>
-              <f-mixin-asset-logo
-                :size="32"
-                :logo="meta.auctionLogo"
-              ></f-mixin-asset-logo>
-              <v-layout column class="ml-2 mt-1">
-                <div class="f-caption">{{ meta.auctionSymbol }}</div>
-              </v-layout>
+              <f-mixin-asset-logo :size="24" :logo="meta.auctionLogo" />
+              <div class="f-title-3 ml-2">
+                {{ `= ${flip.lot} ${meta.auctionSymbol}` }}
+              </div>
             </v-layout>
-            <div class="f-body-1 mt-1">{{ flip.lot }}</div>
+            <div class="f-title-3 ml-8">
+              ≈ {{ meta.colValue }} {{ meta.debtSymbol }}
+            </div>
           </v-layout>
-          <v-layout column style="flex: 1" class="pl-4 pb-4">
-            <div class="my-4 f-caption">{{ $t("auction.label.debt") }}</div>
+          <v-divider class="my-4" />
+          <v-layout v-if="meta.isDone" column>
+            <div class="f-body-2 f-greyscale-3 mb-4">
+              {{ $t("auction.label.debt") }}
+            </div>
             <v-layout align-center>
-              <f-mixin-asset-logo
-                :size="32"
-                :logo="meta.debtLogo"
-              ></f-mixin-asset-logo>
-              <v-layout column class="ml-2">
-                <div class="f-caption">{{ meta.debtSymbol }}</div>
-              </v-layout>
+              <f-mixin-asset-logo :size="24" :logo="meta.debtLogo" />
+              <div class="f-title-3 ml-2">
+                {{ `= ${flip.bid} ${meta.debtSymbol}` }}
+              </div>
             </v-layout>
-            <div class="f-body-1 mt-1">{{ flip.bid }}</div>
+          </v-layout>
+          <v-layout v-else column>
+            <v-layout v-if="meta.isStage1" column>
+              <div class="f-caption">
+                {{ $t("auction.label.stage-prev") }}
+                <span class="f-body-1 font-weight-bold primary--text">
+                  {{ $t("auction.label.stage-price") }}
+                </span>
+              </div>
+              <div class="f-caption mt-2">
+                {{
+                  $t("auction.rule.stage-price", {
+                    beg: begText,
+                    amount: flip.tab,
+                    symbol: meta.debtSymbol,
+                  })
+                }}
+              </div>
+            </v-layout>
+            <f-input
+              v-if="meta.isStage1"
+              v-model="inputDebtAmount"
+              class="my-2"
+              type="number"
+              :label="hintLabel1"
+            />
+            <v-layout v-if="meta.isStage2" column>
+              <div class="f-caption">
+                {{ $t("auction.label.stage-prev") }}
+                <span class="f-body-1 font-weight-bold primary--text">
+                  {{ $t("auction.label.stage-collateral") }}
+                </span>
+              </div>
+              <div class="f-caption mt-2">
+                {{
+                  $t("auction.rule.stage-collateral", {
+                    beg: begText,
+                  })
+                }}
+              </div>
+            </v-layout>
+            <f-input
+              v-if="meta.isStage2"
+              v-model="inputCollateralAmount"
+              class="my-2"
+              type="number"
+              :label="hintLabel2"
+            />
+            <base-connect-wallet-btn
+              v-if="!isLogged"
+              rounded
+              large
+              depressed
+              color="primary"
+              @click="handleLogin"
+            >
+              {{ $t("connect.wallet") }}
+            </base-connect-wallet-btn>
+            <v-btn
+              v-else
+              rounded
+              depressed
+              :disabled="confirmDisabled"
+              color="primary"
+              style="height: 48px"
+              @click="bidding"
+              class="mt-2 px-14 align-self-center"
+            >
+              {{ $t("auction.button.confirm") }}
+            </v-btn>
           </v-layout>
         </v-layout>
-        <div class="ml-4 mt-n4 mb-2 f-caption">
-          ≈ {{ meta.colValue }} {{ meta.debtSymbol }}
-        </div>
       </f-panel>
 
-      <f-panel v-if="!meta.isDone" class="mt-4 mx-4">
-        <v-layout column>
-          <v-layout v-if="meta.isStage1" column>
-            <div class="f-caption">
-              {{ $t("auction.label.stage-prev")
-              }}<span class="f-body-1 font-weight-bold primary--text">{{
-                $t("auction.label.stage-price")
-              }}</span>
-            </div>
-            <div class="f-caption mt-2">
-              {{
-                $t("auction.rule.stage-price", {
-                  beg: begText,
-                  amount: flip.tab,
-                  symbol: meta.debtSymbol,
-                })
-              }}
-            </div>
-          </v-layout>
-          <f-input
-            v-if="meta.isStage1"
-            v-model="inputDebtAmount"
-            class="my-2"
-            type="number"
-            :label="hintLabel1"
-          ></f-input>
-          <v-layout v-if="meta.isStage2" column>
-            <div class="f-caption">
-              {{ $t("auction.label.stage-prev")
-              }}<span class="f-body-1 font-weight-bold primary--text">{{
-                $t("auction.label.stage-collateral")
-              }}</span>
-            </div>
-            <div class="f-caption mt-2">
-              {{
-                $t("auction.rule.stage-collateral", {
-                  beg: begText,
-                })
-              }}
-            </div>
-          </v-layout>
-          <f-input
-            v-if="meta.isStage2"
-            v-model="inputCollateralAmount"
-            class="my-2"
-            type="number"
-            :label="hintLabel2"
-          ></f-input>
-          <base-connect-wallet-btn
-            v-if="!isLogged"
-            rounded
-            large
-            depressed
-            color="primary"
-            @click="handleLogin"
-          >
-            {{ $t("connect.wallet") }}
-          </base-connect-wallet-btn>
-          <v-btn
-            v-else
-            rounded
-            depressed
-            :disabled="confirmDisabled"
-            color="primary"
-            style="height: 48px"
-            @click="bidding"
-            class="mt-2 px-14 align-self-center"
-          >
-            {{ $t("auction.button.confirm") }}
-          </v-btn>
-        </v-layout>
-      </f-panel>
-      <div v-if="events && events.length !== 0" class="f-body-1 mx-6 my-2">
-        {{ $t("auction.history") }}
-      </div>
-      <f-panel v-if="events && events.length !== 0" class="mx-4 py-0">
+      <f-panel
+        v-if="events && events.length !== 0"
+        class="mt-2 px-4 pt-6 pb-0 no-border-radius"
+      >
+        <div v-if="events && events.length !== 0" class="f-title-1">
+          {{ $t("auction.history") }}
+        </div>
         <template v-for="(event, index) in events">
           <v-divider :key="`${index}_divider`" v-if="index !== 0" />
           <auction-history-item
             :key="`${event.lot}_${event.bid}_${event.created_at}`"
             :flipEvent="event"
             :flip="flip"
-          ></auction-history-item>
+          />
         </template>
       </f-panel>
       <div style="height: 70px"></div>
@@ -192,10 +186,21 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   }
 
   get auctionStatus() {
-    if (this.meta.isDone) return this.$t("auction.status.end");
-    if (this.meta.isStage1) return this.$t("auction.label.stage-price");
-    if (this.meta.isStage2) return this.$t("auction.label.stage-collateral");
-    return "";
+    const status = {
+      title: "",
+      bgcls: "",
+    };
+    if (this.meta.isDone) {
+      status.title = this.$t("auction.statusbar.done") as string;
+      status.bgcls = "f-bg-greyscale-3";
+    } else if (this.meta.isStage1) {
+      status.title = this.$t("auction.statusbar.debt") as string;
+      status.bgcls = "statusbar-debt";
+    } else if (this.meta.isStage2) {
+      status.title = this.$t("auction.statusbar.collateral") as string;
+      status.bgcls = "statusbar-collateral";
+    }
+    return status;
   }
 
   get begText() {
@@ -203,7 +208,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   }
 
   get collateral() {
-    return this.getCollateral(this.flip?.collateral_id);
+    return this.getCollateral(this.flip?.collateral_id) ?? {};
   }
 
   get auctionAsset() {
@@ -430,4 +435,31 @@ export default class AuctionDetail extends Mixins(mixins.page) {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.statusbar {
+  position: fixed;
+  top: 44px;
+  left: 0;
+  z-index: 99;
+  width: 100vw;
+  line-height: 17px;
+  &-debt {
+    background-color: #2cc94e !important;
+  }
+  &-collateral {
+    background-color: #f58721 !important;
+  }
+
+  &-right {
+    font-weight: bold !important;
+    &-ends {
+      font-weight: normal !important;
+      opacity: 0.5;
+    }
+  }
+}
+
+.collateral {
+  margin-top: 49px;
+}
+</style>
