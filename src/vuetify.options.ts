@@ -50,6 +50,9 @@ const icons = {
     iconMoreInfo: {
       component: "icon-more-info",
     },
+    iconAuctionDetail: {
+      component: "icon-auction-detail",
+    },
   },
 };
 
@@ -68,10 +71,12 @@ export default function ({ store }) {
         light: {
           primary: "#000000",
           orange: "#FFA800",
+          waining: "#F44C4C",
         },
         dark: {
           primary: "#000000",
           orange: "#f08b04",
+          waining: "#F44C4C",
         },
       },
     },
