@@ -2,9 +2,7 @@
   <v-dialog v-model="dialog">
     <v-card>
       <div>
-        <v-icon>
-            $iconWelcomeImg
-        </v-icon>
+        <v-icon> $iconWelcomeImg </v-icon>
       </div>
       <div class="my-8 text-center">
         <v-btn
