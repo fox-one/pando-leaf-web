@@ -59,6 +59,9 @@ const icons = {
     iconLeaf: {
       component: "icon-leaf",
     },
+    iconNoVault: {
+      component: "icon-no-vault",
+    },
   },
 };
 

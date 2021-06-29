@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0" fluid>
+  <v-container class="pa-0" style="height: 100%">
     <v-layout column fill-height class="pa-0 custom-info-grid">
       <base-connect-wallet-btn
         v-if="!isLogged"
@@ -30,51 +30,46 @@
       <div class="py-2" v-if="loading">
         <f-loading :loading="loading"></f-loading>
       </div>
-      <v-container v-if="isLogged && !haveVault" fill-height>
-        <v-layout column align-center justify-center>
-          <h3 class="f-greyscale-2">{{ $t("me.no-vault-1") }}</h3>
-          <p class="mx-4 mt-2 text-center">
-            {{ $t("me.no-vault-2") }}
-          </p>
-          <v-btn
-            class="mt-4"
-            color="primary"
-            @click="openNewVault"
-            :min-width="220"
-            rounded
-            depressed
-          >
-            <span>{{ $t("me.no-vault-button") }}</span>
-          </v-btn>
-        </v-layout>
-      </v-container>
+      <v-layout
+        v-if="isLogged && !haveVault"
+        style="height: 100%"
+        column
+        align-center
+        justify-center
+      >
+        <v-icon class="mb-8" size="110">$iconNoVault</v-icon>
+        <h3 class="f-greyscale-2">{{ $t("me.no-vault-1") }}</h3>
+        <p class="mx-4 mt-2 text-center">
+          {{ $t("me.no-vault-2") }}
+        </p>
+        <v-btn
+          class="mt-4"
+          color="primary"
+          @click="openNewVault"
+          :min-width="220"
+          rounded
+          depressed
+        >
+          <span>{{ $t("me.no-vault-button") }}</span>
+        </v-btn>
+      </v-layout>
       <div v-if="isLogged && haveVault" class="px-4 pt-4">
-        <v-expansion-panels accordion flat v-model="expanded" multiple>
-          <my-vault-item
-            class="mb-4 rounded-lg"
-            :key="vault.id"
-            v-for="vault in sortedMyVaults"
-            :vault="vault"
-          ></my-vault-item>
-        </v-expansion-panels>
+        <my-vault-item
+          class="mb-4 rounded-lg"
+          :key="vault.id"
+          v-for="vault in sortedMyVaults"
+          :vault="vault"
+        ></my-vault-item>
+        <v-layout justify-center>
+          <f-button class="my-8" @click="openNewVault"
+            ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon> Add a
+            Vault</f-button
+          >
+        </v-layout>
         <div style="height: 60px"></div>
         <div class="version-block f-caption text--secondary">{{ version }}</div>
       </div>
     </v-layout>
-    <!-- <v-fab-transition> -->
-    <v-btn
-      class="custom-fab-btn rounded-circle"
-      circle
-      height="64"
-      bottom
-      right
-      elevation="2"
-      color="primary"
-      @click="openNewVault"
-    >
-      <v-icon>{{ $icons.mdiPlus }}</v-icon>
-    </v-btn>
-    <!-- </v-fab-transition> -->
     <market-select-modal
       :show.sync="showSelectModal"
       v-on:update:current="onSelect"
