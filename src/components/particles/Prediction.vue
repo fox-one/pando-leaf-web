@@ -12,16 +12,7 @@
       >
         <v-layout style="height: 65.4px" align-center>
           <div class="f-greyscale-3">{{ item.title }}</div>
-          <v-btn
-            v-if="item.hint"
-            icon
-            x-small
-            :ripple="false"
-            color="f-greyscale-3"
-            @click="openHint(item.hint)"
-          >
-            <v-icon size="14">$iconQuestion</v-icon>
-          </v-btn>
+          <base-tooltip :hint="item.hint"></base-tooltip>
           <v-spacer />
           <div class="f-greyscale-1">
             <span
