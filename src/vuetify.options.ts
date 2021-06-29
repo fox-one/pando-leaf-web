@@ -53,6 +53,12 @@ const icons = {
     iconAuctionDetail: {
       component: "icon-auction-detail",
     },
+    iconWelcomeImg: {
+      component: "icon-welcome-img",
+    },
+    iconLeaf: {
+      component: "icon-leaf",
+    },
   },
 };
 

@@ -36,6 +36,7 @@ const state = () => ({
     visible: false,
   },
   notShowDevAlertAgain: false,
+  firstUsePandoLeaf: true,
 });
 
 export const mutations = {
@@ -70,6 +71,9 @@ export const mutations = {
   },
   SET_BOTTOM_NAV(state, value) {
     state.bottomNav.value = value;
+  },
+  SET_FIRST_USE_PANDO_LEAF(state, value) {
+    state.firstUsePandoLeaf = value;
   },
 };
 

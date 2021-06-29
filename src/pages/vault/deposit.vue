@@ -28,16 +28,9 @@
         validate.tip
       }}</f-tip>
       <div class="my-8 text-center">
-        <base-btn
-          rounded
-          depressed
-          color="primary"
-          height="56px"
-          class="px-8"
-          :disabled="validate.disabled"
-          @click="confirm"
-          >{{ $t("form.deposit.button.confirm") }}</base-btn
-        >
+        <base-btn class="px-8" :disabled="validate.disabled" @click="confirm">{{
+          $t("form.deposit.button.confirm")
+        }}</base-btn>
       </div>
     </v-layout>
 

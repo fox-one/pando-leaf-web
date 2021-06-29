@@ -79,31 +79,37 @@
       :show.sync="showSelectModal"
       v-on:update:current="onSelect"
     />
+    <welcome-modal ref="welcome" />
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Watch } from "vue-property-decorator";
+import { Component, Mixins, Ref, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
-import { Action, Getter, State } from "vuex-class";
+import { Action, Getter, Mutation, State } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
 import MyVaultItem from "~/components/particles/MyVaultItem.vue";
 import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
+import WelcomeModal from "@/components/particles/WelcomeModal.vue";
 import { VERSION } from "~/constants";
 
 @Component({
   components: {
     MyVaultItem,
     MarketSelectModal,
+    WelcomeModal,
   },
 })
 export default class Me extends Mixins(mixins.page) {
   @State((state) => state.global.myVaults) myVaults!: IVault[];
   @State((state) => state.global.collaterals) collaterals!: ICollateral[];
+  @State((state) => state.app.firstUsePandoLeaf) firstUsePandoLeaf;
   @Getter("global/haveVault") haveVault!: boolean;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
+  @Mutation("app/SET_FIRST_USE_PANDO_LEAF") setFirstUsePandoLeaf;
+  @Ref("welcome") welcome;
 
   loading = true;
   expanded = [0];
@@ -221,6 +227,10 @@ export default class Me extends Mixins(mixins.page) {
           this.loading = false;
         });
     }, 200);
+    if (this.firstUsePandoLeaf) {
+      this.welcome.show();
+      this.setFirstUsePandoLeaf(false);
+    }
   }
 
   checkLogin() {
