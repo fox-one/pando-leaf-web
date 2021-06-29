@@ -71,7 +71,9 @@ class ConfirmModal extends Vue {
   }
 
   get risk() {
-    return 0;
+    return Math.round(
+      Number(this.liquidationRate) - Number(this.currentRate) + 60
+    );
   }
 
   show() {
