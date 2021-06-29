@@ -10,14 +10,14 @@
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="M14.3058 2.62653C12.9233 1.65127 11.0767 1.65127 9.69423 2.62653L2.69424 7.56459C1.63186 8.31403 0.999994 9.53304 1 10.8332L1.00004 20.5C1.00005 21.8807 2.11933 23 3.50004 23H20.5C21.8807 23 23 21.8807 23 20.5V10.8331C23 9.53304 22.3681 8.31403 21.3058 7.5646L14.3058 2.62653ZM15 17C15 16.4477 14.5523 16 14 16H9.99998C9.44769 16 8.99998 16.4477 8.99998 17C8.99998 17.5522 9.44769 18 9.99998 18H14C14.5523 18 15 17.5522 15 17Z"
-      fill="black"
+      :fill="color"
     />
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="M14.3058 2.62653C12.9233 1.65127 11.0767 1.65127 9.69423 2.62653L2.69424 7.56459C1.63186 8.31403 0.999994 9.53304 1 10.8332L1.00004 20.5C1.00005 21.8807 2.11933 23 3.50004 23H20.5C21.8807 23 23 21.8807 23 20.5V10.8331C23 9.53304 22.3681 8.31403 21.3058 7.5646L14.3058 2.62653ZM15 17C15 16.4477 14.5523 16 14 16H9.99998C9.44769 16 8.99998 16.4477 8.99998 17C8.99998 17.5522 9.44769 18 9.99998 18H14C14.5523 18 15 17.5522 15 17Z"
-      fill="white"
-      :fill-opacity="color"
+      :fill="bgColor"
+      :fill-opacity="opacity"
     />
   </svg>
 </template>
@@ -31,8 +31,16 @@ class Home extends Vue {
   @State((state) => state.app.bottomNav) currentNav;
   @State((state) => state.app.settings.dark) isDark;
 
-  get color() {
+  get opacity() {
     return this.currentNav.value === "home" ? "0" : "0.8";
+  }
+
+  get color() {
+    return this.isDark ? "white" : "black";
+  }
+
+  get bgColor() {
+    return this.isDark ? "black" : "white";
   }
 }
 export default Home;

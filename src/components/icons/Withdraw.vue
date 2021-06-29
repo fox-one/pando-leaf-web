@@ -10,14 +10,14 @@
       cx="16"
       cy="16"
       r="11.25"
-      stroke="black"
+      :stroke="color"
       stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
     <path
       d="M12 16H20"
-      stroke="black"
+      :stroke="color"
       stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"

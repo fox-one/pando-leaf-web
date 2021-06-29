@@ -28,7 +28,7 @@
         validate.tip
       }}</f-tip>
       <div class="my-8 text-center">
-        <v-btn
+        <base-btn
           rounded
           depressed
           color="primary"
@@ -36,7 +36,7 @@
           class="px-8"
           :disabled="validate.disabled"
           @click="confirm"
-          >{{ $t("form.deposit.button.confirm") }}</v-btn
+          >{{ $t("form.deposit.button.confirm") }}</base-btn
         >
       </div>
     </v-layout>

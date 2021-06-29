@@ -67,7 +67,7 @@ export default function ({ store }) {
           orange: "#FFA800",
         },
         dark: {
-          primary: "#000000",
+          primary: "#ffffff",
           orange: "#f08b04",
         },
       },
