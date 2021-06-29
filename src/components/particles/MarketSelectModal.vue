@@ -1,61 +1,51 @@
 <template>
   <f-bottom-sheet v-model="visible">
-    <template #title> {{ $t("vault.selector.title") }} </template>
-    <template #subheader>
-      <div class="f-caption text-center">
-        {{ $t("vault.selector.tips") }}
+    <template #title>
+      <div class="title f-title-1 text-center">
+        {{ $t("vault.selector.title") }}
       </div>
-      <f-input v-model="filter" :label="$t('vault.selector.search')"></f-input>
     </template>
-    <v-layout class="px-4" justify-space-between>
-      <div class="ml-11">{{ $t("vault.selector.min-collateral-ratio") }}</div>
-      <div>
-        {{ $t("vault.selector.stability-fee") }}
+    <template #subheader>
+      <div class="px-1 text-center">
+        <div class="f-caption f-greyscale-3 px-2 mb-6">
+          {{ $t("vault.selector.tips") }}
+        </div>
+        <f-input
+          v-model="filter"
+          @focus="handleFocus(true)"
+          @blur="handleFocus(false)"
+          class="search"
+          :label="$t('common.search')"
+        >
+          <template #prependInner>
+            <icon-search v-show="prependInner" class="mt-1 mr-2" />
+          </template>
+        </f-input>
       </div>
-    </v-layout>
-    <v-divider class="px-4" />
+    </template>
     <v-list height="500">
       <v-list-item
         v-for="(item, index) in filtedItems"
+        class="card-item"
         :key="index"
-        @click="bindItem(item)"
       >
-        <v-layout column>
-          <v-divider v-if="index !== 0" />
-          <v-layout row align-center class="mx-0 my-2 pa-0">
-            <f-mixin-asset-logo
-              class="flex-grow-0 mr-1 z-index-2"
-              :size="24"
-              :logo="collateralLogo(item)"
-            ></f-mixin-asset-logo>
-            <f-mixin-asset-logo
-              class="flex-grow-0 ml-n3 mr-1"
-              :size="24"
-              :logo="debtLogo(item)"
-            ></f-mixin-asset-logo>
-            <v-layout justify-space-between>
-              <v-layout column>
-                <div class="f-title-2">{{ item.name }}</div>
-                <div>{{ normalize(item).mat }}</div>
-              </v-layout>
-              <v-layout column align-end justify-center>
-                <div>{{ normalize(item).duty }}</div>
-                <!-- <div>{{ normalize(item).chop }}</div> -->
-              </v-layout>
-            </v-layout>
-          </v-layout>
-        </v-layout>
+        <add-vault-card-item :item="item" @add="bindItem(item)" />
       </v-list-item>
     </v-list>
   </f-bottom-sheet>
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
+import { Vue, Component, PropSync } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
+import AddVaultCardItem from "./AddVaultCardItem.vue";
 import { ICollateral } from "~/services/types/vo";
 
-@Component
+@Component({
+  components: {
+    AddVaultCardItem,
+  },
+})
 export default class MarketSelectModal extends Vue {
   @PropSync("show") visible!: boolean;
   @PropSync("current") collateral!: ICollateral;
@@ -64,8 +54,14 @@ export default class MarketSelectModal extends Vue {
 
   filter = "";
 
+  isFocus = false;
+
   get filtedItems() {
     return this.collaterals?.filter((item) => item.name.includes(this.filter));
+  }
+
+  get prependInner() {
+    return !this.filter && !this.isFocus;
   }
 
   collateralSymbol(col) {
@@ -97,7 +93,41 @@ export default class MarketSelectModal extends Vue {
     this.$emit("change", false);
     this.collateral = item;
   }
+
+  handleFocus(bool: boolean) {
+    this.isFocus = bool;
+  }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.theme--dark.v-application {
+  .search {
+    &:focus,
+    &:hover {
+      background-color: #36383b;
+    }
+  }
+}
+
+.title {
+  position: relative;
+  width: 100%;
+}
+
+.search {
+  overflow: hidden;
+  border-radius: 8px;
+  &:focus,
+  &:hover {
+    background-color: #ebebeb;
+  }
+}
+
+.card-item {
+  &:nth-of-type(1) {
+    margin-top: 0;
+  }
+  margin-top: 16px;
+}
+</style>
