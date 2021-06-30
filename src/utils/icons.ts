@@ -16,6 +16,7 @@ import {
   mdiSubdirectoryArrowRight,
   mdiAlert,
   mdiHelpCircle,
+  mdiCheck,
 } from "@mdi/js";
 
 export default {
@@ -36,4 +37,5 @@ export default {
   mdiSubdirectoryArrowRight,
   mdiAlert,
   mdiHelpCircle,
+  mdiCheck,
 };

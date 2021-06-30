@@ -15,31 +15,29 @@
         <f-button class="my-8" @click="hide">Continue</f-button>
       </v-layout>
     </f-bottom-sheet>
-    <v-dialog v-model="dialog">
-      <v-layout>
-        <div>
-          <v-icon>$iconWelcomeImg</v-icon>
-        </div>
-        <v-divider vertical />
-        <div class="welcome-title f-greyscale-1">
-          Pando <v-icon>$iconLeaf</v-icon>
-        </div>
-        <div class="welcome-content f-greyscale-3">
-          Pando leaf is product description product description product
-          description product description
-        </div>
-        <div class="my-8 text-center">
-          <v-btn
-            rounded
-            depressed
-            color="primary"
-            height="56px"
-            class="px-8"
-            @click="handleConfirm"
-            >{{ $t("notice.confirm") }}</v-btn
-          >
-        </div>
-      </v-layout>
+    <v-dialog v-model="dialog" width="627">
+      <f-panel class="pa-0 welcome-dialog">
+        <v-layout>
+          <v-icon class="ma-10" size="207">$iconWelcomeImg</v-icon>
+          <v-divider vertical />
+          <v-layout column>
+            <div class="ml-10 mt-10 welcome-title f-greyscale-1">
+              What's Pando<v-icon class="welcome-leaf-logo" size="54"
+                >$iconLeaf</v-icon
+              >
+            </div>
+            <div class="mx-10 mt-6 welcome-content f-greyscale-3">
+              Pando leaf is product description product description product
+              description product description
+            </div>
+            <div>
+              <f-button class="ml-10 mt-6" @click="handleConfirm"
+                >{{ $t("notice.confirm") }}
+              </f-button>
+            </div>
+          </v-layout>
+        </v-layout>
+      </f-panel>
     </v-dialog>
   </div>
 </template>

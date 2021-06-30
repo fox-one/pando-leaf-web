@@ -62,6 +62,12 @@ const icons = {
     iconNoVault: {
       component: "icon-no-vault",
     },
+    iconTotalCardTexture: {
+      component: "icon-total-card-texture",
+    },
+    iconPusd: {
+      component: "icon-pusd",
+    },
   },
 };
 

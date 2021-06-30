@@ -35,7 +35,7 @@
           <v-icon size="14">$iconQuestion</v-icon>
         </v-btn>
       </template>
-      <template #title> Details </template>
+      <template #title> {{ $t("tooltip.details") }} </template>
       <div class="pb-8">
         <div class="ma-4">{{ hint }}</div>
         <div class="my-8 text-center">

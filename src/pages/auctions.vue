@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="f-bg-greyscale-7">
     <div class="py-2" v-if="loading">
       <f-loading :loading="loading"></f-loading>
     </div>
@@ -33,9 +33,19 @@ export default class AuctionsPage extends Mixins(mixins.page) {
   flips = [] as IFlip[];
 
   get appbar() {
+    if (!this.isLogged) {
+      return {
+        back: false,
+        avatar: false,
+        customContent: true,
+        mixinImmersive: this.$utils.helper.isMixin(),
+      };
+    }
     return {
-      align: "center",
-      back: true,
+      back: false,
+      customContent: true,
+      avatar: true,
+      mixinImmersive: this.$utils.helper.isMixin(),
     };
   }
 

@@ -33,7 +33,7 @@
       </v-layout>
       <f-info-grid :window-size="2" class="mt-2">
         <value-changed-info-grid-item
-          v-for="(item, ix) in infos"
+          v-for="(item, ix) in infos.concat(collapseInfos)"
           :key="ix"
           :index="ix"
           :title="item.title"
@@ -47,29 +47,18 @@
       </f-info-grid>
     </v-layout>
     <v-layout column class="ma-0 pa-0">
-      <f-info-grid :window-size="2">
-        <f-info-grid-item
-          v-for="(item, ix) in collapseInfos"
-          :key="ix"
-          :index="ix"
-          :title="item.title"
-          :value="item.value"
-          :value-unit="item.valueUnit"
-          :value-color="item.valueColor"
-          :hint="item.hint"
-        ></f-info-grid-item>
-      </f-info-grid>
       <v-divider class="mx-6" />
       <v-layout justify-space-around class="buttons">
         <v-btn
           text
+          :disabled="meta.debtAmount === 0"
           :min-height="68"
           class="f-actionbar-button-label f-caption f-weight-m"
-          @click="toDeposit"
+          @click="toPayback"
         >
           <v-layout column justify-center align-center>
-            <v-icon size="32">$iconDeposit</v-icon>
-            <div class="f-caption">{{ $t("button.deposit") }}</div>
+            <v-icon size="32">$iconPayback</v-icon>
+            <div class="f-caption">{{ $t("button.pay-back") }}</div>
           </v-layout>
         </v-btn>
         <v-btn
@@ -86,25 +75,24 @@
         </v-btn>
         <v-btn
           text
-          :disabled="meta.debtAmount === 0"
           :min-height="68"
           class="f-actionbar-button-label f-caption f-weight-m"
-          @click="toPayback"
+          @click="toWithdraw"
         >
           <v-layout column justify-center align-center>
-            <v-icon size="32">$iconPayback</v-icon>
-            <div class="f-caption">{{ $t("button.pay-back") }}</div>
+            <v-icon size="32">$iconWithdraw</v-icon>
+            <div class="f-caption">{{ $t("button.detail") }}</div>
           </v-layout>
         </v-btn>
         <v-btn
           text
           :min-height="68"
           class="f-actionbar-button-label f-caption f-weight-m"
-          @click="toDetail"
+          @click="toDeposit"
         >
           <v-layout column justify-center align-center>
-            <v-icon size="32">$iconWithdraw</v-icon>
-            <div class="f-caption">{{ $t("button.detail") }}</div>
+            <v-icon size="32">$iconDeposit</v-icon>
+            <div class="f-caption">{{ $t("button.deposit") }}</div>
           </v-layout>
         </v-btn>
       </v-layout>
@@ -354,5 +342,9 @@ export default class MyVaultItem extends Vue {
 }
 .z-index-2 {
   z-index: 2;
+}
+.icon-generate {
+  fill: currentColor;
+  stroke: currentColor;
 }
 </style>

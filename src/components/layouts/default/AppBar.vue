@@ -4,7 +4,6 @@
       <v-avatar class="ml-2" size="32">
         <v-img :src="avatar" :size="32"></v-img>
       </v-avatar>
-      <v-spacer />
       <f-bottom-sheet
         v-model="showMenu"
         :adaptive="true"
@@ -12,28 +11,39 @@
       >
         <template #activator="{ on }">
           <v-btn
-            fab
             x-small
             elevation="0"
-            color="primary"
-            class="mr-1"
+            color="transparent"
+            class="middle-center"
             v-on="on"
           >
-            <v-icon> {{ $icons.mdiGoogleAnalytics }}</v-icon>
+            <v-icon size="44"> $iconLeaf</v-icon>
+            <v-icon size="16"> {{ $icons.mdiChevronDown }}</v-icon>
           </v-btn>
         </template>
-        <template #title> {{ $t("common.menu") }} </template>
-        <f-list>
-          <f-list-item
+        <template #title> {{ "Jump To" }} </template>
+        <div>
+          <v-layout
+            style="height: 72px"
+            class="list-item-text"
+            align-center
             v-for="(item, index) in menuItems"
             :key="item.title"
-            :title="item.title"
-            :subtitle="item.subtitle"
-            :value="item.value"
             @click="clickItem(item, index)"
           >
-          </f-list-item>
-        </f-list>
+            <div
+              :class="`ml-4 ${
+                item.disabled ? 'f-greyscale-4' : 'f-greyscale-1'
+              }`"
+            >
+              <span> {{ item.title }}</span>
+            </div>
+            <v-spacer />
+            <div v-if="item.check">
+              <v-icon class="mr-4"> {{ $icons.mdiCheck }}</v-icon>
+            </div>
+          </v-layout>
+        </div>
       </f-bottom-sheet>
     </v-layout>
   </f-app-bar>
@@ -69,20 +79,29 @@ class DefaultLayoutAppBar extends Vue {
   get menuItems() {
     return [
       {
-        title: this.$t("menu.market"),
+        title: "Pando Lakes (Coming soon)",
+        disabled: true,
       },
       {
-        title: this.$t("menu.auction"),
+        title: "Pando Leaf",
+        check: true,
+      },
+      {
+        title: "Pando Rings (Coming soon)",
+        disabled: true,
       },
     ];
   }
 
   clickItem(menu, index) {
     if (index === 0) {
-      this.toMarket();
+      this.toPandoLakes();
     }
     if (index === 1) {
-      this.toAuctions();
+      // this.toAuctions();
+    }
+    if (index === 2) {
+      this.toPandoRings();
     }
   }
 
@@ -100,6 +119,14 @@ class DefaultLayoutAppBar extends Vue {
     this.$router.push("/market");
   }
 
+  toPandoLakes() {
+    // coming soon
+  }
+
+  toPandoRings() {
+    // coming soon
+  }
+
   handleBack() {
     if (window.history.length <= 2) {
       this.$router.options;
@@ -111,4 +138,16 @@ class DefaultLayoutAppBar extends Vue {
 }
 export default DefaultLayoutAppBar;
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.middle-center {
+  position: absolute;
+  @media only screen and (max-width: 959px) {
+    left: calc(50% - 30px);
+  }
+  left: 48px;
+}
+.list-item-text {
+  font-weight: 500;
+  font-size: 16px !important;
+}
+</style>

@@ -1,6 +1,10 @@
 <template>
-  <v-container class="pa-0" style="height: 100%">
-    <v-layout column fill-height class="pa-0 custom-info-grid">
+  <v-container class="pa-0 f-bg-greyscale-7" style="height: 100%">
+    <v-layout column fill-height class="pa-0">
+      <div class="py-2" v-if="loading">
+        <f-loading :loading="loading"></f-loading>
+      </div>
+      <!-- 授权登陆按钮 -->
       <base-connect-wallet-btn
         v-if="!isLogged"
         rounded
@@ -11,25 +15,8 @@
       >
         {{ $t("connect.wallet") }}
       </base-connect-wallet-btn>
-      <v-layout justify-space-between>
-        <v-layout v-if="isLogged" column class="pa-4 f-bg-greyscale-7">
-          <div class="f-caption f-greyscale-3">
-            {{ $t("me.total-collaterals") }}
-          </div>
-          <h2>{{ total.collaterals }}</h2>
-        </v-layout>
-        <v-layout
-          v-if="isLogged"
-          column
-          class="pa-4 f-bg-greyscale-7 text-right"
-        >
-          <div class="f-caption f-greyscale-3">{{ $t("me.total-debts") }}</div>
-          <h2>{{ total.debts }}</h2>
-        </v-layout>
-      </v-layout>
-      <div class="py-2" v-if="loading">
-        <f-loading :loading="loading"></f-loading>
-      </div>
+
+      <!-- no vault -->
       <v-layout
         v-if="isLogged && !haveVault"
         style="height: 100%"
@@ -53,21 +40,96 @@
           <span>{{ $t("me.no-vault-button") }}</span>
         </v-btn>
       </v-layout>
-      <div v-if="isLogged && haveVault" class="px-4 pt-4">
-        <my-vault-item
-          class="mb-4 rounded-lg"
-          :key="vault.id"
-          v-for="vault in sortedMyVaults"
-          :vault="vault"
-        ></my-vault-item>
+
+      <v-container column justify-center v-if="isLogged && haveVault">
+        <!-- 总计card -->
+        <total-card />
+        <!-- <v-row class="pa-0" no-gutters>
+          <v-col xs="12" sm="12" md="6">
+            <f-panel
+              class="mt-2 mx-1 pa-0 leaf-card rounded-lg total-card f-bg-greyscale-1 sm-6 xs-12"
+            >
+              <v-icon size="144" class="total-card-texture"
+                >$iconTotalCardTexture</v-icon
+              >
+              <v-switch class="total-switch"> </v-switch>
+              <v-layout column class="f-greyscale-7 ml-6">
+                <div class="f-body-2 mt-6">
+                  {{ $t("me.total-collaterals") }}
+                </div>
+                <div class="total-value mt-2">
+                  <span class="total-legal-symbol f-green mr-1">$</span
+                  >{{ total.collaterals }}
+                </div>
+                <div class="f-body-2 mt-6">
+                  {{ $t("me.total-debts") }}
+                </div>
+                <div class="total-value mt-2">
+                  <span class="total-legal-symbol f-green mr-1">$</span
+                  >{{ total.debts }}
+                </div>
+              </v-layout>
+            </f-panel>
+          </v-col>
+          <v-col class="extra-card" md="6">
+            <f-panel
+              class="mt-2 mx-1 pa-0 leaf-card rounded-lg total-card f-bg-greyscale-6 sm-6 xs-12"
+            >
+              <v-layout column class="f-greyscale-7 ml-6">
+                <div class="f-body-2 mt-6">
+                  {{ $t("me.total-collaterals") }}
+                </div>
+                <div class="total-value mt-2">
+                  <span class="total-legal-symbol f-green mr-1">$</span
+                  >{{ total.collaterals }}
+                </div>
+                <div class="f-body-2 mt-6">
+                  {{ $t("me.total-debts") }}
+                </div>
+                <div class="total-value mt-2">
+                  <span class="total-legal-symbol f-green mr-1">$</span
+                  >{{ total.debts }}
+                </div>
+              </v-layout>
+            </f-panel>
+          </v-col>
+        </v-row> -->
+
+        <v-layout align-center class="mt-8 mb-2 mx-1 f-greyscale-1 f-title-1">
+          My Vault
+          <base-tooltip
+            class="ml-1"
+            hint="Pando leaf is product description product description product
+            description product description"
+          >
+          </base-tooltip>
+        </v-layout>
+
+        <!-- vault list -->
+        <v-row no-gutters>
+          <v-col
+            xs="12"
+            sm="12"
+            md="6"
+            :key="vault.id"
+            v-for="vault in sortedMyVaults"
+          >
+            <my-vault-item
+              class="leaf-card mt-4 rounded-lg sm-6 xs-12 mx-1"
+              :vault="vault"
+            ></my-vault-item>
+          </v-col>
+        </v-row>
         <v-layout justify-center>
           <f-button class="my-8" @click="openNewVault"
             ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon> Add a
             Vault</f-button
           >
         </v-layout>
-        <div style="height: 60px"></div>
-        <div class="version-block f-caption text--secondary">{{ version }}</div>
+      </v-container>
+      <div style="height: 60px"></div>
+      <div class="version-block f-caption text--secondary">
+        {{ version }}
       </div>
     </v-layout>
     <market-select-modal
@@ -85,6 +147,7 @@ import { Action, Getter, Mutation, State } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
 import MyVaultItem from "~/components/particles/MyVaultItem.vue";
 import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
+import TotalCard from "@/components/particles/TotalCard.vue";
 import WelcomeModal from "@/components/particles/WelcomeModal.vue";
 import { VERSION } from "~/constants";
 
@@ -93,6 +156,7 @@ import { VERSION } from "~/constants";
     MyVaultItem,
     MarketSelectModal,
     WelcomeModal,
+    TotalCard,
   },
 })
 export default class Me extends Mixins(mixins.page) {
@@ -137,6 +201,8 @@ export default class Me extends Mixins(mixins.page) {
       return {
         back: false,
         avatar: false,
+        customContent: true,
+        mixinImmersive: this.$utils.helper.isMixin(),
       };
     }
     return {
@@ -174,31 +240,6 @@ export default class Me extends Mixins(mixins.page) {
     return "home";
   }
 
-  get total() {
-    if (this.myVaults.length === 0)
-      return {
-        collaterals: "$0.00",
-        debts: "$0.00",
-      };
-    let col = 0;
-    let dai = 0;
-    this.myVaults.forEach((v) => {
-      const collateral = this.getCollateral(v.collateral_id);
-      const colAsset = this.getAssetById(collateral?.gem);
-      const colAmount = Number(v.ink || "0");
-      const daiAmount = Number(v.art || "0") * Number(collateral?.rate || "1");
-      const colPrice = Number(colAsset?.price || "0");
-      const daiAsset = this.getAssetById(collateral?.dai);
-      const daiPrice = Number(daiAsset?.price || "0");
-      col += colAmount * colPrice;
-      dai += daiAmount * daiPrice;
-    });
-    return {
-      collaterals: `$${this.$utils.number.toShort(col)}`,
-      debts: `$${this.$utils.number.toShort(dai)}`,
-    };
-  }
-
   created() {
     if (this.$route.query["r"] === "auction") {
       if (this.$route.query["id"]) {
@@ -213,7 +254,6 @@ export default class Me extends Mixins(mixins.page) {
     // this.checkLogin();
     this.loading = true;
     setTimeout(() => {
-      console.log("isLogged:", this.isLogged);
       this.syncMyVaults()
         .then((res) => {
           this.loading = false;
@@ -282,19 +322,6 @@ export default class Me extends Mixins(mixins.page) {
 </script>
 
 <style lang="scss" scoped>
-.custom-info-grid {
-  overflow: hidden;
-  ::v-deep {
-    .f-info-grid {
-      .f-info-grid-inner {
-        width: calc(100vw - 32px) !important;
-        .f-info-grid-item {
-          width: calc(50vw - 16px);
-        }
-      }
-    }
-  }
-}
 .version-block {
   padding-bottom: constant(safe-area-inset-bottom) + 10px;
   padding-bottom: env(safe-area-inset-bottom) + 10px;

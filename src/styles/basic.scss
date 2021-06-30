@@ -19,17 +19,20 @@ a {
 }
 
 .theme--dark.v-application {
+  .f-greyscale-7 {
+    color: #000000;
+  }
   .f-bg-greyscale-7 {
-    background-color: #000000;
+    background-color: #000000 !important;
   }
   .f-bg-lightGreen {
-    background-color: #ebfced;
+    background-color: #415745 !important;
   }
   .f-bg-lightOrange {
-    background-color: #fcf8f0;
+    background-color: #735933 !important;
   }
   .f-bg-lightRed {
-    background-color: #fbf2f2;
+    background-color: #804b4b !important;
   }
   .f-panel.v-sheet {
     background-color: #1e1e1e;
@@ -63,6 +66,9 @@ a {
 }
 
 .theme--light.v-application {
+  .f-greyscale-7 {
+    color: #ffffff;
+  }
   .f-bg-greyscale-7 {
     background-color: #ffffff;
   }
@@ -106,6 +112,10 @@ a {
 .risk-title {
   font-family: "SF Pro Text";
   font-weight: 700;
+}
+
+.leaf-card {
+  max-width: 482px;
 }
 
 .f-info-grid {

@@ -1,5 +1,6 @@
 <template>
   <svg
+    class="icon-generate"
     width="32"
     height="32"
     viewBox="0 0 32 32"
@@ -43,10 +44,10 @@ import { State } from "vuex-class";
 @Component
 class Generate extends Vue {
   @State((state) => state.app.settings.dark) isDark;
-
   get color() {
     return this.isDark ? "white" : "black";
   }
 }
 export default Generate;
 </script>
+<style lang="scss" scoped></style>

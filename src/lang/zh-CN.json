@@ -39,6 +39,7 @@
   "tab.auctions": "拍卖",
   "me.total-collaterals": "总抵押额",
   "me.total-debts": "总债务",
+  "me.collaterals-ratio":"抵押物分布",
   "me.no-vault-1": "你还没有创建金库",
   "me.no-vault-2": "创建你的第一个金库来生成 Pando 资产",
   "me.no-vault-button": "创建一个金库",

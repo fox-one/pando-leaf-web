@@ -3,7 +3,7 @@
     <default-layout-app-bar />
     <v-main>
       <!-- <base-ws-connect-bar /> -->
-      <nuxt style="max-width: 1200px" />
+      <nuxt style="max-width: 988px" />
     </v-main>
     <default-layout-bottom-nav />
     <default-layout-modals />
@@ -27,3 +27,4 @@ import Modals from "./Modals.vue";
 class DefaultLayout extends Vue {}
 export default DefaultLayout;
 </script>
+<style lang="scss"></style>
