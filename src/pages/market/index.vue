@@ -1,26 +1,34 @@
 <template>
   <v-container class="pa-0 desktop-support f-bg-greyscale-7">
     <v-layout column class="px-4">
-      <div class="f-body-1 font-weight-medium mt-10">
+      <div class="f-title-1 font-weight-bold mt-10">
         {{ $t("market.overview") }}
       </div>
-      <v-row no-gutters class="pt-6">
+      <v-row no-gutters class="pt-6 mb-6">
         <v-col class="my-4 pa-0" cols="6" xs="6" sm="4" md="4" lg="3">
           <div class="f-caption">{{ $t("market.total-collaterals") }}</div>
-          <h2>{{ total.collaterals }}</h2>
+          <v-layout align-center class="overview-value">
+            <span class="overview-value-symbol">$</span>{{ total.collaterals }}
+          </v-layout>
         </v-col>
         <v-col class="my-4 pa-0" cols="6" xs="6" sm="4" md="4" lg="3">
           <div class="f-caption">{{ $t("market.total-supply") }}</div>
-          <h2>{{ total.supply }}</h2>
+          <v-layout align-center class="overview-value"
+            ><span class="overview-value-symbol">$</span
+            >{{ total.supply }}</v-layout
+          >
         </v-col>
         <v-col class="my-4 pa-0" cols="6" xs="6" sm="4" md="4" lg="3">
           <div class="f-caption">
             {{ $t("market.total-collateralization") }}
           </div>
-          <h2 class="f-green">{{ total.collaterilazation }}</h2>
+          <div class="market-green overview-value">
+            {{ total.collaterilazation }}
+          </div>
         </v-col>
       </v-row>
       <market-item
+        class="mb-4"
         v-for="item in collaterals"
         :collateral="item"
         :key="item.id"
@@ -87,8 +95,8 @@ export default class Market extends Mixins(mixins.page) {
       dai += daiAmount * daiPrice;
     });
     return {
-      collaterals: "$" + this.$utils.number.toShort(col),
-      supply: "$" + this.$utils.number.toShort(dai),
+      collaterals: this.$utils.number.toShort(col),
+      supply: this.$utils.number.toShort(dai),
       collaterilazation: this.$utils.number.toPercent(col / dai),
     };
   }
@@ -120,13 +128,11 @@ export default class Market extends Mixins(mixins.page) {
 .desktop-support {
   max-width: 1100px !important;
 }
-
 .market-table-title {
   opacity: 0.5;
   font-weight: normal;
   font-style: normal;
 }
-
 .arrow-right {
   position: relative;
   float: right;
@@ -137,5 +143,15 @@ export default class Market extends Mixins(mixins.page) {
   width: 100% !important;
   left: unset !important;
   right: unset !important;
+}
+.overview-value {
+  font-size: 25px;
+  font-weight: 700;
+  .overview-value-symbol {
+    font-size: 17px;
+  }
+}
+.market-green {
+  color: #47bd61;
 }
 </style>

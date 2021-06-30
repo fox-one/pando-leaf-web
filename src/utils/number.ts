@@ -27,10 +27,13 @@ export default {
     return parseFloat("" + n).toFixed(p);
   },
   toPrecision(
-    n: string | number,
+    n: string | number | undefined,
     p: number | undefined = undefined,
     roundMode: BigNumber.RoundingMode = BigNumber.ROUND_DOWN
   ): any {
+    if (n === undefined) {
+      return "";
+    }
     if (p === undefined) {
       p = this.getDefaultPercision(n);
     }

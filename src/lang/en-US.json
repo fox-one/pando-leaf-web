@@ -85,7 +85,7 @@
   "market.item.total-asset-symbol": "Total {symbol}",
   "market.item.symbol-debt": "{symbol} Debt",
   "market.item.oracle-next": "Next:",
-  "market.item.oracle-content": "(will be confirm after {time})",
+  "market.item.oracle-content": "will be confirm after {time}",
   "form.title.open": "Open a {name} Vault",
   "form.title.deposit": "Deposit to Vault",
   "form.title.generate": "Generate more {symbol}",
