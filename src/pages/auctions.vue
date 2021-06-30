@@ -1,5 +1,5 @@
 <template>
-  <v-container class="f-bg-greyscale-7">
+  <v-container class="f-bg-greyscale-7" style="height: 100%">
     <div class="py-2" v-if="loading">
       <f-loading :loading="loading"></f-loading>
     </div>
