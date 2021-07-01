@@ -300,3 +300,8 @@ export async function loadWalletAsset(vue: Vue, assetId: string) {
     return store.dispatch("global/syncWalletAsset", assetId);
   }
 }
+
+export function fiatUnit(vue: Vue) {
+  const lang = vue.$vuetify.lang.current;
+  return lang.includes("zh") ? "￥" : "$";
+}

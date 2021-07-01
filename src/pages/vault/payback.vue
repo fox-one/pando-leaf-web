@@ -117,7 +117,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
   }
 
   get title() {
-    const t = this.$t("form.title.payback", { symbol: this.assetSymbol });
+    const t = this.$t("form.title.payback");
     return `${t}`;
   }
 

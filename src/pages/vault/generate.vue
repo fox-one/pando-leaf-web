@@ -135,7 +135,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
   }
 
   get title() {
-    const t = this.$t("form.title.generate", { symbol: this.assetSymbol });
+    const t = this.$t("form.title.generate");
     return `${t}`;
   }
 
