@@ -51,6 +51,7 @@
   "me.vault-item.available-to-generate": "Available to generate",
   "me.vault-item.in-liquidation-tips1": "You have reached minimum collateral ratio.",
   "me.vault-item.in-liquidation-tips2": "This vault is on the liquidation list.",
+  "vault.detail.title":"Vault Details",
   "vault.detail.history": "History",
   "vault.detail.collateral": "Collateral",
   "vault.detail.debt": "Debt",
