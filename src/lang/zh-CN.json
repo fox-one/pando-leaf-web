@@ -103,6 +103,8 @@
   "form.hint.risk-level-low": "低",
   "form.hint.risk-level-mid": "中",
   "form.hint.risk-level-high": "高",
+  "form.hint.set-max": "设为最大",
+  "form.hint.debt.intro": "由于利息是每分钟计算并加到债务中的，我们会向您收取略高于未偿债务金额的费用，以确保您成功偿还债务，并在您付款后将多余的金额退还您的钱包。",
   "form.open.how-much-col": "你打算存入多少 {symbol}?",
   "form.open.deposit.tooltip1": "你打算存入并锁定多少 {symbol} 在金库中?",
   "form.open.deposit.tooltip2": "你锁定的 {depositSymbol} 将决定你可以生成多少 {mintSymbol}.",

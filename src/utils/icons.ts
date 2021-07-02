@@ -17,6 +17,7 @@ import {
   mdiAlert,
   mdiHelpCircle,
   mdiCheck,
+  mdiCloseCircle,
 } from "@mdi/js";
 
 export default {
@@ -38,4 +39,5 @@ export default {
   mdiAlert,
   mdiHelpCircle,
   mdiCheck,
+  mdiCloseCircle,
 };
