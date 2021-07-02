@@ -1,6 +1,6 @@
-# nuxt-ts-template
+# Pando Leaf Web
 
-> My cat&#39;s meow Nuxt.js project
+> Pando Leaf web based on Vue & Vuetify and Nuxt.js
 
 ## Build Setup
 
