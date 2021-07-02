@@ -9,9 +9,10 @@
         <v-icon size="144" class="total-card-texture"
           >$iconTotalCardTexture</v-icon
         >
-        <v-switch v-model="switchState" class="total-switch"> </v-switch>
+        <v-switch v-model="switchState" color="white" class="total-switch">
+        </v-switch>
         <v-layout column class="ml-6 white--text">
-          <div class="f-body-2 mt-6">
+          <div class="total-label f-body-2 mt-6">
             {{ $t("me.total-collaterals") }}
           </div>
           <div class="total-value mt-2">
@@ -23,7 +24,7 @@
             v-if="switchState"
             :vaults="myVaults"
           />
-          <div class="f-body-2 mt-6">
+          <div class="total-label f-body-2 mt-6">
             {{ $t("me.total-debts") }}
           </div>
           <div class="total-value mt-2">
@@ -41,7 +42,12 @@
           <div class="f-body-2 mt-6">
             {{ $t("me.collaterals-ratio") }}
           </div>
-          <collaterals-ratio :vaults="myVaults" />
+          <collaterals-ratio
+            class="mt-6"
+            :vaults="myVaults"
+            label-color="f-greyscale-1"
+          />
+          <div class="divider"></div>
         </v-layout>
       </f-panel>
     </v-col>
@@ -53,6 +59,7 @@ import { Vue, Component } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
 import { IVault } from "~/services/types/vo";
 import CollateralsRatio from "@/components/charts/CollateralsRatio.vue";
+import { debounce } from "~/utils/helper";
 
 @Component({
   components: {
@@ -65,6 +72,31 @@ export default class TotalCard extends Vue {
   @Getter("global/getAssetById") getAssetById;
 
   switchState = false;
+  restoreState = false;
+
+  saveState() {
+    if (window.innerWidth >= 960) {
+      if (this.switchState) {
+        this.restoreState = true;
+        this.switchState = false;
+      }
+    } else {
+      if (this.restoreState) {
+        this.switchState = true;
+        this.restoreState = false;
+      }
+    }
+  }
+
+  listener = debounce(this.saveState, 600);
+
+  mounted() {
+    addEventListener("resize", this.listener);
+  }
+
+  beforeDestroyed() {
+    removeEventListener("resize", this.listener);
+  }
 
   get total() {
     if (this.myVaults.length === 0)
@@ -98,7 +130,7 @@ export default class TotalCard extends Vue {
   display: block;
   position: relative;
   @media only screen and (min-width: 960px) {
-    height: 204px !important;
+    height: 287px !important;
   }
   .total-card-texture {
     position: absolute;
@@ -116,11 +148,20 @@ export default class TotalCard extends Vue {
       top: 16px;
     }
   }
+  .total-label {
+    @media only screen and (min-width: 960px) {
+      margin-left: 24px !important;
+      margin-top: 48px !important;
+    }
+  }
   .total-value {
     display: flex;
     align-items: center;
     font-size: 25px;
     font-weight: 700;
+    @media only screen and (min-width: 960px) {
+      margin-left: 24px;
+    }
     .total-legal-symbol {
       font-size: 16px;
     }

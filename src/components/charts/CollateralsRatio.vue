@@ -27,19 +27,18 @@
           </v-img>
         </v-layout>
         <div
-          class="align-self-center f-greyscale-7 f-caption mt-2 font-weight-medium"
+          :class="`align-self-center ${labelColor} f-caption mt-2 font-weight-medium`"
         >
-          {{ getPercent(item).toFixed(2) }}%
+          {{ $utils.number.toPercent(getPercent(item)) }}
         </div>
         <div
-          style="color: rgba(255, 255, 255, 0.4)"
-          class="align-self-center f-caption mt-2 font-weight-medium"
+          class="align-self-center f-caption mt-2 font-weight-medium f-greyscale-4"
         >
           {{ item.asset.symbol || "" }}
         </div>
       </v-layout>
     </v-layout>
-    <div class="divider mt-2" />
+    <div :class="`divider ${dividerColor} mt-2`" />
   </v-layout>
 </template>
 
@@ -51,6 +50,8 @@ import { IAsset, IVault, ICollateralRatio } from "~/services/types/vo";
 @Component({})
 export default class CollateralsRatio extends Vue {
   @Prop() vaults!: IVault[];
+  @Prop({ default: "f-greyscale-7" }) labelColor!: string;
+  @Prop({ default: "f-bg-greyscale-3" }) dividerColor!: string;
   @Getter("global/getAssetById") getAssetById!: (id) => IAsset;
   @Getter("global/getCollateral") getCollateral;
 
@@ -80,17 +81,6 @@ export default class CollateralsRatio extends Vue {
     chartData.sort((a, b) => {
       a.value - b.value;
       return 0;
-    });
-
-    chartData.push({
-      value: chartData[0].value * 0.4,
-      asset: chartData[0].asset,
-      color: "808080",
-    });
-    chartData.push({
-      value: chartData[0].value * 0.2,
-      asset: chartData[0].asset,
-      color: "808080",
     });
     return chartData;
   }
@@ -201,7 +191,6 @@ export default class CollateralsRatio extends Vue {
 }
 .divider {
   height: 0.5px;
-  background: #ffffff;
   opacity: 0.24;
 }
 </style>
