@@ -1,7 +1,33 @@
 <template>
   <v-container class="pa-0">
     <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <f-asset-amount-input
+      <asset-range-input
+        v-model="amount"
+        class="mt-6"
+        :label="$t('form.hint.generate-amount')"
+        :assets="[asset]"
+        :asset.sync="asset"
+        :selectable="false"
+        :precision="precision"
+        :inputTips="inputTips"
+        :max="+maxAvailable"
+        :btn-text="$t('form.generate.button.confirm')"
+        :disabled-btn="validate.disabled"
+        :error="validate.tip"
+        @click:button="requestConfirm"
+        color="primary"
+      >
+        <template v-slot:slider>
+          <risk-slider
+            v-model="percent"
+            :tips="sliderTips"
+            :scale="scale"
+            ref="slider"
+          />
+        </template>
+      </asset-range-input>
+
+      <!-- <f-asset-amount-input
         class="mt-6"
         v-model="amount"
         :label="$t('form.hint.generate-amount')"
@@ -39,7 +65,7 @@
           @click="requestConfirm"
           >{{ $t("form.generate.button.confirm") }}</v-btn
         >
-      </div>
+      </div> -->
     </v-layout>
 
     <prediction
@@ -106,6 +132,9 @@ export default class GenerateForm extends Mixins(mixins.page) {
   amount = "";
   precision = 8;
   percent = 0;
+  inputTips = {};
+  sliderTips = {};
+  scale = {};
 
   get appbar() {
     return {
@@ -293,15 +322,15 @@ export default class GenerateForm extends Mixins(mixins.page) {
     ];
   }
 
-  @Watch("percent")
-  onPercent(newVal) {
-    if (!this.$utils.number.isValid(Number(this.amount))) return;
-    if (this.modAmount) return;
-    this.amount = this.$utils.number.toPrecision(
-      (newVal / 100) * this.maxAvailable,
-      8
-    );
-  }
+  // @Watch("percent")
+  // onPercent(newVal) {
+  //   if (!this.$utils.number.isValid(Number(this.amount))) return;
+  //   if (this.modAmount) return;
+  //   this.amount = this.$utils.number.toPrecision(
+  //     (newVal / 100) * this.maxAvailable,
+  //     8
+  //   );
+  // }
 
   modAmount = false;
 
@@ -315,6 +344,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
     this.$utils.helper.debounce(() => {
       this.modAmount = false;
     }, 10)();
+    this.calcSliderTips();
   }
 
   mounted() {
@@ -330,6 +360,45 @@ export default class GenerateForm extends Mixins(mixins.page) {
     this.collateral = this.getCollateral(this.vault.collateral_id);
     this.asset = this.getAssetById(this.collateral.dai);
     this.updateWalletAsset();
+
+    const debtAmount = +this.vault?.art * +this.collateral?.rate;
+    const collateralAmount = +this.vault?.ink * +this.collateral?.price;
+    const midRatioLimit = (5 / 3) * +this.collateral.mat;
+    const highRatioLimit = 1.25 * +this.collateral.mat;
+    const midAmount = collateralAmount / midRatioLimit - debtAmount;
+    const highAmount = collateralAmount / highRatioLimit - debtAmount;
+    this.scale = {
+      low: midAmount / this.maxAvailable,
+      mid: (highAmount - midAmount) / this.maxAvailable,
+      high: (this.maxAvailable - highAmount) / this.maxAvailable,
+    };
+
+    const suggestAmount = this.$utils.number.toPrecision(
+      this.maxAvailable * (midAmount / this.maxAvailable)
+    );
+    this.inputTips = this.isLogged
+      ? {
+          amount: suggestAmount,
+          amountSymbol: this.assetSymbol,
+          tipLeft: this.$t("common.suggest"),
+          tipRight: this.collateral?.gem
+            ? `≈ $ ${this.$utils.number.toPrecision(
+                this.getAssetById?.(this.collateral?.dai)?.price * suggestAmount
+              )}`
+            : "",
+        }
+      : {
+          tipLeft: this.$createElement("connect-wallet", {
+            on: {
+              click: () => this.requestLogin(),
+            },
+            props: {
+              text: this.$t("connect.wallet"),
+            },
+          }),
+        };
+
+    this.calcSliderTips();
   }
 
   destroyed() {
@@ -405,6 +474,31 @@ export default class GenerateForm extends Mixins(mixins.page) {
         this.$utils.helper.handleTxResult(this, response.data);
       }
     }, 3000);
+  }
+
+  calcSliderTips() {
+    let risk = "low";
+    switch (
+      this.$utils.helper.riskLevel(this.meta.ratio, this.collateral.mat)
+    ) {
+      case RISK.HIGH:
+        risk = "high";
+        break;
+
+      case RISK.MEDIUM:
+        risk = "mid";
+        break;
+    }
+    this.sliderTips = {
+      tip: this.$t("form.hint.generate-ration"),
+      highlight: `${this.$utils.number.toPercent(
+        this.meta.ratio,
+        false,
+        1
+      )}, ${this.$t("form.hint.risk-level", {
+        level: this.$t(`form.hint.risk-level-${risk}`),
+      })}`,
+    };
   }
 }
 </script>

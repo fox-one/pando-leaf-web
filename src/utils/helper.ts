@@ -247,9 +247,9 @@ export function risk(currentRatio, minimumRatio) {
   if (!number.isValid(risk)) return "greyscale-6";
   if (risk < 0) {
     return "greyscale-6";
-  } else if (risk <= 1.1) {
+  } else if (risk <= 1.25) {
     return "lightRed";
-  } else if (risk <= 1.5) {
+  } else if (risk <= 5 / 3) {
     return "lightOrange";
   } else {
     return "lightGreen";
@@ -261,9 +261,9 @@ export function riskLevel(currentRatio, minimumRatio) {
   if (!number.isValid(risk)) return RISK.NA;
   if (risk < 0) {
     return RISK.NA;
-  } else if (risk <= 1.1) {
+  } else if (risk <= 1.25) {
     return RISK.HIGH;
-  } else if (risk <= 1.5) {
+  } else if (risk <= 5 / 3) {
     return RISK.MEDIUM;
   } else {
     return RISK.LOW;

@@ -901,10 +901,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@foxone/finance-ui@^0.1.0-alpha.11":
-  version "0.1.0-alpha.11"
-  resolved "https://registry.npmjs.org/@foxone/finance-ui/-/finance-ui-0.1.0-alpha.11.tgz#74f8da1c60bd8317384fb0b6b46136a2f401189e"
-  integrity sha512-lLSzsGUUYOeLm1wYdDyNEf7ngq75PA5WMDnPwqEKY4YB1zzJFhDiKTIf36To8ZX4C8LvS/vDb6D1EDWu7Y50rg==
+"@foxone/finance-ui@^0.1.0-alpha.14":
+  version "0.1.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/@foxone/finance-ui/-/finance-ui-0.1.0-alpha.14.tgz#f2fe48ac4801973e0244bd5eb3bf79b7b0313438"
+  integrity sha512-BXqutX+VzTbxxY+L/qeeuQxB+QdUIublvnKDbnHs+F5hdPw2ra3FeDM+c8tWKjxR/fpK9a68g8ZuV4KjnjaZRQ==
   dependencies:
     classnames "~2.2.6"
     vue-slider-component "~3.2.13"
