@@ -99,6 +99,7 @@ import MyVaultItem from "~/components/particles/MyVaultItem.vue";
 import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
 import TotalCard from "@/components/particles/TotalCard.vue";
 import WelcomeModal from "@/components/particles/WelcomeModal.vue";
+import CollateralsRatio from "@/components/charts/CollateralsRatio.vue";
 import { VERSION } from "~/constants";
 
 @Component({
@@ -107,6 +108,7 @@ import { VERSION } from "~/constants";
     MarketSelectModal,
     WelcomeModal,
     TotalCard,
+    CollateralsRatio,
   },
 })
 export default class Me extends Mixins(mixins.page) {

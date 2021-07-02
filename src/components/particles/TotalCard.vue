@@ -2,12 +2,14 @@
   <v-row class="pa-0" no-gutters>
     <v-col xs="12" sm="12" md="6">
       <f-panel
-        class="mt-2 mx-1 pa-0 leaf-card rounded-lg total-card main-card sm-6 xs-12"
+        :class="`mt-2 mx-1 pa-0 leaf-card rounded-lg total-card main-card sm-6 xs-12 ${
+          switchState ? 'opened-card' : 'closed-card'
+        }`"
       >
         <v-icon size="144" class="total-card-texture"
           >$iconTotalCardTexture</v-icon
         >
-        <v-switch v-if="false" class="total-switch"> </v-switch>
+        <v-switch v-model="switchState" class="total-switch"> </v-switch>
         <v-layout column class="ml-6 white--text">
           <div class="f-body-2 mt-6">
             {{ $t("me.total-collaterals") }}
@@ -16,6 +18,11 @@
             <span class="total-legal-symbol f-green mr-1">$</span
             >{{ total.collaterals }}
           </div>
+          <collaterals-ratio
+            class="pt-5"
+            v-if="switchState"
+            :vaults="myVaults"
+          />
           <div class="f-body-2 mt-6">
             {{ $t("me.total-debts") }}
           </div>
@@ -26,7 +33,7 @@
         </v-layout>
       </f-panel>
     </v-col>
-    <v-col v-if="false" class="extra-card" md="6">
+    <v-col class="extra-card" md="6">
       <f-panel
         class="mt-2 mx-1 pa-0 leaf-card rounded-lg total-card f-bg-greyscale-6 sm-6 xs-12"
       >
@@ -34,17 +41,7 @@
           <div class="f-body-2 mt-6">
             {{ $t("me.collaterals-ratio") }}
           </div>
-          <!-- <div class="total-value mt-2">
-            <span class="total-legal-symbol f-green mr-1">$</span
-            >{{ total.collaterals }}
-          </div>
-          <div class="f-body-2 mt-6">
-            {{ $t("me.total-debts") }}
-          </div>
-          <div class="total-value mt-2">
-            <span class="total-legal-symbol f-green mr-1">$</span
-            >{{ total.debts }}
-          </div> -->
+          <collaterals-ratio :vaults="myVaults" />
         </v-layout>
       </f-panel>
     </v-col>
@@ -55,12 +52,19 @@
 import { Vue, Component } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
 import { IVault } from "~/services/types/vo";
+import CollateralsRatio from "@/components/charts/CollateralsRatio.vue";
 
-@Component
+@Component({
+  components: {
+    CollateralsRatio,
+  },
+})
 export default class TotalCard extends Vue {
   @State((state) => state.global.myVaults) myVaults!: IVault[];
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
+
+  switchState = false;
 
   get total() {
     if (this.myVaults.length === 0)
@@ -92,8 +96,10 @@ export default class TotalCard extends Vue {
 <style lang="scss" scoped>
 .total-card {
   display: block;
-  height: 204px;
   position: relative;
+  @media only screen and (min-width: 960px) {
+    height: 204px !important;
+  }
   .total-card-texture {
     position: absolute;
     bottom: 0px;
@@ -119,6 +125,12 @@ export default class TotalCard extends Vue {
       font-size: 16px;
     }
   }
+}
+.opened-card {
+  height: 393px;
+}
+.closed-card {
+  height: 204px;
 }
 .main-card {
   background-color: #333333 !important;

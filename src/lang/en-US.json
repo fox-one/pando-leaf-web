@@ -56,6 +56,8 @@
   "vault.detail.history": "History",
   "vault.detail.collateral": "Collateral",
   "vault.detail.debt": "Debt",
+  "vault.tab.details":"Details",
+  "vault.tab.history":"History",
   "vault.selector.title": "Add a Vault",
   "vault.selector.tips": "If you only intend to generate more tokens, you can choose to do it in an existing overcollateralized Vault",
   "vault.selector.min-collateral-ratio": "Minimum Collateral Ratio",
