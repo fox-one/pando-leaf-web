@@ -1,89 +1,108 @@
 <template>
-  <v-container class="pa-0" fluid>
-    <v-layout column>
-      <v-layout class="f-bg-greyscale-7">
-        <v-layout column flex-grow-1 class="pa-4 top-view-item">
-          <v-layout align-center>
-            <f-mixin-asset-logo
-              :size="48"
-              :logo="collateralAsset.logo"
-            ></f-mixin-asset-logo>
-            <div class="f-title-3 ml-4">
-              {{ $t("vault.detail.collateral") }}
-            </div>
-          </v-layout>
-          <div class="f-body-1">
-            {{ collateralAmount }} {{ collateralAsset.symbol }}
-          </div>
-        </v-layout>
-        <v-layout column flex-grow-1 class="pa-4 top-view-item">
-          <v-layout align-center>
-            <f-mixin-asset-logo
-              :size="48"
-              :logo="debtAsset.logo"
-            ></f-mixin-asset-logo>
-            <div class="f-title-3 ml-4">{{ $t("vault.detail.debt") }}</div>
-          </v-layout>
-          <div class="f-body-1">{{ debtAmount }} {{ debtAsset.symbol }}</div>
-        </v-layout>
-      </v-layout>
-      <v-layout class="f-bg-greyscale-7">
-        <f-info-grid-item
-          class="top-view-item"
-          v-for="(item, ix) in infos"
-          :key="ix"
-          :index="ix"
-          :title="item.title"
-          :value="item.value"
-          :value-unit="item.valueUnit"
-          :value-color="item.valueColor"
-          :value-custom-color="item.valueCustomColor"
-          :hint="item.hint"
-        ></f-info-grid-item>
-      </v-layout>
-
-      <vault-stats
-        class="mb-4 pt-4 mt-4 custom-info-grid"
-        :title="''"
-        :vault="vault"
-        :collateral="collateral"
-        :show-debt="false"
-        show-penalty
-      />
-      <div class="px-4">
-        <div class="f-greyscale-1 f-title-1 mb-4">
-          {{ $t("vault.detail.history") }}
+  <v-container class="pa-0 pt-4 f-bg-greyscale-7" style="height: 100%">
+    <v-layout justify-center>
+      <f-button-tabs v-model="tabIndex">
+        <template #tabs>
+          <v-btn
+            v-for="(item, index) in tabs"
+            :key="index"
+            :data-value="index"
+            :ripple="false"
+          >
+            <span>{{ item.text }}</span>
+          </v-btn>
+        </template>
+      </f-button-tabs>
+    </v-layout>
+    <v-layout v-if="tabIndex === 0" column>
+      <v-layout class="mt-8 ml-4" align-center>
+        <f-mixin-asset-logo
+          class="z-index-2"
+          :size="40"
+          :logo="collateralAsset.logo"
+        ></f-mixin-asset-logo>
+        <f-mixin-asset-logo
+          class="ml-n2"
+          :size="40"
+          :logo="debtAsset.logo"
+        ></f-mixin-asset-logo>
+        <div class="ml-2 f-caption f-greyscale-1">
+          {{ collateral.name }} #{{ vault.identity_id }}
         </div>
-        <f-panel
-          class="py-0"
-          v-infinite-scroll="requestTx"
-          infinite-scroll-distance="10"
+      </v-layout>
+      <v-row no-gutters class="mt-5 f-body-2 font-weight-bold">
+        <v-col
+          class="py-3 pl-4"
+          v-for="item in metaInfos"
+          :key="item.title"
+          sm="6"
+          xs="6"
+          md="6"
+          cols="6"
         >
-          <template v-for="(item, index) in histories">
-            <v-divider
-              :key="`${item.action}_${item.created_at}`"
-              v-if="index !== 0"
-            />
-            <div :key="index" style="overflow: hidden">
-              <history-item
-                :history="item"
-                :vault="vault"
-                :collateral="collateral"
-              ></history-item>
+          <v-layout align-center :class="item.titleClass">
+            {{ item.title }} <span><base-tooltip :hint="item.hint" /></span>
+          </v-layout>
+          <div :class="item.valueClass">
+            {{ item.value }} <span>{{ item.valueUnit }}</span>
+          </div>
+        </v-col>
+      </v-row>
+
+      <div class="f-bg-greyscale-6" style="height: 8px"></div>
+      <div>
+        <div class="mx-4 f-body-2" v-for="item in infos" :key="item.title">
+          <v-layout style="height: 65.4px" align-center>
+            <div class="f-greyscale-3">{{ item.title }}</div>
+            <base-tooltip class="ml-1" :hint="item.hint"></base-tooltip>
+            <v-spacer />
+            <div class="f-greyscale-1">
+              <span
+                :class="
+                  'f-info-grid-item-value ' +
+                  (item.valueColor ? `${item.valueColor}--text` : '')
+                "
+                >{{ item.value }}</span
+              >
+              <span>{{ item.valueUnit }}</span>
             </div>
-          </template>
-          <f-loading class="my-4" v-if="loading" :loading="loading" />
-          <template v-else-if="histories.length === 0">
-            <base-empty-section />
-          </template>
-        </f-panel>
+          </v-layout>
+          <v-divider />
+        </div>
       </div>
-      <div style="height: 100px"></div>
       <f-action-bar
         fixed
+        class="ma-2 fixed-bottom f-bg-riskOrange"
         @click="handleActionClick"
         :actions="actionButtons"
       ></f-action-bar>
+    </v-layout>
+
+    <v-layout v-if="tabIndex === 1" column>
+      <f-panel
+        class="py-0"
+        v-infinite-scroll="requestTx"
+        infinite-scroll-distance="10"
+      >
+        <template v-for="(item, index) in histories">
+          <v-divider
+            :key="`${item.action}_${item.created_at}`"
+            v-if="index !== 0"
+          />
+          <div :key="index" style="overflow: hidden">
+            <history-item
+              :history="item"
+              :vault="vault"
+              :collateral="collateral"
+            ></history-item>
+          </div>
+        </template>
+        <f-loading class="my-4" v-if="loading" :loading="loading" />
+        <template v-else-if="histories.length === 0">
+          <base-empty-section />
+        </template>
+      </f-panel>
+      <div style="height: 100px"></div>
     </v-layout>
   </v-container>
 </template>
@@ -94,7 +113,9 @@ import mixins from "~/mixins";
 import VaultStats from "@/components/particles/VaultStats.vue";
 import HistoryItem from "@/components/particles/HistoryItem.vue";
 import BigNumber from "bignumber.js";
-import { IVaultEvent } from "~/services/types/vo";
+import { IOracle, IVaultEvent } from "~/services/types/vo";
+import { Getter } from "vuex-class";
+import dayjs from "dayjs";
 
 @Component({
   components: {
@@ -103,12 +124,28 @@ import { IVaultEvent } from "~/services/types/vo";
   },
 })
 export default class VaultDetail extends Mixins(mixins.vault) {
+  @Getter("oracle/findByAssetId") getOracleByAssetId!: (id) => IOracle;
   histories = [] as IVaultEvent[];
   has_next = true;
   cursor = null as string | null;
   loading = false;
+  tabIndex = 0;
+
+  get tabs() {
+    return [
+      {
+        text: this.$t("vault.tab.details"),
+        value: "detail",
+      },
+      {
+        text: this.$t("vault.tab.history"),
+        value: "history",
+      },
+    ];
+  }
+
   get title() {
-    return `${this.collateral?.name} #${this.vault?.identity_id}`;
+    return `${this.$t("vault.detail.title")}`;
   }
 
   get appbar() {
@@ -129,11 +166,108 @@ export default class VaultDetail extends Mixins(mixins.vault) {
     );
   }
 
+  get gemOracle() {
+    return this.getOracleByAssetId(this.collateral?.gem);
+  }
+
+  get daiOracle() {
+    return this.getOracleByAssetId(this.collateral?.dai);
+  }
+
+  get isValidOracle() {
+    const next = this.$utils.time.oracleNext(this.gemOracle, this.daiOracle);
+    return next && next.peek_at && dayjs(next.peek_at).isAfter(Date.now());
+  }
+
   get meta() {
+    const debtAmount =
+      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
+    const collateralAmount = Number(this.vault?.ink);
+    const collateralizationRatio =
+      (collateralAmount * Number(this.collateral?.price)) / debtAmount;
+    const collateralizationRatioText = this.$utils.number.toFixed(
+      collateralizationRatio * 100,
+      4
+    );
+    const liquidationRatio = Number(this.collateral?.mat);
+    const liquidationPrice = (debtAmount * liquidationRatio) / collateralAmount;
+    const liquidationPenalty = this.$utils.number.toFixed(
+      (Number(this.collateral?.chop) - 1) * 100,
+      4
+    );
+    const stabilityFee = this.$utils.number.toFixed(
+      (Number(this.collateral?.duty) - 1) * 100,
+      4
+    );
     return {
-      collateralAmount: Number(this.collateralAmount),
-      debtAmount: Number(this.vault?.art) * Number(this.collateral?.rate),
+      debtAmount,
+      collateralAmount,
+      liquidationPrice: this.$utils.number.toPrecision(liquidationPrice),
+      collateralizationRatio,
+      collateralizationRatioText,
+      liquidationPenalty,
+      stabilityFee,
     };
+  }
+
+  get metaInfos() {
+    const metaInfos: any[] = [
+      {
+        title: this.$t("vault.detail.collateral"),
+        value: this.collateralAmount,
+        valueUnit: this.collateralAsset?.symbol,
+      },
+      {
+        title: this.$t("vault.detail.debt"),
+        value: this.debtAmount,
+        valueUnit: this.debtAsset?.symbol,
+      },
+      {
+        title: this.$t("form.info.collateralization-ratio"), //
+        value: this.$utils.number.isValid(this.meta.collateralizationRatio)
+          ? this.meta.collateralizationRatioText
+          : "N/A",
+        valueUnit: this.$utils.number.isValid(this.meta.collateralizationRatio)
+          ? `%`
+          : "",
+        titleClass: `f-${this.$utils.helper.risk(
+          this.meta.collateralizationRatio,
+          this.collateral.mat
+        )}`,
+        valueClass: `f-${this.$utils.helper.risk(
+          this.meta.collateralizationRatio,
+          this.collateral.mat
+        )}`,
+        hint: this.$t("form.tooltip.collateralization-ratio"),
+      },
+      {
+        title: this.$t("form.info.current-price"),
+        value: this.collateral?.price,
+        valueUnit: this.debtAsset?.symbol,
+        titleClass: "f-greyscale-3",
+      },
+      {
+        title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
+        value: this.meta.liquidationPrice,
+        valueUnit: this.debtAsset?.symbol,
+        hint: this.$t("form.tooltip.liquidation-price"),
+        titleClass: "f-greyscale-3",
+      },
+    ];
+    if (this.isValidOracle) {
+      metaInfos.push({
+        title: this.$t("market.item.oracle-next"),
+        value: this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
+          ?.price,
+        valueUnit: this.debtAsset?.symbol,
+        hint: this.$t("form.info.oracle-price", {
+          time: this.$utils.time.format(
+            this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.peek_at
+          ),
+        }),
+      });
+    }
+    return metaInfos;
   }
 
   get infos() {
@@ -171,6 +305,17 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         value: maxDebtAvailebleText,
         valueUnit: this.debtAsset?.symbol,
       },
+      {
+        title: this.$t("form.info.stability-fee"),
+        value: this.meta.stabilityFee,
+        valueUnit: "%",
+        hint: this.$t("form.tooltip.stability-fee"),
+      },
+      {
+        title: this.$t("form.info.liquidation-penalty"),
+        value: this.meta.liquidationPenalty,
+        valueUnit: "%",
+      },
     ];
   }
 
@@ -178,7 +323,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
     return [
       {
         text: this.$t("button.deposit"),
-        icon: this.$icons.mdiPlusCircle,
+        icon: "$iconDeposit",
         size: "22",
         color: "primary",
         onClick: (id) => {
@@ -187,7 +332,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
       },
       {
         text: this.$t("button.withdraw"),
-        icon: this.$icons.mdiMinusCircle,
+        icon: "$iconWithdraw",
         size: "22",
         color: this.meta?.collateralAmount === 0 ? "grey" : "primary",
         onClick: (id) => {
@@ -197,7 +342,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
       },
       {
         text: this.$t("button.generate"),
-        icon: this.$icons.mdiLock,
+        icon: "$iconGenerate",
         size: "22",
         color: this.meta?.collateralAmount === 0 ? "grey" : "green",
         onClick: (id) => {
@@ -207,7 +352,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
       },
       {
         text: this.$t("button.pay-back"),
-        icon: this.$icons.mdiLockOpen,
+        icon: "$iconPayback",
         size: "22",
         color: this.meta?.debtAmount === 0 ? "grey" : "deep-orange",
         onClick: (id) => {
@@ -250,19 +395,10 @@ export default class VaultDetail extends Mixins(mixins.vault) {
 </script>
 
 <style lang="scss" scoped>
-.custom-info-grid {
-  ::v-deep {
-    .f-info-grid {
-      .f-info-grid-inner {
-        padding-top: 0px !important;
-      }
-    }
-  }
+.fixed-bottom {
+  box-shadow: 0 0 0;
 }
-.top-view-item {
-  flex-grow: 1;
-  flex-shrink: 0;
-  max-width: 50%;
-  flex-basis: 50%;
+.z-index-2 {
+  z-index: 2;
 }
 </style>

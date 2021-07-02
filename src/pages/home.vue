@@ -44,56 +44,6 @@
       <v-container column justify-center v-if="isLogged && haveVault">
         <!-- 总计card -->
         <total-card />
-        <!-- <v-row class="pa-0" no-gutters>
-          <v-col xs="12" sm="12" md="6">
-            <f-panel
-              class="mt-2 mx-1 pa-0 leaf-card rounded-lg total-card f-bg-greyscale-1 sm-6 xs-12"
-            >
-              <v-icon size="144" class="total-card-texture"
-                >$iconTotalCardTexture</v-icon
-              >
-              <v-switch class="total-switch"> </v-switch>
-              <v-layout column class="f-greyscale-7 ml-6">
-                <div class="f-body-2 mt-6">
-                  {{ $t("me.total-collaterals") }}
-                </div>
-                <div class="total-value mt-2">
-                  <span class="total-legal-symbol f-green mr-1">$</span
-                  >{{ total.collaterals }}
-                </div>
-                <div class="f-body-2 mt-6">
-                  {{ $t("me.total-debts") }}
-                </div>
-                <div class="total-value mt-2">
-                  <span class="total-legal-symbol f-green mr-1">$</span
-                  >{{ total.debts }}
-                </div>
-              </v-layout>
-            </f-panel>
-          </v-col>
-          <v-col class="extra-card" md="6">
-            <f-panel
-              class="mt-2 mx-1 pa-0 leaf-card rounded-lg total-card f-bg-greyscale-6 sm-6 xs-12"
-            >
-              <v-layout column class="f-greyscale-7 ml-6">
-                <div class="f-body-2 mt-6">
-                  {{ $t("me.total-collaterals") }}
-                </div>
-                <div class="total-value mt-2">
-                  <span class="total-legal-symbol f-green mr-1">$</span
-                  >{{ total.collaterals }}
-                </div>
-                <div class="f-body-2 mt-6">
-                  {{ $t("me.total-debts") }}
-                </div>
-                <div class="total-value mt-2">
-                  <span class="total-legal-symbol f-green mr-1">$</span
-                  >{{ total.debts }}
-                </div>
-              </v-layout>
-            </f-panel>
-          </v-col>
-        </v-row> -->
 
         <v-layout align-center class="mt-8 mb-2 mx-1 f-greyscale-1 f-title-1">
           My Vault

@@ -81,7 +81,7 @@
         >
           <v-layout column justify-center align-center>
             <v-icon size="32">$iconWithdraw</v-icon>
-            <div class="f-caption">{{ $t("button.detail") }}</div>
+            <div class="f-caption">{{ $t("button.withdraw") }}</div>
           </v-layout>
         </v-btn>
         <v-btn

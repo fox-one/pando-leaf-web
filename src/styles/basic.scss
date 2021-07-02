@@ -25,14 +25,23 @@ a {
   .f-bg-greyscale-7 {
     background-color: #000000 !important;
   }
-  .f-bg-lightGreen {
+  .f-bg-riskGreen {
     background-color: #415745 !important;
   }
-  .f-bg-lightOrange {
+  .f-bg-riskOrange {
     background-color: #735933 !important;
   }
-  .f-bg-lightRed {
+  .f-bg-riskRed {
     background-color: #804b4b !important;
+  }
+  .f-riskGreen {
+    color: #56d471 !important;
+  }
+  .f-riskOrange {
+    color: #ff9d3e !important;
+  }
+  .f-riskRed {
+    color: #f67070 !important;
   }
   .f-panel.v-sheet {
     background-color: #1e1e1e;
@@ -72,14 +81,23 @@ a {
   .f-bg-greyscale-7 {
     background-color: #ffffff;
   }
-  .f-bg-lightGreen {
+  .f-bg-riskGreen {
     background-color: #ebfced;
   }
-  .f-bg-lightOrange {
+  .f-bg-riskOrange {
     background-color: #fcf8f0;
   }
-  .f-bg-lightRed {
+  .f-bg-riskRed {
     background-color: #fbf2f2;
+  }
+  .f-riskGreen {
+    color: #2cc94e !important;
+  }
+  .f-riskOrange {
+    color: #f58721 !important;
+  }
+  .f-riskRed {
+    color: #f44c4c !important;
   }
   .f-orange {
     color: #ffa125;

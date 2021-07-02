@@ -248,11 +248,11 @@ export function risk(currentRatio, minimumRatio) {
   if (risk < 0) {
     return "greyscale-6";
   } else if (risk <= 1.25) {
-    return "lightRed";
+    return "riskRed";
   } else if (risk <= 5 / 3) {
-    return "lightOrange";
+    return "riskOrange";
   } else {
-    return "lightGreen";
+    return "riskGreen";
   }
 }
 
