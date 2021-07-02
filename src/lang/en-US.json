@@ -52,7 +52,7 @@
   "me.vault-item.available-to-generate": "Available to generate",
   "me.vault-item.in-liquidation-tips1": "You have reached minimum collateral ratio.",
   "me.vault-item.in-liquidation-tips2": "This vault is on the liquidation list.",
-  "vault.detail.title":"Vault Details",
+  "vault.detail.title": "Vault Details",
   "vault.detail.history": "History",
   "vault.detail.collateral": "Collateral",
   "vault.detail.debt": "Debt",
@@ -251,5 +251,14 @@
   "errorcode.Flip/lot-not-lower": "lot not lower",
   "errorcode.Flip/insufficient-decrease": "insufficient decrease for lot",
   "errorcode.Flip/bid-not-higher": "bid not higher",
-  "errorcode.Flip/insufficient-increase": "insufficient-increase for bid"
+  "errorcode.Flip/insufficient-increase": "insufficient-increase for bid",
+  "risk.info.continue.title": "Liquidation Warning",
+  "risk.info.continue.highlight-collateral-rate": "Collateral rate has reached",
+  "risk.info.continue.highlight-liquidation-ratio": "Liquidation ratio is 150.00%, reach this you will be liquidatioon",
+  "risk.info.continue.btn-cancel": "Cancel",
+  "risk.info.continue.btn-continue": "Continue",
+  "risk.info.confirm.title": "Confirm transaction",
+  "risk.info.confirm.content": "Once the transaction is executed, it is irrevocable, please pay after confirmation carefully",
+  "risk.info.confirm.btn-cancel": "Cancel",
+  "risk.info.confirm.btn-confirm": "Confirm"
 }

@@ -18,37 +18,6 @@
         @click:button="confirm"
         color="primary"
       />
-      <!-- <f-asset-amount-input
-        class="mt-6"
-        v-model="amount"
-        :label="$t('form.hint.deposit-amount')"
-        :assets="assets"
-        :asset.sync="asset"
-        :selectable="false"
-        :precision="precision"
-      >
-      </f-asset-amount-input>
-      <div v-if="!isLogged" class="f-caption f-blue mt-2" @click="requestLogin">
-        {{ $t("connect.wallet") }}
-      </div>
-      <div v-else class="f-caption f-greyscale-3 mt-2">
-        {{ $t("form.info.wallet-balance") }} {{ assetBalance }}
-        {{ assetSymbol }}
-        <span
-          class="f-black text-decoration-underline ml-1 font-weight-bold"
-          @click="amount = assetBalance"
-          >MAX
-        </span>
-      </div>
-
-      <f-tip :type="validate.type" v-if="validate.tip !== null">{{
-        validate.tip
-      }}</f-tip>
-      <div class="my-8 text-center">
-        <base-btn class="px-8" :disabled="validate.disabled" @click="confirm">{{
-          $t("form.deposit.button.confirm")
-        }}</base-btn>
-      </div> -->
     </v-layout>
 
     <prediction
