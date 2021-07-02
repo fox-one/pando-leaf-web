@@ -6,87 +6,56 @@
       class="desktop-support market-app-bar"
     >
       <v-layout align-center justify-center @click="toast">
-        <!-- <v-avatar class="ml-2 z-index-2" size="32">
-          <v-img :src="deposit.logo" :size="32"></v-img>
-        </v-avatar>
-        <v-avatar class="ml-n3" size="32">
-          <v-img :src="mint.logo" :size="32"></v-img>
-        </v-avatar> -->
         <h4 class="mx-2">{{ appbar.title }}</h4>
         <v-icon>
           {{ $icons.mdiChevronDown }}
         </v-icon>
       </v-layout>
     </f-app-bar>
-    <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <div class="f-caption mb-4 mt-10 f-greyscale-3">
-        {{ $t("form.open.how-much-col", { symbol: depositSymbol }) }}
+    <v-layout column class="ma-0 pa-4 pb-8 f-bg-greyscale-7">
+      <div class="f-title-1 mb-4 f-greyscale-1">
+        {{ $t("form.title.deposit") }}
       </div>
-
-      <f-asset-amount-input
+      <asset-range-input
         v-model="depositAmount"
         :label="$t('form.hint.deposit-amount')"
         :assets="[deposit]"
         :asset.sync="deposit"
         :selectable="false"
         :precision="precision"
-      >
-      </f-asset-amount-input>
-      <div
-        v-if="!isLogged"
-        class="f-caption f-blue mt-2 ml-4"
-        @click="requestLogin"
-      >
-        {{ $t("connect.wallet") }}
+        :inputTips="depositInputTips"
+        :max="+depositBalance"
+        :show-slider="false"
+        :show-btn="false"
+        color="primary"
+      />
+      <div class="f-title-1 mb-4 f-greyscale-1">
+        {{ $t("form.title.generate") }}
       </div>
-      <div v-else class="f-caption f-greyscale-3 mt-2 ml-4">
-        {{ $t("form.info.wallet-balance")
-        }}<span class="f-blue" @click="depositAmount = depositBalance">
-          {{ depositBalance }} </span
-        >{{ depositSymbol }}
-      </div>
-      <div class="f-caption mb-4 mt-10 f-greyscale-3">Generate</div>
-      <div class="f-caption f-greyscale-2"></div>
-      <f-asset-amount-input
+      <asset-range-input
         v-model="mintAmount"
         :label="$t('form.hint.mint-amount')"
         :assets="[mint]"
         :asset.sync="mint"
         :selectable="false"
         :precision="precision"
+        :inputTips="mintInputTips"
+        :max="+meta.maxAvailable"
+        :btn-text="$t('form.open.button.confirm')"
+        :disabled-btn="validate.disabled"
+        :error="validate.tip"
+        @click:button="requestConfirm"
+        color="primary"
       >
-      </f-asset-amount-input>
-      <div
-        v-if="!isLogged"
-        class="f-caption f-blue my-2 ml-4"
-        @click="requestLogin"
-      >
-        {{ $t("connect.wallet") }}
-      </div>
-      <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
-        {{ $t("form.info.max-available-to-generate")
-        }}<span class="f-blue" @click="mintAmount = meta.maxAvailable">
-          {{ meta.maxAvailableText || "0.00" }} </span
-        >{{ mintSymbol }}
-      </div>
-
-      <risk-slider
-        :amount="depositAmount"
-        class="ma-4"
-        :percent.sync="percent"
-      />
-
-      <f-tip class="mt-2" :type="validate.type" v-if="validate.tip !== null">{{
-        validate.tip
-      }}</f-tip>
-      <f-button
-        type="primary"
-        class="mt-5"
-        :disabled="validate.disabled"
-        @click="requestConfirm"
-      >
-        {{ $t("form.open.button.confirm") }}
-      </f-button>
+        <template v-slot:slider>
+          <risk-slider
+            v-model="percent"
+            :tips="sliderTips"
+            :scale="scale"
+            ref="slider"
+          />
+        </template>
+      </asset-range-input>
     </v-layout>
 
     <v-layout column class="my-4 f-bg-greyscale-7">
@@ -137,13 +106,13 @@ import { IAsset, ICollateral } from "~/services/types/vo";
 import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus } from "~/types";
 import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
-import RiskSlider from "~/components/particles/RiskSlider.vue";
+import CustomRiskSlider from "~/components/particles/RiskSlider.vue";
 import Prediction from "@/components/particles/Prediction.vue";
 import BigNumber from "bignumber.js";
 import { isDesktop } from "~/utils/helper";
 
 @Component({
-  components: { MarketSelectModal, RiskSlider, Prediction },
+  components: { MarketSelectModal, CustomRiskSlider, Prediction },
 })
 export default class GenerateVault extends Mixins(mixins.page) {
   @Getter("global/getCollateral") getCollateral;
@@ -160,6 +129,14 @@ export default class GenerateVault extends Mixins(mixins.page) {
   selectable = true;
   precision = 8;
   percent = 0;
+  depositInputTips = {};
+  mintInputTips = {};
+  sliderTips = {};
+  scale = {
+    low: 0.6,
+    mid: 0.2,
+    high: 0.2,
+  };
 
   showSelectModal = false;
   collateral = {} as ICollateral;
@@ -416,15 +393,15 @@ export default class GenerateVault extends Mixins(mixins.page) {
     ];
   }
 
-  @Watch("percent")
-  onPercent(newVal) {
-    if (!this.$utils.number.isValid(Number(this.depositAmount))) return;
-    if (this.modMint) return;
-    this.mintAmount = this.$utils.number.toPrecision(
-      (newVal / 100) * this.meta.maxAvailable,
-      8
-    );
-  }
+  // @Watch("percent")
+  // onPercent(newVal) {
+  //   if (!this.$utils.number.isValid(Number(this.depositAmount))) return;
+  //   if (this.modMint) return;
+  //   this.mintAmount = this.$utils.number.toPrecision(
+  //     (newVal / 100) * this.meta.maxAvailable,
+  //     8
+  //   );
+  // }
 
   modMint = false;
 
@@ -438,6 +415,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.$utils.helper.debounce(() => {
       this.modMint = false;
     }, 10)();
+    this.calcSliderTips();
   }
 
   @Watch("collateral")
@@ -451,6 +429,15 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.deposit = this.getAssetById(newVal?.gem);
     this.mint = this.getAssetById(newVal?.dai);
     this.updateWalletAsset(newVal);
+  }
+
+  @Watch("depositAmount")
+  onDepositChange() {
+    this.$set(
+      this.mintInputTips,
+      "amount",
+      this.$utils.number.toPrecision(this.meta.maxAvailable * this.scale.low)
+    );
   }
 
   intervalid = 0;
@@ -472,6 +459,56 @@ export default class GenerateVault extends Mixins(mixins.page) {
       this.updateWalletAsset();
       this.collateral = this.getCollateral(this.queryId);
     }, 5000) as any) as number;
+
+    const suggestAmount = this.$utils.number.toPrecision(
+      this.meta.maxAvailable * this.scale.low
+    );
+    this.mintInputTips = this.isLogged
+      ? {
+          amount: suggestAmount,
+          amountSymbol: this.mintSymbol,
+          tipLeft: this.$t("common.suggest"),
+          tipRight: this.collateral?.gem
+            ? `≈ $ ${this.$utils.number.toPrecision(
+                this.getAssetById?.(this.collateral?.dai)?.price * suggestAmount
+              )}`
+            : "",
+        }
+      : {
+          tipLeft: this.$createElement("connect-wallet", {
+            on: {
+              click: () => this.requestLogin(),
+            },
+            props: {
+              text: this.$t("connect.wallet"),
+            },
+          }),
+        };
+
+    this.depositInputTips = this.isLogged
+      ? {
+          amount: +this.depositBalance,
+          amountSymbol: this.depositSymbol,
+          tipLeft: this.$t("form.info.wallet-balance"),
+          tipRight: this.collateral?.gem
+            ? `≈ $ ${this.$utils.number.toPrecision(
+                this.getAssetById?.(this.collateral?.gem)?.price *
+                  +this.depositBalance
+              )}`
+            : "",
+        }
+      : {
+          tipLeft: this.$createElement("connect-wallet", {
+            on: {
+              click: () => this.requestLogin(),
+            },
+            props: {
+              text: this.$t("connect.wallet"),
+            },
+          }),
+        };
+
+    this.calcSliderTips();
   }
 
   destroyed() {
@@ -554,6 +591,34 @@ export default class GenerateVault extends Mixins(mixins.page) {
         this.$utils.helper.handleTxResult(this, response.data);
       }
     }, 3000);
+  }
+
+  calcSliderTips() {
+    let risk = "low";
+    switch (
+      this.$utils.helper.riskLevel(
+        this.meta.collateralizationRatio,
+        this.collateral.mat
+      )
+    ) {
+      case RISK.HIGH:
+        risk = "high";
+        break;
+
+      case RISK.MEDIUM:
+        risk = "mid";
+        break;
+    }
+    this.sliderTips = {
+      tip: this.$t("form.hint.generate-ration"),
+      highlight: `${this.$utils.number.toPercent(
+        this.meta.collateralizationRatio,
+        false,
+        0
+      )}, ${this.$t("form.hint.risk-level", {
+        level: this.$t(`form.hint.risk-level-${risk}`),
+      })}`,
+    };
   }
 }
 </script>

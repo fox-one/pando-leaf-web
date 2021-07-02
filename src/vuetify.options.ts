@@ -68,6 +68,9 @@ const icons = {
     iconPusd: {
       component: "icon-pusd",
     },
+    iconSetMax: {
+      component: "icon-set-max",
+    },
   },
 };
 

@@ -1,7 +1,24 @@
 <template>
   <v-container class="pa-0">
-    <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <f-asset-amount-input
+    <v-layout column class="ma-0 pa-4 pb-8 f-bg-greyscale-7">
+      <asset-range-input
+        v-model="amount"
+        class="mt-2"
+        :label="$t('form.hint.withdraw-amount')"
+        :assets="assets"
+        :asset.sync="asset"
+        :selectable="false"
+        :precision="precision"
+        :inputTips="inputTips"
+        :max="+maxAvailable"
+        :ratio-text="$t('form.hint.withdraw-ratio')"
+        :btn-text="$t('form.withdraw.button.confirm')"
+        :disabled-btn="validate.disabled"
+        :error="validate.tip"
+        @click:button="requestConfirm"
+        color="primary"
+      />
+      <!-- <f-asset-amount-input
         v-model="amount"
         class="mt-6"
         :label="$t('form.hint.withdraw-amount')"
@@ -24,7 +41,8 @@
         <span
           class="f-black text-decoration-underline ml-1 font-weight-bold"
           @click="amount = maxAvailable"
-          >MAX
+        >
+          MAX
         </span>
       </div>
 
@@ -44,7 +62,7 @@
           @click="requestConfirm"
           >{{ $t("form.withdraw.button.confirm") }}</v-btn
         >
-      </div>
+      </div> -->
     </v-layout>
 
     <prediction
@@ -112,6 +130,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
   precision = 8;
   alert = false;
   percent = 0;
+  inputTips = {};
 
   get appbar() {
     return {
@@ -327,6 +346,29 @@ export default class WithdrawForm extends Mixins(mixins.page) {
       this.vault = this.getVault(this.vaultId);
       this.collateral = this.getCollateral(this.vault.collateral_id);
     }, 5000) as any) as number;
+
+    this.inputTips = this.isLogged
+      ? {
+          amount: this.maxAvailable,
+          amountSymbol: this.assetSymbol,
+          tipLeft: this.$t("common.collateral"),
+          tipRight: this.collateral?.gem
+            ? `≈ $ ${this.$utils.number.toPrecision(
+                this.getAssetById?.(this.collateral?.gem)?.price *
+                  this.maxAvailable
+              )}`
+            : "",
+        }
+      : {
+          tipLeft: this.$createElement("connect-wallet", {
+            on: {
+              click: () => this.requestLogin(),
+            },
+            props: {
+              text: this.$t("connect.wallet"),
+            },
+          }),
+        };
   }
 
   destroyed() {

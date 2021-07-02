@@ -1,7 +1,24 @@
 <template>
   <v-container class="pa-0">
-    <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <f-asset-amount-input
+    <v-layout column class="ma-0 pa-4 pb-8 f-bg-greyscale-7">
+      <asset-range-input
+        v-model="amount"
+        class="mt-2"
+        :label="$t('form.hint.deposit-amount')"
+        :assets="assets"
+        :asset.sync="asset"
+        :selectable="false"
+        :precision="precision"
+        :inputTips="inputTips"
+        :max="+assetBalance"
+        :btn-text="$t('form.deposit.button.confirm')"
+        :disabled-btn="validate.disabled"
+        :error="validate.tip"
+        :show-slider="false"
+        @click:button="confirm"
+        color="primary"
+      />
+      <!-- <f-asset-amount-input
         class="mt-6"
         v-model="amount"
         :label="$t('form.hint.deposit-amount')"
@@ -31,7 +48,7 @@
         <base-btn class="px-8" :disabled="validate.disabled" @click="confirm">{{
           $t("form.deposit.button.confirm")
         }}</base-btn>
-      </div>
+      </div> -->
     </v-layout>
 
     <prediction
@@ -75,6 +92,7 @@ export default class DepositForm extends Mixins(mixins.page) {
   asset = {} as IAsset;
   amount = "";
   precision = 8;
+  inputTips = {};
 
   get appbar() {
     return {
@@ -206,6 +224,29 @@ export default class DepositForm extends Mixins(mixins.page) {
       this.vault = this.getVault(this.vaultId);
       this.collateral = this.getCollateral(this.vault.collateral_id);
     }, 5000) as any) as number;
+
+    this.inputTips = this.isLogged
+      ? {
+          amount: +this.assetBalance,
+          amountSymbol: this.assetSymbol,
+          tipLeft: this.$t("form.info.wallet-balance"),
+          tipRight: this.collateral?.gem
+            ? `≈ $ ${this.$utils.number.toPrecision(
+                this.getAssetById?.(this.collateral?.gem)?.price *
+                  +this.assetBalance
+              )}`
+            : "",
+        }
+      : {
+          tipLeft: this.$createElement("connect-wallet", {
+            on: {
+              click: () => this.requestLogin(),
+            },
+            props: {
+              text: this.$t("connect.wallet"),
+            },
+          }),
+        };
   }
 
   destroyed() {
