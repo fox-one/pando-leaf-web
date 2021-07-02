@@ -79,12 +79,14 @@
       :current.sync="collateral"
     />
 
-    <base-confirm-modal
-      ref="cmodal"
+    <risk-info
+      v-model="showCModel"
+      :custom-text="riskInfo"
+      :impact="`${(meta.collateralizationRatio * 100).toFixed(2)}%`"
+      :countdown="countdown"
       @confirm="confirm"
-      :current-rate="this.meta.collateralizationRatio * 100"
-      :liquidation-rate="Number(this.collateral.mat) * 100"
     />
+
     <div class="mx-4 mt-6 f-title-1 f-greyscale-1 font-weight-bold">
       {{ $t("risk.warnings") }}
     </div>
@@ -99,20 +101,19 @@
 </template>
 
 <script lang="ts" scoped>
-import { Component, Mixins, Ref, Watch } from "vue-property-decorator";
+import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
-import { Action, Getter, State } from "vuex-class";
+import { Action, Getter } from "vuex-class";
 import { IAsset, ICollateral } from "~/services/types/vo";
 import { IActionsParams } from "~/services/types/dto";
 import { RISK, TransactionStatus } from "~/types";
 import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
-import CustomRiskSlider from "~/components/particles/RiskSlider.vue";
 import Prediction from "@/components/particles/Prediction.vue";
 import BigNumber from "bignumber.js";
 import { isDesktop } from "~/utils/helper";
 
 @Component({
-  components: { MarketSelectModal, CustomRiskSlider, Prediction },
+  components: { MarketSelectModal, Prediction },
 })
 export default class GenerateVault extends Mixins(mixins.page) {
   @Getter("global/getCollateral") getCollateral;
@@ -120,7 +121,6 @@ export default class GenerateVault extends Mixins(mixins.page) {
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
   @Action("global/syncMarkets") syncMarkets;
-  @Ref("cmodal") cmodal;
 
   depositAmount = "";
   depositTips = false;
@@ -137,11 +137,22 @@ export default class GenerateVault extends Mixins(mixins.page) {
     mid: 0.2,
     high: 0.2,
   };
+  riskInfo = {
+    continue: {},
+    confirm: {},
+  };
 
   showSelectModal = false;
+  showCModel = false;
   collateral = {} as ICollateral;
   deposit = ({} as any) as IAsset;
   mint = ({} as any) as IAsset;
+
+  get countdown() {
+    return Math.round(
+      +this.collateral.mat * 100 - +this.meta.collateralizationRatio * 100 + 60
+    );
+  }
 
   get depositBalance() {
     return this.getWalletAssetById(this.deposit?.id)?.balance;
@@ -393,28 +404,14 @@ export default class GenerateVault extends Mixins(mixins.page) {
     ];
   }
 
-  // @Watch("percent")
-  // onPercent(newVal) {
-  //   if (!this.$utils.number.isValid(Number(this.depositAmount))) return;
-  //   if (this.modMint) return;
-  //   this.mintAmount = this.$utils.number.toPrecision(
-  //     (newVal / 100) * this.meta.maxAvailable,
-  //     8
-  //   );
-  // }
-
-  modMint = false;
-
   @Watch("mintAmount")
   onMintChanged(newVal) {
-    this.modMint = true;
     const newPercent = Number(newVal) / Number(this.meta.maxAvailable);
     if (this.$utils.number.isValid(newPercent)) {
       this.percent = newPercent * 100;
     }
-    this.$utils.helper.debounce(() => {
-      this.modMint = false;
-    }, 10)();
+    if (this.percent > 100) this.percent = 100;
+    if (this.percent < 0) this.percent = 0;
     this.calcSliderTips();
   }
 
@@ -459,6 +456,24 @@ export default class GenerateVault extends Mixins(mixins.page) {
       this.updateWalletAsset();
       this.collateral = this.getCollateral(this.queryId);
     }, 5000) as any) as number;
+
+    this.riskInfo = {
+      continue: {
+        title: this.$t("risk.info.continue.title"),
+        highlights: [
+          this.$t("risk.info.continue.highlight-collateral-rate"),
+          this.$t("risk.info.continue.highlight-liquidation-ratio"),
+        ],
+        btn_cancel: this.$t("risk.info.continue.btn-cancel"),
+        btn_continue: this.$t("risk.info.continue.btn-continue"),
+      },
+      confirm: {
+        title: this.$t("risk.info.confirm.title"),
+        content: this.$t("risk.info.confirm.content"),
+        btn_cancel: this.$t("risk.info.confirm.btn-cancel"),
+        btn_confirm: this.$t("risk.info.confirm.btn-confirm"),
+      },
+    };
 
     const suggestAmount = this.$utils.number.toPrecision(
       this.meta.maxAvailable * this.scale.low
@@ -538,7 +553,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
       (this.meta.collateralizationRatio - Number(this.collateral.mat)) * 100 <
       61
     ) {
-      this.cmodal.show();
+      this.showCModel = true;
       return;
     }
     this.confirm();
@@ -612,7 +627,9 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.sliderTips = {
       tip: this.$t("form.hint.generate-ration"),
       highlight: `${this.$utils.number.toPercent(
-        this.meta.collateralizationRatio,
+        this.meta.collateralizationRatio < 0
+          ? 0
+          : this.meta.collateralizationRatio,
         false,
         0
       )}, ${this.$t("form.hint.risk-level", {

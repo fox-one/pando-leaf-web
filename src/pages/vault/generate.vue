@@ -26,46 +26,6 @@
           />
         </template>
       </asset-range-input>
-
-      <!-- <f-asset-amount-input
-        class="mt-6"
-        v-model="amount"
-        :label="$t('form.hint.generate-amount')"
-        :assets="[asset]"
-        :asset.sync="asset"
-        :selectable="false"
-        :precision="precision"
-      >
-      </f-asset-amount-input>
-      <div
-        v-if="!isLogged"
-        class="f-caption f-blue my-2 ml-4"
-        @click="requestLogin"
-      >
-        {{ $t("connect.wallet") }}
-      </div>
-      <div v-else class="f-caption f-greyscale-3 my-2">
-        {{ $t("form.info.max-available") }}
-        <span> {{ maxAvailable }} </span>{{ assetSymbol }}
-      </div>
-
-      <percent-slider class="ma-4" :percent.sync="percent" />
-
-      <f-tip :type="validate.type" v-if="validate.tip !== null">{{
-        validate.tip
-      }}</f-tip>
-      <div class="my-8 text-center">
-        <v-btn
-          rounded
-          depressed
-          color="primary"
-          height="56px"
-          class="px-8"
-          :disabled="validate.disabled"
-          @click="requestConfirm"
-          >{{ $t("form.generate.button.confirm") }}</v-btn
-        >
-      </div> -->
     </v-layout>
 
     <prediction
@@ -74,13 +34,14 @@
       :vault="vault"
       :amount="amount"
       :type="vaultStatsType"
-    ></prediction>
+    />
 
-    <base-confirm-modal
-      ref="cmodal"
+    <risk-info
+      v-model="showCModel"
+      :custom-text="riskInfo"
+      :impact="`${(meta.ratio * 100).toFixed(2)}%`"
+      :countdown="countdown"
       @confirm="confirm"
-      :current-rate="this.meta.ratio * 100"
-      :liquidation-rate="Number(this.collateral.mat) * 100"
     />
 
     <need-cnb-modal :visible.sync="needCnb" />
@@ -94,13 +55,12 @@
 </template>
 
 <script lang="ts" scoped>
-import { Component, Mixins, Ref, Watch } from "vue-property-decorator";
+import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
 import Prediction from "@/components/particles/Prediction.vue";
-import PercentSlider from "@/components/particles/PercentSlider.vue";
 import NeedCnbModal from "@/components/particles/NeedCnbModal.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
@@ -111,7 +71,6 @@ import { isDesktop } from "~/utils/helper";
 @Component({
   components: {
     VaultStats,
-    PercentSlider,
     NeedCnbModal,
     Prediction,
   },
@@ -123,7 +82,6 @@ export default class GenerateForm extends Mixins(mixins.page) {
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
   @Action("global/syncMarkets") syncMarkets;
-  @Ref("cmodal") cmodal;
 
   vaultStatsType = VatAction.VatGenerate;
   collateral = {} as ICollateral;
@@ -135,6 +93,11 @@ export default class GenerateForm extends Mixins(mixins.page) {
   inputTips = {};
   sliderTips = {};
   scale = {};
+  riskInfo = {
+    continue: {},
+    confirm: {},
+  };
+  showCModel = false;
 
   get appbar() {
     return {
@@ -166,6 +129,10 @@ export default class GenerateForm extends Mixins(mixins.page) {
   get title() {
     const t = this.$t("form.title.generate");
     return `${t}`;
+  }
+
+  get countdown() {
+    return Math.round(+this.collateral.mat * 100 - +this.meta.ratio * 100 + 60);
   }
 
   get vaultId() {
@@ -322,28 +289,14 @@ export default class GenerateForm extends Mixins(mixins.page) {
     ];
   }
 
-  // @Watch("percent")
-  // onPercent(newVal) {
-  //   if (!this.$utils.number.isValid(Number(this.amount))) return;
-  //   if (this.modAmount) return;
-  //   this.amount = this.$utils.number.toPrecision(
-  //     (newVal / 100) * this.maxAvailable,
-  //     8
-  //   );
-  // }
-
-  modAmount = false;
-
   @Watch("amount")
   onMintChanged(newVal) {
-    this.modAmount = true;
     const newPercent = Number(newVal) / Number(this.maxAvailable);
     if (this.$utils.number.isValid(newPercent)) {
       this.percent = newPercent * 100;
     }
-    this.$utils.helper.debounce(() => {
-      this.modAmount = false;
-    }, 10)();
+    if (this.percent > 100) this.percent = 100;
+    if (this.percent < 0) this.percent = 0;
     this.calcSliderTips();
   }
 
@@ -360,6 +313,24 @@ export default class GenerateForm extends Mixins(mixins.page) {
     this.collateral = this.getCollateral(this.vault.collateral_id);
     this.asset = this.getAssetById(this.collateral.dai);
     this.updateWalletAsset();
+
+    this.riskInfo = {
+      continue: {
+        title: this.$t("risk.info.continue.title"),
+        highlights: [
+          this.$t("risk.info.continue.highlight-collateral-rate"),
+          this.$t("risk.info.continue.highlight-liquidation-ratio"),
+        ],
+        btn_cancel: this.$t("risk.info.continue.btn-cancel"),
+        btn_continue: this.$t("risk.info.continue.btn-continue"),
+      },
+      confirm: {
+        title: this.$t("risk.info.confirm.title"),
+        content: this.$t("risk.info.confirm.content"),
+        btn_cancel: this.$t("risk.info.confirm.btn-cancel"),
+        btn_confirm: this.$t("risk.info.confirm.btn-confirm"),
+      },
+    };
 
     const debtAmount = +this.vault?.art * +this.collateral?.rate;
     const collateralAmount = +this.vault?.ink * +this.collateral?.price;
@@ -428,7 +399,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
   requestConfirm() {
     if (this.checkCNB()) return;
     if ((this.meta.ratio - Number(this.collateral.mat)) * 100 < 61) {
-      this.cmodal.show();
+      this.showCModel = true;
       return;
     }
     this.confirm();
@@ -492,7 +463,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
     this.sliderTips = {
       tip: this.$t("form.hint.generate-ration"),
       highlight: `${this.$utils.number.toPercent(
-        this.meta.ratio,
+        this.meta.ratio < 0 ? 0 : this.meta.ratio,
         false,
         1
       )}, ${this.$t("form.hint.risk-level", {

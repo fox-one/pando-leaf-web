@@ -49,49 +49,6 @@
           </v-layout>
         </template>
       </asset-range-input>
-      <!-- <f-asset-amount-input
-        class="mt-6"
-        v-model="amount"
-        :label="$t('form.hint.payback-amount')"
-        :asset.sync="asset"
-        :selectable="false"
-        :precision="precision"
-      >
-      </f-asset-amount-input>
-      <div
-        v-if="!isLogged"
-        class="f-caption f-blue my-2 ml-4"
-        @click="requestLogin"
-      >
-        {{ $t("connect.wallet") }}
-      </div>
-      <v-layout v-else justify-space-between>
-        <div class="f-caption f-greyscale-3 my-2">
-          {{ $t("form.info.wallet-balance") }} {{ assetBalance }}
-          {{ assetSymbol }}
-          <span
-            class="f-black text-decoration-underline ml-1 font-weight-bold"
-            @click="amount = maxPayback"
-          >
-            MAX
-          </span>
-        </div>
-      </v-layout>
-      <f-tip :type="validate.type" v-if="validate.tip !== null">{{
-        validate.tip
-      }}</f-tip>
-      <div class="my-8 text-center">
-        <v-btn
-          rounded
-          depressed
-          color="primary"
-          height="56px"
-          class="px-8"
-          :disabled="validate.disabled"
-          @click="confirm"
-          >{{ $t("form.payback.button.confirm") }}</v-btn
-        >
-      </div> -->
     </v-layout>
     <prediction
       class="my-4"
@@ -99,14 +56,7 @@
       :vault="vault"
       :amount="amount"
       :type="vaultStatsType"
-    ></prediction>
-
-    <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
-    <div class="mx-4 f-caption">
-      Price of the pair tokens fluctuates due to change in supply and demand of
-      the tokens. Investors are expected to take caution and take full
-      responsibilities of their own investment decisions.
-    </div> -->
+    />
   </v-container>
 </template>
 
