@@ -119,7 +119,7 @@
   "form.payback.how-much": "你要偿还多少?",
   "form.payback.button.confirm": "偿还",
   "form.info.vault-stats-title": "金库状态",
-  "form.info.wallet-balance": "钱包余额",
+  "form.info.wallet-balance": "余额",
   "form.info.set-max": "设为最大值",
   "form.info.max-available": "最大可生成",
   "form.info.liquidation-price": "清算价格",

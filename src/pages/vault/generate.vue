@@ -1,9 +1,9 @@
 <template>
   <v-container class="pa-0">
-    <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
+    <v-layout column class="ma-0 pa-4 pb-8 f-bg-greyscale-7">
       <asset-range-input
         v-model="amount"
-        class="mt-6"
+        class="mt-2"
         :label="$t('form.hint.generate-amount')"
         :assets="[asset]"
         :asset.sync="asset"

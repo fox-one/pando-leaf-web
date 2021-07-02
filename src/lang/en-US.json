@@ -119,7 +119,7 @@
   "form.payback.how-much": "How much to pay back?",
   "form.payback.button.confirm": "Pay back",
   "form.info.vault-stats-title": "Vault Stats",
-  "form.info.wallet-balance": "Wallet Bal.",
+  "form.info.wallet-balance": "Bal.",
   "form.info.set-max": "Set Max",
   "form.info.max-available": "Max available",
   "form.info.liquidation-price": "Liquidation Price",
