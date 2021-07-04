@@ -409,7 +409,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
       {
         title: this.$t("form.info.liquidation-price"), // mint * mat / deposit
         value: this.meta.liquidationPrice,
-        valueUnit: `${this.mint.symbol}`,
+        valueUnit: `${this.mint?.symbol}`,
         hint: this.$t("form.tooltip.liquidation-price"),
       },
       {
@@ -427,7 +427,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
           symbol: `${this.deposit?.symbol}/${this.mint?.symbol}`,
         }),
         value: this.meta.currentDepositPrice,
-        valueUnit: `${this.mint.symbol}`,
+        valueUnit: `${this.mint?.symbol}`,
       },
       {
         title: this.$t("form.info.minimum-ratio"),

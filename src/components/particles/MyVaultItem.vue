@@ -276,11 +276,12 @@ export default class MyVaultItem extends Vue {
         title: this.$t("form.info.current-symbol-price", {
           symbol: this.collateralSymbol,
         }),
-        value: this.collateral?.price,
+        value: this.$utils.number.toPrecision(this.collateral?.price),
         valueUnit: this.debtSymbol,
-        changedValue:
+        changedValue: this.$utils.number.toPrecision(
           this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.price ||
-          "",
+            ""
+        ),
         showChange: this.isValidOracle,
         hint: this.isValidOracle
           ? this.$t("form.info.oracle-price", {

@@ -15,7 +15,7 @@ export function format(t, p = "YYYY-MM-DD HH:mm:ss") {
 }
 
 export function oracleNext(gem: IOracle, dai: IOracle) {
-  if (!Boolean(gem) || !Boolean(dai)) return { peek_at: dayjs(0) };
+  if (!gem || !dai) return { peek_at: dayjs(0) };
   const gemPeekTime = dayjs(gem.peek_at).add(gem.hop, "seconds");
   const daiPeekTime = dayjs(dai.peek_at).add(dai.hop, "seconds");
   if (gem.threshold === 0 && dai.threshold === 0) {
