@@ -1,15 +1,17 @@
 <template>
   <div>
     <template v-if="isOpen">
-      <v-layout column class="py-3">
-        <v-layout align-center class="f-body-1">
-          <span class="font-weight-bold">{{
+      <v-layout column>
+        <v-layout align-center class="mt-4">
+          <span class="f-body-2 font-weight-medium">{{
             $t("vault.event.action.vatgenerate")
           }}</span>
           <v-spacer />
-          <span class="text-right f-caption">{{ meta.time }}</span>
+          <span class="text-right f-caption f-greyscale-3">{{
+            meta.time
+          }}</span>
         </v-layout>
-        <div>
+        <div style="margin-top: 10px" class="mb-4 f-caption f-greyscale-3">
           {{
             this.$t("vault.event.content.vatgenerate", {
               amount: this.history.debt.replace("-", ""),
@@ -21,15 +23,17 @@
 
       <v-divider />
 
-      <v-layout column class="py-3">
-        <v-layout align-center class="f-body-1">
-          <span class="font-weight-bold">{{
+      <v-layout column>
+        <v-layout align-center class="mt-4">
+          <span class="f-body-2 font-weight-medium">{{
             $t("vault.event.action.vatdeposit")
           }}</span>
           <v-spacer />
-          <span class="text-right f-caption">{{ meta.time }}</span>
+          <span class="text-right f-caption f-greyscale-3">{{
+            meta.time
+          }}</span>
         </v-layout>
-        <div>
+        <div style="margin-top: 10px" class="mb-4 f-caption f-greyscale-3">
           {{
             this.$t("vault.event.content.vatdeposit", {
               amount: this.history.dink,
@@ -41,13 +45,15 @@
 
       <v-divider />
     </template>
-    <v-layout column class="py-3">
-      <v-layout align-center class="f-body-1">
-        <span class="font-weight-bold">{{ meta.actionText }}</span>
+    <v-layout column>
+      <v-layout align-center class="mt-4">
+        <span class="f-body-2 font-weight-medium">{{ meta.actionText }}</span>
         <v-spacer />
-        <span class="text-right f-caption">{{ meta.time }}</span>
+        <span class="text-right f-caption f-greyscale-3">{{ meta.time }}</span>
       </v-layout>
-      <div>{{ meta.actionContent }}</div>
+      <div style="margin-top: 10px" class="mb-4 f-caption f-greyscale-3">
+        {{ meta.actionContent }}
+      </div>
     </v-layout>
   </div>
 </template>

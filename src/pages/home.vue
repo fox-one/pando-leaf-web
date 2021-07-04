@@ -1,6 +1,10 @@
 <template>
-  <v-container class="pa-0" fluid>
-    <v-layout column fill-height class="pa-0 custom-info-grid">
+  <v-container class="pa-0 f-bg-greyscale-7" style="height: 100%">
+    <v-layout column fill-height class="pa-0">
+      <div class="py-2" v-if="loading">
+        <f-loading :loading="loading"></f-loading>
+      </div>
+      <!-- 授权登陆按钮 -->
       <base-connect-wallet-btn
         v-if="!isLogged"
         rounded
@@ -11,99 +15,123 @@
       >
         {{ $t("connect.wallet") }}
       </base-connect-wallet-btn>
-      <v-layout justify-space-between>
-        <v-layout v-if="isLogged" column class="pa-4 f-bg-greyscale-7">
-          <div class="f-caption f-greyscale-3">
-            {{ $t("me.total-collaterals") }}
-          </div>
-          <h2>{{ total.collaterals }}</h2>
-        </v-layout>
-        <v-layout
-          v-if="isLogged"
-          column
-          class="pa-4 f-bg-greyscale-7 text-right"
+
+      <!-- no vault -->
+      <v-layout
+        v-if="isLogged && !haveVault"
+        style="height: 100%"
+        column
+        align-center
+        justify-center
+      >
+        <v-icon class="mb-8" size="110">$iconNoVault</v-icon>
+        <h3 class="f-greyscale-2">{{ $t("me.no-vault-1") }}</h3>
+        <p class="mx-4 mt-2 text-center">
+          {{ $t("me.no-vault-2") }}
+        </p>
+        <v-btn
+          class="mt-4"
+          color="primary"
+          @click="openNewVault"
+          :min-width="220"
+          rounded
+          depressed
         >
-          <div class="f-caption f-greyscale-3">{{ $t("me.total-debts") }}</div>
-          <h2>{{ total.debts }}</h2>
-        </v-layout>
+          <span>{{ $t("me.no-vault-button") }}</span>
+        </v-btn>
       </v-layout>
-      <div class="py-2" v-if="loading">
-        <f-loading :loading="loading"></f-loading>
-      </div>
-      <v-container v-if="isLogged && !haveVault" fill-height>
-        <v-layout column align-center justify-center>
-          <h3 class="f-greyscale-2">{{ $t("me.no-vault-1") }}</h3>
-          <p class="mx-4 mt-2 text-center">
-            {{ $t("me.no-vault-2") }}
-          </p>
-          <v-btn
-            class="mt-4"
-            color="primary"
-            @click="openNewVault"
-            :min-width="220"
-            rounded
-            depressed
+
+      <v-container column justify-center v-if="isLogged && haveVault">
+        <!-- 总计card -->
+        <total-card />
+
+        <v-layout align-center class="mt-8 mb-2 mx-1 f-greyscale-1 f-title-1">
+          My Vault
+          <base-tooltip
+            class="ml-1"
+            hint="Pando leaf is product description product description product
+            description product description"
           >
-            <span>{{ $t("me.no-vault-button") }}</span>
-          </v-btn>
+          </base-tooltip>
         </v-layout>
-      </v-container>
-      <div v-if="isLogged && haveVault" class="px-4 pt-4">
-        <v-expansion-panels accordion flat v-model="expanded" multiple>
-          <my-vault-item
-            class="mb-4 rounded-lg"
+
+        <!-- vault list -->
+        <v-row no-gutters>
+          <v-col
+            xs="12"
+            sm="12"
+            md="6"
+            class="d-flex justify-center"
             :key="vault.id"
             v-for="vault in sortedMyVaults"
-            :vault="vault"
-          ></my-vault-item>
-        </v-expansion-panels>
-        <div style="height: 60px"></div>
-        <div class="version-block f-caption text--secondary">{{ version }}</div>
+          >
+            <my-vault-item
+              class="leaf-card mt-4 rounded-lg sm-6 xs-12 mx-1 flex-grow-1"
+              :vault="vault"
+            ></my-vault-item>
+          </v-col>
+          <v-col
+            xs="12"
+            sm="12"
+            md="6"
+            class="d-flex mt-4 justify-center f-bg-greyscale-7 add-new-vault"
+          >
+            <div class="add-new-vault-text f-body-2 f-greyscale-3">
+              Need more vault?
+            </div>
+            <div class="align-self-center">
+              <f-button class="my-8" @click="openNewVault"
+                ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon> Add a
+                Vault</f-button
+              >
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+      <div style="height: 60px"></div>
+      <div class="version-block f-caption text--secondary">
+        {{ version }}
       </div>
     </v-layout>
-    <!-- <v-fab-transition> -->
-    <v-btn
-      class="custom-fab-btn rounded-circle"
-      circle
-      height="64"
-      bottom
-      right
-      elevation="2"
-      color="primary"
-      @click="openNewVault"
-    >
-      <v-icon>{{ $icons.mdiPlus }}</v-icon>
-    </v-btn>
-    <!-- </v-fab-transition> -->
     <market-select-modal
       :show.sync="showSelectModal"
       v-on:update:current="onSelect"
     />
+    <welcome-modal ref="welcome" />
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Watch } from "vue-property-decorator";
+import { Component, Mixins, Ref, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
-import { Action, Getter, State } from "vuex-class";
+import { Action, Getter, Mutation, State } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
 import MyVaultItem from "~/components/particles/MyVaultItem.vue";
 import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
+import TotalCard from "@/components/particles/TotalCard.vue";
+import WelcomeModal from "@/components/particles/WelcomeModal.vue";
+import CollateralsRatio from "@/components/charts/CollateralsRatio.vue";
 import { VERSION } from "~/constants";
 
 @Component({
   components: {
     MyVaultItem,
     MarketSelectModal,
+    WelcomeModal,
+    TotalCard,
+    CollateralsRatio,
   },
 })
 export default class Me extends Mixins(mixins.page) {
   @State((state) => state.global.myVaults) myVaults!: IVault[];
   @State((state) => state.global.collaterals) collaterals!: ICollateral[];
+  @State((state) => state.app.firstUsePandoLeaf) firstUsePandoLeaf;
   @Getter("global/haveVault") haveVault!: boolean;
   @Getter("global/getCollateral") getCollateral;
   @Getter("global/getAssetById") getAssetById;
   @Action("global/syncMyVaults") syncMyVaults;
+  @Mutation("app/SET_FIRST_USE_PANDO_LEAF") setFirstUsePandoLeaf;
+  @Ref("welcome") welcome;
 
   loading = true;
   expanded = [0];
@@ -119,12 +147,11 @@ export default class Me extends Mixins(mixins.page) {
     )
       return;
     const filtered = nVal.filter((v) => !oVal.includes(v));
-    console.log("oldVal: " + oVal, "newVal: " + nVal, "filtered: " + filtered);
     this.expanded = filtered;
   }
 
   get title() {
-    const s = this.$t("tab.me");
+    const s = this.$t("tab.home");
     return `${s}`;
   }
 
@@ -137,6 +164,8 @@ export default class Me extends Mixins(mixins.page) {
       return {
         back: false,
         avatar: false,
+        customContent: true,
+        mixinImmersive: this.$utils.helper.isMixin(),
       };
     }
     return {
@@ -171,32 +200,7 @@ export default class Me extends Mixins(mixins.page) {
   }
 
   get bottomNav() {
-    return "me";
-  }
-
-  get total() {
-    if (this.myVaults.length === 0)
-      return {
-        collaterals: "$0.00",
-        debts: "$0.00",
-      };
-    let col = 0;
-    let dai = 0;
-    this.myVaults.forEach((v) => {
-      const collateral = this.getCollateral(v.collateral_id);
-      const colAsset = this.getAssetById(collateral?.gem);
-      const colAmount = Number(v.ink || "0");
-      const daiAmount = Number(v.art || "0") * Number(collateral?.rate || "1");
-      const colPrice = Number(colAsset?.price || "0");
-      const daiAsset = this.getAssetById(collateral?.dai);
-      const daiPrice = Number(daiAsset?.price || "0");
-      col += colAmount * colPrice;
-      dai += daiAmount * daiPrice;
-    });
-    return {
-      collaterals: `$${this.$utils.number.toShort(col)}`,
-      debts: `$${this.$utils.number.toShort(dai)}`,
-    };
+    return "home";
   }
 
   created() {
@@ -213,7 +217,6 @@ export default class Me extends Mixins(mixins.page) {
     // this.checkLogin();
     this.loading = true;
     setTimeout(() => {
-      console.log("isLogged:", this.isLogged);
       this.syncMyVaults()
         .then((res) => {
           this.loading = false;
@@ -222,6 +225,10 @@ export default class Me extends Mixins(mixins.page) {
           this.loading = false;
         });
     }, 200);
+    if (this.firstUsePandoLeaf) {
+      this.welcome.show();
+      this.setFirstUsePandoLeaf(false);
+    }
   }
 
   checkLogin() {
@@ -278,19 +285,6 @@ export default class Me extends Mixins(mixins.page) {
 </script>
 
 <style lang="scss" scoped>
-.custom-info-grid {
-  overflow: hidden;
-  ::v-deep {
-    .f-info-grid {
-      .f-info-grid-inner {
-        width: calc(100vw - 32px) !important;
-        .f-info-grid-item {
-          width: calc(50vw - 16px);
-        }
-      }
-    }
-  }
-}
 .version-block {
   padding-bottom: constant(safe-area-inset-bottom) + 10px;
   padding-bottom: env(safe-area-inset-bottom) + 10px;
@@ -308,5 +302,19 @@ export default class Me extends Mixins(mixins.page) {
   height: 24px;
   align-self: center !important;
   justify-self: center !important;
+}
+.add-new-vault {
+  flex-direction: column;
+  @media only screen and (min-width: 960px) {
+    align-items: center;
+    height: 372px;
+    border: 1px dashed #cccccc;
+    border-radius: 8px;
+  }
+  .add-new-vault-text {
+    @media only screen and (max-width: 959px) {
+      display: none;
+    }
+  }
 }
 </style>

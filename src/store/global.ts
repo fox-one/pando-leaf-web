@@ -55,10 +55,8 @@ const mutations: MutationTree<AssetsState> = {
     state.myVaults = data;
   },
   CLEAR(state) {
-    state.collaterals = [];
     state.myVaults = [];
     state.walletAssets = new Map();
-    state.assets = [];
   },
 };
 

@@ -1,59 +1,62 @@
 <template>
   <v-container class="pa-0">
-    <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        {{ $t("form.payback.how-much") }}
+    <v-layout column class="ma-0 pa-4 pb-8 f-bg-greyscale-7">
+      <div class="mt-3 mb-5 pa-4 debt-intro f-caption" v-if="showDebtIntro">
+        {{ $t("form.hint.debt.intro") }}
+        <v-icon
+          class="debt-intro-icon"
+          size="14"
+          color="error"
+          @click="showDebtIntro = false"
+        >
+          {{ $icons.mdiCloseCircle }}
+        </v-icon>
       </div>
-
-      <f-asset-amount-input
+      <asset-range-input
         v-model="amount"
+        class="mt-2"
         :label="$t('form.hint.payback-amount')"
+        :assets="assets"
         :asset.sync="asset"
         :selectable="false"
         :precision="precision"
+        :max="+assetBalance"
+        :btn-text="$t('form.payback.button.confirm')"
+        :disabled-btn="validate.disabled"
+        :error="validate.tip"
+        :show-slider="false"
+        @click:button="confirm"
+        color="primary"
       >
-      </f-asset-amount-input>
-      <div
-        v-if="!isLogged"
-        class="f-caption f-blue my-2 ml-4"
-        @click="requestLogin"
-      >
-        {{ $t("connect.wallet") }}
-      </div>
-      <v-layout v-else justify-space-between>
-        <div class="f-caption f-greyscale-3 my-2 ml-4">
-          {{ $t("form.info.wallet-balance") }} {{ assetBalance }}
-          {{ assetSymbol }}
-        </div>
-        <div class="f-caption f-blue my-2 mr-4" @click="amount = maxPayback">
-          {{ $t("form.info.set-max") }}
-        </div>
-      </v-layout>
-      <f-tip :type="validate.type" v-if="validate.tip !== null">{{
-        validate.tip
-      }}</f-tip>
-      <f-button
-        type="primary"
-        class="mt-5"
-        :disabled="validate.disabled"
-        @click="confirm"
-        >{{ $t("form.payback.button.confirm") }}</f-button
-      >
+        <template v-slot:inputTips>
+          <connect-wallet class="mt-2" v-if="!isLogged" @click="requestLogin" />
+          <v-layout
+            class="mt-2 f-caption f-greyscale-1"
+            v-else
+            align-center
+            justify-space-between
+          >
+            <span class="font-weight-bold" @click="handleAmount(maxPayback)">
+              {{ $t("form.hint.set-max") }}
+              <v-icon class="ml-1" size="12"> $iconSetMax </v-icon>
+            </span>
+            <span @click="handleAmount(assetBalance)">
+              <span class="f-greyscale-3">
+                {{ $t("form.info.wallet-balance") }}
+              </span>
+              {{ assetBalance }}
+            </span>
+          </v-layout>
+        </template>
+      </asset-range-input>
     </v-layout>
-    <vault-stats
+    <prediction
       class="my-4"
       :collateral="collateral"
       :vault="vault"
       :amount="amount"
       :type="vaultStatsType"
-    ></vault-stats>
-
-    <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
-    <div class="mx-4 f-caption">
-      Price of the pair tokens fluctuates due to change in supply and demand of
-      the tokens. Investors are expected to take caution and take full
-      responsibilities of their own investment decisions.
-    </div> -->
+    />
   </v-container>
 </template>
 
@@ -61,8 +64,9 @@
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
-import { Action, Getter, State } from "vuex-class";
+import { Action, Getter } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
+import Prediction from "@/components/particles/Prediction.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
 import { TransactionStatus, VatAction } from "~/types";
@@ -71,6 +75,7 @@ import { isDesktop } from "~/utils/helper";
 @Component({
   components: {
     VaultStats,
+    Prediction,
   },
 })
 export default class PaybackForm extends Mixins(mixins.page) {
@@ -87,6 +92,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
   asset = {} as IAsset;
   amount = "";
   precision = 8;
+  showDebtIntro = true;
 
   get appbar() {
     return {
@@ -110,7 +116,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
   }
 
   get title() {
-    const t = this.$t("form.title.payback", { symbol: this.assetSymbol });
+    const t = this.$t("form.title.payback");
     return `${t}`;
   }
 
@@ -307,7 +313,31 @@ export default class PaybackForm extends Mixins(mixins.page) {
       }
     }, 3000);
   }
+
+  handleAmount(val) {
+    this.amount = val;
+  }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.debt-intro {
+  position: relative;
+  background-color: rgba(244, 76, 76, 0.1);
+  border-radius: 8px;
+  color: #f44c4c;
+  &-icon {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    cursor: pointer;
+  }
+}
+
+.theme--dark.v-application {
+  .debt-intro {
+    background-color: rgba(246, 112, 112, 0.1);
+    color: #f67070;
+  }
+}
+</style>

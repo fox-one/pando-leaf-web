@@ -1,0 +1,37 @@
+<template>
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M1 8H14"
+      :stroke="color"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M12.1722 5.17157L15.0006 8L12.1722 10.8284"
+      :stroke="color"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { State } from "vuex-class";
+
+@Component
+class PointerRight extends Vue {
+  @State((state) => state.app.settings.dark) isDark;
+
+  get color() {
+    return this.isDark ? "white" : "black";
+  }
+}
+export default PointerRight;
+</script>

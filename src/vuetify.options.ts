@@ -17,6 +17,60 @@ const icons = {
     iconListArrow: {
       component: "icon-list-arrow",
     },
+    iconHome: {
+      component: "icon-home",
+    },
+    iconMarket: {
+      component: "icon-market",
+    },
+    iconAuctions: {
+      component: "icon-auctions",
+    },
+    iconPointerRight: {
+      component: "icon-pointer-right",
+    },
+    iconQuestion: {
+      component: "icon-question",
+    },
+    iconSearch: {
+      component: "icon-search",
+    },
+    iconDeposit: {
+      component: "icon-deposit",
+    },
+    iconWithdraw: {
+      component: "icon-withdraw",
+    },
+    iconPayback: {
+      component: "icon-payback",
+    },
+    iconGenerate: {
+      component: "icon-generate",
+    },
+    iconMoreInfo: {
+      component: "icon-more-info",
+    },
+    iconAuctionDetail: {
+      component: "icon-auction-detail",
+    },
+    iconWelcomeImg: {
+      component: "icon-welcome-img",
+    },
+    iconLeaf: {
+      component: "icon-leaf",
+    },
+    iconNoVault: {
+      component: "icon-no-vault",
+    },
+    iconTotalCardTexture: {
+      component: "icon-total-card-texture",
+    },
+    iconPusd: {
+      component: "icon-pusd",
+    },
+    iconSetMax: {
+      component: "icon-set-max",
+    },
   },
 };
 
@@ -33,12 +87,14 @@ export default function ({ store }) {
       },
       themes: {
         light: {
-          primary: "#E4AF77",
+          primary: "#000000",
           orange: "#FFA800",
+          waining: "#F44C4C",
         },
         dark: {
-          primary: "#E4AF77",
+          primary: "#ffffff",
           orange: "#f08b04",
+          waining: "#F44C4C",
         },
       },
     },

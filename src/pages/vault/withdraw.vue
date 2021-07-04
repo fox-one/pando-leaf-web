@@ -1,77 +1,52 @@
 <template>
   <v-container class="pa-0">
-    <v-layout column class="ma-0 pa-4 f-bg-greyscale-7">
-      <div class="f-greyscale-3 f-body-1 mb-3 text-center">
-        {{ $t("form.withdraw.how-much") }}
-      </div>
-
-      <f-asset-amount-input
+    <v-layout column class="ma-0 pa-4 pb-8 f-bg-greyscale-7">
+      <asset-range-input
         v-model="amount"
+        class="mt-2"
         :label="$t('form.hint.withdraw-amount')"
         :assets="assets"
         :asset.sync="asset"
         :selectable="false"
         :precision="precision"
-      >
-      </f-asset-amount-input>
-      <div
-        v-if="!isLogged"
-        class="f-caption f-blue my-2 ml-4"
-        @click="requestLogin"
-      >
-        {{ $t("connect.wallet") }}
-      </div>
-      <div v-else class="f-caption f-greyscale-3 my-2 ml-4">
-        {{ $t("form.info.max-available")
-        }}<span class="f-blue" @click="amount = maxAvailable">
-          {{ maxAvailable }} </span
-        >{{ assetSymbol }}
-      </div>
-
-      <percent-slider class="ma-4" :percent.sync="percent" />
-
-      <f-tip :type="validate.type" v-if="validate.tip !== null">{{
-        validate.tip
-      }}</f-tip>
-      <f-button
-        type="primary"
-        class="mt-5"
-        :disabled="validate.disabled"
-        @click="requestConfirm"
-        >{{ $t("form.withdraw.button.confirm") }}</f-button
-      >
+        :inputTips="inputTips"
+        :max="+maxAvailable"
+        :ratio-text="$t('form.hint.withdraw-ratio')"
+        :btn-text="$t('form.withdraw.button.confirm')"
+        :disabled-btn="validate.disabled"
+        :error="validate.tip"
+        @click:button="requestConfirm"
+        color="primary"
+      />
     </v-layout>
 
-    <vault-stats
+    <prediction
       class="my-4"
       :collateral="collateral"
       :vault="vault"
       :amount="amount"
       :type="vaultStatsType"
-    ></vault-stats>
-
-    <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
-    <div class="mx-4 f-caption">
-      Price of the pair tokens fluctuates due to change in supply and demand of
-      the tokens. Investors are expected to take caution and take full
-      responsibilities of their own investment decisions.
-    </div> -->
-    <base-confirm-modal
-      ref="cmodal"
-      @confirm="confirm"
-      :current-rate="this.meta.ratio * 100"
-      :liquidation-rate="Number(this.collateral.mat) * 100"
     />
+
+    <risk-info
+      v-model="showCModel"
+      :custom-text="riskInfo"
+      :impact="`${(meta.ratio * 100).toFixed(2)}%`"
+      :countdown="countdown"
+      @confirm="confirm"
+    />
+
     <need-cnb-modal :visible.sync="needCnb" />
   </v-container>
 </template>
 
 <script lang="ts" scoped>
-import { Component, Mixins, Ref, Watch } from "vue-property-decorator";
+import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
-import { Action, Getter, State } from "vuex-class";
+import { Action, Getter } from "vuex-class";
 import VaultStats from "@/components/particles/VaultStats.vue";
+import Prediction from "@/components/particles/Prediction.vue";
 import PercentSlider from "@/components/particles/PercentSlider.vue";
 import NeedCnbModal from "@/components/particles/NeedCnbModal.vue";
 import BigNumber from "bignumber.js";
@@ -86,6 +61,7 @@ import { isDesktop } from "~/utils/helper";
     VaultStats,
     PercentSlider,
     NeedCnbModal,
+    Prediction,
   },
 })
 export default class WithdrawForm extends Mixins(mixins.page) {
@@ -95,7 +71,6 @@ export default class WithdrawForm extends Mixins(mixins.page) {
   @Getter("global/getWalletAssetById") getWalletAssetById;
   @Action("global/syncMarkets") syncMarkets;
   @Action("global/syncMyVaults") syncMyVaults;
-  @Ref("cmodal") cmodal;
 
   vaultStatsType = VatAction.VatWithdraw;
   collateral = {} as ICollateral;
@@ -105,6 +80,12 @@ export default class WithdrawForm extends Mixins(mixins.page) {
   precision = 8;
   alert = false;
   percent = 0;
+  inputTips = {};
+  showCModel = false;
+  riskInfo = {
+    continue: {},
+    confirm: {},
+  };
 
   get appbar() {
     return {
@@ -276,28 +257,18 @@ export default class WithdrawForm extends Mixins(mixins.page) {
     ];
   }
 
-  @Watch("percent")
-  onPercent(newVal) {
-    if (!this.$utils.number.isValid(Number(this.amount))) return;
-    if (this.modAmount) return;
-    this.amount = this.$utils.number.toPrecision(
-      (newVal / 100) * this.maxAvailable,
-      8
-    );
+  get countdown() {
+    return Math.round(+this.collateral.mat * 100 - +this.meta.ratio * 100 + 60);
   }
-
-  modAmount = false;
 
   @Watch("amount")
   onMintChanged(newVal) {
-    this.modAmount = true;
     const newPercent = Number(newVal) / Number(this.maxAvailable);
     if (this.$utils.number.isValid(newPercent)) {
       this.percent = newPercent * 100;
     }
-    this.$utils.helper.debounce(() => {
-      this.modAmount = false;
-    }, 10)();
+    if (this.percent > 100) this.percent = 100;
+    if (this.percent < 0) this.percent = 0;
   }
 
   intervalid = 0;
@@ -320,6 +291,47 @@ export default class WithdrawForm extends Mixins(mixins.page) {
       this.vault = this.getVault(this.vaultId);
       this.collateral = this.getCollateral(this.vault.collateral_id);
     }, 5000) as any) as number;
+
+    this.riskInfo = {
+      continue: {
+        title: this.$t("risk.info.continue.title"),
+        highlights: [
+          this.$t("risk.info.continue.highlight-collateral-rate"),
+          this.$t("risk.info.continue.highlight-liquidation-ratio"),
+        ],
+        btn_cancel: this.$t("risk.info.continue.btn-cancel"),
+        btn_continue: this.$t("risk.info.continue.btn-continue"),
+      },
+      confirm: {
+        title: this.$t("risk.info.confirm.title"),
+        content: this.$t("risk.info.confirm.content"),
+        btn_cancel: this.$t("risk.info.confirm.btn-cancel"),
+        btn_confirm: this.$t("risk.info.confirm.btn-confirm"),
+      },
+    };
+
+    this.inputTips = this.isLogged
+      ? {
+          amount: this.maxAvailable,
+          amountSymbol: this.assetSymbol,
+          tipLeft: this.$t("common.collateral"),
+          tipRight: this.collateral?.gem
+            ? `≈ $ ${this.$utils.number.toPrecision(
+                this.getAssetById?.(this.collateral?.gem)?.price *
+                  this.maxAvailable
+              )}`
+            : "",
+        }
+      : {
+          tipLeft: this.$createElement("connect-wallet", {
+            on: {
+              click: () => this.requestLogin(),
+            },
+            props: {
+              text: this.$t("connect.wallet"),
+            },
+          }),
+        };
   }
 
   destroyed() {
@@ -350,7 +362,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
   requestConfirm() {
     if (this.checkCNB()) return;
     if ((this.meta.ratio - Number(this.collateral.mat)) * 100 < 61) {
-      this.cmodal.show();
+      this.showCModel = true;
       return;
     }
     this.confirm();

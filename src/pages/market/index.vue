@@ -1,44 +1,34 @@
 <template>
-  <v-container class="pa-0 desktop-support">
-    <f-app-bar v-bind="appbar" class="desktop-support market-app-bar">
-      <v-layout align-center>
-        <v-avatar class="ml-2" size="32">
-          <v-img :src="logo" :size="32"></v-img>
-        </v-avatar>
-        <h4 class="mx-2">{{ appbar.title }}</h4>
-        <v-spacer />
-        <v-btn
-          fab
-          x-small
-          elevation="0"
-          color="primary"
-          class="mr-1"
-          @click="toTrade"
-        >
-          <v-icon>{{ $icons.mdiAccount }}</v-icon>
-        </v-btn>
-      </v-layout>
-    </f-app-bar>
-    <v-layout column class="px-4 f-bg-greyscale-7">
-      <div class="f-title-2 ma-4">{{ $t("market.overview") }}</div>
-      <v-divider />
-      <v-row class="ma-0 pa-4">
-        <v-col class="ma-0 pa-0" cols="12" xs="6" sm="6" md="4" lg="3">
+  <v-container class="pa-0 desktop-support f-bg-greyscale-7">
+    <v-layout column class="px-4">
+      <div class="f-title-1 font-weight-bold mt-10">
+        {{ $t("market.overview") }}
+      </div>
+      <v-row no-gutters class="pt-6 mb-6">
+        <v-col class="my-4 pa-0" cols="6" xs="6" sm="4" md="4" lg="3">
           <div class="f-caption">{{ $t("market.total-collaterals") }}</div>
-          <h2>{{ total.collaterals }}</h2>
+          <v-layout align-center class="overview-value">
+            <span class="overview-value-symbol">$</span>{{ total.collaterals }}
+          </v-layout>
         </v-col>
-        <v-col class="ma-0 pa-0" cols="12" xs="6" sm="6" md="4" lg="3">
+        <v-col class="my-4 pa-0" cols="6" xs="6" sm="4" md="4" lg="3">
           <div class="f-caption">{{ $t("market.total-supply") }}</div>
-          <h2>{{ total.supply }}</h2>
+          <v-layout align-center class="overview-value"
+            ><span class="overview-value-symbol">$</span
+            >{{ total.supply }}</v-layout
+          >
         </v-col>
-        <v-col class="ma-0 pa-0" cols="12" xs="6" sm="6" md="4" lg="3">
+        <v-col class="my-4 pa-0" cols="6" xs="6" sm="4" md="4" lg="3">
           <div class="f-caption">
             {{ $t("market.total-collateralization") }}
           </div>
-          <h2>{{ total.collaterilazation }}</h2>
+          <div class="market-green overview-value">
+            {{ total.collaterilazation }}
+          </div>
         </v-col>
       </v-row>
       <market-item
+        class="mb-4"
         v-for="item in collaterals"
         :collateral="item"
         :key="item.id"
@@ -54,8 +44,6 @@ import { Action, Getter, State } from "vuex-class";
 import MarketItem from "@/components/particles/MarketItem.vue";
 import { ICollateral } from "~/services/types/vo";
 
-const logo = require("../../static/android-chrome-192x192.png");
-
 @Component({
   components: {
     MarketItem,
@@ -63,26 +51,24 @@ const logo = require("../../static/android-chrome-192x192.png");
 })
 export default class Market extends Mixins(mixins.page) {
   @State((state) => state.global.collaterals) collaterals!: ICollateral[];
-  @Getter("auth/isLogged") isLogged;
   @Getter("global/getAssetById") getAssetById;
   @Action("global/syncMarkets") syncMarkets;
+
   get appbar() {
-    const state = this.$store.state;
-    const appbar = state.app.appbar;
-    const isDark = state.app.settings.dark;
-
+    if (!this.isLogged) {
+      return {
+        back: false,
+        avatar: false,
+        customContent: true,
+        mixinImmersive: this.$utils.helper.isMixin(),
+      };
+    }
     return {
-      ...appbar,
-      title: "Pando Leaf",
+      back: false,
       customContent: true,
+      avatar: true,
       mixinImmersive: this.$utils.helper.isMixin(),
-      disabled: true,
-      color: isDark ? "#000000" : "#FFFFFF",
     };
-  }
-
-  get logo() {
-    return logo;
   }
 
   get bottomNav() {
@@ -109,14 +95,14 @@ export default class Market extends Mixins(mixins.page) {
       dai += daiAmount * daiPrice;
     });
     return {
-      collaterals: "$" + this.$utils.number.toShort(col),
-      supply: "$" + this.$utils.number.toShort(dai),
+      collaterals: this.$utils.number.toShort(col),
+      supply: this.$utils.number.toShort(dai),
       collaterilazation: this.$utils.number.toPercent(col / dai),
     };
   }
 
   toTrade() {
-    this.$router.replace("/me");
+    this.$router.replace("/");
   }
 
   intervalId = 0 as any;
@@ -142,13 +128,11 @@ export default class Market extends Mixins(mixins.page) {
 .desktop-support {
   max-width: 1100px !important;
 }
-
 .market-table-title {
   opacity: 0.5;
   font-weight: normal;
   font-style: normal;
 }
-
 .arrow-right {
   position: relative;
   float: right;
@@ -159,5 +143,15 @@ export default class Market extends Mixins(mixins.page) {
   width: 100% !important;
   left: unset !important;
   right: unset !important;
+}
+.overview-value {
+  font-size: 25px;
+  font-weight: 700;
+  .overview-value-symbol {
+    font-size: 17px;
+  }
+}
+.market-green {
+  color: #47bd61;
 }
 </style>

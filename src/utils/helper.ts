@@ -47,7 +47,7 @@ export function handleTxResult(vue: Vue, tx: ITransaction) {
       message: vue.$t("common.action-success") as string,
       color: "success",
     });
-    vue.$router.replace("/me");
+    vue.$router.replace("/");
   }
   if (tx?.status === TransactionStatus.Abort) {
     vue.$utils.helper.toast(vue, {
@@ -244,15 +244,15 @@ export function hidePaymentDialog(vue: Vue) {
 
 export function risk(currentRatio, minimumRatio) {
   const risk = Number(currentRatio) / Number(minimumRatio);
-  if (!number.isValid(risk)) return "greyscale-1";
+  if (!number.isValid(risk)) return "greyscale-6";
   if (risk < 0) {
-    return "greyscale-1";
-  } else if (risk <= 1.1) {
-    return "red";
-  } else if (risk <= 1.5) {
-    return "orange";
+    return "greyscale-6";
+  } else if (risk <= 1.25) {
+    return "riskRed";
+  } else if (risk <= 5 / 3) {
+    return "riskOrange";
   } else {
-    return "green";
+    return "riskGreen";
   }
 }
 
@@ -261,9 +261,9 @@ export function riskLevel(currentRatio, minimumRatio) {
   if (!number.isValid(risk)) return RISK.NA;
   if (risk < 0) {
     return RISK.NA;
-  } else if (risk <= 1.1) {
+  } else if (risk <= 1.25) {
     return RISK.HIGH;
-  } else if (risk <= 1.5) {
+  } else if (risk <= 5 / 3) {
     return RISK.MEDIUM;
   } else {
     return RISK.LOW;
@@ -299,4 +299,9 @@ export async function loadWalletAsset(vue: Vue, assetId: string) {
   } else {
     return store.dispatch("global/syncWalletAsset", assetId);
   }
+}
+
+export function fiatUnit(vue: Vue) {
+  const lang = vue.$vuetify.lang.current;
+  return lang.includes("zh") ? "￥" : "$";
 }

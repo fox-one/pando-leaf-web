@@ -1,61 +1,53 @@
 <template>
   <div @click="toDetail(flip)">
-    <f-panel column class="pa-0 f-bg-greyscale-7">
-      <v-layout align-center justify-space-between class="ma-2">
-        <div class="f-body-2 font-weight-bold">
-          {{ $t("auction.item.collateral-type") }} {{ meta.colType }}
+    <v-card elevation="0" class="rounded-lg pa-0 f-bg-greyscale-6">
+      <v-layout align-center class="mx-6 pt-6">
+        <f-mixin-asset-logo
+          class="z2"
+          :size="40"
+          :logo="meta.auctionLogo"
+        ></f-mixin-asset-logo>
+        <f-mixin-asset-logo
+          class="ml-n2"
+          :size="40"
+          :logo="meta.debtLogo"
+        ></f-mixin-asset-logo>
+
+        <div class="f-caption ml-2 f-greyscale-4">
+          #{{ meta.id.slice(0, 5) }}
         </div>
-        <div class="f-caption">
+        <v-spacer />
+        <span class="f-caption f-greyscale-4" justify-end>
+          {{ meta.endTime }}
+        </span>
+      </v-layout>
+      <v-layout column class="mx-6 pt-3">
+        <v-layout
+          v-for="item in infos"
+          :key="item.label"
+          align-center
+          class="my-2"
+        >
+          <div class="f-caption f-greyscale-3">{{ item.label }}</div>
+          <v-spacer />
+          <div class="f-caption font-weight-medium f-greyscale-1">
+            {{ item.value }}
+          </div>
+        </v-layout>
+      </v-layout>
+      <v-divider class="mx-6 mt-2" />
+      <v-layout align-center class="mx-6" style="height: 49.5px">
+        <div :class="`f-caption ${meta.isDone ? 'text--disabled' : ''}`">
           {{
             meta.isDone
               ? $t("auction.item.status.done")
               : $t("auction.item.status.in-auction")
           }}
         </div>
+        <v-spacer style="border-color: rgba(0, 0, 0, 0.1) !important" />
+        <v-icon size="16" color="primary">{{ $icons.mdiChevronRight }}</v-icon>
       </v-layout>
-      <v-divider />
-      <v-layout column class="ma-2">
-        <v-layout align-center justify-space-between class="f-caption mb-2">
-          <div>{{ $t("auction.item.info") }}</div>
-          <div>{{ $t("form.info.liquidation-penalty") }} {{ meta.chop }}</div>
-        </v-layout>
-        <v-layout align-center class="mb-2" style="flex: 1">
-          <f-mixin-asset-logo
-            :size="32"
-            :logo="meta.auctionLogo"
-          ></f-mixin-asset-logo>
-          <v-layout column class="ml-2">
-            <div class="f-caption">
-              {{
-                $t("auction.item.collateral-symbol", {
-                  symbol: meta.auctionSymbol,
-                })
-              }}
-            </div>
-            <div class="f-body-1">{{ flip.lot }}</div>
-          </v-layout>
-        </v-layout>
-        <v-layout align-center style="flex: 1">
-          <f-mixin-asset-logo
-            :size="32"
-            :logo="meta.debtLogo"
-          ></f-mixin-asset-logo>
-          <v-layout column class="ml-2">
-            <div class="f-caption">
-              {{ $t("auction.item.debt-symbol", { symbol: meta.debtSymbol }) }}
-            </div>
-            <div class="f-body-1">{{ flip.bid }}</div>
-          </v-layout>
-        </v-layout>
-      </v-layout>
-      <v-divider />
-      <v-layout class="f-caption ma-2" justify-space-between>
-        <div>{{ $t("auction.item.end-time") }}</div>
-        <div>
-          {{ meta.endTime }}
-        </div>
-      </v-layout>
-    </f-panel>
+    </v-card>
   </div>
 </template>
 
@@ -99,6 +91,7 @@ export default class AuctionItem extends Vue {
       }
     }
     return {
+      id: this.flip.id,
       title: this.flip.vault_id,
       colType: this.collateral?.name,
       chop: this.$utils.number.toPercent(Number(this.collateral?.chop) - 1),
@@ -109,6 +102,23 @@ export default class AuctionItem extends Vue {
       isDone,
       endTime,
     };
+  }
+
+  get infos() {
+    return [
+      {
+        label: this.$t("auction.item.collateral-symbol"),
+        value: `${this.flip.lot} ${this.meta.auctionSymbol}`,
+      },
+      {
+        label: this.$t("auction.item.debt-symbol"),
+        value: `${this.flip.bid} ${this.meta.debtSymbol}`,
+      },
+      {
+        label: this.$t("form.info.liquidation-penalty"),
+        value: this.meta.chop,
+      },
+    ];
   }
 
   doneTime(time) {
@@ -125,4 +135,8 @@ export default class AuctionItem extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.z2 {
+  z-index: 2;
+}
+</style>

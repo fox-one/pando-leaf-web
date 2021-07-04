@@ -1,37 +1,24 @@
 <template>
-  <v-layout align-center class="f-bg-greyscale-7">
+  <v-card elevation="0" class="pa-0 rounded-lg f-bg-greyscale-6">
     <v-layout column>
-      <v-row align-center class="ma-4">
+      <v-row class="ma-4 align-center">
         <f-mixin-asset-logo
           class="flex-grow-0 z-index-2"
-          :size="24"
+          :size="40"
           :logo="collateralLogo"
         ></f-mixin-asset-logo>
         <f-mixin-asset-logo
           class="flex-grow-0 ml-n2"
-          :size="24"
+          :size="40"
           :logo="debtLogo"
         ></f-mixin-asset-logo>
-
-        <span class="f-title-2 ml-2"> {{ meta.name }}</span>
-
+        <span class="f-title-1 ml-2"> {{ meta.name }}</span>
         <v-spacer />
-        <!-- <v-btn
-          text
-          class="f-caption primary--text align-self-center"
-          @click="toMarketDetail"
-        >
-          <span class="f-caption">{{ $t("common.detail") }}</span>
-          <v-icon color="primary" size="14">{{
-            $icons.mdiChevronRight
-          }}</v-icon>
-        </v-btn> -->
       </v-row>
-      <v-divider />
-      <v-row class="ma-0 pa-4">
+      <v-row class="ma-0 pa-0 pb-2">
         <v-col
-          class="mx-0 mb-2 pa-0"
-          cols="12"
+          class="ma-0 mt-2 mb-4 pa-0 pl-6"
+          cols="6"
           xs="6"
           sm="6"
           md="4"
@@ -39,24 +26,20 @@
           v-for="(item, ix) in infos"
           :key="ix"
         >
-          <div class="f-caption">{{ item.title }}</div>
-          <h2>
-            {{ item.value
-            }}<span v-if="item.valueUnit" class="f-caption text--secondary">{{
-              item.valueUnit
-            }}</span>
-          </h2>
-          <h4 v-if="item.exTitle">
-            {{ item.exTitle }} {{ item.exValue
-            }}<span v-if="item.valueUnit" class="f-caption text--secondary">{{
-              item.exValueUnit
-            }}</span>
-          </h4>
+          <v-layout align-center :class="`f-caption ${item.labelClass}`">
+            {{ item.title }} <base-tooltip class="ml-1" :hint="item.hint" />
+          </v-layout>
+          <div :class="`f-body-2 font-weight-medium ${item.valueClass}`">
+            {{ item.value }} {{ item.valueUnit }}
+          </div>
         </v-col>
       </v-row>
+      <f-button class="mx-6 mb-6" @click="generateNewVault"
+        >+ Add a vault</f-button
+      >
     </v-layout>
     <!-- <v-icon class="icon" size="20">{{ "$vuetify.icons.iconListArrow" }}</v-icon> -->
-  </v-layout>
+  </v-card>
 </template>
 
 <script lang="ts" scoped>
@@ -64,8 +47,13 @@ import dayjs from "dayjs";
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import { Action, Getter, State } from "vuex-class";
 import { ICollateral, IOracle } from "~/services/types/vo";
+import MarketSelectModal from "@/components/particles/MarketSelectModal.vue";
 
-@Component
+@Component({
+  components: {
+    MarketSelectModal,
+  },
+})
 export default class MarketItem extends Vue {
   @Prop() collateral!: ICollateral;
   @State((state) => state.app.settings) settings;
@@ -94,7 +82,7 @@ export default class MarketItem extends Vue {
     return {
       name: this.collateral.name,
       price: this.collateral.price,
-      available: this.$utils.number.toShort(available),
+      available: this.$utils.number.toPrecision(available),
       rate: this.$utils.number.toFixed(rate * 100, 2),
       collateralAmount: this.collateral.ink,
       debtAmount: Number(this.collateral.art) * Number(this.collateral.rate),
@@ -108,36 +96,58 @@ export default class MarketItem extends Vue {
         title: this.$t("market.item.total-asset-symbol", {
           symbol: this.collateralSymbol,
         }),
-        value: this.meta.collateralAmount,
+        value: this.$utils.number.toPrecision(this.meta.collateralAmount),
         valueUnit: this.collateralSymbol,
-      },
-      {
-        title: this.$t("market.item.price"),
-        value: this.meta.price,
-        valueUnit: this.debtSymbol,
-        exTitle: this.isValidOracle ? this.$t("market.item.oracle-next") : "",
-        exValue: this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
-          ?.price,
-        exValueUnit: this.$t("market.item.oracle-content", {
-          time: this.countDownText,
-        }),
-      },
-      {
-        title: this.$t("market.item.collateral-rate"),
-        value: this.meta.rate,
-        valueUnit: "%",
-      },
-      {
-        title: this.$t("market.item.symbol-debt", {
-          symbol: this.debtSymbol,
-        }),
-        value: this.meta.debtAmount,
-        valueUnit: this.debtSymbol,
+        labelClass: "font-weight-bold f-greyscale-1",
+        valueClass: "font-weight-bold f-greyscale-1",
+        hint: "",
       },
       {
         title: this.$t("market.item.max-available"),
         value: this.meta.available,
         valueUnit: this.debtSymbol,
+        labelClass: "font-weight-bold f-greyscale-1",
+        valueClass: "font-weight-bold f-greyscale-1",
+      },
+      {
+        title: this.$t("market.item.collateral-rate"),
+        value: this.meta.rate,
+        valueUnit: "%",
+        labelClass: "font-weight-bold market-green",
+        valueClass: "font-weight-bold market-green",
+        hint: "",
+      },
+      {
+        title: this.$t("market.item.price"),
+        value: this.$utils.number.toPrecision(this.meta.price),
+        valueUnit: this.debtSymbol,
+        labelClass: "text--disabled f-greyscale-1",
+        valueClass: "f-greyscale-1",
+      },
+      {
+        title: this.$t("market.item.symbol-debt", {
+          symbol: this.debtSymbol,
+        }),
+        value: this.$utils.number.toPrecision(this.meta.debtAmount),
+        valueUnit: this.debtSymbol,
+        labelClass: "text--disabled f-greyscale-1",
+        valueClass: "f-greyscale-1",
+      },
+      {
+        title: this.isValidOracle ? this.$t("market.item.oracle-next") : "",
+        value: this.isValidOracle
+          ? this.$utils.number.toPrecision(
+              this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.price
+            )
+          : "",
+        valueUnit: this.isValidOracle ? this.debtSymbol : "",
+        hint: this.isValidOracle
+          ? this.$t("market.item.oracle-content", {
+              time: this.countDownText,
+            })
+          : "",
+        labelClass: "text--disabled f-greyscale-1",
+        valueClass: "f-greyscale-1",
       },
     ];
   }
@@ -231,5 +241,8 @@ export default class MarketItem extends Vue {
 }
 .vertical-center {
   vertical-align: middle;
+}
+.market-green {
+  color: #47bd61;
 }
 </style>

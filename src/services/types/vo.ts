@@ -135,3 +135,9 @@ export interface IOracle {
   peek_at: string;
   threshold: number;
 }
+
+export interface ICollateralRatio {
+  value: number;
+  asset: IAsset;
+  color: string;
+}

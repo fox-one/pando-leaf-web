@@ -1,12 +1,11 @@
 <template>
   <div>
-    <v-layout column class="py-3">
-      <v-layout align-center class="f-body-1">
+    <v-layout column class="py-4">
+      <v-layout align-center justify-space-between class="mb-2 f-body-2">
         <span class="font-weight-bold">{{ meta.actionText }}</span>
-        <v-spacer />
-        <span class="text-right f-caption">{{ meta.time }}</span>
+        <span class="text-right f-caption f-greyscale-4">{{ meta.time }}</span>
       </v-layout>
-      <div class="f-body-2">{{ meta.actionContent }}</div>
+      <div class="f-caption f-greyscale-3">{{ meta.actionContent }}</div>
     </v-layout>
   </div>
 </template>
@@ -56,7 +55,7 @@ export default class HistoryItem extends Vue {
     return {
       actionText,
       actionContent,
-      time: this.$utils.time.format(this.flipEvent.created_at),
+      time: this.$utils.time.toRelative(this.flipEvent.created_at),
     };
   }
 }
