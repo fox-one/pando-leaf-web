@@ -69,13 +69,23 @@
               :vault="vault"
             ></my-vault-item>
           </v-col>
-        </v-row>
-        <v-layout justify-center>
-          <f-button class="my-8" @click="openNewVault"
-            ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon> Add a
-            Vault</f-button
+          <v-col
+            xs="12"
+            sm="12"
+            md="6"
+            justify-center
+            column
+            class="d-flex mt-4 justify-center f-bg-greyscale-7 add-new-vault"
           >
-        </v-layout>
+            <div class="add-new-vault-text f-body-2 f-greyscale-3">
+              Need more vault?
+            </div>
+            <f-button class="my-8" @click="openNewVault"
+              ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon> Add a
+              Vault</f-button
+            >
+          </v-col>
+        </v-row>
       </v-container>
       <div style="height: 60px"></div>
       <div class="version-block f-caption text--secondary">
@@ -291,5 +301,19 @@ export default class Me extends Mixins(mixins.page) {
   height: 24px;
   align-self: center !important;
   justify-self: center !important;
+}
+.add-new-vault {
+  flex-direction: column;
+  @media only screen and (min-width: 960px) {
+    align-items: center;
+    height: 372px;
+    border: 1px dashed #cccccc;
+    border-radius: 8px;
+  }
+  .add-new-vault-text {
+    @media only screen and (max-width: 959px) {
+      display: none;
+    }
+  }
 }
 </style>
