@@ -61,11 +61,12 @@
             xs="12"
             sm="12"
             md="6"
+            class="d-flex justify-center"
             :key="vault.id"
             v-for="vault in sortedMyVaults"
           >
             <my-vault-item
-              class="leaf-card mt-4 rounded-lg sm-6 xs-12 mx-1"
+              class="leaf-card mt-4 rounded-lg sm-6 xs-12 mx-1 flex-grow-1"
               :vault="vault"
             ></my-vault-item>
           </v-col>
@@ -73,17 +74,17 @@
             xs="12"
             sm="12"
             md="6"
-            justify-center
-            column
             class="d-flex mt-4 justify-center f-bg-greyscale-7 add-new-vault"
           >
             <div class="add-new-vault-text f-body-2 f-greyscale-3">
               Need more vault?
             </div>
-            <f-button class="my-8" @click="openNewVault"
-              ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon> Add a
-              Vault</f-button
-            >
+            <div class="align-self-center">
+              <f-button class="my-8" @click="openNewVault"
+                ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon> Add a
+                Vault</f-button
+              >
+            </div>
           </v-col>
         </v-row>
       </v-container>

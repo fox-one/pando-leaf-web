@@ -74,6 +74,15 @@
         ></f-info-grid-item>
       </f-info-grid>
     </v-layout>
+
+    <prediction
+      class="my-4"
+      :collateral="collateral"
+      :vault="vault"
+      :amount="amount"
+      :type="vaultStatsType"
+    />
+
     <market-select-modal
       :show.sync="showSelectModal"
       :current.sync="collateral"

@@ -1,7 +1,7 @@
 <template>
-  <f-app-bar v-bind="appbar" v-if="!appbar.disabled" @back="handleBack">
-    <v-layout v-if="appbar.avatar" align-center>
-      <v-avatar class="ml-2" size="32">
+  <f-app-bar v-bind="appbar" @back="handleBack">
+    <v-layout align-center>
+      <v-avatar v-if="appbar.avatar" class="ml-2" size="32">
         <v-img :src="avatar" :size="32"></v-img>
       </v-avatar>
       <f-bottom-sheet

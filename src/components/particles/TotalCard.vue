@@ -1,8 +1,8 @@
 <template>
   <v-row class="pa-0" no-gutters>
-    <v-col xs="12" sm="12" md="6">
+    <v-col xs="12" sm="12" md="6" class="d-flex justify-center">
       <f-panel
-        :class="`mt-2 mx-1 pa-0 leaf-card rounded-lg total-card main-card sm-6 xs-12 ${
+        :class="`mt-2 mx-1 pa-0 leaf-card rounded-lg total-card main-card flex-grow-1 sm-6 xs-12 ${
           switchState ? 'opened-card' : 'closed-card'
         }`"
       >
@@ -88,7 +88,7 @@ export default class TotalCard extends Vue {
     }
   }
 
-  listener = debounce(this.saveState, 600);
+  listener = debounce(this.saveState, 300);
 
   mounted() {
     addEventListener("resize", this.listener);
