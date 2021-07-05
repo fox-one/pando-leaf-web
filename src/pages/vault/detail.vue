@@ -151,6 +151,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
   get appbar() {
     return {
       align: "center",
+      back: true,
     };
   }
 

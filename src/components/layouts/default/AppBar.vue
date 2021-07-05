@@ -1,6 +1,6 @@
 <template>
   <f-app-bar v-bind="appbar" @back="handleBack">
-    <v-layout align-center>
+    <v-layout align-center v-if="!appbar.back">
       <v-avatar v-if="appbar.avatar" class="ml-2" size="32">
         <v-img :src="avatar" :size="32"></v-img>
       </v-avatar>
