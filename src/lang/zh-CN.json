@@ -188,6 +188,8 @@
   "tip.no-collaterals": "正在获取抵押物数据,请稍等或尝试刷新页面.",
   "auctions.title": "拍卖",
   "auction.title.details": "拍卖详情",
+  "auction.list.tab.at-auction": "拍卖中",
+  "auction.list.tab.done": "拍卖结束",
   "auction.status.end": "竞拍已结束",
   "auction.status.stage-price": "竞标出价阶段",
   "auction.status.stage-collateral": "竞标抵押物阶段",

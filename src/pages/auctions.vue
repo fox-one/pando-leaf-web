@@ -3,15 +3,41 @@
     <div class="py-2" v-if="loading">
       <f-loading :loading="loading"></f-loading>
     </div>
-    <div>
-      <auction-item
-        v-for="flip in flips"
-        :key="flip.id"
-        :flip="flip"
-        class="mb-4"
+    <v-tabs
+      v-model="tab"
+      centered
+      hide-slider
+      background-color="transparent"
+      color="primary"
+      class="tabs mb-4"
+    >
+      <v-tab
+        active-class="tab-active"
+        class="f-bg-greyscale-6 tab px-4"
+        href="#auctioning"
+        :ripple="false"
       >
-      </auction-item>
-    </div>
+        {{ $t("auction.list.tab.at-auction") }}
+      </v-tab>
+      <v-tab
+        active-class="tab-active"
+        class="f-bg-greyscale-6 tab px-4"
+        href="#done"
+        :ripple="false"
+      >
+        {{ $t("auction.list.tab.done") }}
+      </v-tab>
+    </v-tabs>
+    <v-tabs-items v-model="tab">
+      <v-tab-item v-for="(val, name) in flips" :key="name" :value="name">
+        <auction-item
+          v-for="flip in val"
+          :key="flip.id"
+          :flip="flip"
+          class="mb-4"
+        />
+      </v-tab-item>
+    </v-tabs-items>
   </v-container>
 </template>
 
@@ -20,6 +46,7 @@ import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IFlip } from "~/services/types/vo";
 import AuctionItem from "~/components/particles/AuctionItem.vue";
+import { FlipAction } from "~/types";
 
 @Component({
   components: {
@@ -30,7 +57,11 @@ export default class AuctionsPage extends Mixins(mixins.page) {
   loading = false;
   has_next = true;
   cursor = null as string | null;
-  flips = [] as IFlip[];
+  flips = {
+    done: [] as IFlip[],
+    auctioning: [] as IFlip[],
+  };
+  tab = null;
 
   get appbar() {
     if (!this.isLogged) {
@@ -72,9 +103,15 @@ export default class AuctionsPage extends Mixins(mixins.page) {
         cursor: this.cursor,
       });
       const flips = res?.data?.flips || [];
-      this.flips = [...this.flips, ...flips];
       this.has_next = res?.data?.pagination?.has_next || false;
       this.cursor = res?.data?.pagination?.next_cursor || null;
+      flips.forEach((v) => {
+        if (v.action === FlipAction.FlipDeal) {
+          this.flips.done.push(v);
+        } else {
+          this.flips.auctioning.push(v);
+        }
+      });
     } catch (error) {
       this.$utils.helper.errorHandler(this, error);
     }
@@ -83,4 +120,31 @@ export default class AuctionsPage extends Mixins(mixins.page) {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+::v-deep {
+  .tab {
+    border-radius: 8px;
+    overflow: hidden;
+    height: 37px;
+    line-height: 37px;
+    color: #000000 !important;
+    text-transform: capitalize;
+    font-size: 13px;
+    letter-spacing: -0.0025em;
+    &-active {
+      color: #ffffff !important;
+      background-color: #000000 !important;
+    }
+  }
+}
+
+.theme--dark.v-application {
+  .tab {
+    color: #ffffff !important;
+    &-active {
+      background-color: #ffffff !important;
+      color: #000000 !important;
+    }
+  }
+}
+</style>
