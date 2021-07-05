@@ -10,35 +10,39 @@
         :key="ix"
         :index="ix"
       >
-        <v-layout style="height: 65.4px" align-center>
-          <div class="f-greyscale-3">{{ item.title }}</div>
-          <base-tooltip :hint="item.hint"></base-tooltip>
-          <v-spacer />
-          <div class="f-greyscale-1">
-            <span
-              :class="
-                'f-info-grid-item-value ' +
-                (item.valueColor ? `${item.valueColor}--text` : '')
-              "
-              >{{ item.value }}</span
-            >
-            <span v-if="!item.showChange">{{ item.valueUnit }}</span>
-          </div>
-          <v-icon class="mx-2" v-if="item.showChange" size="14">
-            $iconPointerRight
-          </v-icon>
-          <div class="f-greyscale-1" v-if="item.showChange">
-            <span
-              :class="
-                'f-info-grid-item-value ' +
-                (item.changedValueColor
-                  ? `${item.changedValueColor}--text`
-                  : '')
-              "
-              >{{ item.changedValue }}</span
-            >
-            <span>{{ item.valueUnit }}</span>
-          </div>
+        <v-layout class="py-6" column>
+          <v-layout align-center>
+            <div class="f-greyscale-3">{{ item.title }}</div>
+            <base-tooltip :hint="item.hint"></base-tooltip>
+            <v-spacer />
+            <div :class="item.showChange ? 'f-greyscale-3' : 'f-greyscale-1'">
+              <span :class="item.valueColor ? `f-${item.valueColor}` : ''">{{
+                item.value
+              }}</span>
+              <span :class="item.valueColor ? `f-${item.valueColor}` : ''">{{
+                item.valueUnit
+              }}</span>
+            </div>
+          </v-layout>
+          <v-layout
+            class="mt-3"
+            v-if="item.showChange"
+            justify-end
+            align-center
+          >
+            <v-icon class="mx-2" v-if="item.showChange" size="14">
+              $iconPointerRight
+            </v-icon>
+            <div class="f-greyscale-1" v-if="item.showChange">
+              <span
+                :class="`${
+                  item.changedValueColor ? `f-${item.changedValueColor}` : ''
+                }`"
+                >{{ item.changedValue }}</span
+              >
+              <span>{{ item.valueUnit }}</span>
+            </div>
+          </v-layout>
         </v-layout>
         <div class="divider" />
       </div>
@@ -220,7 +224,6 @@ export default class Prediction extends Vue {
         valueUnit: this.debtAsset?.symbol,
         hint: this.$t("form.tooltip.liquidation-price"),
         changedValue: this.meta.changedPrice,
-        changedValueColor: this.meta.changedRisk,
         showChange: this.showChange,
       },
       {
