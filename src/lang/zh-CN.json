@@ -190,6 +190,7 @@
   "auction.title.details": "拍卖详情",
   "auction.list.tab.at-auction": "拍卖中",
   "auction.list.tab.done": "拍卖结束",
+  "auction.list.tab.empty": "没有正在进行的拍卖",
   "auction.status.end": "竞拍已结束",
   "auction.status.stage-price": "竞标出价阶段",
   "auction.status.stage-collateral": "竞标抵押物阶段",

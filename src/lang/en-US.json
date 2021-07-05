@@ -190,6 +190,7 @@
   "auction.title.details": "Auction Details",
   "auction.list.tab.at-auction": "At Auction",
   "auction.list.tab.done": "Done",
+  "auction.list.tab.empty": "No auction is in progress",
   "auction.status.end": "The auction has ended",
   "auction.status.stage-price": "Price bidding stage",
   "auction.status.stage-collateral": "Collateral amount bidding stage",

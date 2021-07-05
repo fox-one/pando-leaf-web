@@ -28,14 +28,19 @@
         {{ $t("auction.list.tab.done") }}
       </v-tab>
     </v-tabs>
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-model="tab" class="tabs-items">
       <v-tab-item v-for="(val, name) in flips" :key="name" :value="name">
-        <auction-item
-          v-for="flip in val"
-          :key="flip.id"
-          :flip="flip"
-          class="mb-4"
-        />
+        <div v-if="val.length">
+          <auction-item
+            v-for="flip in val"
+            :key="flip.id"
+            :flip="flip"
+            class="mb-4"
+          />
+        </div>
+        <div v-else class="empty f-body-2">
+          {{ $t("auction.list.tab.empty") }}
+        </div>
       </v-tab-item>
     </v-tabs-items>
   </v-container>
@@ -136,6 +141,9 @@ export default class AuctionsPage extends Mixins(mixins.page) {
       background-color: #000000 !important;
     }
   }
+  .tabs-items {
+    background-color: transparent;
+  }
 }
 
 .theme--dark.v-application {
@@ -146,5 +154,11 @@ export default class AuctionsPage extends Mixins(mixins.page) {
       color: #000000 !important;
     }
   }
+}
+
+.empty {
+  background: url(../assets/images/no_auction.png) no-repeat center;
+  padding-top: 32.5vh;
+  text-align: center;
 }
 </style>
