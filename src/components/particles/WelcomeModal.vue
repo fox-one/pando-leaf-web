@@ -22,7 +22,7 @@
           <v-divider vertical />
           <v-layout column>
             <div class="ml-10 mt-10 welcome-title f-greyscale-1">
-              What's Pando<v-icon class="welcome-leaf-logo" size="54"
+              What's Pando<v-icon class="welcome-leaf-logo" size="64px"
                 >$iconLeaf</v-icon
               >
             </div>
@@ -80,6 +80,17 @@ export default WelcomeModal;
   font-size: 16px;
 }
 .welcome-leaf-logo {
-  margin-top: -6px;
+  margin-top: -4px;
+  margin-left: 6px;
+  height: 32px !important;
+  width: 64px !important;
+  font-size: 64px !important;
+  ::v-deep {
+    .v-icon__component {
+      height: 32px !important;
+      width: 64px !important;
+      font-size: 64px !important;
+    }
+  }
 }
 </style>

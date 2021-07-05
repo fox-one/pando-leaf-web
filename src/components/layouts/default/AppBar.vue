@@ -17,7 +17,7 @@
             class="middle-center"
             v-on="on"
           >
-            <v-icon size="44"> $iconLeaf</v-icon>
+            <v-icon size="64"> $iconLeaf</v-icon>
             <v-icon size="16"> {{ $icons.mdiChevronDown }}</v-icon>
           </v-btn>
         </template>
@@ -142,7 +142,8 @@ export default DefaultLayoutAppBar;
 .middle-center {
   position: absolute;
   @media only screen and (max-width: 959px) {
-    left: calc(50% - 30px);
+    float: left;
+    left: calc(50% - 54px);
   }
   left: 48px;
 }
