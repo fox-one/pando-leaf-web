@@ -345,7 +345,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         text: this.$t("button.generate"),
         icon: "$iconGenerate",
         size: "22",
-        color: this.meta?.collateralAmount === 0 ? "grey" : "green",
+        color: this.meta?.collateralAmount === 0 ? "grey" : "primary",
         onClick: (id) => {
           if (this.meta?.collateralAmount === 0) return;
           this.$router.push(`/vault/generate?id=${id}`);
@@ -355,7 +355,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         text: this.$t("button.pay-back"),
         icon: "$iconPayback",
         size: "22",
-        color: this.meta?.debtAmount === 0 ? "grey" : "deep-orange",
+        color: this.meta?.debtAmount === 0 ? "grey" : "primary",
         onClick: (id) => {
           if (this.meta?.debtAmount === 0) return;
           this.$router.push(`/vault/payback?id=${id}`);
