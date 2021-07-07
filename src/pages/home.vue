@@ -26,10 +26,7 @@
       >
         <v-icon class="mb-8" size="110">$iconNoVault</v-icon>
         <h3 class="f-greyscale-2">{{ $t("me.no-vault-1") }}</h3>
-        <p class="mx-4 mt-2 text-center">
-          {{ $t("me.no-vault-2") }}
-        </p>
-        <v-btn
+        <f-button
           class="mt-4"
           color="primary"
           @click="openNewVault"
@@ -38,7 +35,7 @@
           depressed
         >
           <span>{{ $t("me.no-vault-button") }}</span>
-        </v-btn>
+        </f-button>
       </v-layout>
 
       <v-container column justify-center v-if="isLogged && haveVault">
@@ -74,17 +71,15 @@
             xs="12"
             sm="12"
             md="6"
-            class="d-flex mt-4 mx-1 justify-center f-bg-greyscale-7 flex-grow-0 add-new-vault"
+            class="d-flex mt-4 mx-1 justify-center f-bg-greyscale-7 add-new-vault"
           >
             <div class="add-new-vault-text f-body-2 f-greyscale-3">
               Need more vault?
             </div>
-            <div class="align-self-center">
-              <f-button class="my-8" @click="openNewVault"
-                ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon> Add a
-                Vault</f-button
-              >
-            </div>
+            <f-button class="my-8" @click="openNewVault"
+              ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon> Add a
+              Vault</f-button
+            >
           </v-col>
         </v-row>
       </v-container>
