@@ -58,25 +58,9 @@
       </asset-range-input>
     </v-layout>
 
-    <v-layout column class="my-4 f-bg-greyscale-7">
-      <div class="mt-4 mx-4 f-title-1">{{ $t("form.predication") }}</div>
-      <f-info-grid :window-size="2">
-        <f-info-grid-item
-          v-for="(item, ix) in infos"
-          :key="ix"
-          :index="ix"
-          :title="item.title"
-          :value="item.value"
-          :value-unit="item.valueUnit"
-          :value-color="item.valueColor"
-          :value-custom-color="item.valueCustomColor"
-          :hint="item.hint"
-        ></f-info-grid-item>
-      </f-info-grid>
-    </v-layout>
-
     <prediction
       class="my-4"
+      :out-data="infos"
       :collateral="collateral"
       :vault="vault"
       :amount="amount"
@@ -374,6 +358,13 @@ export default class GenerateVault extends Mixins(mixins.page) {
         hint: this.$t("form.tooltip.liquidation-price"),
       },
       {
+        title: this.$t("form.info.current-symbol-price", {
+          symbol: `${this.deposit?.symbol}/${this.mint?.symbol}`,
+        }),
+        value: this.meta.currentDepositPrice,
+        valueUnit: `${this.mint?.symbol}`,
+      },
+      {
         title: this.$t("form.info.collateralization-ratio"), // deposit * price / mint
         value: this.meta.collateralizationRatioText,
         valueUnit: "%",
@@ -382,13 +373,6 @@ export default class GenerateVault extends Mixins(mixins.page) {
           this.collateral.mat
         ),
         hint: this.$t("form.tooltip.collateralization-ratio"),
-      },
-      {
-        title: this.$t("form.info.current-symbol-price", {
-          symbol: `${this.deposit?.symbol}/${this.mint?.symbol}`,
-        }),
-        value: this.meta.currentDepositPrice,
-        valueUnit: `${this.mint?.symbol}`,
       },
       {
         title: this.$t("form.info.minimum-ratio"),

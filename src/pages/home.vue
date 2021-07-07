@@ -74,7 +74,7 @@
             xs="12"
             sm="12"
             md="6"
-            class="d-flex mt-4 justify-center f-bg-greyscale-7 add-new-vault"
+            class="d-flex mt-4 mx-1 justify-center f-bg-greyscale-7 flex-grow-0 add-new-vault"
           >
             <div class="add-new-vault-text f-body-2 f-greyscale-3">
               Need more vault?
@@ -307,9 +307,10 @@ export default class Me extends Mixins(mixins.page) {
   flex-direction: column;
   @media only screen and (min-width: 960px) {
     align-items: center;
-    height: 372px;
+    height: 342px;
     border: 1px dashed #cccccc;
     border-radius: 8px;
+    max-width: calc(50% - 8px);
   }
   .add-new-vault-text {
     @media only screen and (max-width: 959px) {

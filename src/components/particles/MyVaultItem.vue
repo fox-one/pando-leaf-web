@@ -1,10 +1,10 @@
 <template>
-  <f-panel :class="`pa-0 f-bg-${risk}`">
+  <f-panel :class="`my-vault-card pa-0 f-bg-${risk}`">
     <div @click="toDetail">
-      <v-layout column>
-        <v-layout row align-center class="ma-0 mt-4 pa-0">
+      <v-layout column class="my-vault-card">
+        <v-layout row align-center class="ma-0 mt-4 pa-0 flex-grow-0">
           <f-mixin-asset-logo
-            class="flex-grow-0 ml-4 mr-1 z-index-2"
+            class="flex-grow-0 ml-6 mr-1 z-index-2"
             :size="40"
             :logo="collateralLogo"
           ></f-mixin-asset-logo>
@@ -24,78 +24,84 @@
             <v-icon size="40" color="primary">$iconMoreInfo</v-icon>
           </v-btn>
         </v-layout>
-        <v-layout v-if="inLiquidation" column class="red pl-4 my-4 ml-4">
-          <div class="mt-2 f-caption">
-            {{ $t("me.vault-item.in-liquidation-tips1") }}
-          </div>
-          <div class="mb-2 f-caption">
-            {{ $t("me.vault-item.in-liquidation-tips2") }}
-          </div>
-        </v-layout>
-        <f-info-grid :window-size="2" class="mt-2">
-          <value-changed-info-grid-item
-            v-for="(item, ix) in infos.concat(collapseInfos)"
-            :key="ix"
-            :index="ix"
-            :title="item.title"
-            :value="item.value"
-            :value-unit="item.valueUnit"
-            :value-color="item.valueColor"
-            :changed-value="item.changedValue"
-            :show-change="item.showChange"
-            :hint="item.hint"
-          ></value-changed-info-grid-item>
-        </f-info-grid>
-      </v-layout>
-      <v-layout column class="ma-0 pa-0">
-        <v-divider class="mx-6" />
-        <v-layout justify-space-around class="buttons">
-          <v-btn
-            text
-            :disabled="meta.debtAmount === 0"
-            :min-height="68"
-            class="f-actionbar-button-label f-caption f-weight-m"
-            @click="toPayback"
+        <v-row no-gutters class="px-2 mb-3 f-body-2 font-weight-bold">
+          <v-col
+            class="py-3 pl-4"
+            v-for="item in infos"
+            :key="item.title"
+            sm="6"
+            xs="6"
+            md="6"
+            cols="6"
           >
-            <v-layout column justify-center align-center>
-              <v-icon size="32">$iconPayback</v-icon>
-              <div class="f-caption">{{ $t("button.pay-back") }}</div>
+            <v-layout align-center>
+              <span :class="`f-caption font-weight-bold ` + item.titleClass">
+                {{ item.title }}</span
+              >
+              <span><base-tooltip :hint="item.hint" /></span>
             </v-layout>
-          </v-btn>
-          <v-btn
-            text
-            :disabled="inLiquidation || meta.collateralAmount === 0"
-            class="f-actionbar-button-label f-caption f-weight-m"
-            :min-height="68"
-            @click="toGenerate"
-          >
-            <v-layout column justify-center align-center>
-              <v-icon size="32">$iconGenerate</v-icon>
-              <div class="f-caption">{{ $t("button.generate") }}</div>
-            </v-layout>
-          </v-btn>
-          <v-btn
-            text
-            :min-height="68"
-            class="f-actionbar-button-label f-caption f-weight-m"
-            @click="toWithdraw"
-          >
-            <v-layout column justify-center align-center>
-              <v-icon size="32">$iconWithdraw</v-icon>
-              <div class="f-caption">{{ $t("button.withdraw") }}</div>
-            </v-layout>
-          </v-btn>
-          <v-btn
-            text
-            :min-height="68"
-            class="f-actionbar-button-label f-caption f-weight-m"
-            @click="toDeposit"
-          >
-            <v-layout column justify-center align-center>
-              <v-icon size="32">$iconDeposit</v-icon>
-              <div class="f-caption">{{ $t("button.deposit") }}</div>
-            </v-layout>
-          </v-btn>
+            <div :class="`f-body-2 ` + item.valueClass">
+              {{ item.value }} <span>{{ item.valueUnit }}</span>
+            </div>
+          </v-col>
+        </v-row>
+        <div
+          v-if="collateralAmount === 0"
+          class="f-caption f-greyscale-1 opacity4 mt-2 mb-6 ml-6"
+        >
+          {{ "This vault don’t have any collateral" }}
+        </div>
+        <v-spacer />
+        <v-layout column class="ma-0 pa-0 flex-grow-0">
+          <v-divider class="mx-6" />
+          <v-layout justify-space-around class="buttons">
+            <v-btn
+              text
+              :disabled="meta.debtAmount === 0"
+              :min-height="68"
+              class="f-actionbar-button-label f-caption f-weight-m"
+              @click="toPayback"
+            >
+              <v-layout column justify-center align-center>
+                <v-icon size="32">$iconPayback</v-icon>
+                <div class="f-caption">{{ $t("button.pay-back") }}</div>
+              </v-layout>
+            </v-btn>
+            <v-btn
+              text
+              :disabled="inLiquidation || meta.collateralAmount === 0"
+              class="f-actionbar-button-label f-caption f-weight-m"
+              :min-height="68"
+              @click="toGenerate"
+            >
+              <v-layout column justify-center align-center>
+                <v-icon size="32">$iconGenerate</v-icon>
+                <div class="f-caption">{{ $t("button.generate") }}</div>
+              </v-layout>
+            </v-btn>
+            <v-btn
+              text
+              :min-height="68"
+              class="f-actionbar-button-label f-caption f-weight-m"
+              @click="toWithdraw"
+            >
+              <v-layout column justify-center align-center>
+                <v-icon size="32">$iconWithdraw</v-icon>
+                <div class="f-caption">{{ $t("button.withdraw") }}</div>
+              </v-layout>
+            </v-btn>
+            <v-btn
+              text
+              :min-height="68"
+              class="f-actionbar-button-label f-caption f-weight-m"
+              @click="toDeposit"
+            >
+              <v-layout column justify-center align-center>
+                <v-icon size="32">$iconDeposit</v-icon>
+                <div class="f-caption">{{ $t("button.deposit") }}</div>
+              </v-layout>
+            </v-btn>
+          </v-layout>
         </v-layout>
       </v-layout>
     </div>
@@ -168,6 +174,16 @@ export default class MyVaultItem extends Vue {
     return this.debtAsset?.symbol;
   }
 
+  get collateralAmount() {
+    return Number(this.vault?.ink);
+  }
+
+  get debtAmount() {
+    return (
+      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1")
+    );
+  }
+
   get maxAvailableToGenerate() {
     const debtAmount =
       Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
@@ -201,7 +217,7 @@ export default class MyVaultItem extends Vue {
     const collateralizationRatio =
       (collateralAmount * Number(this.collateral?.price)) / debtAmount;
     let collateralizationRatioText =
-      this.$utils.number.toFixed(collateralizationRatio * 100, 2) + "%";
+      this.$utils.number.toFixed(collateralizationRatio * 100, 1) + "%";
     if (!this.$utils.number.isValid(collateralizationRatio)) {
       collateralizationRatioText = "N/A";
     }
@@ -233,13 +249,15 @@ export default class MyVaultItem extends Vue {
   }
 
   get infos() {
-    return [
+    if (this.collateralAmount === 0) return [];
+    const infos: any[] = [
       {
         title: this.$t("me.vault-item.symbol-locked", {
           symbol: this.collateralSymbol,
         }),
         value: this.$utils.number.toPrecision(this.vault?.ink),
         valueUnit: this.collateralSymbol,
+        valueClass: `font-weight-bold`,
       },
       {
         title: this.$t("me.vault-item.outstanding-symbol-debt", {
@@ -251,6 +269,24 @@ export default class MyVaultItem extends Vue {
           BigNumber.ROUND_UP
         ),
         valueUnit: this.debtSymbol,
+        valueClass: `font-weight-bold`,
+      },
+      // {
+      //   title: this.$t("form.info.minimum-ratio"),
+      //   value: this.$utils.number.toFixed(
+      //     Number(this.collateral?.mat) * 100,
+      //     2
+      //   ),
+      //   valueUnit: "%",
+      // },
+    ];
+    if (this.debtAmount === 0) return infos;
+    infos.push(
+      {
+        title: this.$t("me.vault-item.collateral-ratio"),
+        value: this.meta.collateralizationRatioText,
+        titleClass: `f-${this.risk}`,
+        valueClass: `f-${this.risk} font-weight-bold`,
       },
       {
         title: this.$t("form.info.current-symbol-price", {
@@ -258,11 +294,25 @@ export default class MyVaultItem extends Vue {
         }),
         value: this.$utils.number.toPrecision(this.collateral?.price),
         valueUnit: this.debtSymbol,
-        changedValue: this.$utils.number.toPrecision(
-          this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.price ||
-            ""
-        ),
-        showChange: this.isValidOracle,
+        titleClass: `f-greyscale-1 opacity4`,
+        valueClass: `f-greyscale-1`,
+      },
+      {
+        title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
+        value: this.meta?.liquidationPrice,
+        valueUnit: this.debtSymbol,
+        titleClass: `f-greyscale-1 opacity4`,
+        valueClass: `f-greyscale-1`,
+      },
+      {
+        title: this.$t("me.vault-item.next-price"),
+        value: this.isValidOracle
+          ? this.$utils.number.toPrecision(
+              this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
+                ?.price || "-"
+            )
+          : "-",
+        valueUnit: this.isValidOracle ? this.debtSymbol : "",
         hint: this.isValidOracle
           ? this.$t("form.info.oracle-price", {
               time: this.$utils.time.format(
@@ -270,15 +320,12 @@ export default class MyVaultItem extends Vue {
                   ?.peek_at
               ),
             })
-          : null,
-      },
-      {
-        title: this.$t("me.vault-item.available-to-generate"),
-        value: this.maxAvailableToGenerate,
-        valueUnit: this.debtSymbol,
-        valueColor: this.inLiquidation ? "red" : "",
-      },
-    ];
+          : "",
+        titleClass: `f-greyscale-1 opacity4`,
+        valueClass: `f-greyscale-1`,
+      }
+    );
+    return infos;
   }
 
   get isValidOracle() {
@@ -286,34 +333,6 @@ export default class MyVaultItem extends Vue {
     return next && next.peek_at && dayjs(next.peek_at).isAfter(Date.now());
   }
 
-  get collapseInfos() {
-    return [
-      {
-        title: this.$t("me.vault-item.available-to-withdraw"),
-        value: this.maxAvailableToWithdraw,
-        valueUnit: this.collateralSymbol,
-        valueColor: this.inLiquidation ? "red" : "",
-      },
-      {
-        title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
-        value: this.meta?.liquidationPrice,
-        valueUnit: this.debtSymbol,
-      },
-      {
-        title: this.$t("form.info.minimum-ratio"),
-        value: this.$utils.number.toFixed(
-          Number(this.collateral?.mat) * 100,
-          2
-        ),
-        valueUnit: "%",
-      },
-      {
-        title: this.$t("form.info.stability-fee"),
-        value: this.meta?.stabilityFee,
-        valueUnit: "%",
-      },
-    ];
-  }
   toDeposit() {
     this.$router.push(`/vault/deposit?id=${this.vault.id}`);
   }
@@ -333,21 +352,15 @@ export default class MyVaultItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.content-panel {
-  ::v-deep {
-    .v-expansion-panel-content__wrap {
-      padding: 0px 0px;
-      .f-info-grid-inner {
-        padding-top: 0px !important;
-      }
-    }
+.my-vault-card {
+  @media only screen and (min-width: 960px) {
+    height: 342px;
   }
 }
 .z-index-2 {
   z-index: 2;
 }
-.icon-generate {
-  fill: currentColor;
-  stroke: currentColor;
+.opacity4 {
+  opacity: 0.4;
 }
 </style>

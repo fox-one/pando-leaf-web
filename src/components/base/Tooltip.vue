@@ -23,7 +23,7 @@
       max-width="600"
     >
       <template #activator="{ on }">
-        <v-btn
+        <f-button
           v-if="hint"
           icon
           x-small
@@ -33,20 +33,20 @@
           v-on="on"
         >
           <v-icon size="14">$iconQuestion</v-icon>
-        </v-btn>
+        </f-button>
       </template>
       <template #title> {{ $t("tooltip.details") }} </template>
       <div class="pb-8">
         <div class="ma-4">{{ hint }}</div>
         <div class="my-8 text-center">
-          <v-btn
+          <f-button
             rounded
             depressed
             color="primary"
             height="56px"
             class="px-8"
             @click="showSheet = false"
-            >{{ $t("common.close") }}</v-btn
+            >{{ $t("common.close") }}</f-button
           >
         </div>
       </div>

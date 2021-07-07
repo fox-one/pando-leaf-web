@@ -6,7 +6,7 @@
           switchState ? 'opened-card' : 'closed-card'
         }`"
       >
-        <v-icon size="144" class="total-card-texture"
+        <v-icon v-if="!switchState" size="144" class="total-card-texture"
           >$iconTotalCardTexture</v-icon
         >
         <v-switch v-model="switchState" color="white" class="total-switch">

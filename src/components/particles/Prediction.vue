@@ -6,7 +6,7 @@
     <div>
       <div
         class="mx-4 f-body-2"
-        v-for="(item, ix) in infos"
+        v-for="(item, ix) in outData ? outData : infos"
         :key="ix"
         :index="ix"
       >
@@ -75,12 +75,13 @@ export default class Prediction extends Vue {
   @Prop() type!: VatAction;
   @Prop({ type: Boolean, default: true }) showDebt;
   @Prop({ type: Boolean, default: false }) showPenalty;
+  @Prop({ default: null }) outData!: any[];
 
   get gridTitle() {
     if (this.title !== undefined) {
       return this.title;
     } else {
-      return this.$t("form.info.vault-stats-title");
+      return this.$t("form.predication");
     }
   }
 
@@ -194,7 +195,7 @@ export default class Prediction extends Vue {
 
     return {
       debtAmount,
-      liquidationPrice: this.$utils.number.toPrecision(liquidationPrice),
+      liquidationPrice: this.$utils.number.toPrecision(liquidationPrice || "-"),
       collateralizationRatio,
       collateralizationRatioText,
       liquidationPenalty,

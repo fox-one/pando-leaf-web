@@ -12,8 +12,8 @@ const state = () => ({
     avatar: false,
   },
   settings: {
-    // dark: true,
-    dark: isDarkTheme(),
+    dark: true,
+    // dark: isDarkTheme(),
   },
   bottomNav: {
     value: "",
