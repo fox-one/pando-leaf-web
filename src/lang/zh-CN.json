@@ -51,6 +51,7 @@
   "me.vault-item.outstanding-symbol-debt": "未偿 {symbol} 债务",
   "me.vault-item.available-to-withdraw": "可取回",
   "me.vault-item.available-to-generate": "可生成",
+  "me.vault-item.next-price":"下一价格",
   "me.vault-item.in-liquidation-tips1": "已触达清算线.",
   "me.vault-item.in-liquidation-tips2": "这个金库将在清算列表中列出.",
   "vault.detail.title": "金库详情",
