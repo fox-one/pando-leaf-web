@@ -1,5 +1,5 @@
 <template>
-  <v-layout column class="wrapper mx-0 pa-6">
+  <v-layout @click="$emit('add')" column class="wrapper mx-0 pa-6">
     <v-layout justify-space-between>
       <v-layout align-center>
         <f-mixin-asset-logo

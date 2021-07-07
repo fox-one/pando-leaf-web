@@ -5,17 +5,17 @@
         <f-loading :loading="loading"></f-loading>
       </div>
       <!-- 授权登陆按钮 -->
-      <base-connect-wallet-btn
-        v-if="!isLogged"
-        rounded
-        large
-        depressed
-        color="primary"
-        @click="handleLogin"
-      >
-        {{ $t("connect.wallet") }}
-      </base-connect-wallet-btn>
-
+      <div v-if="!isLogged" style="height: 88%">
+        <base-connect-wallet-btn
+          rounded
+          large
+          depressed
+          color="primary"
+          @click="handleLogin"
+        >
+          {{ $t("connect.wallet") }}
+        </base-connect-wallet-btn>
+      </div>
       <!-- no vault -->
       <v-layout
         v-if="isLogged && !haveVault"

@@ -57,7 +57,9 @@ export default class MarketSelectModal extends Vue {
   isFocus = false;
 
   get filtedItems() {
-    return this.collaterals?.filter((item) => item.name.includes(this.filter));
+    return this.collaterals?.filter((item) =>
+      item.name?.toLowerCase().includes(this.filter?.toLowerCase())
+    );
   }
 
   get prependInner() {
