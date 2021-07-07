@@ -17,7 +17,7 @@
             class="leaf-logo-button"
             v-on="on"
           >
-            <v-icon size="64"> $iconLeaf</v-icon>
+            <v-icon class="leaf-logo" size="64"> $iconLeaf</v-icon>
             <v-icon size="16"> {{ $icons.mdiChevronDown }}</v-icon>
           </v-btn>
         </template>
@@ -146,6 +146,20 @@ export default DefaultLayoutAppBar;
     left: calc(50% - 54px);
   }
   left: 48px;
+}
+.leaf-logo {
+  margin-top: -4px;
+  margin-left: 6px;
+  height: 32px !important;
+  width: 64px !important;
+  font-size: 64px !important;
+  ::v-deep {
+    .v-icon__component {
+      height: 32px !important;
+      width: 64px !important;
+      font-size: 64px !important;
+    }
+  }
 }
 .list-item-text {
   font-weight: 500;

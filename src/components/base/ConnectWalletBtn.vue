@@ -1,6 +1,6 @@
 <template>
   <div style="text-align: center">
-    <v-btn
+    <f-button
       rounded
       depressed
       color="primary"
@@ -9,7 +9,7 @@
       @click="handleLogin"
     >
       {{ $t("connect.wallet") }}
-    </v-btn>
+    </f-button>
     <f-bottom-sheet v-model="show">
       <template #title>{{ $t("connect.wallet") }}</template>
       <!--

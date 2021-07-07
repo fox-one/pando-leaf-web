@@ -305,6 +305,7 @@ export default class Me extends Mixins(mixins.page) {
 }
 .add-new-vault {
   flex-direction: column;
+  align-items: center;
   @media only screen and (min-width: 960px) {
     align-items: center;
     height: 342px;
