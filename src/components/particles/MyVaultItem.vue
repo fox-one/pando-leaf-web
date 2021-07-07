@@ -1,102 +1,104 @@
 <template>
   <f-panel :class="`pa-0 f-bg-${risk}`">
-    <v-layout column>
-      <v-layout row align-center class="ma-0 mt-4 pa-0">
-        <f-mixin-asset-logo
-          class="flex-grow-0 ml-4 mr-1 z-index-2"
-          :size="40"
-          :logo="collateralLogo"
-        ></f-mixin-asset-logo>
-        <f-mixin-asset-logo
-          class="flex-grow-0 ml-n2 mr-1"
-          :size="40"
-          :logo="debtLogo"
-        ></f-mixin-asset-logo>
-        <span class="f-caption ml-1">{{
-          `${collateralName} #${vault.identity_id}`
-        }}</span>
-        <v-spacer></v-spacer>
-        <!-- <div :class="`mr-1 f-${risk}`">
+    <div @click="toDetail">
+      <v-layout column>
+        <v-layout row align-center class="ma-0 mt-4 pa-0">
+          <f-mixin-asset-logo
+            class="flex-grow-0 ml-4 mr-1 z-index-2"
+            :size="40"
+            :logo="collateralLogo"
+          ></f-mixin-asset-logo>
+          <f-mixin-asset-logo
+            class="flex-grow-0 ml-n2 mr-1"
+            :size="40"
+            :logo="debtLogo"
+          ></f-mixin-asset-logo>
+          <span class="f-caption ml-1">{{
+            `${collateralName} #${vault.identity_id}`
+          }}</span>
+          <v-spacer></v-spacer>
+          <!-- <div :class="`mr-1 f-${risk}`">
           {{ this.meta.collateralizationRatioText }}
         </div> -->
-        <v-btn text fab circle rounded class="mr-2" @click="toDetail">
-          <v-icon size="40" color="primary">$iconMoreInfo</v-icon>
-        </v-btn>
+          <v-btn text fab circle rounded class="mr-2" @click="toDetail">
+            <v-icon size="40" color="primary">$iconMoreInfo</v-icon>
+          </v-btn>
+        </v-layout>
+        <v-layout v-if="inLiquidation" column class="red pl-4 my-4 ml-4">
+          <div class="mt-2 f-caption">
+            {{ $t("me.vault-item.in-liquidation-tips1") }}
+          </div>
+          <div class="mb-2 f-caption">
+            {{ $t("me.vault-item.in-liquidation-tips2") }}
+          </div>
+        </v-layout>
+        <f-info-grid :window-size="2" class="mt-2">
+          <value-changed-info-grid-item
+            v-for="(item, ix) in infos.concat(collapseInfos)"
+            :key="ix"
+            :index="ix"
+            :title="item.title"
+            :value="item.value"
+            :value-unit="item.valueUnit"
+            :value-color="item.valueColor"
+            :changed-value="item.changedValue"
+            :show-change="item.showChange"
+            :hint="item.hint"
+          ></value-changed-info-grid-item>
+        </f-info-grid>
       </v-layout>
-      <v-layout v-if="inLiquidation" column class="red pl-4 my-4 ml-4">
-        <div class="mt-2 f-caption">
-          {{ $t("me.vault-item.in-liquidation-tips1") }}
-        </div>
-        <div class="mb-2 f-caption">
-          {{ $t("me.vault-item.in-liquidation-tips2") }}
-        </div>
+      <v-layout column class="ma-0 pa-0">
+        <v-divider class="mx-6" />
+        <v-layout justify-space-around class="buttons">
+          <v-btn
+            text
+            :disabled="meta.debtAmount === 0"
+            :min-height="68"
+            class="f-actionbar-button-label f-caption f-weight-m"
+            @click="toPayback"
+          >
+            <v-layout column justify-center align-center>
+              <v-icon size="32">$iconPayback</v-icon>
+              <div class="f-caption">{{ $t("button.pay-back") }}</div>
+            </v-layout>
+          </v-btn>
+          <v-btn
+            text
+            :disabled="inLiquidation || meta.collateralAmount === 0"
+            class="f-actionbar-button-label f-caption f-weight-m"
+            :min-height="68"
+            @click="toGenerate"
+          >
+            <v-layout column justify-center align-center>
+              <v-icon size="32">$iconGenerate</v-icon>
+              <div class="f-caption">{{ $t("button.generate") }}</div>
+            </v-layout>
+          </v-btn>
+          <v-btn
+            text
+            :min-height="68"
+            class="f-actionbar-button-label f-caption f-weight-m"
+            @click="toWithdraw"
+          >
+            <v-layout column justify-center align-center>
+              <v-icon size="32">$iconWithdraw</v-icon>
+              <div class="f-caption">{{ $t("button.withdraw") }}</div>
+            </v-layout>
+          </v-btn>
+          <v-btn
+            text
+            :min-height="68"
+            class="f-actionbar-button-label f-caption f-weight-m"
+            @click="toDeposit"
+          >
+            <v-layout column justify-center align-center>
+              <v-icon size="32">$iconDeposit</v-icon>
+              <div class="f-caption">{{ $t("button.deposit") }}</div>
+            </v-layout>
+          </v-btn>
+        </v-layout>
       </v-layout>
-      <f-info-grid :window-size="2" class="mt-2">
-        <value-changed-info-grid-item
-          v-for="(item, ix) in infos.concat(collapseInfos)"
-          :key="ix"
-          :index="ix"
-          :title="item.title"
-          :value="item.value"
-          :value-unit="item.valueUnit"
-          :value-color="item.valueColor"
-          :changed-value="item.changedValue"
-          :show-change="item.showChange"
-          :hint="item.hint"
-        ></value-changed-info-grid-item>
-      </f-info-grid>
-    </v-layout>
-    <v-layout column class="ma-0 pa-0">
-      <v-divider class="mx-6" />
-      <v-layout justify-space-around class="buttons">
-        <v-btn
-          text
-          :disabled="meta.debtAmount === 0"
-          :min-height="68"
-          class="f-actionbar-button-label f-caption f-weight-m"
-          @click="toPayback"
-        >
-          <v-layout column justify-center align-center>
-            <v-icon size="32">$iconPayback</v-icon>
-            <div class="f-caption">{{ $t("button.pay-back") }}</div>
-          </v-layout>
-        </v-btn>
-        <v-btn
-          text
-          :disabled="inLiquidation || meta.collateralAmount === 0"
-          class="f-actionbar-button-label f-caption f-weight-m"
-          :min-height="68"
-          @click="toGenerate"
-        >
-          <v-layout column justify-center align-center>
-            <v-icon size="32">$iconGenerate</v-icon>
-            <div class="f-caption">{{ $t("button.generate") }}</div>
-          </v-layout>
-        </v-btn>
-        <v-btn
-          text
-          :min-height="68"
-          class="f-actionbar-button-label f-caption f-weight-m"
-          @click="toWithdraw"
-        >
-          <v-layout column justify-center align-center>
-            <v-icon size="32">$iconWithdraw</v-icon>
-            <div class="f-caption">{{ $t("button.withdraw") }}</div>
-          </v-layout>
-        </v-btn>
-        <v-btn
-          text
-          :min-height="68"
-          class="f-actionbar-button-label f-caption f-weight-m"
-          @click="toDeposit"
-        >
-          <v-layout column justify-center align-center>
-            <v-icon size="32">$iconDeposit</v-icon>
-            <div class="f-caption">{{ $t("button.deposit") }}</div>
-          </v-layout>
-        </v-btn>
-      </v-layout>
-    </v-layout>
+    </div>
   </f-panel>
 </template>
 
