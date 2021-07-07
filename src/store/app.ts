@@ -1,4 +1,3 @@
-import { MutationTree, GetterTree, ActionTree } from "vuex";
 import { SOCKET_STATE } from "~/types";
 import { isDarkTheme } from "~/utils/helper";
 
@@ -12,8 +11,8 @@ const state = () => ({
     avatar: false,
   },
   settings: {
-    dark: true,
-    // dark: isDarkTheme(),
+    // dark: true,
+    dark: isDarkTheme(),
   },
   bottomNav: {
     value: "",

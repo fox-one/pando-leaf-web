@@ -67,6 +67,7 @@
             text
             :disabled="meta.debtAmount === 0"
             :min-height="68"
+            color="primary"
             class="f-actionbar-button-label f-caption f-weight-m"
             @click="toPayback"
           >
@@ -77,6 +78,7 @@
           </v-btn>
           <v-btn
             text
+            color="primary"
             :disabled="inLiquidation || meta.collateralAmount === 0"
             class="f-actionbar-button-label f-caption f-weight-m"
             :min-height="68"
@@ -89,6 +91,7 @@
           </v-btn>
           <v-btn
             text
+            color="primary"
             :min-height="68"
             class="f-actionbar-button-label f-caption f-weight-m"
             @click="toWithdraw"
@@ -100,6 +103,7 @@
           </v-btn>
           <v-btn
             text
+            color="primary"
             :min-height="68"
             class="f-actionbar-button-label f-caption f-weight-m"
             @click="toDeposit"

@@ -4,13 +4,11 @@
       <v-layout column align-center>
         <v-icon class="mt-10" :size="imageHeight">$iconWelcomeImg</v-icon>
         <div class="welcome-title f-greyscale-1 mt-8 text-center">
-          What's Pando<v-icon class="welcome-leaf-logo" size="54"
-            >$iconLeaf</v-icon
-          >
+          {{ $t("welcome.what-is")
+          }}<v-icon class="welcome-leaf-logo" size="54">$iconLeaf</v-icon>
         </div>
         <div class="welcome-content f-greyscale-3 mx-4 mt-8 text-center">
-          Pando leaf is product description product description product
-          description product description
+          {{ $t("welcome.description") }}
         </div>
         <f-button class="my-8" @click="hide">{{
           $t("common.continue")
@@ -24,13 +22,11 @@
           <v-divider vertical />
           <v-layout column>
             <div class="ml-10 mt-10 welcome-title f-greyscale-1">
-              What's Pando<v-icon class="welcome-leaf-logo" size="64px"
-                >$iconLeaf</v-icon
-              >
+              {{ $t("welcome.what-is")
+              }}<v-icon class="welcome-leaf-logo" size="64px">$iconLeaf</v-icon>
             </div>
             <div class="mx-10 mt-6 welcome-content f-greyscale-3">
-              Pando leaf is product description product description product
-              description product description
+              {{ $t("welcome.description") }}
             </div>
             <div>
               <f-button class="ml-10 mt-6" @click="handleConfirm"

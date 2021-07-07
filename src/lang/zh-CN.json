@@ -40,6 +40,8 @@
   "tab.home": "首页",
   "tab.market": "市场",
   "tab.auctions": "拍卖",
+  "welcome.what-is":"什么是 Pando",
+  "welcome.description":"Pando Leaf 是一个通过抵押数字资产生成稳定币的去中心化产品。前往创建金库开始你的旅程吧。",
   "me.total-collaterals": "总抵押额",
   "me.total-debts": "总债务",
   "me.collaterals-ratio": "抵押物分布",
