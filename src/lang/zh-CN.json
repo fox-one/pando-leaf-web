@@ -21,6 +21,7 @@
   "common.checking-payment": "查询结果中...",
   "common.menu": "菜单",
   "common.suggest": "建议",
+  "common.continue":"继续",
   "common.action-success": "操作成功",
   "connect.fennec": "连接到 Fennec",
   "connect.fennec.detected": "检测到 Fennec，点击按钮连接",

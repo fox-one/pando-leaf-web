@@ -2,7 +2,7 @@
   <div>
     <f-bottom-sheet v-model="sheet">
       <v-layout column align-center>
-        <v-icon class="mt-10" size="320">$iconWelcomeImg</v-icon>
+        <v-icon class="mt-10" :size="imageHeight">$iconWelcomeImg</v-icon>
         <div class="welcome-title f-greyscale-1 mt-8 text-center">
           What's Pando<v-icon class="welcome-leaf-logo" size="54"
             >$iconLeaf</v-icon
@@ -12,7 +12,9 @@
           Pando leaf is product description product description product
           description product description
         </div>
-        <f-button class="my-8" @click="hide">Continue</f-button>
+        <f-button class="my-8" @click="hide">{{
+          $t("common.continue")
+        }}</f-button>
       </v-layout>
     </f-bottom-sheet>
     <v-dialog v-model="dialog" width="627">
@@ -49,6 +51,7 @@ import { Component, Vue } from "vue-property-decorator";
 class WelcomeModal extends Vue {
   dialog = false;
   sheet = false;
+  imageHeight = 0;
   show() {
     if (this.$utils.helper.isDesktop()) {
       this.dialog = true;
@@ -59,6 +62,10 @@ class WelcomeModal extends Vue {
 
   handleConfirm() {
     this.dialog = false;
+  }
+
+  mounted() {
+    this.imageHeight = Math.min(document.body.offsetHeight - 390, 327);
   }
 
   hide() {

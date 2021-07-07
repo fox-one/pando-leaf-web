@@ -14,7 +14,7 @@
             x-small
             elevation="0"
             color="transparent"
-            class="middle-center"
+            class="leaf-logo-button"
             v-on="on"
           >
             <v-icon size="64"> $iconLeaf</v-icon>
@@ -139,7 +139,7 @@ class DefaultLayoutAppBar extends Vue {
 export default DefaultLayoutAppBar;
 </script>
 <style lang="scss" scoped>
-.middle-center {
+.leaf-logo-button {
   position: absolute;
   @media only screen and (max-width: 959px) {
     float: left;

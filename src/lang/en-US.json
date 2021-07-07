@@ -22,6 +22,7 @@
   "common.menu": "Menu",
   "common.suggest": "Suggest",
   "common.action-success": "Success",
+  "common.continue":"Continue",
   "connect.fennec": "Connect Fennec",
   "connect.fennec.detected": "Fennec detected. Tap to connect",
   "connect.others": "Connect other wallets",
