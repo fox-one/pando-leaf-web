@@ -48,6 +48,7 @@
   "me.collaterals-ratio": "Collaterals ratio",
   "me.no-vault-1": "You don't have a vault yet.",
   "me.no-vault-2": "Open your first Vault to start generating Pando Assets.",
+  "me.need-more-vault":"Need more vault?",
   "me.no-vault-button": "Add a vault",
   "me.my-vault":"My Vault",
   "me.vault-item.collateral-ratio": "Collateral Ratio",
