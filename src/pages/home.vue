@@ -245,7 +245,6 @@ export default class Me extends Mixins(mixins.page) {
           this.loading = false;
         })
         .catch((err) => {
-          console.log(this.isLogged);
           this.loading = false;
         });
     }

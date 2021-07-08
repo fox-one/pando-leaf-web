@@ -21,12 +21,12 @@ import { Component, Vue } from "vue-property-decorator";
 import { State } from "vuex-class";
 
 @Component
-class Deposit extends Vue {
+class ChevronDown extends Vue {
   @State((state) => state.app.settings.dark) isDark;
 
   get color() {
     return this.isDark ? "white" : "black";
   }
 }
-export default Deposit;
+export default ChevronDown;
 </script>

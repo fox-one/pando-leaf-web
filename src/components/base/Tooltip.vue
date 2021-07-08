@@ -23,7 +23,7 @@
       nudge-top="-10"
       max-width="600"
     >
-      <template #activator="{ on }">
+      <template #activator="{ on, attrs }">
         <f-button
           v-if="hint"
           icon

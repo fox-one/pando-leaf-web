@@ -114,15 +114,6 @@ export default class CollateralsRatio extends Vue {
       const canvas = element.getContext("2d");
       canvas?.drawImage(img, 0, 0, 24, 24);
       const imageData = canvas?.getImageData(0, 0, 24, 24);
-      console.log(imageData?.width, imageData?.height, imageData?.data);
-      console.log(
-        this.getHex(
-          imageData?.data[44],
-          imageData?.data[45],
-          imageData?.data[46],
-          imageData?.data[47]
-        )
-      );
       const color = this.getHex(
         imageData?.data[48],
         imageData?.data[49],

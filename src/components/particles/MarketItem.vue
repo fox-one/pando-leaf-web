@@ -35,10 +35,9 @@
         </v-col>
       </v-row>
       <f-button class="mx-6 mb-6" @click="generateNewVault"
-        >+ Add a vault</f-button
+        >+ {{ $t("market.item.add-a-vault") }}</f-button
       >
     </v-layout>
-    <!-- <v-icon class="icon" size="20">{{ "$vuetify.icons.iconListArrow" }}</v-icon> -->
   </v-card>
 </template>
 
@@ -121,7 +120,7 @@ export default class MarketItem extends Vue {
         title: this.$t("market.item.price"),
         value: this.$utils.number.toPrecision(this.meta.price),
         valueUnit: this.debtSymbol,
-        labelClass: "text--disabled f-greyscale-1",
+        labelClass: "text--disabled f-greyscale-1 font-weight-regular",
         valueClass: "f-greyscale-1",
       },
       {
@@ -130,7 +129,7 @@ export default class MarketItem extends Vue {
         }),
         value: this.$utils.number.toPrecision(this.meta.debtAmount),
         valueUnit: this.debtSymbol,
-        labelClass: "text--disabled f-greyscale-1",
+        labelClass: "text--disabled f-greyscale-1 font-weight-regular",
         valueClass: "f-greyscale-1",
       },
       {
@@ -146,7 +145,7 @@ export default class MarketItem extends Vue {
               time: this.countDownText,
             })
           : "",
-        labelClass: "text--disabled f-greyscale-1",
+        labelClass: "text--disabled f-greyscale-1 font-weight-regular",
         valueClass: "f-greyscale-1",
       },
     ];

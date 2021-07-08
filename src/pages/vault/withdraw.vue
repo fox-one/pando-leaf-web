@@ -45,9 +45,7 @@ import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter } from "vuex-class";
-import VaultStats from "@/components/particles/VaultStats.vue";
 import Prediction from "@/components/particles/Prediction.vue";
-import PercentSlider from "@/components/particles/PercentSlider.vue";
 import NeedCnbModal from "@/components/particles/NeedCnbModal.vue";
 import BigNumber from "bignumber.js";
 import { IActionsParams } from "~/services/types/dto";
@@ -58,8 +56,6 @@ import { isDesktop } from "~/utils/helper";
 
 @Component({
   components: {
-    VaultStats,
-    PercentSlider,
     NeedCnbModal,
     Prediction,
   },

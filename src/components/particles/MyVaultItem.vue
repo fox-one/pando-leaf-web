@@ -125,12 +125,9 @@ import dayjs from "dayjs";
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
 import { ICollateral, IOracle, IVault } from "~/services/types/vo";
-import ValueChangedInfoGridItem from "./ValueChangedInfoGridItem.vue";
 
 @Component({
-  components: {
-    ValueChangedInfoGridItem,
-  },
+  components: {},
 })
 export default class MyVaultItem extends Vue {
   @Prop() vault!: IVault;

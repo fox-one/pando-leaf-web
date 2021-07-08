@@ -110,7 +110,6 @@
 <script lang="ts" scoped>
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "~/mixins";
-import VaultStats from "@/components/particles/VaultStats.vue";
 import HistoryItem from "@/components/particles/HistoryItem.vue";
 import BigNumber from "bignumber.js";
 import { IOracle, IVaultEvent } from "~/services/types/vo";
@@ -119,7 +118,6 @@ import dayjs from "dayjs";
 
 @Component({
   components: {
-    VaultStats,
     HistoryItem,
   },
 })

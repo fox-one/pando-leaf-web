@@ -35,7 +35,6 @@ import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter } from "vuex-class";
-import VaultStats from "@/components/particles/VaultStats.vue";
 import Prediction from "@/components/particles/Prediction.vue";
 import { IActionsParams } from "~/services/types/dto";
 import { TransactionStatus, VatAction } from "~/types";
@@ -43,7 +42,6 @@ import { isDesktop } from "~/utils/helper";
 
 @Component({
   components: {
-    VaultStats,
     Prediction,
   },
 })

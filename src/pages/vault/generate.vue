@@ -45,12 +45,6 @@
     />
 
     <need-cnb-modal :visible.sync="needCnb" />
-    <!-- <div class="mx-4 mt-4 risk-title f-caption">RISK WARNING</div>
-    <div class="mx-4 f-caption">
-      Price of the pair tokens fluctuates due to change in supply and demand of
-      the tokens. Investors are expected to take caution and take full
-      responsibilities of their own investment decisions.
-    </div> -->
   </v-container>
 </template>
 
@@ -59,7 +53,6 @@ import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter } from "vuex-class";
-import VaultStats from "@/components/particles/VaultStats.vue";
 import Prediction from "@/components/particles/Prediction.vue";
 import NeedCnbModal from "@/components/particles/NeedCnbModal.vue";
 import BigNumber from "bignumber.js";
@@ -70,7 +63,6 @@ import { isDesktop } from "~/utils/helper";
 
 @Component({
   components: {
-    VaultStats,
     NeedCnbModal,
     Prediction,
   },
