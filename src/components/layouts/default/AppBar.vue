@@ -12,7 +12,7 @@
       >
         <template #activator="{ on }">
           <div class="leaf-logo-button" v-on="on">
-            <v-icon class="leaf-logo" size="64"> $iconLeaf</v-icon>
+            <v-icon class="leaf-logo" size="64">$iconLeaf</v-icon>
             <v-icon size="16" color="primary">$iconChevronDown</v-icon>
           </div>
         </template>

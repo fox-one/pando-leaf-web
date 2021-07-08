@@ -400,7 +400,11 @@ export default class VaultDetail extends Mixins(mixins.vault) {
 
 <style lang="scss" scoped>
 .fixed-bottom {
+  height: 78px !important;
   box-shadow: 0 0 0;
+  margin-bottom: calc(constant(safe-area-inset-bottom) + 20px) !important;
+  margin-bottom: calc(env(safe-area-inset-bottom) + 20px) !important;
+  padding-bottom: 8px !important;
 }
 .z-index-2 {
   z-index: 2;
