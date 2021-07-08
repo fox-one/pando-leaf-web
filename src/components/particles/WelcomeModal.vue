@@ -1,6 +1,6 @@
 <template>
   <div>
-    <f-bottom-sheet v-model="sheet">
+    <f-bottom-sheet overlay-opacity="0.9" v-model="sheet">
       <v-layout column align-center>
         <v-icon class="mt-10" :size="imageHeight">$iconWelcomeImg</v-icon>
         <div class="welcome-title f-greyscale-1 mt-8 text-center">

@@ -4,13 +4,12 @@
       rounded
       depressed
       color="primary"
-      style="height: 48px"
-      class="mt-5 px-14 f-title-2"
+      class="mt-5"
       @click="handleLogin"
     >
       {{ $t("connect.wallet") }}
     </f-button>
-    <f-bottom-sheet v-model="show">
+    <f-bottom-sheet overlay-opacity="0.9" v-model="show">
       <template #title>{{ $t("connect.wallet") }}</template>
       <!--
         in Mixin Messenger?

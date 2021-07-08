@@ -5,7 +5,16 @@
         <f-loading :loading="loading"></f-loading>
       </div>
       <!-- 授权登陆按钮 -->
-      <div v-if="!isLogged" style="height: 88%">
+      <v-layout
+        v-if="!isLogged"
+        style="height: 88%"
+        align-center
+        justify-center
+        column
+      >
+        <div class="f-greyscale-1 f-body-2 font-weight-medium mb-3">
+          {{ $t("connect.wallet.hint") }}
+        </div>
         <base-connect-wallet-btn
           rounded
           large
@@ -15,7 +24,7 @@
         >
           {{ $t("connect.wallet") }}
         </base-connect-wallet-btn>
-      </div>
+      </v-layout>
       <!-- no vault -->
       <v-layout
         v-if="isLogged && !haveVault"
@@ -77,8 +86,8 @@
               Need more vault?
             </div>
             <f-button class="my-8" @click="openNewVault"
-              ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon> Add a
-              Vault</f-button
+              ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon
+              >{{ $t("vault.selector.title") }}</f-button
             >
           </v-col>
         </v-row>

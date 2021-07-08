@@ -16,6 +16,7 @@
       <div class="tip">{{ hint }}</div>
     </f-tooltip>
     <f-bottom-sheet
+      overlay-opacity="0.9"
       v-if="hint && !isDesktop"
       v-model="showSheet"
       :persistent="true"

@@ -55,6 +55,11 @@ a {
   .f-orange {
     color: #f07a02;
   }
+  .f-button.v-size--default {
+    height: 56px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
 }
 
 .theme--light.v-application {
@@ -90,6 +95,11 @@ a {
   }
   .f-orange {
     color: #ffa125;
+  }
+  .f-button.v-size--default {
+    height: 56px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 }
 

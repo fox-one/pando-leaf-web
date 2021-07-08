@@ -203,7 +203,10 @@ export default class VaultDetail extends Mixins(mixins.vault) {
     return {
       debtAmount,
       collateralAmount,
-      liquidationPrice: this.$utils.number.toPrecision(liquidationPrice),
+      liquidationPrice,
+      liquidationPriceText: this.$utils.number.isValid(liquidationPrice)
+        ? this.$utils.number.toPrecision(liquidationPrice)
+        : "N/A",
       collateralizationRatio,
       collateralizationRatioText,
       liquidationPenalty,
@@ -249,8 +252,10 @@ export default class VaultDetail extends Mixins(mixins.vault) {
       },
       {
         title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
-        value: this.meta.liquidationPrice,
-        valueUnit: this.debtAsset?.symbol,
+        value: this.meta.liquidationPriceText,
+        valueUnit: this.$utils.number.isValid(this.meta.liquidationPrice)
+          ? this.debtAsset?.symbol
+          : "",
         hint: this.$t("form.tooltip.liquidation-price"),
         titleClass: "f-greyscale-3",
       },

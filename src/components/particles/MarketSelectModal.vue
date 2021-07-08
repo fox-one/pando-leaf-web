@@ -1,5 +1,5 @@
 <template>
-  <f-bottom-sheet v-model="visible">
+  <f-bottom-sheet overlay-opacity="0.9" v-model="visible">
     <template #title>
       <div class="title f-title-1 text-center">
         {{ $t("vault.selector.title") }}

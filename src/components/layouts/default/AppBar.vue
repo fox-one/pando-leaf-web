@@ -6,20 +6,15 @@
       </v-avatar>
       <f-bottom-sheet
         v-model="showMenu"
+        overlay-opacity="0.9"
         :adaptive="true"
         :desktop-wapper="'menu'"
       >
         <template #activator="{ on }">
-          <v-btn
-            x-small
-            elevation="0"
-            color="transparent"
-            class="leaf-logo-button"
-            v-on="on"
-          >
+          <div class="leaf-logo-button" v-on="on">
             <v-icon class="leaf-logo" size="64"> $iconLeaf</v-icon>
-            <v-icon size="16"> {{ $icons.mdiChevronDown }}</v-icon>
-          </v-btn>
+            <v-icon size="16" color="primary">$iconChevronDown</v-icon>
+          </div>
         </template>
         <template #title> {{ "Jump To" }} </template>
         <div>
