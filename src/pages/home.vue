@@ -52,12 +52,8 @@
         <total-card />
 
         <v-layout align-center class="mt-8 mb-2 mx-1 f-greyscale-1 f-title-1">
-          My Vault
-          <base-tooltip
-            class="ml-1"
-            hint="Pando leaf is product description product description product
-            description product description"
-          >
+          {{ $t("me.my-vault") }}
+          <base-tooltip class="ml-1" :size="16" :hint="myVaultHint">
           </base-tooltip>
         </v-layout>
 
@@ -82,10 +78,10 @@
             md="6"
             class="d-flex mt-4 mx-1 justify-center f-bg-greyscale-7 add-new-vault"
           >
-            <div class="add-new-vault-text f-body-2 f-greyscale-3">
-              Need more vault?
+            <div class="add-new-vault-text f-body-2 mb-4 f-greyscale-3">
+              {{ $t("me.need-more-vault") }}
             </div>
-            <f-button class="my-8" @click="openNewVault"
+            <f-button class="mt-4 mb-8" @click="openNewVault"
               ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon
               >{{ $t("vault.selector.title") }}</f-button
             >
@@ -178,6 +174,10 @@ export default class Me extends Mixins(mixins.page) {
       avatar: true,
       mixinImmersive: this.$utils.helper.isMixin(),
     };
+  }
+
+  get myVaultHint() {
+    return this.$t("welcome.description");
   }
 
   get sortedMyVaults() {

@@ -7,9 +7,7 @@
     >
       <v-layout align-center justify-center @click="toast">
         <h4 class="mx-2">{{ appbar.title }}</h4>
-        <v-icon>
-          {{ $icons.mdiChevronDown }}
-        </v-icon>
+        <v-icon size="16"> $iconChevronDown </v-icon>
       </v-layout>
     </f-app-bar>
     <v-layout column class="ma-0 pa-4 pb-8 f-bg-greyscale-7">
@@ -58,14 +56,7 @@
       </asset-range-input>
     </v-layout>
 
-    <prediction
-      class="my-4"
-      :out-data="infos"
-      :collateral="collateral"
-      :vault="vault"
-      :amount="amount"
-      :type="vaultStatsType"
-    />
+    <prediction class="my-4" :out-data="infos" :collateral="collateral" />
 
     <market-select-modal
       :show.sync="showSelectModal"

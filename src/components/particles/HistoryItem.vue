@@ -29,7 +29,7 @@
             $t("vault.event.action.vatdeposit")
           }}</span>
           <v-spacer />
-          <span class="text-right f-caption f-greyscale-3">{{
+          <span class="text-right f-caption f-greyscale-4">{{
             meta.time
           }}</span>
         </v-layout>

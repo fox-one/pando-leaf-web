@@ -1,7 +1,7 @@
 <template>
   <v-app id="app">
     <default-layout-app-bar />
-    <v-main>
+    <v-main style="padding-top: 44px">
       <!-- <base-ws-connect-bar /> -->
       <nuxt style="max-width: 988px" />
     </v-main>

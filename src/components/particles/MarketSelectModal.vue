@@ -7,8 +7,11 @@
     </template>
     <template #subheader>
       <div class="px-1 text-center">
+        <div class="f-caption f-greyscale-3 px-2">
+          {{ $t("vault.selector.tips1") }}
+        </div>
         <div class="f-caption f-greyscale-3 px-2 mb-6">
-          {{ $t("vault.selector.tips") }}
+          {{ $t("vault.selector.tips2") }}
         </div>
         <f-input
           v-model="filter"

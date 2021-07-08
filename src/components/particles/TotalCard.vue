@@ -16,7 +16,7 @@
             {{ $t("me.total-collaterals") }}
           </div>
           <div class="total-value mt-2">
-            <span class="total-legal-symbol f-green mr-1">$</span
+            <span class="total-legal-symbol mr-1">$</span
             >{{ total.collaterals }}
           </div>
           <collaterals-ratio
@@ -164,6 +164,7 @@ export default class TotalCard extends Vue {
     }
     .total-legal-symbol {
       font-size: 16px;
+      color: #15d8b4;
     }
   }
 }

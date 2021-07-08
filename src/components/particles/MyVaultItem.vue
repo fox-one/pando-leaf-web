@@ -24,7 +24,15 @@
         <!-- <div :class="`mr-1 f-${risk}`">
           {{ this.meta.collateralizationRatioText }}
         </div> -->
-        <v-btn text fab circle rounded class="mr-2" @click="toDetail">
+        <v-btn
+          text
+          fab
+          circle
+          :ripple="false"
+          rounded
+          class="mr-2"
+          @click="toDetail"
+        >
           <v-icon size="40" color="primary">$iconMoreInfo</v-icon>
         </v-btn>
       </v-layout>
@@ -43,7 +51,7 @@
           cols="6"
         >
           <v-layout align-center>
-            <span :class="`f-caption font-weight-bold ` + item.titleClass">
+            <span :class="`f-caption ` + item.titleClass">
               {{ item.title }}</span
             >
             <span><base-tooltip :hint="item.hint" /></span>
@@ -67,6 +75,7 @@
             text
             :disabled="meta.debtAmount === 0"
             :min-height="68"
+            :ripple="false"
             color="primary"
             class="f-actionbar-button-label f-caption f-weight-m"
             @click="toPayback"
@@ -78,6 +87,7 @@
           </v-btn>
           <v-btn
             text
+            :ripple="false"
             color="primary"
             :disabled="inLiquidation || meta.collateralAmount === 0"
             class="f-actionbar-button-label f-caption f-weight-m"
@@ -93,6 +103,8 @@
             text
             color="primary"
             :min-height="68"
+            :ripple="false"
+            :disabled="inLiquidation || meta.collateralAmount === 0"
             class="f-actionbar-button-label f-caption f-weight-m"
             @click="toWithdraw"
           >
@@ -104,6 +116,7 @@
           <v-btn
             text
             color="primary"
+            :ripple="false"
             :min-height="68"
             class="f-actionbar-button-label f-caption f-weight-m"
             @click="toDeposit"
@@ -192,30 +205,20 @@ export default class MyVaultItem extends Vue {
     );
   }
 
-  get maxAvailableToGenerate() {
-    const debtAmount =
-      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
-    const collateralAmount = Number(this.vault?.ink);
-    const price = Number(this.collateral?.price);
-    const mininumRatio = Number(this.collateral?.mat);
-    const max = (collateralAmount * price) / mininumRatio - debtAmount;
-    if (max < 0) return "0";
-    const catMax = this.$utils.collateral.maxAvailable(this.collateral);
-    return this.$utils.number.toPrecision(Math.min(max, catMax));
+  get isValidOracle() {
+    const next = this.$utils.time.oracleNext(this.gemOracle, this.daiOracle);
+    return next && next.peek_at && dayjs(next.peek_at).isAfter(Date.now());
   }
 
-  get maxAvailableToWithdraw() {
-    const debtAmount =
-      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
-    if (debtAmount === 0) {
-      return this.vault?.ink;
-    }
-    const collateralAmount = Number(this.vault?.ink);
-    const price = Number(this.collateral?.price);
-    const mininumRatio = Number(this.collateral?.mat);
-    const max = collateralAmount - (mininumRatio * debtAmount) / price;
-    if (max < 0) return "0";
-    return this.$utils.number.toPrecision(max);
+  get risk() {
+    return this.$utils.helper.risk(
+      this.meta.collateralizationRatio,
+      this.collateral.mat
+    );
+  }
+
+  get inLiquidation() {
+    return this.meta.collateralizationRatio <= Number(this.collateral.mat);
   }
 
   get meta() {
@@ -245,17 +248,6 @@ export default class MyVaultItem extends Vue {
     };
   }
 
-  get risk() {
-    return this.$utils.helper.risk(
-      this.meta.collateralizationRatio,
-      this.collateral.mat
-    );
-  }
-
-  get inLiquidation() {
-    return this.meta.collateralizationRatio <= Number(this.collateral.mat);
-  }
-
   get infos() {
     if (this.collateralAmount === 0) return [];
     const infos: any[] = [
@@ -265,6 +257,7 @@ export default class MyVaultItem extends Vue {
         }),
         value: this.$utils.number.toPrecision(this.vault?.ink),
         valueUnit: this.collateralSymbol,
+        titleClass: `font-weight-bold`,
         valueClass: `font-weight-bold`,
       },
       {
@@ -277,23 +270,16 @@ export default class MyVaultItem extends Vue {
           BigNumber.ROUND_UP
         ),
         valueUnit: this.debtSymbol,
+        titleClass: `font-weight-bold`,
         valueClass: `font-weight-bold`,
       },
-      // {
-      //   title: this.$t("form.info.minimum-ratio"),
-      //   value: this.$utils.number.toFixed(
-      //     Number(this.collateral?.mat) * 100,
-      //     2
-      //   ),
-      //   valueUnit: "%",
-      // },
     ];
     if (this.debtAmount === 0) return infos;
     infos.push(
       {
         title: this.$t("me.vault-item.collateral-ratio"),
         value: this.meta.collateralizationRatioText,
-        titleClass: `f-${this.risk}`,
+        titleClass: `f-${this.risk} font-weight-bold`,
         valueClass: `f-${this.risk} font-weight-bold`,
       },
       {
@@ -334,11 +320,6 @@ export default class MyVaultItem extends Vue {
       }
     );
     return infos;
-  }
-
-  get isValidOracle() {
-    const next = this.$utils.time.oracleNext(this.gemOracle, this.daiOracle);
-    return next && next.peek_at && dayjs(next.peek_at).isAfter(Date.now());
   }
 
   toDeposit() {

@@ -10,7 +10,7 @@
           v-on="on"
           v-bind="attrs"
         >
-          <v-icon size="14">$iconQuestion</v-icon>
+          <v-icon :size="size">$iconQuestion</v-icon>
         </v-btn>
       </template>
       <div class="tip">{{ hint }}</div>
@@ -33,7 +33,7 @@
           v-bind="attrs"
           v-on="on"
         >
-          <v-icon size="14">$iconQuestion</v-icon>
+          <v-icon :size="size">$iconQuestion</v-icon>
         </f-button>
       </template>
       <template #title> {{ $t("tooltip.details") }} </template>
@@ -61,6 +61,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class Tooltip extends Vue {
   @Prop() hint!: string;
+  @Prop({ default: 14 }) size!: number;
 
   showTooltip = false;
   showSheet = false;
