@@ -12,6 +12,7 @@
           {{ $icons.mdiCloseCircle }}
         </v-icon>
       </div>
+
       <asset-range-input
         v-model="amount"
         class="mt-2"
@@ -50,8 +51,9 @@
         </template>
       </asset-range-input>
     </v-layout>
+
     <prediction
-      class="my-4"
+      class="my-2"
       :collateral="collateral"
       :vault="vault"
       :amount="amount"
@@ -336,7 +338,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
 
 .theme--dark.v-application {
   .debt-intro {
-    background-color: rgba(246, 112, 112, 0.1);
+    background-color: rgba(246, 112, 112, 0.3);
     color: #f67070;
   }
 }

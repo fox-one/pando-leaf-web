@@ -21,7 +21,7 @@
     </v-layout>
 
     <prediction
-      class="my-4"
+      class="my-2"
       :collateral="collateral"
       :vault="vault"
       :amount="amount"

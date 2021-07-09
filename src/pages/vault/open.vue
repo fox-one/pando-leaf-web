@@ -29,7 +29,7 @@
         :show-btn="false"
         color="primary"
       />
-      <div class="f-title-1 mb-4 f-greyscale-1">
+      <div class="f-title-1 mt-8 mb-4 f-greyscale-1">
         {{ $t("form.title.generate") }}
       </div>
       <asset-range-input
@@ -76,7 +76,7 @@
     </v-layout>
 
     <prediction
-      class="my-4"
+      class="my-2"
       :collateral="collateral"
       :vault="vault"
       :amount="amount"
