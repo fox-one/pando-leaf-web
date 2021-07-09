@@ -5,8 +5,13 @@
       @back="handleBack"
       class="desktop-support market-app-bar"
     >
-      <v-layout align-center justify-center @click="toast">
-        <h4 class="mx-2">{{ appbar.title }}</h4>
+      <v-layout
+        align-center
+        justify-center
+        class="f-greyscale-1"
+        @click="toast"
+      >
+        <h4 class="mx-1">{{ appbar.title }}</h4>
         <v-icon size="16" color="primary"> $iconChevronDown </v-icon>
       </v-layout>
     </f-app-bar>
