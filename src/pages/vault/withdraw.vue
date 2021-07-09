@@ -212,7 +212,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
         price: this.$utils.number.toPrecision(liquidationPrice),
         ratio: collateralizationRatio,
         ratioText: number.isValid(collateralizationRatio)
-          ? this.$utils.number.toFixed(collateralizationRatio * 100, 2)
+          ? this.$utils.number.toFixed(collateralizationRatio * 100, 1)
           : "N/A",
       };
     }

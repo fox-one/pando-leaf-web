@@ -72,7 +72,7 @@
     <risk-info
       v-model="showCModel"
       :custom-text="riskInfo"
-      :impact="`${(meta.collateralizationRatio * 100).toFixed(2)}%`"
+      :impact="`${(meta.collateralizationRatio * 100).toFixed(1)}%`"
       :countdown="countdown"
       @confirm="confirm"
       ref="riskInfo"
@@ -197,7 +197,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
       (depositNum * Number(this.collateral?.price)) / mintNum;
     let collateralizationRatioText = `${this.$utils.number.toFixed(
       collateralizationRatio * 100,
-      2
+      1
     )}`;
     if (!this.$utils.number.isValid(collateralizationRatio)) {
       collateralizationRatioText = "-";
@@ -239,7 +239,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
       currentDepositPrice: `${this.$utils.number.toPrecision(
         this.collateral?.price || "0"
       )}`,
-      stabilityFee: this.$utils.number.toFixed(stabilityFee, 2),
+      stabilityFee: this.$utils.number.toFixed(stabilityFee, 1),
       maxToGenerate: maxToGenerateText,
       maxAvailable,
       maxAvailableText,

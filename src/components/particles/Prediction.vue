@@ -122,17 +122,17 @@ export default class Prediction extends Vue {
       (collateralAmount * Number(this.collateral?.price)) / debtAmount;
     const collateralizationRatioText = this.$utils.number.toFixed(
       collateralizationRatio * 100,
-      4
+      1
     );
     const liquidationRatio = Number(this.collateral?.mat);
     const liquidationPrice = (debtAmount * liquidationRatio) / collateralAmount;
     const liquidationPenalty = this.$utils.number.toFixed(
       (Number(this.collateral?.chop) - 1) * 100,
-      4
+      1
     );
     const stabilityFee = this.$utils.number.toFixed(
       (Number(this.collateral?.duty) - 1) * 100,
-      4
+      1
     );
     let changedPrice;
     let changedRatio;
@@ -206,7 +206,7 @@ export default class Prediction extends Vue {
       changedRatio:
         changedRatio < 0 || !this.$utils.number.isValid(changedRatio)
           ? "N/A"
-          : this.$utils.number.toFixed(changedRatio * 100, 4),
+          : this.$utils.number.toFixed(changedRatio * 100, 1),
       changedRisk,
       changedAmount,
     };
@@ -265,7 +265,7 @@ export default class Prediction extends Vue {
         title: this.$t("form.info.minimum-ratio"),
         value: this.$utils.number.toFixed(
           Number(this.collateral?.mat) * 100,
-          4
+          1
         ),
         valueUnit: "%",
         hint: this.$t("form.tooltip.minimum-ratio"),

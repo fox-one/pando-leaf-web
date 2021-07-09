@@ -248,7 +248,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
       return {
         price: this.$utils.number.toPrecision(liquidationPrice),
         ratio: collateralizationRatio,
-        ratioText: this.$utils.number.toFixed(collateralizationRatio * 100, 2),
+        ratioText: this.$utils.number.toFixed(collateralizationRatio * 100, 1),
       };
     }
     const increasedDebt = Number(this.amount);
@@ -260,7 +260,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
     return {
       price: this.$utils.number.toPrecision(price),
       ratio,
-      ratioText: this.$utils.number.toFixed(ratio * 100, 2),
+      ratioText: this.$utils.number.toFixed(ratio * 100, 1),
     };
   }
 

@@ -190,7 +190,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
         debtAmount,
         price: this.$utils.number.toPrecision(liquidationPrice),
         ratio: collateralizationRatio,
-        ratioText: this.$utils.number.toFixed(collateralizationRatio * 100, 2),
+        ratioText: this.$utils.number.toFixed(collateralizationRatio * 100, 1),
       };
     }
     const decreasedDebt = Number(this.amount);

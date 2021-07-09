@@ -183,17 +183,17 @@ export default class VaultDetail extends Mixins(mixins.vault) {
       (collateralAmount * Number(this.collateral?.price)) / debtAmount;
     const collateralizationRatioText = this.$utils.number.toFixed(
       collateralizationRatio * 100,
-      4
+      1
     );
     const liquidationRatio = Number(this.collateral?.mat);
     const liquidationPrice = (debtAmount * liquidationRatio) / collateralAmount;
     const liquidationPenalty = this.$utils.number.toFixed(
       (Number(this.collateral?.chop) - 1) * 100,
-      4
+      1
     );
     const stabilityFee = this.$utils.number.toFixed(
       (Number(this.collateral?.duty) - 1) * 100,
-      4
+      1
     );
     return {
       debtAmount,

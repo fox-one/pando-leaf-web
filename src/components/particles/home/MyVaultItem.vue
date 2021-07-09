@@ -207,7 +207,7 @@ export default class MyVaultItem extends Vue {
     const liquidationPrice = (debtAmount * liquidationRatio) / collateralAmount;
     const stabilityFee = this.$utils.number.toFixed(
       (Number(this.collateral?.duty) - 1) * 100,
-      2
+      1
     );
     return {
       liquidationPrice: this.$utils.number.toPrecision(liquidationPrice),
