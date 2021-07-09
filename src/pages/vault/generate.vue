@@ -292,6 +292,13 @@ export default class GenerateForm extends Mixins(mixins.page) {
     if (this.percent > 100) this.percent = 100;
     if (this.percent < 0) this.percent = 0;
     this.calcSliderTips();
+    this.$set(
+      this.inputTips,
+      "tipRight",
+      `≈ $ ${this.$utils.number.toPrecision(
+        this.getAssetById?.(this.collateral?.dai)?.price * +newVal
+      )}`
+    );
     (this.$refs.riskInfo as any)?.resetTimer?.();
   }
 
@@ -344,14 +351,10 @@ export default class GenerateForm extends Mixins(mixins.page) {
     );
     this.inputTips = this.isLogged
       ? {
-          amount: suggestAmount,
+          amount: suggestAmount > 0 ? suggestAmount : 0,
           amountSymbol: this.assetSymbol,
           tipLeft: this.$t("common.suggest"),
-          tipRight: this.collateral?.gem
-            ? `≈ $ ${this.$utils.number.toPrecision(
-                this.getAssetById?.(this.collateral?.dai)?.price * suggestAmount
-              )}`
-            : "",
+          tipRight: `≈ $ 0`,
         }
       : {
           tipLeft: this.$createElement("connect-wallet", {

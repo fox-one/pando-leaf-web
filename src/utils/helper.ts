@@ -257,13 +257,13 @@ export function risk(currentRatio, minimumRatio) {
 }
 
 export function riskLevel(currentRatio, minimumRatio) {
-  const risk = Number(currentRatio) / Number(minimumRatio);
+  const risk = number.divide(Number(currentRatio), Number(minimumRatio));
   if (!number.isValid(risk)) return RISK.NA;
   if (risk < 0) {
     return RISK.NA;
-  } else if (risk <= 1.25) {
+  } else if (number.isLessThanOrEqualTo(risk, 1.25)) {
     return RISK.HIGH;
-  } else if (risk <= 5 / 3) {
+  } else if (number.isLessThanOrEqualTo(risk, 5 / 3)) {
     return RISK.MEDIUM;
   } else {
     return RISK.LOW;
