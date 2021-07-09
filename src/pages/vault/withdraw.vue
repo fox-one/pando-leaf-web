@@ -34,6 +34,7 @@
       :impact="`${(meta.ratio * 100).toFixed(2)}%`"
       :countdown="countdown"
       @confirm="confirm"
+      ref="riskInfo"
     />
 
     <need-cnb-modal :visible.sync="needCnb" />
@@ -269,6 +270,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
     }
     if (this.percent > 100) this.percent = 100;
     if (this.percent < 0) this.percent = 0;
+    (this.$refs.riskInfo as any)?.resetTimer?.();
   }
 
   intervalid = 0;
