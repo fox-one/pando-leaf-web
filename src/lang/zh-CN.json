@@ -141,7 +141,7 @@
   "form.info.liquidation-price": "清算价格",
   "form.info.collateralization-ratio": "抵押率",
   "form.info.current-symbol-price": "当前 {symbol} 价格",
-  "form.info.current-price": "当前价格",
+  "form.info.current-price": "{symbol} 价格",
   "form.info.minimum-ratio": "最低抵押率",
   "form.info.liquidation-penalty": "清算罚金率",
   "form.info.market-debt-ceiling": "市场最多可出借",

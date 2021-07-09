@@ -220,31 +220,6 @@ export default class Prediction extends Vue {
   get infos() {
     const infos = [
       {
-        title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
-        value: this.meta.liquidationPrice,
-        valueUnit: this.debtAsset?.symbol,
-        hint: this.$t("form.tooltip.liquidation-price"),
-        changedValue: this.meta.changedPrice,
-        showChange: this.showChange,
-      },
-      {
-        title: this.$t("form.info.current-price"),
-        value: this.collateral?.price,
-        valueUnit: this.debtAsset?.symbol,
-        changedValue:
-          this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.price ||
-          "",
-        showChange: this.isValidOracle,
-        hint: this.isValidOracle
-          ? this.$t("form.info.oracle-price", {
-              time: this.$utils.time.format(
-                this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
-                  ?.peek_at
-              ),
-            })
-          : null,
-      },
-      {
         title: this.$t("form.info.collateralization-ratio"), //
         value: this.$utils.number.isValid(this.meta.collateralizationRatio)
           ? this.meta.collateralizationRatioText
@@ -270,9 +245,36 @@ export default class Prediction extends Vue {
         valueUnit: "%",
         hint: this.$t("form.tooltip.minimum-ratio"),
       },
+      {
+        title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
+        value: this.meta.liquidationPrice,
+        valueUnit: this.debtAsset?.symbol,
+        hint: this.$t("form.tooltip.liquidation-price"),
+        changedValue: this.meta.changedPrice,
+        showChange: this.showChange,
+      },
+      {
+        title: this.$t("form.info.current-price", {
+          symbol: `${this.collateralAsset?.symbol}/${this.debtAsset?.symbol}`,
+        }),
+        value: this.collateral?.price,
+        valueUnit: this.debtAsset?.symbol,
+        changedValue:
+          this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.price ||
+          "",
+        showChange: this.isValidOracle,
+        hint: this.isValidOracle
+          ? this.$t("form.info.oracle-price", {
+              time: this.$utils.time.format(
+                this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
+                  ?.peek_at
+              ),
+            })
+          : null,
+      },
     ] as any[];
     if (this.showDebt) {
-      infos.push({
+      infos.unshift({
         // title: this.$t("form.info.liquidation-penalty"),
         title: this.$t("form.info.symbol-debt", {
           symbol: this.debtAsset?.symbol,

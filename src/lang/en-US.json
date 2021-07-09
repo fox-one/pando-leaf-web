@@ -140,7 +140,7 @@
   "form.info.liquidation-price": "Liquidation Price",
   "form.info.collateralization-ratio": "Collateralization Ratio",
   "form.info.current-symbol-price": "Current {symbol} Price",
-  "form.info.current-price": "Current Price",
+  "form.info.current-price": "{symbol} Price",
   "form.info.minimum-ratio": "Liquidation Ratio",
   "form.info.liquidation-penalty": "Liquidation penalty",
   "form.info.market-debt-ceiling": "Market Debt Ceiling",
