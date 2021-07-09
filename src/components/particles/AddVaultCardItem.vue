@@ -8,7 +8,7 @@
           :logo="collateralLogo(item)"
         />
         <f-mixin-asset-logo
-          class="flex-grow-0 ml-n2 mr-2"
+          class="flex-grow-0 ml-n2 mr-2 z-index-1"
           :size="40"
           :logo="debtLogo(item)"
         />
@@ -62,6 +62,15 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
+.z-index {
+  &-1 {
+    z-index: 1;
+  }
+
+  &-2 {
+    z-index: 2;
+  }
+}
 .theme--dark.v-application {
   .wrapper {
     background-color: #191919;

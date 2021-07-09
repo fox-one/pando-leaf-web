@@ -1,5 +1,5 @@
 <template>
-  <f-bottom-sheet overlay-opacity="0.9" v-model="visible">
+  <f-bottom-sheet v-model="visible" :overlay-opacity="0.9" :persistent="true">
     <template #title>
       <div class="title f-title-1 text-center">
         {{ $t("vault.selector.title") }}
@@ -19,6 +19,7 @@
           @blur="handleFocus(false)"
           class="search"
           :label="$t('common.search')"
+          :clearable="true"
         >
           <template #prependInner>
             <icon-search v-show="prependInner" class="mt-1 mr-2" />
@@ -27,13 +28,18 @@
       </div>
     </template>
     <v-list height="500">
-      <v-list-item
-        v-for="(item, index) in filtedItems"
-        class="card-item"
-        :key="index"
-      >
-        <add-vault-card-item :item="item" @add="bindItem(item)" />
-      </v-list-item>
+      <div v-if="filtedItems.length">
+        <v-list-item
+          v-for="(item, index) in filtedItems"
+          class="card-item"
+          :key="index"
+        >
+          <add-vault-card-item :item="item" @add="bindItem(item)" />
+        </v-list-item>
+      </div>
+      <p class="text-center f-body-2" v-else>
+        {{ $t("vault.selector.empty") }}
+      </p>
     </v-list>
   </f-bottom-sheet>
 </template>
@@ -61,7 +67,7 @@ export default class MarketSelectModal extends Vue {
 
   get filtedItems() {
     return this.collaterals?.filter((item) =>
-      item.name?.toLowerCase().includes(this.filter?.toLowerCase())
+      item.name.toLowerCase().includes((this.filter ?? "").toLowerCase())
     );
   }
 

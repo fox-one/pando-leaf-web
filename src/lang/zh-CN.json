@@ -67,6 +67,7 @@
   "vault.tab.details": "详情明细",
   "vault.tab.history": "历史记录",
   "vault.selector.title": "添加金库",
+  "vault.selector.empty": "没有结果",
   "vault.selector.tips1": "如果您仅打算铸币更多",
   "vault.selector.tips2": "可以选择在现有超额抵押的金库中进行",
   "vault.selector.min-collateral-ratio": "最低抵押率",

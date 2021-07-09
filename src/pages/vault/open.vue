@@ -32,7 +32,7 @@
         :show-btn="false"
         color="primary"
       />
-      <div class="f-title-1 mb-4 f-greyscale-1">
+      <div class="f-title-1 mt-8 mb-4 f-greyscale-1">
         {{ $t("form.title.generate") }}
       </div>
       <asset-range-input
@@ -55,6 +55,7 @@
             v-model="percent"
             :tips="sliderTips"
             :scale="scale"
+            disabled
             ref="slider"
           />
         </template>
@@ -74,6 +75,7 @@
       :impact="`${(meta.collateralizationRatio * 100).toFixed(2)}%`"
       :countdown="countdown"
       @confirm="confirm"
+      ref="riskInfo"
     />
 
     <div class="mx-4 mt-6 f-title-1 f-greyscale-1 font-weight-bold">
@@ -402,6 +404,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
     if (this.percent > 100) this.percent = 100;
     if (this.percent < 0) this.percent = 0;
     this.calcSliderTips();
+    (this.$refs.riskInfo as any)?.resetTimer?.();
   }
 
   @Watch("collateral")
@@ -424,6 +427,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
       "amount",
       this.$utils.number.toPrecision(this.meta.maxAvailable * this.scale.low)
     );
+    (this.$refs.riskInfo as any)?.resetTimer?.();
   }
 
   intervalid = 0;
