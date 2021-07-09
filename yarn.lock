@@ -901,11 +901,12 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@foxone/finance-ui@^0.1.0-beta.0":
-  version "0.1.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@foxone/finance-ui/-/finance-ui-0.1.0-beta.0.tgz#f4d233e381d7455bd25948a56dce77767b648d43"
-  integrity sha512-4zOTxXAS3b3h+OUZW2fp92bjk6zV7JNLWXHUZO8sTZrPwz4RyEt/CVpmPF4bB7hL1QNwCLOO9+pwhl/SJKzvzQ==
+"@foxone/finance-ui@^0.1.0-rc.9":
+  version "0.1.0-rc.9"
+  resolved "https://registry.yarnpkg.com/@foxone/finance-ui/-/finance-ui-0.1.0-rc.9.tgz#40d76b03189c799b30e916e88b38f29b6af32120"
+  integrity sha512-vI0ExZomYR1GRjH/CgE3c8oHN2JFzPbrJarLOnZjnIIRRQNF3QLs/Zto2HlP8TUqYrexmP+6po5FuuL5uYKWpA==
   dependencies:
+    "@vue/composition-api" "^1.0.0-rc.13"
     classnames "~2.2.6"
     vue-slider-component "~3.2.13"
 
@@ -2035,6 +2036,13 @@
   integrity sha512-aj/lWD+9dmJ+r9qkbASByqlphkbwvZ8q1T7yC5H1leWSdtxfWg7tDR98vZEKzjikRSztwC7xrtrLwOnt8glQDA==
   dependencies:
     tslib "^2.2.0"
+
+"@vue/composition-api@^1.0.0-rc.13":
+  version "1.0.0-rc.13"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.0.0-rc.13.tgz#6cb768d0575b3c031ba15e05b09ecbd9780d941c"
+  integrity sha512-jUobqfMYC4gJJIMI3SfANiDMa7cNlfIQQTZFCVagKefnfzCDMtfHGuq0D/K2+yAyHYP2gHLyLHb9E6dQmPN2pQ==
+  dependencies:
+    tslib "^2.3.0"
 
 "@vue/eslint-config-prettier@^6.0.0":
   version "6.0.0"
@@ -3518,7 +3526,7 @@ core-js@^2.6.5:
 
 core-js@^3.6.5:
   version "3.15.2"
-  resolved "https://registry.npmjs.org/core-js/-/core-js-3.15.2.tgz#740660d2ff55ef34ce664d7e2455119c5bdd3d61"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.15.2.tgz#740660d2ff55ef34ce664d7e2455119c5bdd3d61"
   integrity sha512-tKs41J7NJVuaya8DxIOCnl8QuPHx5/ZVbFo1oKgVl1qHFBBrDctzQGtuLjPpRdNTWmKPH6oEvgN/MUID+l485Q==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
@@ -10048,6 +10056,11 @@ tslib@^2.0.3, tslib@^2.2.0:
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
   integrity sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==
 
+tslib@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
+  integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
+
 tslint@^5.20.1:
   version "5.20.1"
   resolved "https://registry.npmjs.org/tslint/-/tslint-5.20.1.tgz#e401e8aeda0152bc44dd07e614034f3f80c67b7d"
@@ -10528,7 +10541,7 @@ vue-no-ssr@^1.1.1:
 
 vue-property-decorator@^8.0.0:
   version "8.5.1"
-  resolved "https://registry.npmjs.org/vue-property-decorator/-/vue-property-decorator-8.5.1.tgz#571a91cf8d2b507f537d79bf8275af3184572fff"
+  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-8.5.1.tgz#571a91cf8d2b507f537d79bf8275af3184572fff"
   integrity sha512-O6OUN2OMsYTGPvgFtXeBU3jPnX5ffQ9V4I1WfxFQ6dqz6cOUbR3Usou7kgFpfiXDvV7dJQSFcJ5yUPgOtPPm1Q==
   dependencies:
     vue-class-component "^7.1.0"
@@ -10559,7 +10572,7 @@ vue-server-renderer@^2.6.12:
 
 vue-slider-component@~3.2.13:
   version "3.2.13"
-  resolved "https://registry.npmjs.org/vue-slider-component/-/vue-slider-component-3.2.13.tgz#1be85e6e822ca0997ecd10067c2351bd8e8d7a15"
+  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-3.2.13.tgz#1be85e6e822ca0997ecd10067c2351bd8e8d7a15"
   integrity sha512-8Unr7YgVgf+IjJkbHHCloeWjtOyn4UMotFWX+5S5tUjpwU4OA7ADiaJ94/jFsuJt3JvpJm/vECrRvdSAVZjn9g==
   dependencies:
     core-js "^3.6.5"

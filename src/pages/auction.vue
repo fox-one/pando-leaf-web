@@ -12,7 +12,7 @@
         class="pa-4 f-body-2 statusbar"
         :class="auctionStatus.bgcls"
       >
-        <div class="text-center">
+        <div class="text-center statusbar-left">
           {{ auctionStatus.title }}
         </div>
         <div v-if="!meta.isDone" class="text-center statusbar-right">
@@ -168,18 +168,16 @@
             >
               {{ $t("connect.wallet") }}
             </base-connect-wallet-btn>
-            <v-btn
+            <f-button
               v-else
-              rounded
-              depressed
               :disabled="confirmDisabled"
               color="primary"
               style="height: 48px"
               @click="bidding"
-              class="mt-8 px-8 align-self-center"
+              class="mt-8 mb-4 px-8 align-self-center"
             >
               {{ $t("auction.button.confirm") }}
-            </v-btn>
+            </f-button>
           </v-layout>
         </v-layout>
       </f-panel>
@@ -188,7 +186,7 @@
         v-if="events && events.length !== 0"
         class="mt-2 px-4 pt-6 pb-0 no-border-radius"
       >
-        <div v-if="events && events.length !== 0" class="f-title-1">
+        <div v-if="events && events.length !== 0" class="f-title-1 mb-2">
           {{ $t("auction.history") }}
         </div>
         <template v-for="(event, index) in events">
@@ -573,6 +571,10 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   }
   &-collateral {
     background-color: #f58721 !important;
+  }
+
+  &-left {
+    font-weight: 500;
   }
 
   &-right {

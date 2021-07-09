@@ -3,7 +3,49 @@
     <div class="py-2" v-if="loading">
       <f-loading :loading="loading"></f-loading>
     </div>
-    <v-tabs
+    <div class="text-center">
+      <f-button-tabs v-model="tabIndex" class="mb-4">
+        <template #tabs>
+          <v-btn
+            v-for="(item, index) in tabs"
+            :key="index"
+            :data-value="index"
+            :ripple="false"
+            class="px-4 py-3"
+          >
+            <span>{{ item.text }}</span>
+          </v-btn>
+        </template>
+      </f-button-tabs>
+    </div>
+
+    <div v-if="tabIndex === 0" class="tabs-items">
+      <div v-if="flips.auctioning.length">
+        <auction-item
+          v-for="flip in flips.auctioning"
+          :key="flip.id"
+          :flip="flip"
+          class="mb-4"
+        />
+      </div>
+      <div v-else class="empty f-body-2">
+        {{ $t("auction.list.tab.empty") }}
+      </div>
+    </div>
+    <div v-if="tabIndex === 1" class="tabs-items">
+      <div v-if="flips.done.length">
+        <auction-item
+          v-for="flip in flips.done"
+          :key="flip.id"
+          :flip="flip"
+          class="mb-4"
+        />
+      </div>
+      <div v-else class="empty f-body-2">
+        {{ $t("auction.list.tab.empty") }}
+      </div>
+    </div>
+    <!-- <v-tabs
       v-model="tab"
       centered
       hide-slider
@@ -27,8 +69,8 @@
       >
         {{ $t("auction.list.tab.done") }}
       </v-tab>
-    </v-tabs>
-    <v-tabs-items v-model="tab" class="tabs-items">
+    </v-tabs> -->
+    <!-- <v-tabs-items v-model="tab" class="tabs-items">
       <v-tab-item v-for="(val, name) in flips" :key="name" :value="name">
         <div v-if="val.length">
           <auction-item
@@ -42,7 +84,7 @@
           {{ $t("auction.list.tab.empty") }}
         </div>
       </v-tab-item>
-    </v-tabs-items>
+    </v-tabs-items> -->
   </v-container>
 </template>
 
@@ -66,7 +108,7 @@ export default class AuctionsPage extends Mixins(mixins.page) {
     done: [] as IFlip[],
     auctioning: [] as IFlip[],
   };
-  tab = null;
+  tabIndex = 0;
 
   get appbar() {
     if (!this.isLogged) {
@@ -83,6 +125,19 @@ export default class AuctionsPage extends Mixins(mixins.page) {
       avatar: true,
       mixinImmersive: this.$utils.helper.isMixin(),
     };
+  }
+
+  get tabs() {
+    return [
+      {
+        text: this.$t("auction.list.tab.at-auction"),
+        value: "auctioning",
+      },
+      {
+        text: this.$t("auction.list.tab.done"),
+        value: "done",
+      },
+    ];
   }
 
   mounted() {
@@ -157,7 +212,9 @@ export default class AuctionsPage extends Mixins(mixins.page) {
 }
 
 .empty {
-  background: url(../assets/images/no_auction.png) no-repeat center;
+  background: url(../assets/images/no_auction.png) no-repeat 110px / 110px;
+  background-position-x: center;
+  background-position-y: calc(100% - 52px);
   padding-top: 32.5vh;
   text-align: center;
 }
