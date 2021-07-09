@@ -53,9 +53,9 @@ export default class extends Vue {
 
   normalize(col: ICollateral) {
     return {
-      duty: this.$utils.number.toPercent(Number(col.duty) - 1),
-      mat: this.$utils.number.toPercent(Number(col.mat)),
-      chop: this.$utils.number.toPercent(Number(col.chop) - 1),
+      duty: this.$utils.number.toPercent(Number(col.duty) - 1, false, 1),
+      mat: this.$utils.number.toPercent(Number(col.mat), false, 1),
+      chop: this.$utils.number.toPercent(Number(col.chop) - 1, false, 1),
     };
   }
 }
