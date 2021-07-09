@@ -15,6 +15,12 @@ requireComponent.keys().forEach((fileName) => {
 
 export function makeIconValues() {
   return {
+    iconSwitchChart: {
+      component: "icon-switch-chart",
+    },
+    iconSwitchNumber: {
+      component: "icon-switch-number",
+    },
     iconCheck: {
       component: "icon-check",
     },

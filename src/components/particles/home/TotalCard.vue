@@ -9,8 +9,7 @@
         <v-icon v-if="!switchState" size="144" class="total-card-texture"
           >$iconTotalCardTexture</v-icon
         >
-        <v-switch v-model="switchState" color="white" class="total-switch">
-        </v-switch>
+        <total-card-switch :enable.sync="switchState" class="total-switch" />
         <v-layout column class="ml-6 white--text">
           <div class="total-label f-body-2 mt-6">
             {{ $t("me.total-collaterals") }}
@@ -59,11 +58,13 @@ import { Vue, Component } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
 import { IVault } from "~/services/types/vo";
 import CollateralsRatio from "@/components/charts/CollateralsRatio.vue";
+import TotalCardSwitch from "@/components/particles/home/TotalCardSwitch.vue";
 import { debounce } from "~/utils/helper";
 
 @Component({
   components: {
     CollateralsRatio,
+    TotalCardSwitch,
   },
 })
 export default class TotalCard extends Vue {
@@ -140,7 +141,7 @@ export default class TotalCard extends Vue {
   .total-switch {
     display: none;
     @media only screen and (max-width: 959px) {
-      display: inherit;
+      display: block;
       position: absolute;
       margin: 0px;
       padding: 0px;

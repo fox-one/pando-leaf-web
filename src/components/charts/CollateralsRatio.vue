@@ -1,6 +1,6 @@
 <template>
   <v-layout column>
-    <v-layout align-start justify-start class="collaterals-ratio-chart">
+    <v-layout align-start justify-start class="collaterals-ratio-chart pl-5">
       <v-layout
         class="collateral-ratio-bar"
         v-for="(item, index) in chartData"
@@ -8,7 +8,7 @@
         align-end
         column
       >
-        <v-layout align-end class="rounded-pill mx-5" :style="styles[index]">
+        <v-layout align-end class="rounded-pill mr-10" :style="styles[index]">
           <v-img
             class="collateral-ratio-chart-icon"
             width="24"
@@ -27,12 +27,12 @@
           </v-img>
         </v-layout>
         <div
-          :class="`align-self-center ${labelColor} f-caption mt-2 font-weight-medium`"
+          :class="`align-self-start ${labelColor} f-caption mt-2 font-weight-medium`"
         >
           {{ $utils.number.toPercent(getPercent(item)) }}
         </div>
         <div
-          class="align-self-center f-caption mt-2 font-weight-medium f-greyscale-4"
+          class="align-self-start f-caption mt-2 font-weight-medium f-greyscale-4"
         >
           {{ item.asset.symbol || "" }}
         </div>
