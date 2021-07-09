@@ -254,19 +254,24 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         hint: this.$t("form.tooltip.liquidation-price"),
         titleClass: "f-greyscale-3",
       },
+      {
+        title: this.$t("market.item.oracle-next"),
+        value: this.isValidOracle
+          ? this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.price
+          : "-",
+        valueUnit: this.isValidOracle ? this.debtAsset?.symbol : "",
+        hint: this.$t("form.info.oracle-price", {
+          time: this.isValidOracle
+            ? this.$utils.time.format(
+                this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
+                  ?.peek_at
+              )
+            : "-",
+        }),
+      },
     ];
     if (this.isValidOracle) {
-      metaInfos.push({
-        title: this.$t("market.item.oracle-next"),
-        value: this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
-          ?.price,
-        valueUnit: this.debtAsset?.symbol,
-        hint: this.$t("form.info.oracle-price", {
-          time: this.$utils.time.format(
-            this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.peek_at
-          ),
-        }),
-      });
+      metaInfos.push();
     }
     return metaInfos;
   }

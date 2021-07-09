@@ -5,7 +5,7 @@
         @click="toDetail"
         row
         align-center
-        class="ma-0 mt-4 pa-0 flex-grow-0"
+        class="ma-0 mt-6 pa-0 mb-3 flex-grow-0"
       >
         <f-mixin-asset-logo
           class="flex-grow-0 ml-6 mr-1 z-index-2"
@@ -21,20 +21,9 @@
           `${collateralName} #${vault.identity_id}`
         }}</span>
         <v-spacer></v-spacer>
-        <!-- <div :class="`mr-1 f-${risk}`">
-          {{ this.meta.collateralizationRatioText }}
-        </div> -->
-        <v-btn
-          text
-          fab
-          circle
-          :ripple="false"
-          rounded
-          class="mr-2"
-          @click="toDetail"
-        >
+        <div class="mr-6" @click="toDetail">
           <v-icon size="40" color="primary">$iconMoreInfo</v-icon>
-        </v-btn>
+        </div>
       </v-layout>
       <v-row
         @click="toDetail"

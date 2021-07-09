@@ -96,7 +96,7 @@
   "market.item.collaterals": "Collaterals",
   "market.item.total-asset-symbol": "Total {symbol}",
   "market.item.symbol-debt": "{symbol} Debt",
-  "market.item.oracle-next": "Next:",
+  "market.item.oracle-next": "Next Price",
   "market.item.oracle-content": "will be confirm after {time}",
   "market.item.add-a-vault":"Add a vault",
   "form.title.open": "Open a {name} Vault",

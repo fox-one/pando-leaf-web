@@ -34,7 +34,7 @@
         justify-center
       >
         <v-icon class="mb-8" size="110">$iconNoVault</v-icon>
-        <h3 class="f-greyscale-2">{{ $t("me.no-vault-1") }}</h3>
+        <div class="f-body-2 f-greyscale-1">{{ $t("me.no-vault-1") }}</div>
         <f-button
           class="mt-4"
           color="primary"
@@ -43,7 +43,8 @@
           rounded
           depressed
         >
-          <span>{{ $t("me.no-vault-button") }}</span>
+          <v-icon size="16" class="mr-2">$iconAdd</v-icon
+          ><span>{{ $t("me.no-vault-button") }}</span>
         </f-button>
       </v-layout>
 
@@ -82,7 +83,7 @@
               {{ $t("me.need-more-vault") }}
             </div>
             <f-button class="mt-4 mb-8" @click="openNewVault"
-              ><v-icon size="16">{{ $icons.mdiPlus }}</v-icon
+              ><v-icon size="16" class="mr-2">$iconAdd</v-icon
               >{{ $t("vault.selector.title") }}</f-button
             >
           </v-col>
@@ -108,7 +109,7 @@ import { Action, Getter, Mutation, State } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
 import MyVaultItem from "~/components/particles/MyVaultItem.vue";
 import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
-import TotalCard from "@/components/particles/TotalCard.vue";
+import TotalCard from "@/components/particles/home/TotalCard.vue";
 import WelcomeModal from "@/components/particles/WelcomeModal.vue";
 import CollateralsRatio from "@/components/charts/CollateralsRatio.vue";
 import { VERSION } from "~/constants";

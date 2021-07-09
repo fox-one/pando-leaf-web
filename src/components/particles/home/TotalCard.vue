@@ -164,7 +164,8 @@ export default class TotalCard extends Vue {
     }
     .total-legal-symbol {
       font-size: 16px;
-      color: #15d8b4;
+      margin-top: -4px;
+      color: #bbf50d;
     }
   }
 }

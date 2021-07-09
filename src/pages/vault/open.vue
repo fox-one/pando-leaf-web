@@ -7,7 +7,7 @@
     >
       <v-layout align-center justify-center @click="toast">
         <h4 class="mx-2">{{ appbar.title }}</h4>
-        <v-icon size="16"> $iconChevronDown </v-icon>
+        <v-icon size="16" color="primary"> $iconChevronDown </v-icon>
       </v-layout>
     </f-app-bar>
     <v-layout column class="ma-0 pa-4 pb-8 f-bg-greyscale-7">

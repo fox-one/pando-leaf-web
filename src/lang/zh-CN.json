@@ -97,7 +97,7 @@
   "market.item.collaterals": "抵押额",
   "market.item.total-asset-symbol": "全部 {symbol}",
   "market.item.symbol-debt": "{symbol} 总债务",
-  "market.item.oracle-next": "下一价格:",
+  "market.item.oracle-next": "下一价格",
   "market.item.oracle-content": "将于 {time} 后生效",
   "market.item.add-a-vault":"添加金库",
   "form.title.open": "新建金库 {name}",

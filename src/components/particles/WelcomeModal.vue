@@ -17,7 +17,7 @@
     </f-bottom-sheet>
     <v-dialog v-model="dialog" width="627">
       <f-panel class="pa-0 welcome-dialog">
-        <v-layout>
+        <v-layout align-center>
           <v-icon class="ma-10" size="207">$iconWelcomeImg</v-icon>
           <v-divider vertical />
           <v-layout column>
@@ -29,7 +29,7 @@
               {{ $t("welcome.description") }}
             </div>
             <div>
-              <f-button class="ml-10 mt-6" @click="handleConfirm"
+              <f-button class="ml-10 mt-6 mb-10" @click="handleConfirm"
                 >{{ $t("notice.confirm") }}
               </f-button>
             </div>

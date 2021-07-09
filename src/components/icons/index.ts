@@ -15,6 +15,9 @@ requireComponent.keys().forEach((fileName) => {
 
 export function makeIconValues() {
   return {
+    iconAdd: {
+      component: "icon-add",
+    },
     iconChevronDown: {
       component: "icon-chevron-down",
     },
@@ -68,9 +71,6 @@ export function makeIconValues() {
     },
     iconTotalCardTexture: {
       component: "icon-total-card-texture",
-    },
-    iconPusd: {
-      component: "icon-pusd",
     },
     iconSetMax: {
       component: "icon-set-max",
