@@ -107,7 +107,7 @@ import { Component, Mixins, Ref, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { Action, Getter, Mutation, State } from "vuex-class";
 import { ICollateral, IVault } from "~/services/types/vo";
-import MyVaultItem from "~/components/particles/MyVaultItem.vue";
+import MyVaultItem from "~/components/particles/home/MyVaultItem.vue";
 import MarketSelectModal from "~/components/particles/MarketSelectModal.vue";
 import TotalCard from "@/components/particles/home/TotalCard.vue";
 import WelcomeModal from "@/components/particles/WelcomeModal.vue";

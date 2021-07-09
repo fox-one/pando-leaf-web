@@ -60,61 +60,14 @@
       <v-layout column class="ma-0 pa-0 flex-grow-0">
         <div class="mx-6 pando-divider f-bg-greyscale-1" />
         <v-layout justify-space-around class="buttons">
-          <v-btn
-            text
-            :disabled="meta.debtAmount === 0"
-            :min-height="68"
-            :ripple="false"
-            color="primary"
-            class="f-actionbar-button-label f-caption f-weight-m"
-            @click="toPayback"
-          >
-            <v-layout column justify-center align-center>
-              <v-icon size="32">$iconPayback</v-icon>
-              <div class="f-caption">{{ $t("button.pay-back") }}</div>
-            </v-layout>
-          </v-btn>
-          <v-btn
-            text
-            :ripple="false"
-            color="primary"
-            :disabled="inLiquidation || meta.collateralAmount === 0"
-            class="f-actionbar-button-label f-caption f-weight-m"
-            :min-height="68"
-            @click="toGenerate"
-          >
-            <v-layout column justify-center align-center>
-              <v-icon size="32">$iconGenerate</v-icon>
-              <div class="f-caption">{{ $t("button.generate") }}</div>
-            </v-layout>
-          </v-btn>
-          <v-btn
-            text
-            color="primary"
-            :min-height="68"
-            :ripple="false"
-            :disabled="inLiquidation || meta.collateralAmount === 0"
-            class="f-actionbar-button-label f-caption f-weight-m"
-            @click="toWithdraw"
-          >
-            <v-layout column justify-center align-center>
-              <v-icon size="32">$iconWithdraw</v-icon>
-              <div class="f-caption">{{ $t("button.withdraw") }}</div>
-            </v-layout>
-          </v-btn>
-          <v-btn
-            text
-            color="primary"
-            :ripple="false"
-            :min-height="68"
-            class="f-actionbar-button-label f-caption f-weight-m"
-            @click="toDeposit"
-          >
-            <v-layout column justify-center align-center>
-              <v-icon size="32">$iconDeposit</v-icon>
-              <div class="f-caption">{{ $t("button.deposit") }}</div>
-            </v-layout>
-          </v-btn>
+          <base-action-button
+            v-for="item in actionButtons"
+            :key="item.text"
+            :icon="item.icon"
+            :text="item.text"
+            :disabled="item.disabled"
+            @click="item.click"
+          ></base-action-button>
         </v-layout>
       </v-layout>
     </v-layout>
@@ -139,6 +92,35 @@ export default class MyVaultItem extends Vue {
   @Getter("oracle/findByAssetId") getOracleByAssetId!: (id) => IOracle;
 
   tooltip = false;
+
+  get actionButtons() {
+    return [
+      {
+        icon: "$iconPayback",
+        text: this.$t("button.pay-back"),
+        disabled: this.meta.debtAmount === 0,
+        click: this.toPayback,
+      },
+      {
+        icon: "$iconGenerate",
+        text: this.$t("button.generate"),
+        disabled: this.inLiquidation || this.meta.collateralAmount === 0,
+        click: this.toGenerate,
+      },
+      {
+        icon: "$iconWithdraw",
+        text: this.$t("button.withdraw"),
+        disabled: this.inLiquidation || this.meta.collateralAmount === 0,
+        click: this.toWithdraw,
+      },
+      {
+        icon: "$iconDeposit",
+        text: this.$t("button.deposit"),
+        disabled: false,
+        click: this.toDeposit,
+      },
+    ];
+  }
 
   get resize() {
     return this.$utils.helper.mixinImageResize;
@@ -340,5 +322,9 @@ export default class MyVaultItem extends Vue {
 }
 .opacity4 {
   opacity: 0.4;
+}
+.buttons {
+  align-items: center;
+  height: 94.5px;
 }
 </style>

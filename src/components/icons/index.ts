@@ -15,6 +15,9 @@ requireComponent.keys().forEach((fileName) => {
 
 export function makeIconValues() {
   return {
+    iconCheck: {
+      component: "icon-check",
+    },
     iconAdd: {
       component: "icon-add",
     },

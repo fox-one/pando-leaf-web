@@ -17,10 +17,9 @@
           </div>
         </template>
         <template #title> {{ "Jump To" }} </template>
-        <div>
+        <div class="mb-10">
           <v-layout
-            style="height: 72px"
-            class="list-item-text"
+            class="list-item-text py-5"
             align-center
             v-for="(item, index) in menuItems"
             :key="item.title"
@@ -35,7 +34,7 @@
             </div>
             <v-spacer />
             <div v-if="item.check">
-              <v-icon class="mr-4"> {{ $icons.mdiCheck }}</v-icon>
+              <v-icon size="24" class="mr-4" color="primary">$iconCheck</v-icon>
             </div>
           </v-layout>
         </div>
