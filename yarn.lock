@@ -901,11 +901,12 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@foxone/finance-ui@^0.1.0-beta.0":
-  version "0.1.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@foxone/finance-ui/-/finance-ui-0.1.0-beta.0.tgz#f4d233e381d7455bd25948a56dce77767b648d43"
-  integrity sha512-4zOTxXAS3b3h+OUZW2fp92bjk6zV7JNLWXHUZO8sTZrPwz4RyEt/CVpmPF4bB7hL1QNwCLOO9+pwhl/SJKzvzQ==
+"@foxone/finance-ui@^0.1.0-beta.7":
+  version "0.1.0-beta.7"
+  resolved "https://registry.npmjs.org/@foxone/finance-ui/-/finance-ui-0.1.0-beta.7.tgz#2a1572b51d1658e797e0f9cb154dec8dfcdd90cc"
+  integrity sha512-Kkmy7W+9UcZK1lPfoJgEWroDGE/iETZbOBxFQW4WrCw92ScVZRQXaXFzIW+zWGVcxAejiBL9qVBnZqHLTVE8wQ==
   dependencies:
+    "@vue/composition-api" "^1.0.0-rc.13"
     classnames "~2.2.6"
     vue-slider-component "~3.2.13"
 
@@ -2035,6 +2036,13 @@
   integrity sha512-aj/lWD+9dmJ+r9qkbASByqlphkbwvZ8q1T7yC5H1leWSdtxfWg7tDR98vZEKzjikRSztwC7xrtrLwOnt8glQDA==
   dependencies:
     tslib "^2.2.0"
+
+"@vue/composition-api@^1.0.0-rc.13":
+  version "1.0.0-rc.13"
+  resolved "https://registry.npmjs.org/@vue/composition-api/-/composition-api-1.0.0-rc.13.tgz#6cb768d0575b3c031ba15e05b09ecbd9780d941c"
+  integrity sha512-jUobqfMYC4gJJIMI3SfANiDMa7cNlfIQQTZFCVagKefnfzCDMtfHGuq0D/K2+yAyHYP2gHLyLHb9E6dQmPN2pQ==
+  dependencies:
+    tslib "^2.3.0"
 
 "@vue/eslint-config-prettier@^6.0.0":
   version "6.0.0"
@@ -10047,6 +10055,11 @@ tslib@^2.0.3, tslib@^2.2.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
   integrity sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==
+
+tslib@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
+  integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
 
 tslint@^5.20.1:
   version "5.20.1"
