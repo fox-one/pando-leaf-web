@@ -89,4 +89,19 @@ export default {
       return `${v.toFixed(2)}t`;
     }
   },
+  divide(dividend: number, divisor: number) {
+    const x = new BigNumber(dividend);
+    const y = new BigNumber(divisor);
+    return x.dividedBy(y).toNumber();
+  },
+  isLessThanOrEqualTo(x: number, y: number) {
+    const x1 = new BigNumber(x);
+    const y1 = new BigNumber(y);
+    return x1.isLessThanOrEqualTo(y1);
+  },
+  isGreaterThanOrEqualTo(x: number, y: number) {
+    const x1 = new BigNumber(x);
+    const y1 = new BigNumber(y);
+    return x1.isGreaterThanOrEqualTo(y1);
+  },
 };

@@ -404,6 +404,13 @@ export default class GenerateVault extends Mixins(mixins.page) {
     if (this.percent > 100) this.percent = 100;
     if (this.percent < 0) this.percent = 0;
     this.calcSliderTips();
+    this.$set(
+      this.mintInputTips,
+      "tipRight",
+      `≈ $ ${this.$utils.number.toPrecision(
+        this.getAssetById?.(this.collateral?.dai)?.price * +this.mintAmount
+      )}`
+    );
     (this.$refs.riskInfo as any)?.resetTimer?.();
   }
 
@@ -422,6 +429,13 @@ export default class GenerateVault extends Mixins(mixins.page) {
 
   @Watch("depositAmount")
   onDepositChange() {
+    this.$set(
+      this.depositInputTips,
+      "tipRight",
+      `≈ $ ${this.$utils.number.toPrecision(
+        this.getAssetById?.(this.collateral?.gem)?.price * +this.depositAmount
+      )}`
+    );
     this.$set(
       this.mintInputTips,
       "amount",
@@ -476,11 +490,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
           amount: suggestAmount,
           amountSymbol: this.mintSymbol,
           tipLeft: this.$t("common.suggest"),
-          tipRight: this.collateral?.gem
-            ? `≈ $ ${this.$utils.number.toPrecision(
-                this.getAssetById?.(this.collateral?.dai)?.price * suggestAmount
-              )}`
-            : "",
+          tipRight: `≈ $ 0`,
         }
       : {
           tipLeft: this.$createElement("connect-wallet", {
@@ -498,12 +508,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
           amount: +this.depositBalance,
           amountSymbol: this.depositSymbol,
           tipLeft: this.$t("form.info.wallet-balance"),
-          tipRight: this.collateral?.gem
-            ? `≈ $ ${this.$utils.number.toPrecision(
-                this.getAssetById?.(this.collateral?.gem)?.price *
-                  +this.depositBalance
-              )}`
-            : "",
+          tipRight: `≈ $ 0`,
         }
       : {
           tipLeft: this.$createElement("connect-wallet", {

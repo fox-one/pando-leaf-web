@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" scoped>
-import { Component, Mixins } from "vue-property-decorator";
+import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter } from "vuex-class";
@@ -197,12 +197,7 @@ export default class DepositForm extends Mixins(mixins.page) {
           amount: +this.assetBalance,
           amountSymbol: this.assetSymbol,
           tipLeft: this.$t("form.info.wallet-balance"),
-          tipRight: this.collateral?.gem
-            ? `≈ $ ${this.$utils.number.toPrecision(
-                this.getAssetById?.(this.collateral?.gem)?.price *
-                  +this.assetBalance
-              )}`
-            : "",
+          tipRight: `≈ $ 0`,
         }
       : {
           tipLeft: this.$createElement("connect-wallet", {
@@ -214,6 +209,17 @@ export default class DepositForm extends Mixins(mixins.page) {
             },
           }),
         };
+  }
+
+  @Watch("amount")
+  handleAmountChange(val) {
+    this.$set(
+      this.inputTips,
+      "tipRight",
+      `≈ $ ${this.$utils.number.toPrecision(
+        this.getAssetById?.(this.collateral?.gem)?.price * +val
+      )}`
+    );
   }
 
   destroyed() {

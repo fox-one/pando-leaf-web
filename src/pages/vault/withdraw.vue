@@ -267,6 +267,13 @@ export default class WithdrawForm extends Mixins(mixins.page) {
     if (this.percent > 100) this.percent = 100;
     if (this.percent < 0) this.percent = 0;
     (this.$refs.riskInfo as any)?.resetTimer?.();
+    this.$set(
+      this.inputTips,
+      "tipRight",
+      `≈ $ ${this.$utils.number.toPrecision(
+        this.getAssetById?.(this.collateral?.gem)?.price * +newVal
+      )}`
+    );
   }
 
   intervalid = 0;
@@ -313,12 +320,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
           amount: this.maxAvailable,
           amountSymbol: this.assetSymbol,
           tipLeft: this.$t("common.collateral"),
-          tipRight: this.collateral?.gem
-            ? `≈ $ ${this.$utils.number.toPrecision(
-                this.getAssetById?.(this.collateral?.gem)?.price *
-                  this.maxAvailable
-              )}`
-            : "",
+          tipRight: `≈ $ 0`,
         }
       : {
           tipLeft: this.$createElement("connect-wallet", {
