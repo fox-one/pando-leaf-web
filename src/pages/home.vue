@@ -36,7 +36,7 @@
         <v-icon class="mb-8" size="110">$iconNoVault</v-icon>
         <div class="f-body-2 f-greyscale-1">{{ $t("me.no-vault-1") }}</div>
         <f-button
-          class="mt-4"
+          class="mt-8"
           color="primary"
           @click="openNewVault"
           :min-width="220"

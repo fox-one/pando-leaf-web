@@ -1,7 +1,7 @@
 <template>
   <f-app-bar v-bind="appbar" @back="handleBack">
     <v-layout align-center v-if="!appbar.back">
-      <v-avatar v-if="appbar.avatar" class="ml-2" size="32">
+      <v-avatar v-if="appbar.avatar" class="ml-2 appbar-avatar" size="32">
         <v-img :src="avatar" :size="32"></v-img>
       </v-avatar>
       <f-bottom-sheet
@@ -134,6 +134,9 @@ class DefaultLayoutAppBar extends Vue {
 export default DefaultLayoutAppBar;
 </script>
 <style lang="scss" scoped>
+.appbar-avatar {
+  margin-top: -2px;
+}
 .leaf-logo-button {
   position: absolute;
   @media only screen and (max-width: 959px) {

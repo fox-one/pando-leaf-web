@@ -26,13 +26,13 @@ a {
     background-color: #000000 !important;
   }
   .f-bg-riskGreen {
-    background-color: #415745 !important;
+    background-color: #45764e !important;
   }
   .f-bg-riskOrange {
-    background-color: #735933 !important;
+    background-color: #97713a !important;
   }
   .f-bg-riskRed {
-    background-color: #804b4b !important;
+    background-color: #8a4141 !important;
   }
   .f-bg-riskGrey {
     background-color: #36383b !important;
@@ -110,4 +110,9 @@ a {
 
 .leaf-card {
   max-width: 482px;
+}
+
+.pando-divider {
+  height: 0.5px;
+  opacity: 0.1;
 }

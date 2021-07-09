@@ -58,7 +58,7 @@
       </div>
       <v-spacer />
       <v-layout column class="ma-0 pa-0 flex-grow-0">
-        <v-divider class="mx-6" />
+        <div class="mx-6 pando-divider f-bg-greyscale-1" />
         <v-layout justify-space-around class="buttons">
           <v-btn
             text
