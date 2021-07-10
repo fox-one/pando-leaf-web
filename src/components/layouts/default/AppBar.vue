@@ -1,9 +1,19 @@
 <template>
   <f-app-bar v-bind="appbar" @back="handleBack">
     <v-layout align-center v-if="!appbar.back">
-      <v-avatar v-if="appbar.avatar" class="ml-2 appbar-avatar" size="32">
+      <v-avatar
+        v-if="appbar.avatar && avatar"
+        class="ml-2 appbar-avatar"
+        size="32"
+      >
         <v-img :src="avatar" :size="32"></v-img>
       </v-avatar>
+      <div
+        class="ml-2 appbar-avatar text-avatar"
+        v-if="appbar.avatar && !avatar"
+      >
+        {{ name ? name.slice(0, 1) : "P" }}
+      </div>
       <f-bottom-sheet
         v-model="showMenu"
         overlay-opacity="0.9"
@@ -45,9 +55,13 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { State } from "vuex-class";
 
 @Component
 class DefaultLayoutAppBar extends Vue {
+  @State((state) => state.auth.name) name;
+  @State((state) => state.auth.avatar) avatar;
+
   showMenu = false;
   get appbar() {
     const state = this.$store.state;
@@ -58,16 +72,6 @@ class DefaultLayoutAppBar extends Vue {
       ...appbar,
       color: isDark ? "#000000" : "#FFFFFF",
     };
-  }
-
-  get avatar() {
-    const avatar = this.$store.state.auth.avatar;
-    return this.$utils.helper.mixinImageResize(avatar);
-  }
-
-  get name() {
-    const name = this.$store.state.auth.name;
-    return name;
   }
 
   get menuItems() {
@@ -135,6 +139,16 @@ export default DefaultLayoutAppBar;
 <style lang="scss" scoped>
 .appbar-avatar {
   margin-top: -2px;
+}
+.text-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  font-weight: 600;
+  height: 32px;
+  border-radius: 32px;
+  background-color: goldenrod;
 }
 .leaf-logo-button {
   position: absolute;
