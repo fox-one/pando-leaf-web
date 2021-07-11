@@ -72,6 +72,11 @@
     <risk-info
       v-model="showCModel"
       :custom-text="riskInfo"
+      :custom-color="{
+        continue: {
+          btn_cancel: 'f-bg-greyscale-1',
+        },
+      }"
       :impact="`${(meta.collateralizationRatio * 100).toFixed(1)}%`"
       :countdown="countdown"
       @confirm="confirm"

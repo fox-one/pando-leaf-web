@@ -901,10 +901,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@foxone/finance-ui@^0.1.0-rc.10":
-  version "0.1.0-rc.10"
-  resolved "https://registry.yarnpkg.com/@foxone/finance-ui/-/finance-ui-0.1.0-rc.10.tgz#c92f2544bd4d9cab0e4a90ca1ecce3e6644ca98a"
-  integrity sha512-LqkUkhGLZjaAKTzj0XKkQlumDLXgmZEVjRhQzvkkxaS+sVU1BdRpsNCDnM/9q5X1CaJAau8GLk5QDkAW7zzJcw==
+"@foxone/finance-ui@^0.1.0-rc.11":
+  version "0.1.0-rc.11"
+  resolved "https://registry.yarnpkg.com/@foxone/finance-ui/-/finance-ui-0.1.0-rc.11.tgz#27f576891d523e41fbcffc2fcd6a1d4913b76255"
+  integrity sha512-sXltX0ffGYGNlUhn5mUX0QqRMOwqgR+M9yJG7t2e3g2VwRFqo7KH4nPSy4TND6ftcjMFgGyxY0WjHMdd7/nBeg==
   dependencies:
     "@vue/composition-api" "^1.0.0-rc.13"
     classnames "~2.2.6"
