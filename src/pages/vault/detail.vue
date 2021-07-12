@@ -243,7 +243,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         hint: this.$t("form.tooltip.collateralization-ratio"),
       },
       {
-        title: this.$t("form.info.current-price", {
+        title: this.$t("form.info.symbol-price", {
           symbol: `${this.collateralAsset?.symbol}/${this.debtAsset?.symbol}`,
         }),
         value: this.collateral?.price,
