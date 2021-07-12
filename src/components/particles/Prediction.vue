@@ -181,17 +181,20 @@ export default class Prediction extends Vue {
           changedRatio =
             (collateralAmount * Number(this.collateral?.price)) /
             (debtAmount - diffAmount);
+          if (changedRatio < 0) changedRatio = 0;
           changedRisk = this.$utils.helper.risk(
             changedRatio,
             this.collateral.mat
           );
           changedAmount = debtAmount - diffAmount;
-          if (changedAmount < 0) changedAmount = 0;
           break;
         default:
           break;
       }
     }
+    if (changedRatio < 0) changedRatio = 0;
+    if (changedPrice < 0) changedPrice = 0;
+    if (changedAmount < 0) changedAmount = 0;
 
     return {
       debtAmount,
@@ -254,7 +257,7 @@ export default class Prediction extends Vue {
         showChange: this.showChange,
       },
       {
-        title: this.$t("form.info.current-price", {
+        title: this.$t("form.info.symbol-price", {
           symbol: `${this.collateralAsset?.symbol}/${this.debtAsset?.symbol}`,
         }),
         value: this.collateral?.price,
@@ -275,7 +278,6 @@ export default class Prediction extends Vue {
     ] as any[];
     if (this.showDebt) {
       infos.unshift({
-        // title: this.$t("form.info.liquidation-penalty"),
         title: this.$t("form.info.symbol-debt", {
           symbol: this.debtAsset?.symbol,
         }),

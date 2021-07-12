@@ -19,7 +19,6 @@
       overlay-opacity="0.9"
       v-if="hint && !isDesktop"
       v-model="showSheet"
-      :persistent="true"
       nudge-top="-10"
       max-width="600"
     >
