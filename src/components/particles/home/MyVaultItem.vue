@@ -314,7 +314,7 @@ export default class MyVaultItem extends Vue {
 <style lang="scss" scoped>
 .my-vault-card {
   @media only screen and (min-width: 960px) {
-    height: 342px;
+    height: 372px;
   }
 }
 .z-index-2 {

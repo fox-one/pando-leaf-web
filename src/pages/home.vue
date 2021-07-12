@@ -64,7 +64,7 @@
             xs="12"
             sm="12"
             md="6"
-            class="d-flex justify-center"
+            class="d-flex justify-center flex-basis-auto"
             :key="vault.id"
             v-for="vault in sortedMyVaults"
           >
@@ -302,6 +302,9 @@ export default class Me extends Mixins(mixins.page) {
   padding-bottom: env(safe-area-inset-bottom);
   right: 16px;
 }
+.flex-basis-auto {
+  flex-basis: auto;
+}
 .fab-icon {
   height: 24px;
   align-self: center !important;
@@ -312,7 +315,7 @@ export default class Me extends Mixins(mixins.page) {
   align-items: center;
   @media only screen and (min-width: 960px) {
     align-items: center;
-    height: 342px;
+    height: 372px;
     border: 1px dashed #cccccc;
     border-radius: 8px;
     max-width: calc(50% - 8px);
