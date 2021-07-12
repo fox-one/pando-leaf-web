@@ -99,7 +99,9 @@ export default class MarketItem extends Vue {
         valueUnit: this.collateralSymbol,
         labelClass: "font-weight-bold f-greyscale-1",
         valueClass: "font-weight-bold f-greyscale-1",
-        hint: "",
+        hint: this.$t("market.item.hint.total-asset", {
+          symbol: this.collateralSymbol,
+        }),
       },
       {
         title: this.$t("market.item.max-available"),
@@ -114,7 +116,7 @@ export default class MarketItem extends Vue {
         valueUnit: "%",
         labelClass: "font-weight-bold market-green",
         valueClass: "font-weight-bold market-green",
-        hint: "",
+        hint: this.$t("form.tooltip.collateralization-ratio"),
       },
       {
         title: this.$t("market.item.price"),
@@ -141,7 +143,7 @@ export default class MarketItem extends Vue {
           : "",
         valueUnit: this.isValidOracle ? this.debtSymbol : "",
         hint: this.isValidOracle
-          ? this.$t("market.item.oracle-content", {
+          ? this.$t("form.info.oracle-price", {
               time: this.countDownText,
             })
           : "",

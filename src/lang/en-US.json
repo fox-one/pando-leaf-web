@@ -100,6 +100,7 @@
   "market.item.oracle-next": "Next Price",
   "market.item.oracle-content": "will be confirm after {time}",
   "market.item.add-a-vault": "Add a vault",
+  "market.item.hint.total-asset":"Total amount of {symbol} collateralized in the market.",
   "form.title.open": "Open a {name} Vault",
   "form.title.deposit": "Deposit",
   "form.title.generate": "Generate",
