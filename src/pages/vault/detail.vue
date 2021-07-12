@@ -70,6 +70,9 @@
           <v-divider />
         </div>
       </div>
+
+      <div style="height: 120px"></div>
+
       <f-action-bar
         fixed
         class="ma-2 fixed-bottom f-bg-riskOrange"
