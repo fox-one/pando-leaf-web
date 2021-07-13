@@ -35,7 +35,7 @@
           </div>
         </v-layout>
       </v-layout>
-      <v-divider class="mx-6 mt-2" />
+      <div class="mx-6 mt-2 f-divider" />
       <v-layout align-center class="mx-6" style="height: 49.5px">
         <div :class="`f-caption ${meta.isDone ? 'text--disabled' : ''}`">
           {{

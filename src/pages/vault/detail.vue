@@ -67,7 +67,7 @@
               <span>{{ item.valueUnit }}</span>
             </div>
           </v-layout>
-          <v-divider />
+          <div class="f-divider" />
         </div>
       </div>
 
@@ -95,7 +95,7 @@
               :collateral="collateral"
             ></history-item>
           </div>
-          <v-divider :key="`${item.action}_${item.created_at}`" />
+          <div class="f-divider" :key="`${item.action}_${item.created_at}`" />
         </template>
         <f-loading class="my-4" v-if="loading" :loading="loading" />
         <template v-else-if="histories.length === 0">

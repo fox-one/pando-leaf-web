@@ -21,7 +21,7 @@
         </div>
       </v-layout>
 
-      <v-divider />
+      <div class="f-divider" />
 
       <v-layout column>
         <v-layout align-center class="mt-4">
@@ -42,8 +42,7 @@
           }}
         </div>
       </v-layout>
-
-      <v-divider />
+      <div class="f-divider" />
     </template>
     <v-layout column>
       <v-layout align-center class="mt-4">

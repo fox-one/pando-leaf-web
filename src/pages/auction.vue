@@ -346,15 +346,15 @@ export default class AuctionDetail extends Mixins(mixins.page) {
       if (minBid >= maxBid) minBid = maxBid;
 
       curPrice = isStage1
-        ? `1 ${debtSymbol} = ${debt2collateral}${auctionSymbol}`
-        : `1 ${auctionSymbol} = ${collateral2debt}${debtSymbol}`;
+        ? `1 ${debtSymbol} = ${debt2collateral} ${auctionSymbol}`
+        : `1 ${auctionSymbol} = ${collateral2debt} ${debtSymbol}`;
       bidPrice = isStage1
         ? `1 ${debtSymbol} = ${this.$utils.number.toPrecision(
-            +this.inputDebtAmount * debt2collateral
-          )}${auctionSymbol}`
+            (+this.inputDebtAmount || 0) * debt2collateral
+          )} ${auctionSymbol}`
         : `1 ${auctionSymbol} = ${this.$utils.number.toPrecision(
-            +this.inputCollateralAmount * collateral2debt
-          )}${debtSymbol}`;
+            (+this.inputCollateralAmount || 0) * collateral2debt
+          )} ${debtSymbol}`;
     }
 
     return {

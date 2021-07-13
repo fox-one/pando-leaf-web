@@ -60,6 +60,13 @@ a {
     padding-left: 32px;
     padding-right: 32px;
   }
+  .f-divider {
+    height: 1px;
+    transform: scaleY(0.5);
+    transform-origin: 50% 100%;
+    background: #ffffff;
+    opacity: 0.1;
+  }
 }
 
 .theme--light.v-application {
@@ -101,6 +108,13 @@ a {
     padding-left: 32px;
     padding-right: 32px;
   }
+  .f-divider {
+    height: 1px;
+    transform: scaleY(0.5);
+    transform-origin: 50% 100%;
+    background: #000000;
+    opacity: 0.1;
+  }
 }
 
 .risk-title {
@@ -110,9 +124,4 @@ a {
 
 .leaf-card {
   max-width: 482px;
-}
-
-.pando-divider {
-  height: 0.5px;
-  opacity: 0.1;
 }

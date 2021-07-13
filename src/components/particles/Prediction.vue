@@ -44,7 +44,7 @@
             </div>
           </v-layout>
         </v-layout>
-        <div class="divider" />
+        <div class="f-divider" />
       </div>
     </div>
   </v-layout>
@@ -317,10 +317,5 @@ export default class Prediction extends Vue {
 .title {
   font-weight: 600;
   font-size: 18px;
-}
-.divider {
-  height: 0.5px;
-  background: #000000;
-  opacity: 0.1;
 }
 </style>
