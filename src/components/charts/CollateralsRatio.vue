@@ -64,7 +64,8 @@ export default class CollateralsRatio extends Vue {
       const col = this.getCollateral(vault.collateral_id);
       const asset = this.getAssetById(col.gem);
       if (chartDataMap[asset.id] !== undefined) {
-        chartDataMap[asset.id].value += Number(vault.ink) * 1;
+        chartDataMap[asset.id].value +=
+          Number(vault.ink) * Number(asset.price) || 0;
       } else {
         const item = {
           value: Number(vault.ink) * Number(asset.price) || 0,
@@ -79,8 +80,7 @@ export default class CollateralsRatio extends Vue {
       chartData.push(chartDataMap[k]);
     }
     chartData.sort((a, b) => {
-      a.value - b.value;
-      return 0;
+      return a.value - b.value;
     });
     return chartData;
   }

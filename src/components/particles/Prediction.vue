@@ -10,7 +10,7 @@
         :key="ix"
         :index="ix"
       >
-        <v-layout class="py-6" column>
+        <v-layout class="py-4" column>
           <v-layout align-center>
             <div class="f-greyscale-3">{{ item.title }}</div>
             <base-tooltip :hint="item.hint"></base-tooltip>
@@ -25,7 +25,7 @@
             </div>
           </v-layout>
           <v-layout
-            class="mt-3"
+            class="change-value"
             v-if="item.showChange"
             justify-end
             align-center
@@ -317,5 +317,8 @@ export default class Prediction extends Vue {
 .title {
   font-weight: 600;
   font-size: 18px;
+}
+.change-value {
+  margin-top: 11px;
 }
 </style>
