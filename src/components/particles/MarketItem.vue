@@ -35,7 +35,8 @@
         </v-col>
       </v-row>
       <f-button class="mx-6 mb-6" @click="generateNewVault"
-        >+ {{ $t("market.item.add-a-vault") }}</f-button
+        ><v-icon size="16" class="mr-2">$iconAdd</v-icon>
+        {{ $t("market.item.add-a-vault") }}</f-button
       >
     </v-layout>
   </v-card>
