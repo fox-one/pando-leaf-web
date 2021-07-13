@@ -52,7 +52,7 @@
       <div class="f-bg-greyscale-6" style="height: 8px"></div>
       <div>
         <div class="mx-4 f-body-2" v-for="item in infos" :key="item.title">
-          <v-layout style="height: 65.4px" align-center>
+          <v-layout class="py-4" align-center>
             <div class="f-greyscale-3">{{ item.title }}</div>
             <base-tooltip class="ml-1" :hint="item.hint"></base-tooltip>
             <v-spacer />
