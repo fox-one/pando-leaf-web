@@ -149,6 +149,8 @@ export default class Market extends Mixins(mixins.page) {
   font-weight: 700;
   .overview-value-symbol {
     font-size: 17px;
+    margin-top: -2px;
+    margin-right: 4px;
   }
 }
 .market-green {
