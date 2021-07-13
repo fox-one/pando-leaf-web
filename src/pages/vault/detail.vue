@@ -248,7 +248,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         }),
         value: this.collateral?.price,
         valueUnit: this.debtAsset?.symbol,
-        titleClass: "f-greyscale-3",
+        titleClass: "f-greyscale-3 font-weight-regular",
       },
       {
         title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
@@ -257,7 +257,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
           ? this.debtAsset?.symbol
           : "",
         hint: this.$t("form.tooltip.liquidation-price"),
-        titleClass: "f-greyscale-3",
+        titleClass: "f-greyscale-3 font-weight-regular",
       },
       {
         title: this.$t("market.item.oracle-next"),
@@ -265,6 +265,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
           ? this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.price
           : "-",
         valueUnit: this.isValidOracle ? this.debtAsset?.symbol : "",
+        titleClass: "f-greyscale-3 font-weight-regular",
         hint: this.$t("form.info.oracle-price", {
           time: this.isValidOracle
             ? this.$utils.time.format(
