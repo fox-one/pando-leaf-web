@@ -631,11 +631,15 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.sliderTips = {
       tip: this.$t("form.hint.generate-ration"),
       highlight: `${this.$utils.number.toPercent(
-        this.meta.collateralizationRatio < 0
-          ? 0
-          : this.meta.collateralizationRatio,
+        this.$utils.number.toPrecision(
+          this.meta.collateralizationRatio < 0
+            ? 0
+            : this.meta.collateralizationRatio,
+          3,
+          BigNumber.ROUND_DOWN
+        ),
         false,
-        0
+        1
       )}, ${this.$t("form.hint.risk-level", {
         level: this.$t(`form.hint.risk-level-${risk}`),
       })}`,

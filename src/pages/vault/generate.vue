@@ -357,7 +357,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
     );
     this.inputTips = this.isLogged
       ? {
-          amount: suggestAmount > 0 ? suggestAmount : 0,
+          amount: suggestAmount > 0 ? suggestAmount : "0",
           amountSymbol: this.assetSymbol,
           tipLeft: this.$t("common.suggest"),
           tipRight: `≈ $ 0`,
@@ -466,11 +466,19 @@ export default class GenerateForm extends Mixins(mixins.page) {
     }
     this.sliderTips = {
       tip: this.$t("form.hint.generate-ration"),
-      highlight: `${this.$utils.number.toPercent(
-        this.meta.ratio < 0 ? 0 : this.meta.ratio,
-        false,
-        1
-      )}, ${this.$t("form.hint.risk-level", {
+      highlight: `${
+        this.meta.ratio !== Infinity
+          ? this.$utils.number.toPercent(
+              this.$utils.number.toPrecision(
+                this.meta.ratio < 0 ? 0 : this.meta.ratio,
+                3,
+                BigNumber.ROUND_DOWN
+              ),
+              false,
+              1
+            )
+          : "-%"
+      }, ${this.$t("form.hint.risk-level", {
         level: this.$t(`form.hint.risk-level-${risk}`),
       })}`,
     };
