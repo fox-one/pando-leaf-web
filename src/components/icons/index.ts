@@ -84,5 +84,8 @@ export function makeIconValues() {
     iconSetMax: {
       component: "icon-set-max",
     },
+    iconAddWithRadius: {
+      component: "icon-add-with-radius",
+    },
   };
 }

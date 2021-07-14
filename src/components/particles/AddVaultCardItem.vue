@@ -14,9 +14,9 @@
         />
         <span class="f-title-1 f-greyscale-1">{{ item.name }}</span>
       </v-layout>
-      <v-icon class="btn-add" @click="$emit('add')">
-        {{ $icons.mdiPlus }}
-      </v-icon>
+      <div class="btn-add">
+        <v-icon size="12" @click="$emit('add')"> $iconAddWithRadius </v-icon>
+      </div>
     </v-layout>
     <v-layout justify-space-between class="mt-6 mb-4">
       <div class="f-caption f-greyscale-3">
@@ -91,7 +91,8 @@ export default class extends Vue {
   &-add {
     width: 40px;
     height: 40px;
-    line-height: 1.97em;
+    font-size: 12px;
+    line-height: 40px;
     border-radius: 50%;
     display: inline-block;
     color: #ffffff;
