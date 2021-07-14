@@ -20,7 +20,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@foxone/finance-ui": "^0.1.0-rc.12",
+    "@foxone/finance-ui": "^0.1.2",
     "@foxone/uikit": "^2.0.60",
     "@mdi/js": "^5.5.55",
     "@nuxt/types": "^2.15.4",
