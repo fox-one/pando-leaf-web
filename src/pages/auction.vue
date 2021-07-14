@@ -23,7 +23,10 @@
         </div>
       </v-layout>
 
-      <f-panel class="collateral pa-4 no-border-radius f-greyscale-1">
+      <f-panel
+        :elevation="0"
+        class="collateral pa-4 no-border-radius f-greyscale-1"
+      >
         <v-layout column>
           <v-layout column>
             <div class="f-body-2 f-greyscale-3 mb-4">
@@ -183,6 +186,7 @@
       </f-panel>
 
       <f-panel
+        :elevation="0"
         v-if="events && events.length !== 0"
         class="mt-2 px-4 pt-6 pb-0 no-border-radius"
       >
