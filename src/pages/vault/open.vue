@@ -41,6 +41,7 @@
         :assets="[mint]"
         :asset.sync="mint"
         :selectable="false"
+        :show-slider-tips="false"
         :precision="precision"
         :inputTips="mintInputTips"
         :max="+meta.maxAvailable"

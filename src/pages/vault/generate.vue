@@ -8,6 +8,7 @@
         :assets="[asset]"
         :asset.sync="asset"
         :selectable="false"
+        :show-slider-tips="false"
         :precision="precision"
         :inputTips="inputTips"
         :max="+maxAvailable"
