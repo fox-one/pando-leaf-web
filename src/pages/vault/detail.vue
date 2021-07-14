@@ -75,7 +75,8 @@
 
       <f-action-bar
         fixed
-        class="ma-2 fixed-bottom f-bg-riskOrange"
+        class="ma-2 fixed-bottom"
+        :class="`f-bg-${riskColor}`"
         @click="handleActionClick"
         :actions="actionButtons"
       ></f-action-bar>
@@ -176,6 +177,13 @@ export default class VaultDetail extends Mixins(mixins.vault) {
   get isValidOracle() {
     const next = this.$utils.time.oracleNext(this.gemOracle, this.daiOracle);
     return next && next.peek_at && dayjs(next.peek_at).isAfter(Date.now());
+  }
+
+  get riskColor() {
+    return this.$utils.helper.risk(
+      this.meta?.collateralizationRatio,
+      this.collateral?.mat
+    );
   }
 
   get meta() {
