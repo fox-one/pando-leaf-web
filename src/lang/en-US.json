@@ -118,7 +118,7 @@
   "form.hint.risk-level-mid": "Mid",
   "form.hint.risk-level-high": "High",
   "form.hint.set-max": "Set Max",
-  "form.hint.debt.intro": "Your total debt changes every minute** as the interests are calculated and added to the debt every minute. If you click on “Set Max” but still receive notification reminding you to pay off all the debt, click on Sex Max again to refresh and autofill the new value.",
+  "form.hint.debt.intro": "Your total debt changes every minute as the interests are calculated and added to the debt every minute. If you click on “Set Max” but still receive notification reminding you to pay off all the debt, click on Sex Max again to refresh and autofill the new value.",
   "form.open.how-much-col": "How much {symbol} would you deposit?",
   "form.open.deposit.tooltip1": "How much {symbol} would you like to lock in your Vault?",
   "form.open.deposit.tooltip2": "The amount of {depositSymbol} you lock up determines how much {mintSymbol} you can generate.",

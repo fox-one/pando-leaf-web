@@ -73,13 +73,28 @@
 
       <div style="height: 120px"></div>
 
-      <f-action-bar
+      <v-layout
+        justify-space-around
+        align-center
+        class="buttons fixed-bottom ma-2"
+        :class="`f-bg-${riskColor}`"
+      >
+        <base-action-button
+          v-for="item in actionButtons"
+          :key="item.text"
+          :icon="item.icon"
+          :text="item.text"
+          :disabled="item.disabled"
+          @click="item.onClick"
+        ></base-action-button>
+      </v-layout>
+      <!-- <f-action-bar
         fixed
         class="ma-2 fixed-bottom"
         :class="`f-bg-${riskColor}`"
         @click="handleActionClick"
         :actions="actionButtons"
-      ></f-action-bar>
+      ></f-action-bar> -->
     </v-layout>
 
     <v-layout v-if="tabIndex === 1" column>
@@ -342,7 +357,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         text: this.$t("button.pay-back"),
         icon: "$iconPayback",
         size: "32",
-        color: this.meta?.debtAmount === 0 ? "grey" : "primary",
+        disabled: this.meta?.debtAmount === 0,
         onClick: (id) => {
           if (this.meta?.debtAmount === 0) return;
           this.$router.push(`/vault/payback?id=${id}`);
@@ -353,7 +368,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         text: this.$t("button.generate"),
         icon: "$iconGenerate",
         size: "32",
-        color: this.meta?.collateralAmount === 0 ? "grey" : "primary",
+        disabled: this.meta?.collateralAmount === 0,
         onClick: (id) => {
           if (this.meta?.collateralAmount === 0) return;
           this.$router.push(`/vault/generate?id=${id}`);
@@ -363,7 +378,7 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         text: this.$t("button.withdraw"),
         icon: "$iconWithdraw",
         size: "32",
-        color: this.meta?.collateralAmount === 0 ? "grey" : "primary",
+        disabled: this.meta?.collateralAmount === 0,
         onClick: (id) => {
           if (this.meta?.collateralAmount === 0) return;
           this.$router.push(`/vault/withdraw?id=${id}`);
@@ -373,7 +388,6 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         text: this.$t("button.deposit"),
         icon: "$iconDeposit",
         size: "32",
-        color: "primary",
         onClick: (id) => {
           this.$router.push(`/vault/deposit?id=${id}`);
         },
@@ -415,10 +429,14 @@ export default class VaultDetail extends Mixins(mixins.vault) {
 <style lang="scss" scoped>
 .fixed-bottom {
   height: 78px !important;
+  border-radius: 8px;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
   box-shadow: 0 0 0;
   margin-bottom: calc(constant(safe-area-inset-bottom) + 20px) !important;
   margin-bottom: calc(env(safe-area-inset-bottom) + 20px) !important;
-  padding-bottom: 8px !important;
 }
 .z-index-2 {
   z-index: 2;

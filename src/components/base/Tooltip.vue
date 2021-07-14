@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-layout align-center>
     <f-tooltip v-if="hint && isDesktop" top v-model="showTooltip">
       <template #activator="{ on, attrs }">
         <v-btn
@@ -35,7 +35,9 @@
           <v-icon :size="size">$iconQuestion</v-icon>
         </f-button>
       </template>
-      <template #title> {{ $t("tooltip.details") }} </template>
+      <template #title>
+        <div class="f-title-1 text-center">{{ $t("tooltip.details") }}</div>
+      </template>
       <div class="pb-8">
         <div class="ma-4">{{ hint }}</div>
         <div class="my-8 text-center">
@@ -51,7 +53,7 @@
         </div>
       </div>
     </f-bottom-sheet>
-  </div>
+  </v-layout>
 </template>
 
 <script lang="ts">

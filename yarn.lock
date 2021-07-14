@@ -910,10 +910,10 @@
     classnames "~2.2.6"
     vue-slider-component "~3.2.13"
 
-"@foxone/uikit@^2.0.60":
-  version "2.0.60"
-  resolved "https://registry.npmjs.org/@foxone/uikit/-/uikit-2.0.60.tgz#df9b2ec0c4b4b1e5e959300d6b53d789a0987b35"
-  integrity sha512-cAzMw8c27QdKyLY1MAveRfoy+cn56Pq3G6FD0YXR1suJmmZcKfHv+qLUA5qAIgcDAUQhaoxTEWQlRnEHQCyr9Q==
+"@foxone/uikit@^2.0.62":
+  version "2.0.62"
+  resolved "https://registry.npmjs.org/@foxone/uikit/-/uikit-2.0.62.tgz#76668acc07667370d03a16747eb90aa041af352a"
+  integrity sha512-frfzZnh143gJX5BDhuBmEXMs+jUr1FI68LsU7QeK2uhcnoFHCarmxqTw1McTYyDxMBI0MWfi2jBp77o8Ofhoag==
   dependencies:
     animate.css "^4.1.0"
     bignumber.js "^9.0.0"

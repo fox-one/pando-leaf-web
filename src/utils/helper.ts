@@ -8,7 +8,6 @@ import {
   CONFIG,
   NODE_ENV,
 } from "~/constants";
-import i18n from "~/i18n";
 import { initApp } from "./app";
 import { v4 as uuid } from "uuid";
 import number from "./number";

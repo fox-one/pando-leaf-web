@@ -115,6 +115,9 @@ a {
     background: #000000;
     opacity: 0.1;
   }
+  .v-icon {
+    color: var(--v-f-greyscale-1);
+  }
 }
 
 .risk-title {
@@ -124,4 +127,14 @@ a {
 
 .leaf-card {
   max-width: 482px;
+}
+
+::v-deep {
+  .v-btn:not(.v-btn--active) {
+    color: var(--v-f-greyscale-5) !important;
+  }
+  .f-bottom-sheet__content {
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+  }
 }
