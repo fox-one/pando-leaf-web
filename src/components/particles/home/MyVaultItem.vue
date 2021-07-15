@@ -1,5 +1,5 @@
 <template>
-  <f-panel :elevation="0" :class="`my-vault-card pa-0 f-bg-${risk}`">
+  <f-panel elevation="none" :class="`my-vault-card pa-0 f-bg-${risk}`">
     <v-layout column class="my-vault-card">
       <v-layout
         @click="toDetail"

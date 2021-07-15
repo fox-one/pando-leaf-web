@@ -2,7 +2,7 @@
   <v-row class="pa-0" no-gutters>
     <v-col xs="12" sm="12" md="6" class="d-flex justify-center">
       <f-panel
-        :elevation="0"
+        elevation="none"
         :class="`mt-2 mx-1 pa-0 leaf-card rounded-lg total-card main-card flex-grow-1 sm-6 xs-12 ${
           switchState ? 'opened-card' : 'closed-card'
         }`"
@@ -36,7 +36,7 @@
     </v-col>
     <v-col class="extra-card" md="6">
       <f-panel
-        :elevation="0"
+        elevation="none"
         class="mt-2 mx-1 pa-0 leaf-card rounded-lg total-card f-bg-greyscale-6 sm-6 xs-12"
       >
         <v-layout column class="f-greyscale-1 ml-6">

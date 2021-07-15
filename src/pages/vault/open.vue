@@ -63,6 +63,8 @@
       </asset-range-input>
     </v-layout>
 
+    <div class="f-bg-greyscale-6" style="height: 8px"></div>
+
     <prediction class="my-4" :out-data="infos" :collateral="collateral" />
 
     <market-select-modal

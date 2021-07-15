@@ -24,7 +24,7 @@
       </v-layout>
 
       <f-panel
-        :elevation="0"
+        elevation="none"
         class="collateral pa-4 no-border-radius f-greyscale-1"
       >
         <v-layout column>
@@ -186,7 +186,7 @@
       </f-panel>
 
       <f-panel
-        :elevation="0"
+        elevation="none"
         v-if="events && events.length !== 0"
         class="mt-2 px-4 pt-6 pb-0 no-border-radius"
       >

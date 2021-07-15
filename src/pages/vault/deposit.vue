@@ -20,6 +20,8 @@
       />
     </v-layout>
 
+    <div class="f-bg-greyscale-6" style="height: 8px"></div>
+
     <prediction
       class="my-2"
       :collateral="collateral"

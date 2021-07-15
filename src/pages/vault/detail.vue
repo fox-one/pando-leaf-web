@@ -88,13 +88,6 @@
           @click="item.onClick"
         ></base-action-button>
       </v-layout>
-      <!-- <f-action-bar
-        fixed
-        class="ma-2 fixed-bottom"
-        :class="`f-bg-${riskColor}`"
-        @click="handleActionClick"
-        :actions="actionButtons"
-      ></f-action-bar> -->
     </v-layout>
 
     <v-layout v-if="tabIndex === 1" column>
