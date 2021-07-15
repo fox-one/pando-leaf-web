@@ -358,9 +358,9 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         icon: "$iconPayback",
         size: "32",
         disabled: this.meta?.debtAmount === 0,
-        onClick: (id) => {
+        onClick: () => {
           if (this.meta?.debtAmount === 0) return;
-          this.$router.push(`/vault/payback?id=${id}`);
+          this.$router.push(`/vault/payback?id=${this.vaultId}`);
         },
       },
 
@@ -369,9 +369,9 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         icon: "$iconGenerate",
         size: "32",
         disabled: this.meta?.collateralAmount === 0,
-        onClick: (id) => {
+        onClick: () => {
           if (this.meta?.collateralAmount === 0) return;
-          this.$router.push(`/vault/generate?id=${id}`);
+          this.$router.push(`/vault/generate?id=${this.vaultId}`);
         },
       },
       {
@@ -379,17 +379,17 @@ export default class VaultDetail extends Mixins(mixins.vault) {
         icon: "$iconWithdraw",
         size: "32",
         disabled: this.meta?.collateralAmount === 0,
-        onClick: (id) => {
+        onClick: () => {
           if (this.meta?.collateralAmount === 0) return;
-          this.$router.push(`/vault/withdraw?id=${id}`);
+          this.$router.push(`/vault/withdraw?id=${this.vaultId}`);
         },
       },
       {
         text: this.$t("button.deposit"),
         icon: "$iconDeposit",
         size: "32",
-        onClick: (id) => {
-          this.$router.push(`/vault/deposit?id=${id}`);
+        onClick: () => {
+          this.$router.push(`/vault/deposit?id=${this.vaultId}`);
         },
       },
     ];
@@ -418,10 +418,6 @@ export default class VaultDetail extends Mixins(mixins.vault) {
       this.$utils.helper.errorHandler(this, error);
     }
     this.loading = false;
-  }
-
-  handleActionClick({ onClick }) {
-    onClick(this.vaultId);
   }
 }
 </script>
