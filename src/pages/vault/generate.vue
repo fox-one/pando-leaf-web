@@ -48,7 +48,7 @@
           btn_cancel: 'f-bg-greyscale-1',
         },
       }"
-      :impact="`${(meta.ratio * 100).toFixed(2)}%`"
+      :impact="`${(meta.ratio * 100).toFixed(1)}%`"
       :countdown="countdown"
       @confirm="confirm"
       ref="riskInfo"
