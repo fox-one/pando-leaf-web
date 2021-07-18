@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import { Action, Getter, Mutation, State } from "vuex-class";
+
+import type { TranslateResult } from "vue-i18n";
 
 export interface Page extends Vue {
   title: string;
@@ -31,53 +32,36 @@ export interface Page extends Vue {
   },
 })
 export default class PageView extends Vue {
-  @Mutation("app/SET_APPBAR") setAppbar;
-
-  @Mutation("app/SET_BOTTOM_NAV") setBottomNav;
-
-  @Action("oracle/sync") syncOracles;
-
-  @Action("auth/getMe") getMe;
-
-  @State((state) => state.auth.id) user_id;
-
-  @Getter("auth/isLogged") isLogged;
-
-  @Getter("auth/canReadAsset") canReadAsset;
-
-  get title() {
+  get title(): TranslateResult {
     return "";
   }
 
-  get appbar() {
-    return {};
+  get appbar(): Partial<State.AppBarState> {
+    return {
+      style: "nav",
+    };
   }
 
   get bottomNav() {
     return "";
   }
 
-  mounted() {
-    this.syncOracles();
-    setTimeout(() => {
-      if (this.isLogged && !this.user_id) {
-        this.getMe();
-      }
-    }, 200);
-  }
-
   setLang() {
     const locale = this.$utils.helper.getLocale();
     this.$i18n.locale = locale;
     this.$vuetify.lang.current = locale;
-    document.title = this.title;
+    document.title = this.title as string;
   }
 
   setPageConfig() {
-    this.setBottomNav(this.bottomNav);
-    this.setAppbar({ title: this.title, ...this.appbar });
+    this.$store.commit("app/SET_BOTTOM_NAV", { value: this.bottomNav });
+    this.$store.commit("app/SET_APPBAR", {
+      title: this.title,
+      ...this.appbar,
+    });
+
     setTimeout(() => {
-      this.$utils.helper.loadMixinTheme();
+      this.$utils.mixin.loadMixinTheme();
     }, 50);
   }
 }

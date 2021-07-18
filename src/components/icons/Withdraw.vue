@@ -27,15 +27,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { State } from "vuex-class";
 
 @Component
-class Withdraw extends Vue {
-  @State((state) => state.app.settings.dark) isDark;
-
-  get color() {
-    return this.isDark ? "white" : "black";
-  }
-}
+class Withdraw extends Vue {}
 export default Withdraw;
 </script>

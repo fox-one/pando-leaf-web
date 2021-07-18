@@ -4,8 +4,10 @@ export async function initApp(vue: Vue) {
   const store = vue.$store;
   dayjs.locale(vue.$vuetify.lang.current);
   await Promise.all([
-    // store.dispatch("global/syncAccount"),
-    store.dispatch("global/syncMarkets"),
-    store.dispatch("global/syncAssets"),
+    store.dispatch("auth/getMe"),
+    store.dispatch("collateral/loadCollaterals"),
+    store.dispatch("vault/loadVaults"),
+    store.dispatch("asset/loadAssets"),
+    store.dispatch("oracle/loadOracles"),
   ]);
 }

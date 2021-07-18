@@ -1,22 +1,6 @@
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import updateLocale from "dayjs/plugin/updateLocale";
-import "dayjs/locale/zh";
-import { IOracle } from "~/services/types/vo";
 
-dayjs.extend(relativeTime);
-
-dayjs.extend(updateLocale);
-
-export function toRelative(t) {
-  return dayjs().to(t);
-}
-
-export function format(t, p = "YYYY-MM-DD HH:mm:ss") {
-  return dayjs(t).format(p);
-}
-
-export function oracleNext(gem: IOracle, dai: IOracle) {
+export function oracleNext(gem: API.Oracle, dai: API.Oracle) {
   if (!gem || !dai) return { peek_at: dayjs(0) };
   const gemPeekTime = dayjs(gem.peek_at).add(gem.hop, "seconds");
   const daiPeekTime = dayjs(dai.peek_at).add(dai.hop, "seconds");

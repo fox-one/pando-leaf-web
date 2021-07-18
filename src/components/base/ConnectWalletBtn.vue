@@ -121,8 +121,8 @@ class ConnectWalletBtn extends Vue {
   }
 
   handleLogin() {
-    if (this.$utils.helper.isMixin()) {
-      this.$utils.helper.requestLogin(this);
+    if (this.$utils.mixin.isMixin()) {
+      this.$utils.account.requestLogin(this);
     } else {
       this.show = true;
     }
@@ -131,18 +131,15 @@ class ConnectWalletBtn extends Vue {
   async authFennec() {
     if (this.isFennecDetected) {
       await this.$fennec.connect("Pando Leaf");
-      await this.$utils.helper.loadWalletAssets(this);
+      await this.$utils.account.loadProfile(this);
       this.show = false;
-      this.$store.dispatch("auth/getMe");
-      this.$store.dispatch("global/syncMarkets");
-      this.$store.dispatch("global/syncMyVaults");
     } else {
-      this.$utils.helper.requestLogin(this);
+      this.$utils.account.requestLogin(this);
     }
   }
 
   async auth() {
-    this.$utils.helper.requestLogin(this);
+    this.$utils.account.requestLogin(this);
   }
 
   install(item) {
@@ -156,6 +153,7 @@ export default ConnectWalletBtn;
   padding-left: 20px !important;
   padding-right: 20px !important;
 }
+
 .connect-button {
   width: 80vw;
 }

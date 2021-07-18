@@ -33,14 +33,12 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { State } from "vuex-class";
 
 @Component
 class IconSearch extends Vue {
-  @State((state) => state.app.settings.dark) isDark;
-
   get colors() {
-    return this.isDark ? ["#000000", "#ffffff"] : ["#ffffff", "#000000"];
+    const dark = this.$vuetify.theme.dark;
+    return dark ? ["#000000", "#ffffff"] : ["#ffffff", "#000000"];
   }
 }
 export default IconSearch;

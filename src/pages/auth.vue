@@ -1,10 +1,11 @@
 <template>
-  <div class="auth-page">
-    <v-progress-circular :width="3" color="primary" indeterminate />
-    <div class="mt-3 text--secondary">
-      {{ $t("common.authing") }}
-    </div>
-  </div>
+  <v-container>
+    <f-loading fullscreen loading>
+      <template #text>
+        {{ $t("common.login") }}
+      </template>
+    </f-loading>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -27,33 +28,21 @@ class AuthPage extends Mixins(mixins.page) {
     return this.$route.query.code as string;
   }
 
-  get state() {
-    const state = this.$route.query.state as string;
-    try {
-      return JSON.parse(decodeURIComponent(state));
-    } catch (error) {
-      return "";
-    }
-  }
-
-  get redirect() {
-    return this.state?.location ?? "/";
-  }
-
   async mounted() {
-    await this.$store.dispatch("auth/login", this.code);
-    document.location.replace(this.redirect);
+    try {
+      await this.$store.dispatch("auth/login", this.code);
+      const authPath = localStorage.getItem("authPath");
+
+      if (authPath) {
+        window.location.replace(authPath);
+      } else {
+        this.$router.push({ name: "index" });
+      }
+    } catch (error) {
+      this.$utils.helper.errorHandler(this, error);
+      this.$router.push({ name: "index" });
+    }
   }
 }
 export default AuthPage;
 </script>
-
-<style lang="scss" scoped>
-.auth-page {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-</style>

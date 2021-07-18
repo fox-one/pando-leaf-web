@@ -17,6 +17,7 @@ module.exports = {
     "arrow-parens": ["error", "always"],
     camelcase: "off",
     "no-empty": "off",
+    "no-undef": "off",
     "@typescript-eslint/camelcase": ["off"],
     "@typescript-eslint/no-explicit-any": ["off"],
     "@typescript-eslint/explicit-module-boundary-types": ["off"],

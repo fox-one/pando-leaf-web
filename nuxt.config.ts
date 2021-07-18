@@ -5,6 +5,7 @@ const config: NuxtConfig = {
   ssr: false,
   router: {
     mode: "hash",
+    middleware: "route",
   },
   srcDir: "./src",
   head: {
@@ -47,20 +48,6 @@ const config: NuxtConfig = {
       { rel: "manifest", href: "/site.webmanifest" },
       { rel: "mask-icon", color: "#5bbad5", href: "/safari-pinned-tab.svg" },
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
-      {
-        rel: "preconnect",
-        href: "https://fonts.googleapis.com",
-      },
-      {
-        rel: "preconnect",
-        href: "https://fonts.gstatic.com",
-        crossOrigin: null,
-      },
-      {
-        rel: "stylesheet",
-        href:
-          "https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap",
-      },
     ],
   },
   loading: { color: "#fff" },

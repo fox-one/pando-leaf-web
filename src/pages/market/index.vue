@@ -1,159 +1,26 @@
 <template>
-  <v-container class="pa-0 desktop-support f-bg-greyscale-7">
-    <v-layout column class="px-4">
-      <div class="f-title-1 font-weight-bold mt-10">
-        {{ $t("market.overview") }}
-      </div>
-      <v-row no-gutters class="pt-6 mb-6">
-        <v-col class="my-4 pa-0" cols="6" xs="6" sm="4" md="4" lg="3">
-          <div class="f-caption">{{ $t("market.total-collaterals") }}</div>
-          <v-layout align-center class="overview-value">
-            <span class="overview-value-symbol">$</span>{{ total.collaterals }}
-          </v-layout>
-        </v-col>
-        <v-col class="my-4 pa-0" cols="6" xs="6" sm="4" md="4" lg="3">
-          <div class="f-caption">{{ $t("market.total-supply") }}</div>
-          <v-layout align-center class="overview-value"
-            ><span class="overview-value-symbol">$</span
-            >{{ total.supply }}</v-layout
-          >
-        </v-col>
-        <v-col class="my-4 pa-0" cols="6" xs="6" sm="4" md="4" lg="3">
-          <div class="f-caption">
-            {{ $t("market.total-collateralization") }}
-          </div>
-          <div class="market-green overview-value">
-            {{ total.collaterilazation }}
-          </div>
-        </v-col>
-      </v-row>
-      <market-item
-        class="mb-4"
-        v-for="item in collaterals"
-        :collateral="item"
-        :key="item.id"
-      ></market-item>
-    </v-layout>
-  </v-container>
+  <v-container class="fill-height"> asf </v-container>
 </template>
 
-<script lang="ts" scoped>
+<script lang="ts">
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
-import { Action, Getter, State } from "vuex-class";
-import MarketItem from "@/components/particles/MarketItem.vue";
-import { ICollateral } from "~/services/types/vo";
 
-@Component({
-  components: {
-    MarketItem,
-  },
-})
-export default class Market extends Mixins(mixins.page) {
-  @State((state) => state.global.collaterals) collaterals!: ICollateral[];
-  @Getter("global/getAssetById") getAssetById;
-  @Action("global/syncMarkets") syncMarkets;
+@Component
+class VaultPage extends Mixins(mixins.page) {
+  get title() {
+    return this.$t("tab.market") as string;
+  }
 
   get appbar() {
-    if (!this.isLogged) {
-      return {
-        back: false,
-        avatar: false,
-        customContent: true,
-        mixinImmersive: this.$utils.helper.isMixin(),
-      };
-    }
     return {
-      back: false,
-      customContent: true,
-      avatar: true,
-      mixinImmersive: this.$utils.helper.isMixin(),
+      style: "home" as const,
     };
   }
 
   get bottomNav() {
     return "market";
   }
-
-  get total() {
-    if (!this.collaterals || this.collaterals.length === 0) {
-      return {
-        supply: "-",
-        collaterals: "-",
-      };
-    }
-    let col = 0;
-    let dai = 0;
-    this.collaterals.forEach((c) => {
-      const colAsset = this.getAssetById(c?.gem);
-      const daiAsset = this.getAssetById(c?.dai);
-      const colAmount = Number(c.ink || "0");
-      const daiAmount = Number(c.art || "0") * Number(c.rate || "1");
-      const colPrice = Number(colAsset?.price || "0");
-      const daiPrice = Number(daiAsset?.price || "0");
-      col += colAmount * colPrice;
-      dai += daiAmount * daiPrice;
-    });
-    return {
-      collaterals: this.$utils.number.toShort(col),
-      supply: this.$utils.number.toShort(dai),
-      collaterilazation: this.$utils.number.toPercent(col / dai),
-    };
-  }
-
-  toTrade() {
-    this.$router.replace("/");
-  }
-
-  intervalId = 0 as any;
-
-  mounted() {
-    if (this.isLogged) {
-      this.$utils.helper.loadWalletAssets(this);
-    }
-    this.intervalId = setInterval(() => {
-      this.syncMarkets();
-      this.syncOracles();
-    }, 3000);
-    this.syncMarkets();
-  }
-
-  beforeDestroy() {
-    clearInterval(this.intervalId);
-  }
 }
+export default VaultPage;
 </script>
-
-<style lang="scss" scoped>
-.desktop-support {
-  max-width: 1100px !important;
-}
-.market-table-title {
-  opacity: 0.5;
-  font-weight: normal;
-  font-style: normal;
-}
-.arrow-right {
-  position: relative;
-  float: right;
-  right: 30px;
-  transform: translateY(52px);
-}
-.market-app-bar {
-  width: 100% !important;
-  left: unset !important;
-  right: unset !important;
-}
-.overview-value {
-  font-size: 25px;
-  font-weight: 700;
-  .overview-value-symbol {
-    font-size: 17px;
-    margin-top: -2px;
-    margin-right: 4px;
-  }
-}
-.market-green {
-  color: #47bd61;
-}
-</style>

@@ -39,15 +39,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { State } from "vuex-class";
 
 @Component
-class Generate extends Vue {
-  @State((state) => state.app.settings.dark) isDark;
-  get color() {
-    return this.isDark ? "white" : "black";
-  }
-}
+class Generate extends Vue {}
 export default Generate;
 </script>
 <style lang="scss" scoped></style>

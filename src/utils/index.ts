@@ -1,17 +1,24 @@
-import * as helper from "./helper";
+import utils, { mixin, number } from "@foxone/utils";
 import * as app from "./app";
-import * as time from "./time";
+import * as account from "./account";
+import * as asset from "./asset";
 import * as collateral from "./collateral";
+import * as time from "./time";
+import * as helper from "./helper";
+import * as payment from "./payment";
+import * as vault from "./vault";
 import icons from "./icons";
-import base64 from "./base64";
-import number from "./number";
 
 export default {
-  helper,
+  account,
   app,
+  asset,
   icons,
-  base64,
-  number,
-  time,
   collateral,
+  payment,
+  mixin,
+  number,
+  vault,
+  helper: { ...utils.helper, ...helper },
+  time: { ...utils.time, ...time },
 };

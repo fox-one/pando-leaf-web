@@ -18,15 +18,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { State } from "vuex-class";
 
 @Component
-class ChevronDown extends Vue {
-  @State((state) => state.app.settings.dark) isDark;
-
-  get color() {
-    return this.isDark ? "white" : "black";
-  }
-}
+class ChevronDown extends Vue {}
 export default ChevronDown;
 </script>

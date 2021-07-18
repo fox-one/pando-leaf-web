@@ -58,15 +58,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { State } from "vuex-class";
 
 @Component
-class Question extends Vue {
-  @State((state) => state.app.settings.dark) isDark;
-
-  get color() {
-    return this.isDark ? "white" : "black";
-  }
-}
+class Question extends Vue {}
 export default Question;
 </script>

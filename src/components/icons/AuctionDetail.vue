@@ -26,17 +26,15 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { State } from "vuex-class";
 
 @Component
-class AuctionDetail extends Vue {
-  @State((state) => state.app.settings.dark) isDark;
-
+class IconSearch extends Vue {
   get color() {
-    return this.isDark ? ["#ffffff", "#000000"] : ["#000000", "#ffffff"];
+    const dark = this.$vuetify.theme.dark;
+    return dark ? ["#ffffff", "#000000"] : ["#000000", "#ffffff"];
   }
 }
-export default AuctionDetail;
+export default IconSearch;
 </script>
 
 <style lang="scss" scoped>

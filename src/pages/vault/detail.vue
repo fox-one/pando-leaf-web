@@ -1,433 +1,113 @@
 <template>
-  <v-container class="pa-0 pt-4 f-bg-greyscale-7" style="height: 100%">
+  <v-container class="detail-page">
     <v-layout justify-center>
-      <f-button-tabs v-model="tabIndex">
-        <template #tabs>
-          <v-btn
-            v-for="(item, index) in tabs"
-            :key="index"
-            :data-value="index"
-            :ripple="false"
-          >
-            <span>{{ item.text }}</span>
-          </v-btn>
-        </template>
-      </f-button-tabs>
-    </v-layout>
-    <v-layout v-if="tabIndex === 0" column>
-      <v-layout class="mt-8 ml-4" align-center>
-        <f-mixin-asset-logo
-          class="z-index-2"
-          :size="40"
-          :logo="collateralAsset.logo"
-        ></f-mixin-asset-logo>
-        <f-mixin-asset-logo
-          class="ml-n2"
-          :size="40"
-          :logo="debtAsset.logo"
-        ></f-mixin-asset-logo>
-        <div class="ml-2 f-caption f-greyscale-1">
-          {{ collateral.name }} #{{ vault.identity_id }}
-        </div>
-      </v-layout>
-      <v-row no-gutters class="mt-5 f-body-2 font-weight-bold">
-        <v-col
-          class="py-3 pl-4"
-          v-for="item in metaInfos"
-          :key="item.title"
-          sm="6"
-          xs="6"
-          md="6"
-          cols="6"
-        >
-          <v-layout align-center :class="item.titleClass">
-            {{ item.title }} <span><base-tooltip :hint="item.hint" /></span>
-          </v-layout>
-          <div :class="item.valueClass">
-            {{ item.value }} <span>{{ item.valueUnit }}</span>
-          </div>
-        </v-col>
-      </v-row>
-
-      <div class="f-bg-greyscale-6" style="height: 8px"></div>
-      <div>
-        <div class="mx-4 f-body-2" v-for="item in infos" :key="item.title">
-          <v-layout class="py-4" align-center>
-            <div class="f-greyscale-3">{{ item.title }}</div>
-            <base-tooltip class="ml-1" :hint="item.hint"></base-tooltip>
-            <v-spacer />
-            <div class="f-greyscale-1">
-              <span
-                :class="
-                  'f-info-grid-item-value ' +
-                  (item.valueColor ? `${item.valueColor}--text` : '')
-                "
-                >{{ item.value }}</span
-              >
-              <span>{{ item.valueUnit }}</span>
-            </div>
-          </v-layout>
-          <div class="f-divider" />
-        </div>
-      </div>
-
-      <div style="height: 120px"></div>
-
-      <v-layout
-        justify-space-around
-        align-center
-        class="buttons fixed-bottom ma-2"
-        :class="`f-bg-${riskColor}`"
-      >
-        <base-action-button
-          v-for="item in actionButtons"
-          :key="item.text"
-          :icon="item.icon"
-          :text="item.text"
-          :disabled="item.disabled"
-          @click="item.onClick"
-        ></base-action-button>
-      </v-layout>
+      <detail-tabs v-model="index" />
     </v-layout>
 
-    <v-layout v-if="tabIndex === 1" column>
-      <div
-        class="mt-4 px-4 py-0"
-        v-infinite-scroll="requestTx"
-        infinite-scroll-distance="10"
-      >
-        <template v-for="(item, index) in histories">
-          <div :key="index" style="overflow: hidden">
-            <history-item
-              :history="item"
-              :vault="vault"
-              :collateral="collateral"
-            ></history-item>
-          </div>
-          <div class="f-divider" :key="`${item.action}_${item.created_at}`" />
-        </template>
-        <f-loading class="my-4" v-if="loading" :loading="loading" />
-        <template v-else-if="histories.length === 0">
-          <base-empty-section />
-        </template>
-      </div>
-      <div style="height: 100px"></div>
-    </v-layout>
+    <div v-show="index === 0">
+      <vault-name :id="vaultId" class="my-8" />
+      <vault-detail-fields
+        v-if="meta.hasCollateral"
+        :id="vaultId"
+        class="mb-3"
+      />
+      <empty-vault-place-holder v-else />
+
+      <div class="greyscale_6 pb-2 mx-n4" />
+
+      <vault-detail-infos :id="vaultId" class="infos" />
+    </div>
+
+    <div v-show="index === 1">
+      <vault-history :id="vaultId" class="mt-4" />
+    </div>
+
+    <div class="actions__wrapper">
+      <vault-actions
+        :id="id"
+        :has-collateral="meta.hasCollateral"
+        class="actions"
+      />
+    </div>
   </v-container>
 </template>
 
-<script lang="ts" scoped>
+<script lang="ts">
 import { Component, Mixins } from "vue-property-decorator";
-import mixins from "~/mixins";
-import HistoryItem from "@/components/particles/HistoryItem.vue";
-import BigNumber from "bignumber.js";
-import { IOracle, IVaultEvent } from "~/services/types/vo";
-import { Getter } from "vuex-class";
-import dayjs from "dayjs";
+import DetailTabs from "@/components/vault/DetailTabs.vue";
+import VaultName from "@/components/vault/VaultName.vue";
+import VaultDetailFields from "@/components/vault/VaultDetailFields.vue";
+import VaultDetailInfos from "@/components/vault/VaultDetailInfos.vue";
+import VaultHistory from "@/components/vault/VaultHistory.vue";
+import VaultActions from "@/components/vault/VaultActions.vue";
+import mixins from "@/mixins";
 
 @Component({
   components: {
-    HistoryItem,
+    DetailTabs,
+    VaultName,
+    VaultDetailFields,
+    VaultDetailInfos,
+    VaultHistory,
+    VaultActions,
   },
 })
-export default class VaultDetail extends Mixins(mixins.vault) {
-  @Getter("oracle/findByAssetId") getOracleByAssetId!: (id) => IOracle;
-  histories = [] as IVaultEvent[];
-  has_next = true;
-  cursor = null as string | null;
-  loading = false;
-  tabIndex = 0;
-
-  get tabs() {
-    return [
-      {
-        text: this.$t("vault.tab.details"),
-        value: "detail",
-      },
-      {
-        text: this.$t("vault.tab.history"),
-        value: "history",
-      },
-    ];
-  }
+class VaultDetailPage extends Mixins(mixins.page) {
+  index = 0;
 
   get title() {
-    return `${this.$t("vault.detail.title")}`;
+    return this.$t("vault.detail.title") as string;
   }
 
   get appbar() {
     return {
-      align: "center",
       back: true,
     };
   }
 
-  get collateralAmount() {
-    return this.vault?.ink;
-  }
-
-  get debtAmount() {
-    return this.$utils.number.toPrecision(
-      Number(this.vault?.art) * Number(this.collateral?.rate),
-      8,
-      BigNumber.ROUND_UP
-    );
-  }
-
-  get gemOracle() {
-    return this.getOracleByAssetId(this.collateral?.gem);
-  }
-
-  get daiOracle() {
-    return this.getOracleByAssetId(this.collateral?.dai);
-  }
-
-  get isValidOracle() {
-    const next = this.$utils.time.oracleNext(this.gemOracle, this.daiOracle);
-    return next && next.peek_at && dayjs(next.peek_at).isAfter(Date.now());
-  }
-
-  get riskColor() {
-    return this.$utils.helper.risk(
-      this.meta?.collateralizationRatio,
-      this.collateral?.mat
-    );
+  get vaultId() {
+    return this.$route.query.id as string;
   }
 
   get meta() {
-    const debtAmount =
-      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
-    const collateralAmount = Number(this.vault?.ink);
-    const collateralizationRatio =
-      (collateralAmount * Number(this.collateral?.price)) / debtAmount;
-    const collateralizationRatioText = this.$utils.number.toFixed(
-      collateralizationRatio * 100,
-      1
-    );
-    const liquidationRatio = Number(this.collateral?.mat);
-    const liquidationPrice = (debtAmount * liquidationRatio) / collateralAmount;
-    const liquidationPenalty = this.$utils.number.toFixed(
-      (Number(this.collateral?.chop) - 1) * 100,
-      1
-    );
-    const stabilityFee = this.$utils.number.toFixed(
-      (Number(this.collateral?.duty) - 1) * 100,
-      1
-    );
-    return {
-      debtAmount,
-      collateralAmount,
-      liquidationPrice,
-      liquidationPriceText: this.$utils.number.isValid(liquidationPrice)
-        ? this.$utils.number.toPrecision(liquidationPrice)
-        : "N/A",
-      collateralizationRatio,
-      collateralizationRatioText,
-      liquidationPenalty,
-      stabilityFee,
-    };
-  }
+    const getVaultFields = this.$utils.vault.getVaultFields;
+    const { vault } = getVaultFields(this, this.vaultId);
 
-  get metaInfos() {
-    const metaInfos: any[] = [
-      {
-        title: this.$t("vault.detail.collateral"),
-        value: this.collateralAmount,
-        valueUnit: this.collateralAsset?.symbol,
-      },
-      {
-        title: this.$t("vault.detail.debt"),
-        value: this.debtAmount,
-        valueUnit: this.debtAsset?.symbol,
-      },
-      {
-        title: this.$t("form.info.collateralization-ratio"), //
-        value: this.$utils.number.isValid(this.meta.collateralizationRatio)
-          ? this.meta.collateralizationRatioText
-          : "N/A",
-        valueUnit: this.$utils.number.isValid(this.meta.collateralizationRatio)
-          ? `%`
-          : "",
-        titleClass: `f-${this.$utils.helper.risk(
-          this.meta.collateralizationRatio,
-          this.collateral.mat
-        )}`,
-        valueClass: `f-${this.$utils.helper.risk(
-          this.meta.collateralizationRatio,
-          this.collateral.mat
-        )}`,
-        hint: this.$t("form.tooltip.collateralization-ratio"),
-      },
-      {
-        title: this.$t("form.info.symbol-price", {
-          symbol: `${this.collateralAsset?.symbol}/${this.debtAsset?.symbol}`,
-        }),
-        value: this.collateral?.price,
-        valueUnit: this.debtAsset?.symbol,
-        titleClass: "f-greyscale-3 font-weight-regular",
-      },
-      {
-        title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
-        value: this.meta.liquidationPriceText,
-        valueUnit: this.$utils.number.isValid(this.meta.liquidationPrice)
-          ? this.debtAsset?.symbol
-          : "",
-        hint: this.$t("form.tooltip.liquidation-price"),
-        titleClass: "f-greyscale-3 font-weight-regular",
-      },
-      {
-        title: this.$t("market.item.oracle-next"),
-        value: this.isValidOracle
-          ? this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)?.price
-          : "-",
-        valueUnit: this.isValidOracle ? this.debtAsset?.symbol : "",
-        titleClass: "f-greyscale-3 font-weight-regular",
-        hint: this.$t("form.info.oracle-price", {
-          time: this.isValidOracle
-            ? this.$utils.time.format(
-                this.$utils.time.oracleNext(this.gemOracle, this.daiOracle)
-                  ?.peek_at
-              )
-            : "-",
-        }),
-      },
-    ];
-    return metaInfos;
-  }
-
-  get infos() {
-    const debtAmount =
-      Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
-    const collateralAmount = Number(this.vault?.ink);
-    const price = Number(this.collateral?.price);
-    const mininumRatio = Number(this.collateral?.mat);
-    const maxDebtAvaileble =
-      (collateralAmount * price) / mininumRatio - debtAmount;
-    const maxDebtAvailebleText = this.$utils.number.toPrecision(
-      maxDebtAvaileble,
-      8,
-      BigNumber.ROUND_DOWN
-    );
-
-    if (debtAmount === 0) {
-      return [];
-    }
-    const maxWithdrawAvaileble =
-      collateralAmount - (mininumRatio * debtAmount) / price;
-    const maxWithdrawAvailebleText = this.$utils.number.toPrecision(
-      maxWithdrawAvaileble,
-      8,
-      BigNumber.ROUND_DOWN
-    );
-    return [
-      {
-        title: this.$t("form.info.available-to-withdraw"),
-        value: maxWithdrawAvailebleText,
-        valueUnit: this.collateralAsset?.symbol,
-      },
-      {
-        title: this.$t("form.info.available-to-generate"),
-        value: maxDebtAvailebleText,
-        valueUnit: this.debtAsset?.symbol,
-      },
-      {
-        title: this.$t("form.info.stability-fee"),
-        value: this.meta.stabilityFee,
-        valueUnit: "%",
-        hint: this.$t("form.tooltip.stability-fee"),
-      },
-      {
-        title: this.$t("form.info.liquidation-penalty"),
-        value: this.meta.liquidationPenalty,
-        valueUnit: "%",
-      },
-    ];
-  }
-
-  get actionButtons() {
-    return [
-      {
-        text: this.$t("button.pay-back"),
-        icon: "$iconPayback",
-        size: "32",
-        disabled: this.meta?.debtAmount === 0,
-        onClick: () => {
-          if (this.meta?.debtAmount === 0) return;
-          this.$router.push(`/vault/payback?id=${this.vaultId}`);
-        },
-      },
-
-      {
-        text: this.$t("button.generate"),
-        icon: "$iconGenerate",
-        size: "32",
-        disabled: this.meta?.collateralAmount === 0,
-        onClick: () => {
-          if (this.meta?.collateralAmount === 0) return;
-          this.$router.push(`/vault/generate?id=${this.vaultId}`);
-        },
-      },
-      {
-        text: this.$t("button.withdraw"),
-        icon: "$iconWithdraw",
-        size: "32",
-        disabled: this.meta?.collateralAmount === 0,
-        onClick: () => {
-          if (this.meta?.collateralAmount === 0) return;
-          this.$router.push(`/vault/withdraw?id=${this.vaultId}`);
-        },
-      },
-      {
-        text: this.$t("button.deposit"),
-        icon: "$iconDeposit",
-        size: "32",
-        onClick: () => {
-          this.$router.push(`/vault/deposit?id=${this.vaultId}`);
-        },
-      },
-    ];
-  }
-
-  mounted() {
-    this.requestTx();
-  }
-
-  async requestTx() {
-    if (this.loading || !this.has_next) {
-      return;
-    }
-    this.loading = true;
-    try {
-      const res = await this.$http.getVaultEvents({
-        id: this.vaultId,
-        limit: 20,
-        cursor: this.cursor,
-      });
-      const transactions = res?.data?.events || [];
-      this.histories = [...this.histories, ...transactions];
-      this.has_next = res?.data?.pagination?.has_next || false;
-      this.cursor = res?.data?.pagination?.next_cursor || null;
-    } catch (error) {
-      this.$utils.helper.errorHandler(this, error);
-    }
-    this.loading = false;
+    return { vault, hasCollateral: Number(vault?.ink) > 0 };
   }
 }
+export default VaultDetailPage;
 </script>
 
 <style lang="scss" scoped>
-.fixed-bottom {
-  height: 78px !important;
-  border-radius: 8px;
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  box-shadow: 0 0 0;
-  margin-bottom: calc(constant(safe-area-inset-bottom) + 20px) !important;
-  margin-bottom: calc(env(safe-area-inset-bottom) + 20px) !important;
+.infos {
+  margin-bottom: 200px;
 }
-.z-index-2 {
-  z-index: 2;
+
+.actions__wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 30px 16px 50px;
+  display: flex;
+  justify-content: center;
+
+  .actions {
+    background: var(--v-risk_mid_bg-base);
+    max-width: 800px;
+    border-radius: 8px;
+    padding: 16px;
+  }
+}
+
+.theme--light {
+  .actions__wrapper {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      #ffffff 24.4%
+    );
+  }
 }
 </style>

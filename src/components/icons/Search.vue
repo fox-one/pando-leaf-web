@@ -5,7 +5,6 @@
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    @click="$emit('click')"
   >
     <circle
       cx="11"
@@ -28,14 +27,12 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { State } from "vuex-class";
 
 @Component
 class IconSearch extends Vue {
-  @State((state) => state.app.settings.dark) isDark;
-
   get color() {
-    return this.isDark ? "#636466" : "#cccccc";
+    const dark = this.$vuetify.theme.dark;
+    return dark ? "#636466" : "#cccccc";
   }
 }
 export default IconSearch;

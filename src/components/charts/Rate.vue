@@ -16,11 +16,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { IChartData } from "~/services/types/vo";
 
 @Component
 class RateChart extends Vue {
-  @Prop() data!: IChartData[];
+  @Prop() data!: API.ChartData[];
 
   textStyle = {
     fontFamily: `"-apple-system, BlinkMacSystemFont, SF Compact Display Medium, "PingFang SC", "Helvetica Neue", Roboto"`,
@@ -91,7 +90,7 @@ class RateChart extends Vue {
       axisLabel: {
         showMinLabel: false,
         formatter: (v) => {
-          return this.$utils.time.format(v * 1000, "MMM DD");
+          return this.$utils.time.format(v * 1000 + "", "MMM DD");
         },
       },
       axisPointer: {
@@ -142,7 +141,7 @@ class RateChart extends Vue {
       },
       formatter: ([params]) => {
         const time = this.$utils.time.format(
-          params.axisValue * 1000,
+          params.axisValue * 1000 + "",
           "MM/DD YYYY"
         );
         const value = this.$utils.number.toPercent(params.value);

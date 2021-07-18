@@ -1,6 +1,5 @@
-$body-font-family: Inter, -apple-system, BlinkMacSystemFont,
-  SF Compact Display Medium, Roboto, Oxygen, "Helvetica Neue", "PingFang SC",
-  sans-serif;
+$body-font-family: -apple-system, BlinkMacSystemFont, "Inter", Roboto, Oxygen,
+  "Helvetica Neue", "PingFang SC", sans-serif;
 
 $font-weights: (
   "thin": 100,
@@ -12,3 +11,11 @@ $font-weights: (
 );
 
 $container-padding-x: 16px;
+$border-radius-root: 8px;
+
+$headings: (
+  "subtitle-1": (
+    "size": 1.125rem,
+    "weight": 300,
+  ),
+);

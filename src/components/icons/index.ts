@@ -15,18 +15,6 @@ requireComponent.keys().forEach((fileName) => {
 
 export function makeIconValues() {
   return {
-    iconSwitchChart: {
-      component: "icon-switch-chart",
-    },
-    iconSwitchNumber: {
-      component: "icon-switch-number",
-    },
-    iconCheck: {
-      component: "icon-check",
-    },
-    iconAdd: {
-      component: "icon-add",
-    },
     iconChevronDown: {
       component: "icon-chevron-down",
     },
@@ -81,11 +69,11 @@ export function makeIconValues() {
     iconTotalCardTexture: {
       component: "icon-total-card-texture",
     },
+    iconPusd: {
+      component: "icon-pusd",
+    },
     iconSetMax: {
       component: "icon-set-max",
-    },
-    iconAddWithRadius: {
-      component: "icon-add-with-radius",
     },
   };
 }
