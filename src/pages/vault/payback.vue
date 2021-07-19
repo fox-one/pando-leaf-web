@@ -37,7 +37,15 @@
             align-center
             justify-space-between
           >
-            <span class="font-weight-bold" @click="handleAmount(maxPayback)">
+            <span
+              class="font-weight-bold"
+              @click="
+                () => {
+                  handleAmount(maxPayback);
+                  showDebtIntro = true;
+                }
+              "
+            >
               {{ $t("form.hint.set-max") }}
               <v-icon class="ml-1" size="12"> $iconSetMax </v-icon>
             </span>
@@ -94,7 +102,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
   asset = {} as IAsset;
   amount = "";
   precision = 8;
-  showDebtIntro = true;
+  showDebtIntro = false;
 
   get appbar() {
     return {
@@ -110,7 +118,7 @@ export default class PaybackForm extends Mixins(mixins.page) {
   get maxPayback() {
     const debtAmount =
       Number(this.vault?.art || "0") * Number(this.collateral?.rate || "1");
-    return this.$utils.number.toPrecision(debtAmount, 8, BigNumber.ROUND_UP);
+    return this.$utils.number.toPrecision(debtAmount, 4, BigNumber.ROUND_UP);
   }
 
   get assetSymbol() {
@@ -152,13 +160,13 @@ export default class PaybackForm extends Mixins(mixins.page) {
         };
       }
       const debtAmount = Number(this.maxPayback);
-      // if (amountNum > debtAmount) {
-      //   return {
-      //     disabled: true,
-      //     type: "error",
-      //     tip: this.$t("form.validate.pay-back-over"),
-      //   };
-      // }
+      if (amountNum > debtAmount) {
+        return {
+          disabled: true,
+          // type: "error",
+          // tip: this.$t("form.validate.pay-back-over"),
+        };
+      }
       const leftDebt = debtAmount - amountNum;
       if (leftDebt < Number(this.collateral?.dust) && leftDebt > 0) {
         return {

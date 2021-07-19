@@ -13,7 +13,9 @@
           <v-icon :size="size">$iconQuestion</v-icon>
         </v-btn>
       </template>
-      <div class="tip">{{ hint }}</div>
+      <slot name="tip">
+        <div class="tip">{{ hint }}</div>
+      </slot>
     </f-tooltip>
     <f-bottom-sheet
       overlay-opacity="0.9"
@@ -39,7 +41,9 @@
         <div class="f-title-1 text-center">{{ $t("tooltip.details") }}</div>
       </template>
       <div class="pb-8">
-        <div class="ma-4">{{ hint }}</div>
+        <slot name="tip">
+          <div class="ma-4">{{ hint }}</div>
+        </slot>
         <div class="my-8 text-center">
           <f-button
             rounded
