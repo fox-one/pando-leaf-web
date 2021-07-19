@@ -152,13 +152,13 @@ export default class PaybackForm extends Mixins(mixins.page) {
         };
       }
       const debtAmount = Number(this.maxPayback);
-      if (amountNum > debtAmount) {
-        return {
-          disabled: true,
-          type: "error",
-          tip: this.$t("form.validate.pay-back-over"),
-        };
-      }
+      // if (amountNum > debtAmount) {
+      //   return {
+      //     disabled: true,
+      //     type: "error",
+      //     tip: this.$t("form.validate.pay-back-over"),
+      //   };
+      // }
       const leftDebt = debtAmount - amountNum;
       if (leftDebt < Number(this.collateral?.dust) && leftDebt > 0) {
         return {
