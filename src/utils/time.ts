@@ -3,7 +3,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
 import "dayjs/locale/zh";
 import { IOracle } from "~/services/types/vo";
-import number from "./number";
 
 dayjs.extend(relativeTime);
 

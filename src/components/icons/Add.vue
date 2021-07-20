@@ -22,12 +22,12 @@ import { Component, Vue } from "vue-property-decorator";
 import { State } from "vuex-class";
 
 @Component
-class Generate extends Vue {
+class Add extends Vue {
   @State((state) => state.app.settings.dark) isDark;
   get color() {
     return this.isDark ? "black" : "white";
   }
 }
-export default Generate;
+export default Add;
 </script>
 <style lang="scss" scoped></style>

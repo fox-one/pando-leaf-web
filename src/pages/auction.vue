@@ -20,6 +20,9 @@
             {{ $t("auction.statusbar.ends") }}
           </span>
           {{ countDownText }}
+          <span class="ml-2 statusbar-right-ends">
+            {{ $t("auction.statusbar.ends-shuffix") }}
+          </span>
         </div>
       </v-layout>
 
