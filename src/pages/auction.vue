@@ -139,6 +139,17 @@
               />
             </v-layout>
             <v-layout v-if="!meta.isDone" column>
+              <div class="mt-3 ml-8 f-greyscale-3 f-caption">
+                {{
+                  meta.isStage1
+                    ? `≈ $${$utils.number.toPrecision(
+                        meta.debtPrice * inputDebtAmount
+                      )}`
+                    : `≈ $${$utils.number.toPrecision(
+                        meta.collateralPrice * inputCollateralAmount
+                      )}`
+                }}
+              </div>
               <div
                 v-if="meta.isStage1"
                 class="mt-3 ml-8 f-greyscale-3 f-caption"
@@ -417,6 +428,8 @@ export default class AuctionDetail extends Mixins(mixins.page) {
       minBid,
       maxBid,
       bidPrice,
+      debtPrice,
+      collateralPrice,
       debtFiatValue,
       collateralFiatValue,
     };
