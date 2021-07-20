@@ -178,7 +178,7 @@ export default class Me extends Mixins(mixins.page) {
   }
 
   get myVaultHint() {
-    return this.$t("welcome.description");
+    return this.$t("me.my-vault.hint");
   }
 
   get sortedMyVaults() {
