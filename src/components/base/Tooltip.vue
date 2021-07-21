@@ -14,7 +14,9 @@
         </v-btn>
       </template>
       <slot name="tip">
-        <div class="tip">{{ hint }}</div>
+        <div class="tip" v-for="content in contents" :key="content">
+          {{ content }}
+        </div>
       </slot>
     </f-tooltip>
     <f-bottom-sheet
@@ -42,7 +44,9 @@
       </template>
       <div class="pb-8">
         <slot name="tip">
-          <div class="ma-4">{{ hint }}</div>
+          <div class="ma-4" v-for="content in contents" :key="content">
+            {{ content }}
+          </div>
         </slot>
         <div class="my-8 text-center">
           <f-button
@@ -65,7 +69,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class Tooltip extends Vue {
-  @Prop() hint!: string;
+  @Prop() hint!: string | string[];
   @Prop({ default: 14 }) size!: number;
 
   showTooltip = false;
@@ -73,6 +77,13 @@ export default class Tooltip extends Vue {
 
   get isDesktop() {
     return this.$utils.helper.isDesktop();
+  }
+
+  get contents() {
+    if (Array.isArray(this.hint)) {
+      return this.hint;
+    }
+    return [this.hint];
   }
 }
 </script>
