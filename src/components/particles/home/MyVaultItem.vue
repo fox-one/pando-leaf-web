@@ -54,7 +54,7 @@
         v-if="collateralAmount === 0"
         class="f-caption f-greyscale-1 opacity4 mt-2 mb-6 ml-6"
       >
-        {{ "This vault don’t have any collateral" }}
+        {{ $t("me.vault-item.empty") }}
       </div>
       <v-spacer />
       <v-layout column class="ma-0 pa-0 flex-grow-0">

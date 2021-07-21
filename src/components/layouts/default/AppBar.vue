@@ -26,7 +26,7 @@
             <v-icon size="16" color="primary">$iconChevronDown</v-icon>
           </div>
         </template>
-        <template #title> {{ "Jump To" }} </template>
+        <template #title> {{ $t("menu.jump-to") }} </template>
         <div class="mb-10">
           <v-layout
             class="list-item-text py-5"
@@ -77,7 +77,7 @@ class DefaultLayoutAppBar extends Vue {
   get menuItems() {
     return [
       {
-        title: "Pando Lakes (Coming soon)",
+        title: `Pando Lakes (${this.$t("menu.coming-soon")})`,
         disabled: true,
       },
       {
@@ -85,7 +85,7 @@ class DefaultLayoutAppBar extends Vue {
         check: true,
       },
       {
-        title: "Pando Rings (Coming soon)",
+        title: `Pando Rings (${this.$t("menu.coming-soon")})`,
         disabled: true,
       },
     ];
