@@ -194,12 +194,6 @@
                   </v-icon>
                 </span>
               </div>
-              <div class="mt-3 ml-8 f-greyscale-3 f-caption">
-                {{ $t("auction.label.stage.your.bid.price") }}
-                <span class="ml-1 f-greyscale-1 font-weight-bold">
-                  {{ meta.bidPrice }}
-                </span>
-              </div>
               <div
                 v-if="meta.isStage2"
                 class="mt-3 ml-8 f-caption waining--text"
