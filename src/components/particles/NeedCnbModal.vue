@@ -51,7 +51,7 @@ export default class NeedCnbModal extends Vue {
 
   go4swap() {
     location.assign(
-      "https://f1-4swap-mtg.firesbox.com/#/swap?output=965e5c6e-434c-3fa9-b780-c50f43cd955c"
+      "https://app.4swap.org/#/swap?output=965e5c6e-434c-3fa9-b780-c50f43cd955c"
     );
   }
 }

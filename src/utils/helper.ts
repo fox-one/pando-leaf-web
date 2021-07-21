@@ -178,7 +178,7 @@ export function requestLogin(vue) {
   const host = window.location.origin;
   const redirectUrl = encodeURIComponent(host + "/#/auth/");
   localStorage.setItem("authPath", window.location.href);
-  let path = `https://mixin-oauth.firesbox.com/?client_id=${CONFIG.MIXIN_CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ+SNAPSHOTS:READ&response_type=code`;
+  let path = `https://mixin-oauth.fox.one/?client_id=${CONFIG.MIXIN_CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ+SNAPSHOTS:READ&response_type=code`;
   path += `&redirect_url=${redirectUrl}`;
   window.location.href = path;
 }
