@@ -33,11 +33,13 @@ export default function ({ store }) {
           primary: "#000000",
           orange: "#FFA800",
           waining: "#F44C4C",
+          greyscale_4: "#CCCCCC",
         },
         dark: {
           primary: "#ffffff",
           orange: "#f08b04",
           waining: "#F44C4C",
+          greyscale_4: "#656565",
         },
       },
     },

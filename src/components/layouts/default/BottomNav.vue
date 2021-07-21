@@ -53,3 +53,12 @@ class DefaultLayoutBottomNav extends Vue {
 }
 export default DefaultLayoutBottomNav;
 </script>
+
+<style lang="scss">
+.theme--dark.v-bottom-navigation.f-bottom-nav .v-btn:not(.v-btn--active) {
+  color: var(--v-greyscale_4-base) !important;
+}
+.theme--light.v-bottom-navigation.f-bottom-nav .v-btn:not(.v-btn--active) {
+  color: var(--v-greyscale_4-base) !important;
+}
+</style>
