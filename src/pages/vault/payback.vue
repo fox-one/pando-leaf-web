@@ -73,7 +73,7 @@
 </template>
 
 <script lang="ts" scoped>
-import { Component, Mixins } from "vue-property-decorator";
+import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import { IAsset, ICollateral, IVault } from "~/services/types/vo";
 import { Action, Getter } from "vuex-class";
@@ -121,6 +121,13 @@ export default class PaybackForm extends Mixins(mixins.page) {
     return this.$utils.number.toPrecision(debtAmount, 4, BigNumber.ROUND_UP);
   }
 
+  @Watch("amount")
+  onAmountChange(newVal) {
+    if (Number(newVal) > this.maxPayback) {
+      this.showDebtIntro = false;
+    }
+  }
+
   get assetSymbol() {
     return this.asset?.symbol || "";
   }
@@ -163,8 +170,8 @@ export default class PaybackForm extends Mixins(mixins.page) {
       if (amountNum > debtAmount) {
         return {
           disabled: true,
-          // type: "error",
-          // tip: this.$t("form.validate.pay-back-over"),
+          type: "error",
+          tip: this.$t("form.validate.pay-back-over"),
         };
       }
       const leftDebt = debtAmount - amountNum;
