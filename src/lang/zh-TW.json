@@ -175,7 +175,7 @@
     "form.validate.medium-risk-withdraw": "此取回的 {symbol} 數量將使金庫接近清算風險",
     "form.validate.amount-zero": "數量需要大於 0",
     "form.validate.insufficient-balance": "{symbol} 餘額不足",
-    "form.validate.pay-back-over": "無法償還超過所欠的債務，您最多可以償還所有未償債務",
+    "form.validate.pay-back-over": "您的償還金額不可超過系統設置的還款最大值",
     "form.validate.remaining-dust-debt": "債務餘額不得低於 {amount} {symbol}，或者您可以選擇清償全部債務",
     "button.deposit": "存入",
     "button.withdraw": "取回",

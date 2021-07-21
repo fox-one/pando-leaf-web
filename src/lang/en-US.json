@@ -175,7 +175,7 @@
   "form.validate.medium-risk-withdraw": "The amount of {symbol} you are withdraw is putting your Vault at risk of liquidation.",
   "form.validate.amount-zero": "Amount must be greater than 0",
   "form.validate.insufficient-balance": "Insufficient {symbol} balance",
-  "form.validate.pay-back-over": "Cannot pay back more than owed, You can repay all your outstanding debt",
+  "form.validate.pay-back-over": "Your repayment cannot exceed the maximum amount set by the system",
   "form.validate.remaining-dust-debt": "Remaining debt has to be no less than {amount} {symbol} or you can pay off all the debt",
   "button.deposit": "Deposit",
   "button.withdraw": "Withdraw",
