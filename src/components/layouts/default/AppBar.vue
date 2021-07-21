@@ -49,6 +49,18 @@
           </v-layout>
         </div>
       </f-bottom-sheet>
+      <v-spacer></v-spacer>
+      <v-layout justify-end v-if="$vuetify.breakpoint.mdAndUp">
+        <div
+          class="top-navs mx-5"
+          :class="item.active ? 'f-greyscale-1' : 'f-greyscale-4'"
+          v-for="item in navs"
+          :key="item.value"
+          @click="handleChange(item)"
+        >
+          {{ item.text }}
+        </div>
+      </v-layout>
     </v-layout>
   </f-app-bar>
 </template>
@@ -91,6 +103,30 @@ class DefaultLayoutAppBar extends Vue {
     ];
   }
 
+  get navs() {
+    const name = this.$route.name;
+    return [
+      {
+        text: this.$t("tab.home"),
+        path: "home",
+        value: "home",
+        active: name === "home",
+      },
+      {
+        text: this.$t("tab.market"),
+        path: "market",
+        value: "market",
+        active: name === "market",
+      },
+      {
+        text: this.$t("tab.auctions"),
+        path: "auctions",
+        value: "auctions",
+        active: name === "auctions",
+      },
+    ];
+  }
+
   clickItem(menu, index) {
     if (index === 0) {
       this.toPandoLakes();
@@ -125,6 +161,13 @@ class DefaultLayoutAppBar extends Vue {
     // coming soon
   }
 
+  handleChange(nav) {
+    if (!nav || this.$route.name === nav.path) {
+      return;
+    }
+    this.$router.push({ name: nav.path });
+  }
+
   handleBack() {
     if (window.history.length <= 2) {
       this.$router.options;
@@ -157,6 +200,14 @@ export default DefaultLayoutAppBar;
     left: calc(50% - 54px);
   }
   left: 48px;
+}
+.top-navs {
+  display: none;
+  @media only screen and (min-width: 960px) {
+    display: flex;
+    font-weight: 600;
+    font-size: 16px;
+  }
 }
 .leaf-logo {
   margin-top: -4px;
