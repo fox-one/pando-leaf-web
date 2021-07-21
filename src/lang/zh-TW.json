@@ -261,6 +261,7 @@
     "auction.history.kick.content": "起始價為以 {debtamount} {debtsymbol} 競購 {colamount} {colsymbol}",
     "auction.history.deal.title": "拍賣成交",
     "auction.history.deal.content": "成交價為以 {debtamount} {debtsymbol} 競購 {colamount} {colsymbol}",
+    "message.auction.success":"競標出價完成",
     "errorcode.-1": "網絡錯誤",
     "errorcode.404": "資源不存在",
     "errorcode.403": "沒有訪問權限",

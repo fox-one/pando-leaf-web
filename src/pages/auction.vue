@@ -582,7 +582,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
         this.$utils.helper.hidePaying(this);
         this.$utils.helper.hidePaymentDialog(this);
         this.$utils.helper.toast(this, {
-          message: "Try bidding finish.",
+          message: `${this.$t("message.auction.success")}`,
           color: "success",
         });
       }

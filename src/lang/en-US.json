@@ -258,6 +258,7 @@
   "auction.history.kick.content": "Starting price is {debtamount} {debtsymbol} for {colamount} {colsymbol}",
   "auction.history.deal.title": "Auction Deal",
   "auction.history.deal.content": "The final price is {debtamount} {debtsymbol} for {colamount} {colsymbol}",
+  "message.auction.success":"Bidding completed",
   "errorcode.-1": "NETWORK ERROR",
   "errorcode.404": "CANNOT FIND RESOURCE",
   "errorcode.403": "ACCESS DENIED",
