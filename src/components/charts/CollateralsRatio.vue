@@ -80,7 +80,7 @@ export default class CollateralsRatio extends Vue {
       chartData.push(chartDataMap[k]);
     }
     chartData.sort((a, b) => {
-      return a.value - b.value;
+      return b.value - a.value;
     });
     return chartData;
   }
