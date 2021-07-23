@@ -61,7 +61,10 @@ class WelcomeModal extends Vue {
   }
 
   mounted() {
-    this.imageHeight = Math.min(document.body.offsetHeight - 390, 327);
+    this.imageHeight = Math.min(
+      document.documentElement.clientHeight - 390,
+      327
+    );
   }
 
   hide() {
