@@ -89,7 +89,7 @@ class DefaultLayoutAppBar extends Vue {
   get menuItems() {
     return [
       {
-        title: `Pando Lakes`,
+        title: `Pando Lake`,
         disabled: false,
       },
       {
