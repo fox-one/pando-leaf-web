@@ -433,6 +433,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
     this.deposit = this.getAssetById(newVal?.gem);
     this.mint = this.getAssetById(newVal?.dai);
     this.updateWalletAsset(newVal);
+    this.updateTips();
   }
 
   @Watch("depositAmount")
@@ -470,6 +471,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
       await this.syncMarkets();
       this.updateWalletAsset();
       this.collateral = this.getCollateral(this.queryId);
+      this.updateTips();
     }, 5000) as any) as number;
 
     this.riskInfo = {
@@ -489,7 +491,10 @@ export default class GenerateVault extends Mixins(mixins.page) {
         btn_confirm: this.$t("risk.info.confirm.btn-confirm"),
       },
     };
+    this.updateTips();
+  }
 
+  updateTips() {
     const suggestAmount = this.$utils.number.toPrecision(
       this.meta.maxAvailable * this.scale.low
     );
