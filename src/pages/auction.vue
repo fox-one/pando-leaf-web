@@ -230,10 +230,11 @@
         </v-layout>
       </f-panel>
 
+      <div class="mt-2 f-bg-greyscale-6" style="height: 8px"></div>
       <f-panel
         elevation="none"
         v-if="events && events.length !== 0"
-        class="mt-2 px-4 pt-6 pb-0 no-border-radius"
+        class="px-4 pt-6 pb-0 no-border-radius"
       >
         <div v-if="events && events.length !== 0" class="f-title-1 mb-2">
           {{ $t("auction.history") }}
