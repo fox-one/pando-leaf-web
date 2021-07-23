@@ -89,8 +89,8 @@ class DefaultLayoutAppBar extends Vue {
   get menuItems() {
     return [
       {
-        title: `Pando Lakes (${this.$t("menu.coming-soon")})`,
-        disabled: true,
+        title: `Pando Lakes`,
+        disabled: false,
       },
       {
         title: "Pando Leaf",
@@ -154,7 +154,7 @@ class DefaultLayoutAppBar extends Vue {
   }
 
   toPandoLakes() {
-    // coming soon
+    location.assign("https://lake.pando.im/");
   }
 
   toPandoRings() {
