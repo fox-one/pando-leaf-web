@@ -224,7 +224,7 @@
     "auction.statusbar.done": "競拍已結束",  
     "auction.label.current-state": "當前狀態",
     "auction.label.collateral": "抵押物",
-    "auction.label.debt": "需要償還的債務",
+    "auction.label.debt": "總債務",
     "auction.label.debt.highest": "最高出價",
     "auction.label.stage.title.debt": "你出價償還的債務",
     "auction.label.stage.title.collateral": "您出價接受的抵押品",
