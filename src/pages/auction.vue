@@ -201,6 +201,10 @@
                 {{
                   $t("auction.label.stage.reduction.agree", {
                     price: `${flip.tab} ${meta.debtSymbol}`,
+                    amount: `${
+                      inputCollateralAmount ? inputCollateralAmount : "-"
+                    }`,
+                    collateral: `${meta.auctionSymbol}`,
                   })
                 }}
               </div>
