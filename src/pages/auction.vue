@@ -314,7 +314,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   }
 
   get begText() {
-    return this.$utils.number.toPercent(this.collateral?.beg);
+    return this.$utils.number.toPercent(+this.collateral?.beg - 1);
   }
 
   get collateral() {
@@ -386,14 +386,14 @@ export default class AuctionDetail extends Mixins(mixins.page) {
         1 / debt2collateral
       );
       minBid = this.$utils.number.toPrecision(
-        +this.flip.bid * (1 + +this.collateral?.beg),
+        +this.flip.bid * +this.collateral?.beg,
         8,
         2
       );
       maxBid = isStage1
         ? this.$utils.number.toPrecision(this.flip.tab, 8)
         : this.$utils.number.toPrecision(
-            +this.flip.lot * (1 - +this.collateral?.beg),
+            +this.flip.lot / +this.collateral?.beg,
             8
           );
       if (minBid >= maxBid) minBid = maxBid;
