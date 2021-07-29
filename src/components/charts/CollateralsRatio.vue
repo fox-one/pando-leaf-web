@@ -50,7 +50,7 @@ import { IAsset, IVault, ICollateralRatio } from "~/services/types/vo";
 @Component({})
 export default class CollateralsRatio extends Vue {
   @Prop() vaults!: IVault[];
-  @Prop({ default: "f-greyscale-7" }) labelColor!: string;
+  @Prop({ default: "white--text" }) labelColor!: string;
   @Prop({ default: "f-bg-greyscale-3" }) dividerColor!: string;
   @Getter("global/getAssetById") getAssetById!: (id) => IAsset;
   @Getter("global/getCollateral") getCollateral;

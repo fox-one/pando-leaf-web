@@ -43,11 +43,7 @@
           <div class="f-body-2 mt-6">
             {{ $t("me.collaterals-ratio") }}
           </div>
-          <collaterals-ratio
-            class="mt-6"
-            :vaults="myVaults"
-            label-color="f-greyscale-1"
-          />
+          <collaterals-ratio class="mt-6" :vaults="myVaults" />
           <div class="divider"></div>
         </v-layout>
       </f-panel>
