@@ -22,7 +22,7 @@
       >
         <template #activator="{ on }">
           <div class="leaf-logo-button" v-on="on">
-            <v-icon class="leaf-logo" size="64">$iconLeaf</v-icon>
+            <v-icon class="leaf-logo mr-2" size="72">$iconLeaf</v-icon>
             <v-icon size="16" color="primary">$iconChevronDown</v-icon>
           </div>
         </template>
@@ -97,8 +97,8 @@ class DefaultLayoutAppBar extends Vue {
         check: true,
       },
       {
-        title: `Pando Rings (${this.$t("menu.coming-soon")})`,
-        disabled: true,
+        title: `Pando Rings`,
+        disabled: false,
       },
     ];
   }
@@ -154,11 +154,11 @@ class DefaultLayoutAppBar extends Vue {
   }
 
   toPandoLakes() {
-    location.assign("https://lake.pando.im/");
+    location.assign("https://lake.pando.im");
   }
 
   toPandoRings() {
-    // coming soon
+    location.assign("https://rings.pando.im");
   }
 
   handleChange(nav) {
@@ -209,20 +209,7 @@ export default DefaultLayoutAppBar;
     font-size: 16px;
   }
 }
-.leaf-logo {
-  margin-top: -4px;
-  margin-left: 6px;
-  height: 32px !important;
-  width: 64px !important;
-  font-size: 64px !important;
-  ::v-deep {
-    .v-icon__component {
-      height: 32px !important;
-      width: 64px !important;
-      font-size: 64px !important;
-    }
-  }
-}
+
 .list-item-text {
   font-weight: 500;
   font-size: 16px !important;
