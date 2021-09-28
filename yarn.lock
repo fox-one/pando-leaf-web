@@ -940,10 +940,10 @@
     vuetify "^2.5.6"
     vuex "^3.4.0"
 
-"@foxone/pandoseed@^0.9.8":
-  version "0.9.8"
-  resolved "https://registry.npmjs.org/@foxone/pandoseed/-/pandoseed-0.9.8.tgz#9e0150c77507a972c8210274040f65c5ecb8fe58"
-  integrity sha512-9Vf5RJJXpafeCxy6ALWMlJk3T25BikMYTHtzo3kkspSchw7STEuOvQ6GUs9zGEGvYFrxq4mXd7UWYjpOtlsdXw==
+"@foxone/pandoseed@^0.9.9":
+  version "0.9.9"
+  resolved "https://registry.npmjs.org/@foxone/pandoseed/-/pandoseed-0.9.9.tgz#0f0f4676016ae8a6a7703f5cd556751424c5e879"
+  integrity sha512-ARWwuohAjAAvgxz4QyVcObZlV3ox/PAYVLBZdZ7Tn2HWpU2vV29MT3asiJChU1RbSYDow/3ZMNLtdvzRIdQ0+Q==
   dependencies:
     "@foxone/fennec-base" "^0.3.7"
     "@foxone/fennec-dapp" "^0.3.7"
@@ -953,12 +953,13 @@
     dayjs "^1.10.7"
     dotenv "^10.0.0"
     uuid "^8.3.2"
-    vue "^2.6.11"
+    vue "2.6.12"
     vue-class-component "^7.2.3"
     vue-i18n "^8.25.0"
     vue-property-decorator "^9.1.2"
     vue-router "^3.5.2"
     vuetify "^2.5.8"
+    vuex "^3.6.2"
     vuex-persistedstate "^3.0.1"
 
 "@foxone/uikit@3.0.1-27", "@foxone/uikit@^3.0.1-27":
@@ -10721,7 +10722,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.11, vue@^2.6.12:
+vue@2.6.12, vue@^2.6.11, vue@^2.6.12:
   version "2.6.12"
   resolved "https://registry.npmjs.org/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==

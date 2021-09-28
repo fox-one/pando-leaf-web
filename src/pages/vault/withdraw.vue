@@ -364,6 +364,10 @@ export default class WithdrawForm extends Mixins(mixins.page) {
           token: this.$utils.helper.getToken(this.$store),
           success: () => {
             this.updateWalletAsset();
+            this.$utils.helper.toast(this, {
+              message: this.$t("common.action-success") + "",
+            });
+            this.$pandoseed.close();
           },
         });
         return true;
