@@ -383,10 +383,19 @@ export default class GenerateForm extends Mixins(mixins.page) {
   }
 
   needCnb = false;
-  checkCNB() {
+  checkActionAsset() {
     if (this.isLogged && this.canReadAsset) {
-      if (Number(this.getAssetById(ACTION_ASSET_ID)?.balance) <= 0) {
-        this.needCnb = true;
+      if (Number(this.getWalletAssetById(ACTION_ASSET_ID)?.balance) <= 0) {
+        this.$pandoseed.show({
+          token: this.$utils.helper.getToken(this.$store),
+          success: () => {
+            this.updateWalletAsset();
+            this.$utils.helper.toast(this, {
+              message: this.$t("common.action-success") + "",
+            });
+            this.$pandoseed.close();
+          },
+        });
         return true;
       }
     }
@@ -396,6 +405,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
   updateWalletAsset() {
     this.$utils.helper.loadWalletAsset(this, this.collateral.gem);
     this.$utils.helper.loadWalletAsset(this, this.collateral.dai);
+    this.$utils.helper.loadWalletAsset(this, ACTION_ASSET_ID);
   }
 
   requestLogin() {
@@ -403,7 +413,7 @@ export default class GenerateForm extends Mixins(mixins.page) {
   }
 
   requestConfirm() {
-    if (this.checkCNB()) return;
+    if (this.checkActionAsset()) return;
     if ((this.meta.ratio - Number(this.collateral.mat)) * 100 < 61) {
       this.showCModel = true;
       return;
