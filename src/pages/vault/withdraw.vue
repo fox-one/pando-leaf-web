@@ -300,6 +300,7 @@ export default class WithdrawForm extends Mixins(mixins.page) {
     this.intervalid = (setInterval(async () => {
       await this.syncMyVaults();
       await this.syncMarkets();
+      this.$utils.helper.loadWalletAsset(this, ACTION_ASSET_ID);
       this.vault = this.getVault(this.vaultId);
       this.collateral = this.getCollateral(this.vault.collateral_id);
     }, 5000) as any) as number;
