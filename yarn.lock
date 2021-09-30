@@ -940,10 +940,10 @@
     vuetify "^2.5.6"
     vuex "^3.4.0"
 
-"@foxone/pandoseed@^0.9.12":
-  version "0.9.12"
-  resolved "https://registry.npmjs.org/@foxone/pandoseed/-/pandoseed-0.9.12.tgz#db8d2f9ed233c44b94f89f5214fd9813c9715b17"
-  integrity sha512-qFHISCp0x1Zj+CzyMHR1bdYCjwBS9sVSruOxP7R+b/OCP+7/LkK0kSkfHrLUk02bEQx+YqmSOsvSYlzxAxD4Cw==
+"@foxone/pandoseed@^0.9.13":
+  version "0.9.13"
+  resolved "https://registry.npmjs.org/@foxone/pandoseed/-/pandoseed-0.9.13.tgz#72c4dea0357d082a8312c34dd11dd4fdb747ff15"
+  integrity sha512-qCzJSNBMPv+rNq2UN37xgNiI/mmz+KXC2sI+AGpewRBP8zFLCdJwXi9Loz2EFS0xHqmGPheRHHvZFq5wkUem6Q==
   dependencies:
     "@foxone/fennec-base" "^0.3.7"
     "@foxone/fennec-dapp" "^0.3.7"
