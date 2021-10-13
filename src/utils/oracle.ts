@@ -1,11 +1,10 @@
 import dayjs from "dayjs";
 
 export function getNextPairPrice(
-  vm: Vue,
+  getters: Getter.GettersTree,
   opts: { base: string; quote: string }
 ) {
-  const getOracleById: State.GetOracleById =
-    vm.$store.getters["oracle/getOracleById"];
+  const getOracleById: State.GetOracleById = getters["oracle/getOracleById"];
 
   const baseOracle = getOracleById(opts.base);
   const quoteOracle = getOracleById(opts.quote);

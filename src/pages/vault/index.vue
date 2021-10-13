@@ -17,8 +17,7 @@
       <div class="d-flex align-center mt-8 mt-md-14">
         <span class="subtitle-1 font-weight-bold mr-1">{{ "My Vault" }}</span>
         <base-tooltip
-          hint="Pando leaf is product description product description product
-            description product description"
+          hint="'Pando leaf is product description product description product description product description'"
         >
         </base-tooltip>
       </div>

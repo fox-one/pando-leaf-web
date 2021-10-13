@@ -54,7 +54,6 @@ const config: NuxtConfig = {
   css: ["~/styles/index.scss"],
   plugins: [
     "~/plugins/persistedstate.ts",
-    "~/plugins/components.ts",
     "~/plugins/property.ts",
     "~/plugins/lib.ts",
     "~/plugins/ga.ts",
@@ -85,7 +84,6 @@ const config: NuxtConfig = {
         seo: false,
       },
     ],
-    "@nuxtjs/pwa",
   ],
   vuetify: {
     customVariables: ["~/styles/_variables.scss"],

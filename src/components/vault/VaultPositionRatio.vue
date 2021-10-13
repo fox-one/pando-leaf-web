@@ -2,9 +2,9 @@
   <v-layout column class="pt-5 ratio-chart-wrapper">
     <div class="ratio-chart pl-4 pl-md-0">
       <vault-position-ratio-item
-        v-for="(item, index) in ratioItems"
+        v-for="(item, index) in meta.ratioItems"
         :ratio="item"
-        :benchmark="benchmark"
+        :benchmark="meta.benchmark"
         :key="index"
       />
     </div>
@@ -15,31 +15,23 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import VaultPositionRatioItem from "./VaultPositionRatioItem.vue";
-import { Get } from "vuex-pathify";
+import { Sync } from "vuex-pathify";
 
 @Component({
   components: {
     VaultPositionRatioItem,
   },
 })
-class VaultPositionRatio extends Vue {
-  @Get("vault/vaults") vaults!: API.Vault[];
+export default class VaultPositionRatio extends Vue {
+  @Sync("vault/vaults") vaults!: API.Vault[];
 
-  ratioItems: API.CollateralRatio[] = [];
-
-  benchmark = 0;
-
-  mounted() {
-    this.init();
-  }
-
-  init() {
+  get meta() {
     const vaults = this.vaults;
-
     const ratioMap: Record<string, API.CollateralRatio> = vaults.reduce(
       (acc, vault) => {
-        const getVaultFields = this.$utils.vault.getVaultFields;
-        const fields = getVaultFields(this, vault.id);
+        const getters = this.$store.getters as Getter.GettersTree;
+        const getVaultFields = getters.getVaultFields;
+        const fields = getVaultFields(vault.id);
         const { collateralAsset, collateralAmountUSD } = fields;
 
         if (!collateralAsset) return acc;
@@ -58,27 +50,16 @@ class VaultPositionRatio extends Vue {
       {}
     );
 
-    // const ratioMap: Record<string, API.CollateralRatio> = {};
-
-    // const assets = this.$store.state.asset.assets;
-    // for (let i = 0; i < 10; i++) {
-    //   const random = Math.random();
-    //   const asset = assets[Math.floor(assets.length * random)];
-    //   ratioMap[asset.id] = {
-    //     value: 100 * random,
-    //     asset,
-    //   };
-    // }
-
     const ratioItems = Object.values(ratioMap).sort(
       (a, b) => b.value - a.value
     );
 
-    this.ratioItems = ratioItems;
-    this.benchmark = ratioItems[0]?.value;
+    return {
+      ratioItems,
+      benchmark: ratioItems[0]?.value,
+    };
   }
 }
-export default VaultPositionRatio;
 </script>
 
 <style lang="scss" scoped>

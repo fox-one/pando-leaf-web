@@ -53,19 +53,6 @@ export function demandPrecision(value: number): number {
   return precision;
 }
 
-// export function trimDecimalZero(num: number): string {
-//   if (num === undefined || num === null || num === "") {
-//     return num;
-//   }
-//   if (Number.isInteger(Number.parseFloat(num))) {
-//     return Number.parseFloat(num).toFixed(0);
-//   }
-//   if (num.charAt(num.length - 1) === "0") {
-//     return trimDecimalZero(num.substr(0, num.length - 1));
-//   }
-//   return num;
-// }
-
 export function getLocale() {
   let locale = "en";
   if (navigator.language.includes("zh")) {
@@ -82,29 +69,6 @@ export function mixinImageResize(logo: string, size = 32 * 3) {
     return logo.replace(reg, `=s${size}`);
   }
   return logo;
-}
-
-export async function loadWalletAssets(vue: Vue) {
-  const store = vue.$store;
-  if (vue.$fennec.connected) {
-    return store.dispatch("global/loadFennecWalletAssets", {
-      fennec: vue.$fennec,
-    });
-  } else {
-    return store.dispatch("global/syncWallets");
-  }
-}
-
-export async function loadWalletAsset(vue: Vue, assetId: string) {
-  const store = vue.$store;
-  if (vue.$fennec.connected) {
-    return store.dispatch("global/loadFennecWalletAsset", {
-      fennec: vue.$fennec,
-      assetId,
-    });
-  } else {
-    return store.dispatch("global/syncWalletAsset", assetId);
-  }
 }
 
 export function fiatUnit(vue: Vue) {

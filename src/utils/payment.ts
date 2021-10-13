@@ -15,7 +15,7 @@ export async function requestPayment(vm: Vue, params: API.ActionPayload) {
   const resp = await vm.$http.postActions(params);
   // connected to Fennec?
   if (vm.$fennec.connected) {
-    return await vm.$fennec.multisigsPayment({ code: resp.code });
+    return await vm.$fennec.ctx?.wallet.multisigsPayment({ code: resp.code });
   }
 
   // not connected to Fennec
@@ -26,13 +26,10 @@ export async function requestPayment(vm: Vue, params: API.ActionPayload) {
   }
 }
 
-export function showPayingModal(vm: Vue, timer: any) {
-  vm.$store.commit("app/SET_PAYING", {
-    visible: true,
-    timer,
-  });
+export function showPaying(vm: Vue) {
+  vm.$store.commit("app/SET_PAYING", { visible: true });
 }
 
 export function hidePaying(vm: Vue) {
-  vm.$store.commit("app/SET_PAYING", { visible: false, timer: null });
+  vm.$store.commit("app/SET_PAYING", { visible: false });
 }

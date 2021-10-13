@@ -39,7 +39,7 @@ class AuthPage extends Mixins(mixins.page) {
         this.$router.push({ name: "index" });
       }
     } catch (error) {
-      this.$utils.helper.errorHandler(this, error);
+      this.$utils.helper.errorHandler(this, error as any);
       this.$router.push({ name: "index" });
     }
   }

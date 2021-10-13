@@ -100,7 +100,7 @@ export function getVaultFields(vm: Vue, id: string) {
   const liquidationPenalty = chop;
 
   // 交易对下个价格
-  const nextPrice = getNextPairPrice(vm, {
+  const nextPrice = getNextPairPrice(vm.$store.getters, {
     base: collateral?.gem ?? "",
     quote: collateral?.dai ?? "",
   });

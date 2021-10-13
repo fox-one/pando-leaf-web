@@ -14,16 +14,16 @@ import { Get } from "vuex-pathify";
 
 @Component
 class Account extends Vue {
-  @Get("auth") auth!: State.Auth;
+  @Get("account") account!: State.Account;
 
   @Get("auth/isLogged") isLogged!: boolean;
 
   get meta() {
-    const { avatar, name } = this.auth;
+    const { profile } = this.account;
 
     return {
-      avatar,
-      name,
+      avatar: profile?.avatar_url,
+      name: profile?.full_name,
     };
   }
 }

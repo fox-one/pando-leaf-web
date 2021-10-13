@@ -1,23 +1,30 @@
 <template>
   <f-app-bottom-nav
-    :app="true"
-    :nav="bottomNav"
-    :items="navItems"
-    :animation="false"
-    active-class="primary-color"
+    v-if="Boolean(value)"
+    :value="value"
+    :items="items"
+    app
+    flat
+    height="calc(66px + env(safe-area-inset-bottom))"
+    color="primary"
     @change="handleChange"
-  />
+  >
+  </f-app-bottom-nav>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Get } from "vuex-pathify";
+import { Sync } from "vuex-pathify";
 
-@Component
+@Component({})
 class DefaultLayoutBottomNav extends Vue {
-  @Get("app/bottomNav@value") bottomNav!: string;
+  @Sync("app/bottomNav@value") bottomNav!: string;
 
-  get navItems() {
+  get value() {
+    return this.bottomNav || undefined;
+  }
+
+  get items() {
     return [
       {
         text: this.$t("tab.home"),
@@ -40,11 +47,12 @@ class DefaultLayoutBottomNav extends Vue {
     ];
   }
 
-  handleChange(nav) {
-    if (!nav || this.$route.name === nav.path) {
-      return;
+  handleChange(value) {
+    const nav = this.items.find((x) => x.value === value);
+
+    if (nav) {
+      this.$router.push({ name: nav.path });
     }
-    this.$router.push({ name: nav.path });
   }
 }
 export default DefaultLayoutBottomNav;

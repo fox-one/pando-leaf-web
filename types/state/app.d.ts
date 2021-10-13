@@ -14,12 +14,6 @@ declare namespace State {
     value: string;
   }
 
-  export interface ToastState {
-    show: boolean;
-    color: string;
-    message: string;
-  }
-
   export interface PayState {
     visible: boolean;
     timer: any;
@@ -29,8 +23,8 @@ declare namespace State {
     appbar: AppBarState;
     settings: SettingsState;
     bottomNav: BottomNavState;
-    toast: ToastState;
     paying: PayState;
     visited: boolean;
+    initing: boolean;
   }
 }

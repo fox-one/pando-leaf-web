@@ -8,13 +8,12 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 
-@Component
-class PairLogo extends Vue {
+@Component({})
+export default class PairLogo extends Vue {
   @Prop() base!: string;
 
   @Prop() quote!: string;
 }
-export default PairLogo;
 </script>
 
 <style scoped>

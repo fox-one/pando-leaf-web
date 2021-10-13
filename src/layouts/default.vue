@@ -34,7 +34,7 @@ class NuxtDefaultLayout extends Vue {
     try {
       await this.$utils.app.initApp(this);
     } catch (error) {
-      this.$utils.helper.errorHandler(this, error);
+      this.$utils.helper.errorHandler(this, error as any);
     }
     this.initing = false;
   }

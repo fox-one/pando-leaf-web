@@ -1,18 +1,21 @@
-$body-font-family: -apple-system, BlinkMacSystemFont, "Inter", Roboto, Oxygen,
-  "Helvetica Neue", "PingFang SC", sans-serif;
-
-$font-weights: (
-  "thin": 100,
-  "light": 300,
-  "regular": 400,
-  "medium": 500,
-  "bold": 600,
-  "black": 900,
+@import "~@foxone/uikit/src/styles/variables/_index.scss";
+$body-font-family: "Inter", Roboto, Oxygen, "Helvetica Neue", "PingFang SC",
+  sans-serif;
+$line-height-root: 1.2;
+$font-weights: () !default;
+$font-weights: map-deep-merge(
+  (
+    "thin": 100,
+    "light": 300,
+    "regular": 400,
+    "medium": 500,
+    "semibold": 600,
+    "bold": 700,
+    "black": 900,
+  ),
+  $font-weights
 );
-
-$container-padding-x: 16px;
-$border-radius-root: 8px;
-
+$snackbar-absolute-z-index: 1000;
 $headings: (
   "subtitle-1": (
     "size": 1.125rem,

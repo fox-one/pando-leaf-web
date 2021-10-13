@@ -24,7 +24,7 @@ class BalanceField extends Vue {
   @Get("auth/isLogged") isLogged!: boolean;
 
   handleLogin() {
-    this.$utils.account.requestLogin(this);
+    this.$utils.account.openAuth(this);
   }
 }
 export default BalanceField;

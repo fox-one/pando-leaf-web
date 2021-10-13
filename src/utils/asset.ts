@@ -1,4 +1,4 @@
-export async function loadWalletAssets(vm: Vue) {
+export async function getAssets(vm: Vue) {
   const store = vm.$store;
   if (vm.$fennec.connected) {
     return store.dispatch("asset/loadFennecWalletAssets", {

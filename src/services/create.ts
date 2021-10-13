@@ -58,11 +58,7 @@ function generateAuthInterceptor(app: NuxtAppOptions) {
       if (configs.token) {
         token = configs.token;
       } else {
-        if (app.$fennec.connected) {
-          token = app.$fennec.getToken();
-        } else {
-          token = app.store?.state.auth.token;
-        }
+        token = app.store?.state.auth.token;
       }
 
       if (token) {

@@ -10,11 +10,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import analyze from "rgbaster";
 
-@Component
-class VaultPositionRatioItem extends Vue {
+@Component({})
+export default class VaultPositionRatioItem extends Vue {
   @Prop() benchmark!: number;
 
   @Prop() ratio!: API.CollateralRatio;
@@ -25,7 +25,7 @@ class VaultPositionRatioItem extends Vue {
     const toPercent = this.$utils.number.toPercent;
 
     const { benchmark, ratio } = this;
-    const percentValue = ratio.value / benchmark;
+    const percentValue = ratio?.value / benchmark;
     const percentText = toPercent({ n: percentValue });
     const height = Math.floor(114 * percentValue);
     const color = this.color || "#808080";
@@ -34,20 +34,22 @@ class VaultPositionRatioItem extends Vue {
       height,
       percentText,
       styles: { height: `${height}px`, background: height <= 24 ? "" : color },
-      symbol: ratio.asset.symbol,
-      logo: ratio.asset.logo,
+      symbol: ratio?.asset?.symbol,
+      logo: ratio?.asset?.logo,
     };
   }
 
-  async mounted() {
-    const result = await analyze(this.ratio.asset.logo, {
-      ignore: ["rgb(255,255,255)", "rgb(0,0,0)"],
-      scale: 0.6,
-    });
-    this.color = result[0].color;
+  @Watch("ratio", { immediate: true })
+  async calculateColor() {
+    if (this.ratio?.asset?.logo) {
+      const result = await analyze(this.ratio?.asset?.logo, {
+        ignore: ["rgb(255,255,255)", "rgb(0,0,0)"],
+        scale: 0.6,
+      });
+      this.color = result[0].color;
+    }
   }
 }
-export default VaultPositionRatioItem;
 </script>
 
 <style lang="scss" scoped>

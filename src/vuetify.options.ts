@@ -5,6 +5,10 @@ import enUIKit from "@foxone/uikit/src/locales/en";
 import jaUIKit from "@foxone/uikit/src/locales/ja";
 import zhUIKit from "@foxone/uikit/src/locales/zh-Hans";
 import { makeIconValues } from "@/components/icons";
+import UIKit from "@foxone/uikit";
+import icons from "@/utils/icons";
+
+import { mergeDeep } from "vuetify/lib/util/helpers";
 
 const locales = {
   zh: { ...zh, ...zhUIKit },
@@ -12,16 +16,17 @@ const locales = {
   ja: { ...ja, ...jaUIKit },
 };
 
-const icons = {
-  iconfont: "mdiSvg",
-  values: makeIconValues(),
-};
-
 export default function ({ store }) {
   const isDark = store.state.app.settings.dark;
 
-  return {
-    icons,
+  const options = {
+    icons: {
+      iconfont: "mdiSvg",
+      values: {
+        ...icons,
+        ...makeIconValues(),
+      },
+    },
     lang: { locales },
     theme: {
       dark: isDark,
@@ -73,4 +78,5 @@ export default function ({ store }) {
       },
     },
   };
+  return mergeDeep(UIKit.preset, options);
 }

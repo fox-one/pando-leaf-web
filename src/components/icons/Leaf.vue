@@ -56,11 +56,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { State } from "vuex-class";
+import { Get } from "vuex-pathify";
 
 @Component
 class Leaf extends Vue {
-  @State((state) => state.app.settings.dark) isDark;
+  @Get("app/settings@dark") isDark;
 
   get color() {
     return this.isDark ? "#E5E5E5" : "#1A1A1A";

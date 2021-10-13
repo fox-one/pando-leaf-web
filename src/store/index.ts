@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import modules from "./modules";
 import pathify from "vuex-pathify";
+import getters from "./getters";
 
 // options
 pathify.options.mapping = "standard";
@@ -12,6 +13,7 @@ export default function () {
 
   return new Vuex.Store({
     state: {},
+    getters,
     modules,
     plugins: [pathify.plugin],
   });

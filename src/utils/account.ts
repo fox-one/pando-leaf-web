@@ -1,33 +1,55 @@
-import { initApp } from "./app";
-import {
-  APP_AVATAR,
-  APP_ID,
-  APP_NAME,
-  APP_SCOPE,
-  APP_TOKEN,
-  CONFIG,
-  NODE_ENV,
-} from "@/constants";
+import { APP_TOKEN, CONFIG, EVENTS, NODE_ENV } from "@/constants";
 
-export async function requestLogin(vm: Vue) {
+const scope = "['PROFILE:READ', 'ASSETS:READ']";
+
+export async function requestAuthMixin(vm: Vue) {
   if (NODE_ENV === "development" && APP_TOKEN) {
-    vm.$store?.commit("auth/SET_PROFILE", {
-      token: APP_TOKEN,
-      scope: APP_SCOPE,
-      id: APP_ID,
-      name: APP_NAME,
-      avatar: APP_AVATAR,
-    });
-    await initApp(vm);
+    await updateProfile(vm, { token: APP_TOKEN, scope, channel: "mixin" });
+
     return;
   }
 
   const host = window.location.origin;
   const redirectUrl = encodeURIComponent(host + "/#/auth/");
+  const path = `https://mixin-oauth.firesbox.com/?client_id=${CONFIG.MIXIN_CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ&response_type=code&redirect_url=${redirectUrl}`;
+
   localStorage.setItem("authPath", window.location.href);
-  let path = `https://mixin-oauth.firesbox.com/?client_id=${CONFIG.MIXIN_CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ+SNAPSHOTS:READ&response_type=code`;
-  path += `&redirect_url=${redirectUrl}`;
   window.location.href = path;
+}
+
+export async function authFennec(vm: Vue) {
+  await vm.$fennec.connect("Pando Leaf");
+
+  const token = await vm.$fennec.ctx!.wallet.signToken({
+    payload: { from: "pando-leaf" },
+  });
+
+  await updateProfile(vm, { token, scope, channel: "fennec" });
+}
+
+async function updateProfile(
+  vm: Vue,
+  payload: { token: string; scope: string; channel: string }
+) {
+  vm.$store.commit("auth/SET_OAUTH_INFO", payload);
+  await vm.$utils.app.loadAccount(vm);
+}
+
+export async function checkFennecAuth(vm: Vue) {
+  if (vm.$store.state.auth.channel === "fennec") {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        vm.$fennec
+          .connect("Pando Leaf")
+          .then(() => {
+            resolve(true);
+          })
+          .catch(() => {
+            reject();
+          });
+      }, 1000);
+    });
+  }
 }
 
 export async function logout(vm: Vue) {
@@ -38,10 +60,6 @@ export async function logout(vm: Vue) {
   ]);
 }
 
-export async function loadProfile(vm: Vue) {
-  return Promise.all([
-    vm.$utils.asset.loadWalletAssets(vm),
-    vm.$store.dispatch("auth/getMe"),
-    vm.$store.dispatch("vault/loadVaults"),
-  ]);
+export function openAuth(vm: Vue) {
+  vm.$root.$emit(EVENTS.OPEN_AUTH);
 }

@@ -1,4 +1,5 @@
 import { mixin } from "@foxone/utils";
+import { MutationTree } from "vuex";
 import { make } from "vuex-pathify";
 
 const state = (): State.App => ({
@@ -15,19 +16,23 @@ const state = (): State.App => ({
   bottomNav: {
     value: "",
   },
-  toast: {
-    show: false,
-    color: "info",
-    message: "",
-  },
   paying: {
     visible: false,
     timer: null,
   },
   visited: false,
+  initing: true,
 });
 
-const mutations = make.mutations(state);
+const mutations: MutationTree<State.App> = {
+  ...make.mutations(state),
+  SET_PAYING(state, data) {
+    state.paying = { ...state.paying, ...data };
+    if (data.visible === false && state.paying.timer) {
+      clearTimeout(state.paying.timer as any);
+    }
+  },
+};
 
 export default {
   namespaced: true,

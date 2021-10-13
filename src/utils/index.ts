@@ -7,6 +7,7 @@ import * as time from "./time";
 import * as helper from "./helper";
 import * as payment from "./payment";
 import * as vault from "./vault";
+import * as oracle from "./oracle";
 import icons from "./icons";
 
 export default {
@@ -19,6 +20,7 @@ export default {
   mixin,
   number,
   vault,
+  oracle,
   helper: { ...utils.helper, ...helper },
   time: { ...utils.time, ...time },
 };

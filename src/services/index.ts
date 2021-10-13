@@ -71,8 +71,9 @@ export default function (http: Http) {
       return http.get(`${MIXIN_HOST}/assets/${id}`);
     },
 
-    getMe(): Promise<any> {
-      return http.get(`${MIXIN_HOST}/me`);
+    async getMe(): Promise<API.Profile> {
+      const resp = await http.get(`${MIXIN_HOST}me`);
+      return resp.data;
     },
 
     config(options: AxiosRequestConfig) {

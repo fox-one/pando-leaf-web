@@ -14,7 +14,7 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { getVaultFields } from "@/utils/vault";
 
-@Component
+@Component({})
 class VaultName extends Vue {
   @Prop() id!: string;
 

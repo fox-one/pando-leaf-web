@@ -4,28 +4,29 @@ import { make } from "vuex-pathify";
 import type { GetterTree, ActionTree, MutationTree } from "vuex";
 
 const state = () => ({
-  walletAssets: {},
+  walletAssets: [],
   assets: [],
 });
 
 const getters: GetterTree<State.Asset, any> = {
-  getWalletAssetById(state) {
-    return (id: string) => state.walletAssets[id];
+  walletAssetsMap(state) {
+    return state.walletAssets.reduce((m, x) => ({ ...m, [x.asset_id]: x }), {});
   },
-  getAssetById(state) {
-    return (id: string) => {
-      return state.assets.find((a) => a.id === id);
-    };
+  assetsMap(state) {
+    return state.assets.reduce((m, x) => ({ ...m, [x.id]: x }), {});
+  },
+  getWalletAssetById(_, getters) {
+    return (id: string) => getters["walletAssetsMap"][id];
+  },
+  getAssetById(_, getters) {
+    return (id: string) => getters["assetsMap"][id];
   },
 };
 
 const mutations: MutationTree<State.Asset> = {
   ...make.mutations(state),
   SET_WALLET_ASSETS(state, data: API.MixinAsset[]) {
-    state.walletAssets = data.reduce(
-      (acc, asset) => ({ ...acc, [asset.asset_id]: asset }),
-      {}
-    );
+    state.walletAssets = data;
   },
 
   SET_WALLET_ASSET(state, { data, id }) {
