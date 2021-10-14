@@ -901,6 +901,23 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@foxone/fennec-base@0.3.7", "@foxone/fennec-base@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.npmjs.org/@foxone/fennec-base/-/fennec-base-0.3.7.tgz#edca1611a3434485a0782a6bec17730220e7636a"
+  integrity sha512-qlfhN3VY+XC0vAEXWLhwqjuLJfT7fYihKKBX++vMg/CQB4ur2autFWMh8L6w7MSqumcp45P99+eDJqyFyH9Wwg==
+  dependencies:
+    browser-passworder "^2.0.3"
+    extensionizer "^1.0.1"
+    lodash "^4.17.21"
+    rxjs "^6.6.3"
+
+"@foxone/fennec-dapp@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.npmjs.org/@foxone/fennec-dapp/-/fennec-dapp-0.3.7.tgz#ac7fa3021d11bc630149d9fad8ac6d407898cf95"
+  integrity sha512-ME2WTkL1JlJEeoJS8u5uAzIZgCW+sCoQNCitk7q819Dx/l/zyewoHoRNjrWhzuW1gAkTvIrDOFDZEJCjfazsrg==
+  dependencies:
+    "@foxone/fennec-base" "0.3.7"
+
 "@foxone/finance-ui@^0.1.7":
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/@foxone/finance-ui/-/finance-ui-0.1.7.tgz#d583446982b2f99b6cde2f6e11a74d583ca7b08f"
@@ -909,6 +926,54 @@
     "@vue/composition-api" "^1.0.0-rc.13"
     classnames "~2.2.6"
     vue-slider-component "~3.2.13"
+
+"@foxone/icons@3.0.1-27":
+  version "3.0.1-27"
+  resolved "https://registry.npmjs.org/@foxone/icons/-/icons-3.0.1-27.tgz#7a14b1359ffa2ef50a489097b67ad9c66d3c3eb1"
+  integrity sha512-e3cyfcSFGDOt/+9+wX14/yFyQJDq4hzv3r+dZ2NaVayQSNwhH2NolW4X2tgEZJhRuqbyXPsc5BSG9ZUcawEADg==
+  dependencies:
+    "@foxone/uikit" "3.0.1-27"
+    vue "^2.6.12"
+    vue-class-component "^7.2.3"
+    vue-property-decorator "^9.1.2"
+    vue-router "^3.2.0"
+    vuetify "^2.5.6"
+    vuex "^3.4.0"
+
+"@foxone/pandoseed@^0.9.13":
+  version "0.9.13"
+  resolved "https://registry.npmjs.org/@foxone/pandoseed/-/pandoseed-0.9.13.tgz#72c4dea0357d082a8312c34dd11dd4fdb747ff15"
+  integrity sha512-qCzJSNBMPv+rNq2UN37xgNiI/mmz+KXC2sI+AGpewRBP8zFLCdJwXi9Loz2EFS0xHqmGPheRHHvZFq5wkUem6Q==
+  dependencies:
+    "@foxone/fennec-base" "^0.3.7"
+    "@foxone/fennec-dapp" "^0.3.7"
+    "@foxone/uikit" "^3.0.1-27"
+    "@foxone/utils" "^0.2.12"
+    axios "^0.21.4"
+    dayjs "^1.10.7"
+    dotenv "^10.0.0"
+    uuid "^8.3.2"
+    vue "2.6.12"
+    vue-class-component "^7.2.3"
+    vue-i18n "^8.25.0"
+    vue-property-decorator "^9.1.2"
+    vue-router "^3.5.2"
+    vuetify "^2.5.8"
+    vuex "^3.6.2"
+    vuex-persistedstate "^3.0.1"
+
+"@foxone/uikit@3.0.1-27", "@foxone/uikit@^3.0.1-27":
+  version "3.0.1-27"
+  resolved "https://registry.npmjs.org/@foxone/uikit/-/uikit-3.0.1-27.tgz#6d73bfc42370b87c20c53fcb0d5b6ecae58a4120"
+  integrity sha512-OOFoKwNogHwaEVk1W6tYpYQqmXpoEtV0khIR5he/YrUpB+OZOnWZU1h/z4XwvIdXzX/jyZK3Nm+iixEiWpRjoA==
+  dependencies:
+    "@foxone/icons" "3.0.1-27"
+    "@foxone/utils" "^0.2.6"
+    bignumber.js "^9.0.1"
+    qrcode "^1.4.4"
+    tinycolor2 "^1.4.2"
+    vue-class-component "^7.2.3"
+    vue-property-decorator "^9.1.2"
 
 "@foxone/uikit@^2.0.62":
   version "2.0.62"
@@ -924,6 +989,15 @@
     vue-class-component "^7.2.5"
     vue-property-decorator "^9.0.0"
     vuetify "^2.4.5"
+
+"@foxone/utils@^0.2.12", "@foxone/utils@^0.2.6":
+  version "0.2.12"
+  resolved "https://registry.npmjs.org/@foxone/utils/-/utils-0.2.12.tgz#4caa774885ada9475cc75db1de0f4060a8c288e1"
+  integrity sha512-2M9YWEJKWOtUDvLNMtkGuxy9//afEtqRs6BzEOIjpm6a0lPbdlZV4iynD2Ouz8u+IAjoLUgIHjaApymGXbVwsQ==
+  dependencies:
+    axios "^0.21.1"
+    bignumber.js "^9.0.1"
+    dayjs "^1.10.4"
 
 "@hapi/address@2.x.x":
   version "2.1.4"
@@ -2559,6 +2633,13 @@ axios@^0.21.1:
   dependencies:
     follow-redirects "^1.10.0"
 
+axios@^0.21.4:
+  version "0.21.4"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
+  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
+  dependencies:
+    follow-redirects "^1.14.0"
+
 babel-code-frame@^6.22.0:
   version "6.26.0"
   resolved "https://registry.npmjs.org/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
@@ -2664,7 +2745,7 @@ big.js@^5.2.2:
   resolved "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
-bignumber.js@^9.0.0:
+bignumber.js@^9.0.0, bignumber.js@^9.0.1:
   version "9.0.1"
   resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.1.tgz#8d7ba124c882bfd8e43260c67475518d0689e4e5"
   integrity sha512-IdZR9mh6ahOBv/hYGiXyVuyCetmGJhtYkqLBpTStdhEGjegpPlUawydyaF3pbIOFynJTpllEs+NP+CS9jKFLjA==
@@ -2779,6 +2860,13 @@ brorand@^1.0.1, brorand@^1.1.0:
   resolved "https://registry.npmjs.org/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
 
+browser-passworder@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/browser-passworder/-/browser-passworder-2.0.3.tgz#6fdd2082e516a176edbcb3dcee0b7f9fce4f7917"
+  integrity sha1-b90gguUWoXbtvLPc7gt/n85PeRc=
+  dependencies:
+    browserify-unibabel "^3.0.0"
+
 browserify-aes@^1.0.0, browserify-aes@^1.0.4:
   version "1.2.0"
   resolved "https://registry.npmjs.org/browserify-aes/-/browserify-aes-1.2.0.tgz#326734642f403dabc3003209853bb70ad428ef48"
@@ -2832,6 +2920,11 @@ browserify-sign@^4.0.0:
     parse-asn1 "^5.1.5"
     readable-stream "^3.6.0"
     safe-buffer "^5.2.0"
+
+browserify-unibabel@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/browserify-unibabel/-/browserify-unibabel-3.0.0.tgz#5a6b8f0f704ce388d3927df47337e25830f71dda"
+  integrity sha1-WmuPD3BM44jTkn30czfiWDD3Hdo=
 
 browserify-zlib@^0.2.0:
   version "0.2.0"
@@ -3878,6 +3971,11 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+dayjs@^1.10.4, dayjs@^1.10.7:
+  version "1.10.7"
+  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
+  integrity sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==
+
 dayjs@^1.8.36:
   version "1.10.4"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.10.4.tgz#8e544a9b8683f61783f570980a8a80eaf54ab1e2"
@@ -4181,6 +4279,11 @@ dot-prop@^5.2.0:
   integrity sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==
   dependencies:
     is-obj "^2.0.0"
+
+dotenv@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.npmjs.org/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
+  integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
 dotenv@^8.1.0, dotenv@^8.2.0:
   version "8.2.0"
@@ -4802,6 +4905,11 @@ extend@~3.0.2:
   resolved "https://registry.npmjs.org/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
 
+extensionizer@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/extensionizer/-/extensionizer-1.0.1.tgz#504544239a7610ba8404b15c1832091a37768d09"
+  integrity sha512-UES5CSOYqshNsWFrpORcQR47+ph6UvQK25mguD44IyeMemt40CG+LTZrH1PgpGUHX3w7ACtNQnmM0J+qEe8G0Q==
+
 external-editor@^3.0.3:
   version "3.1.0"
   resolved "https://registry.npmjs.org/external-editor/-/external-editor-3.1.0.tgz#cb03f740befae03ea4d283caed2741a83f335495"
@@ -5038,6 +5146,11 @@ follow-redirects@^1.0.0, follow-redirects@^1.10.0:
   version "1.13.3"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.13.3.tgz#e5598ad50174c1bc4e872301e82ac2cd97f90267"
   integrity sha512-DUgl6+HDzB0iEptNQEXLx/KhTmDb8tZUHSeLqpnjpknR70H0nC2t9N73BK6fN4hOvJ84pKlIQVQ4k5FFlBedKA==
+
+follow-redirects@^1.14.0:
+  version "1.14.4"
+  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.4.tgz#838fdf48a8bbdd79e52ee51fb1c94e3ed98b9379"
+  integrity sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -9017,7 +9130,7 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs@^6.6.0:
+rxjs@^6.6.0, rxjs@^6.6.3:
   version "6.6.7"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-6.6.7.tgz#90ac018acabf491bf65044235d5863c4dab804c9"
   integrity sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==
@@ -10421,7 +10534,7 @@ uuid@^3.3.2:
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^8.3.0:
+uuid@^8.3.0, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
@@ -10474,7 +10587,7 @@ vm-browserify@^1.0.1:
   resolved "https://registry.npmjs.org/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-class-component@^7.1.0, vue-class-component@^7.2.5:
+vue-class-component@^7.1.0, vue-class-component@^7.2.3, vue-class-component@^7.2.5:
   version "7.2.6"
   resolved "https://registry.npmjs.org/vue-class-component/-/vue-class-component-7.2.6.tgz#8471e037b8e4762f5a464686e19e5afc708502e4"
   integrity sha512-+eaQXVrAm/LldalI272PpDe3+i4mPis0ORiMYxF6Ae4hyuCh15W8Idet7wPUEs4N4YptgFHGys4UrgNQOMyO6w==
@@ -10511,6 +10624,11 @@ vue-i18n@^8.24.3:
   resolved "https://registry.npmjs.org/vue-i18n/-/vue-i18n-8.24.3.tgz#2233ae11ec59e8204df58a28fc41afe9754e3b41"
   integrity sha512-uKAYzGbwGIJndY7JwhQwIGi1uyvErWkBfFwooOtjcNnIfMbAR49ad5dT/MiykrJ9pCcgvnocFjFsNLtTzyW+rg==
 
+vue-i18n@^8.25.0:
+  version "8.25.1"
+  resolved "https://registry.npmjs.org/vue-i18n/-/vue-i18n-8.25.1.tgz#63e4111ff50269c8ae91e7f0f73373198a81a0fc"
+  integrity sha512-UgvN6LxcANSG2O/i8draincxY3E/2bppMNN0szVinN7tuzSJdNFQdB9VDVaQcR1i8BprK9ISUAgZVZacsl+Zbw==
+
 vue-infinite-scroll@^2.0.2:
   version "2.0.2"
   resolved "https://registry.npmjs.org/vue-infinite-scroll/-/vue-infinite-scroll-2.0.2.tgz#ca37a91fe92ee0ad3b74acf8682c00917144b711"
@@ -10546,10 +10664,15 @@ vue-property-decorator@^8.0.0:
   dependencies:
     vue-class-component "^7.1.0"
 
-vue-property-decorator@^9.0.0:
+vue-property-decorator@^9.0.0, vue-property-decorator@^9.1.2:
   version "9.1.2"
   resolved "https://registry.npmjs.org/vue-property-decorator/-/vue-property-decorator-9.1.2.tgz#266a2eac61ba6527e2e68a6933cfb98fddab5457"
   integrity sha512-xYA8MkZynPBGd/w5QFJ2d/NM0z/YeegMqYTphy7NJQXbZcuU6FC6AOdUAcy4SXP+YnkerC6AfH+ldg7PDk9ESQ==
+
+vue-router@^3.2.0, vue-router@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.npmjs.org/vue-router/-/vue-router-3.5.2.tgz#5f55e3f251970e36c3e8d88a7cd2d67a350ade5c"
+  integrity sha512-807gn82hTnjCYGrnF3eNmIw/dk7/GE4B5h69BlyCK9KHASwSloD1Sjcn06zg9fVG4fYH2DrsNBZkpLtb25WtaQ==
 
 vue-router@^3.5.1:
   version "3.5.1"
@@ -10599,7 +10722,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.11, vue@^2.6.12:
+vue@2.6.12, vue@^2.6.11, vue@^2.6.12:
   version "2.6.12"
   resolved "https://registry.npmjs.org/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
@@ -10618,6 +10741,11 @@ vuetify@^2.4.2, vuetify@^2.4.5:
   resolved "https://registry.npmjs.org/vuetify/-/vuetify-2.4.11.tgz#3aba19a32cd89c5dce523260f589cf95d90e2dce"
   integrity sha512-xFNwr95tFRfbyGNg5DBuUkWaKazMBr+ptzoSSL4PGrI0qItY5Vuusxh+ETPtjUXxwz76v5zVtGvF5rWvGQjy7A==
 
+vuetify@^2.5.6, vuetify@^2.5.8:
+  version "2.5.8"
+  resolved "https://registry.npmjs.org/vuetify/-/vuetify-2.5.8.tgz#a23e6a7e77b77de0744b53cf1e7c9d40efac0635"
+  integrity sha512-paLmNhKTYFD41+14rIHnCo+P1jHbUzwBiMowxs5qXVq8RdRMqRmcy05Sfse1WUu90amPGK2fIFQq5rL2N8zqZg==
+
 vuex-class@^0.3.2:
   version "0.3.2"
   resolved "https://registry.npmjs.org/vuex-class/-/vuex-class-0.3.2.tgz#c7e96a076c1682137d4d23a8dcfdc63f220e17a8"
@@ -10631,7 +10759,7 @@ vuex-persistedstate@^3.0.1:
     deepmerge "^4.2.2"
     shvl "^2.0.2"
 
-vuex@^3.6.2:
+vuex@^3.4.0, vuex@^3.6.2:
   version "3.6.2"
   resolved "https://registry.npmjs.org/vuex/-/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"
   integrity sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw==

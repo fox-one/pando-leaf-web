@@ -25,7 +25,11 @@ const getters: GetterTree<AuthState, any> = {
     return Boolean(state.token) || Boolean(state.fennecToken);
   },
   getToken(state) {
-    return state.token;
+    return state.token
+      ? state.token
+      : state.fennecToken
+      ? state.fennecToken
+      : "";
   },
   canReadAsset(state) {
     return state.scope.indexOf(SCOPE.ASSETS_READ) > -1;
