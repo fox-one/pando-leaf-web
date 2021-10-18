@@ -117,8 +117,8 @@ export default class TotalCard extends Vue {
       dai += daiAmount * daiPrice;
     });
     return {
-      collaterals: `${this.$utils.number.toShort(col)}`,
-      debts: `${this.$utils.number.toShort(dai)}`,
+      collaterals: `${this.$utils.number.toPrecision(col)}`,
+      debts: `${this.$utils.number.toPrecision(dai)}`,
     };
   }
 }
