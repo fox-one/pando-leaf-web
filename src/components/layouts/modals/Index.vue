@@ -1,11 +1,13 @@
 <template>
   <div>
     <welcome-modal />
+
     <f-paying-modal
       :show="paying.visible"
       :text="$t('common.checking-payment')"
       @cancel="handlePayingCancel"
     />
+
     <auth-modal />
   </div>
 </template>

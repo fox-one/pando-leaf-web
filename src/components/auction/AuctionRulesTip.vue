@@ -1,0 +1,69 @@
+<template>
+  <base-tooltip class="tooltip ml-1" :hint="true">
+    <template v-slot:tip>
+      <div class="pa-4">
+        <p>
+          {{ meta.content1 }}
+        </p>
+        <p>
+          {{ meta.content2 }}
+        </p>
+        <p>
+          {{ meta.content3 }}
+        </p>
+      </div>
+    </template>
+  </base-tooltip>
+</template>
+
+<script lang="ts" scoped>
+import { Vue, Component, Prop } from "vue-property-decorator";
+
+@Component({
+  components: {},
+})
+export default class AuctionRulesTip extends Vue {
+  @Prop() flip!: API.Flip;
+
+  get meta() {
+    const getters = this.$store.getters as Getter.GettersTree;
+    const { collateral, isStage1, debtSymbol } = getters.getFlipFields(
+      this.flip
+    );
+
+    const begText = this.$utils.number.toPercent({
+      n: +(collateral?.beg ?? "1.03") - 1,
+    });
+
+    const content1 = isStage1
+      ? this.$t("auction.rule.stage-price-1")
+      : this.$t("auction.rule.stage-collateral-1");
+
+    const content2 = isStage1
+      ? this.$t("auction.rule.stage-price-2", {
+          beg: begText,
+          amount: this.flip.tab,
+          symbol: debtSymbol,
+        })
+      : this.$t("auction.rule.stage-collateral-2", {
+          beg: begText,
+        });
+
+    const content3 = isStage1
+      ? this.$t("auction.rule.stage-price-3")
+      : this.$t("auction.rule.stage-collateral-3");
+
+    return {
+      content1,
+      content2,
+      content3,
+    };
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.tooltip {
+  display: inline-block;
+}
+</style>

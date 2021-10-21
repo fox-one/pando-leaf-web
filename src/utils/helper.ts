@@ -1,9 +1,6 @@
 import Vue from "vue";
 import { TransactionStatus } from "@/enums";
-
-export function toast(vm: Vue, data: { message: string; color?: string }) {
-  vm.$store.commit("app/SET_TOAST", { ...data, show: true });
-}
+import { v4 as uuid } from "uuid";
 
 export function errorHandler(
   vm: Vue,
@@ -20,37 +17,29 @@ export function errorHandler(
   const message = `${errorcode || ""} ${
     errorcode !== 400 ? i18nMessage : error.message || error.msg || fallback
   }`;
-  toast(vm, {
+  vm.$uikit.toast.error({
     message: i18nMessage.includes("errorcode.") ? message : i18nMessage,
-    color: "error",
   });
 }
 
 export function handleTxResult(vm: Vue, tx: API.Transaction) {
   if (tx.status === TransactionStatus.OK) {
-    toast(vm, {
+    vm.$uikit.toast.success({
       message: vm.$t("common.action-success") as string,
-      color: "success",
     });
     vm.$router.replace("/");
     return;
   }
 
   if (tx.status === TransactionStatus.Abort) {
-    toast(vm, {
+    vm.$uikit.toast.error({
       message: vm.$t(`errorcode.${tx.msg}`) as string,
-      color: "error",
     });
   }
 }
 
-export function demandPrecision(value: number): number {
-  let precision = 8;
-  while (precision > 2 && value > 1000) {
-    value = value / 10;
-    precision = precision - 1;
-  }
-  return precision;
+export function uuidV4() {
+  return uuid();
 }
 
 export function getLocale() {
@@ -61,14 +50,6 @@ export function getLocale() {
     locale = "ja";
   }
   return locale;
-}
-
-export function mixinImageResize(logo: string, size = 32 * 3) {
-  const reg = /=s[0-9]{1,4}$/;
-  if (reg.test(logo)) {
-    return logo.replace(reg, `=s${size}`);
-  }
-  return logo;
 }
 
 export function fiatUnit(vue: Vue) {

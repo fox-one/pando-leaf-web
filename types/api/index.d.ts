@@ -1,10 +1,15 @@
 declare namespace API {
+  export interface PayUrl {
+    follow_id: string;
+    pay_url: string;
+  }
+
   export interface Pagination {
     next_cursor: string;
     has_next: boolean;
   }
   export interface PaginationParams {
-    cursor: string;
+    cursor: string | null;
     limit: number;
   }
 

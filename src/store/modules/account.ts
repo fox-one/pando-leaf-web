@@ -1,9 +1,15 @@
-import { MutationTree, ActionTree } from "vuex";
+import { GetterTree, MutationTree, ActionTree } from "vuex";
 import { make } from "vuex-pathify";
 
 const state = (): State.Account => ({
   profile: null,
 });
+
+const getters: GetterTree<State.Account, any> = {
+  userId(state) {
+    return state.profile?.user_id;
+  },
+};
 
 const mutations: MutationTree<State.Account> = {
   ...make.mutations(state),

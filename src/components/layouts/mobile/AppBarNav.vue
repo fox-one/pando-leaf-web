@@ -1,5 +1,14 @@
 <template>
-  <f-app-bar v-bind="appbar" @back="handleBack"> </f-app-bar>
+  <f-app-bar
+    app
+    flat
+    center
+    :title="appbar.title"
+    :back="appbar.back"
+    :color="appbar.color"
+    @back="handleBack"
+  >
+  </f-app-bar>
 </template>
 
 <script lang="ts">
@@ -10,13 +19,12 @@ class AppBarNav extends Vue {
   get appbar() {
     const state = this.$store.state;
     const appbar = state.app.appbar;
-    const isDark = state.app.settings.dark;
+    const defaultThemeColor = this.$vuetify.theme.dark ? "#000000" : "#ffffff";
+    const color = appbar.color || defaultThemeColor;
 
     return {
-      flat: true,
-      align: "center",
-      color: isDark ? "#000000" : "#FFFFFF",
       ...appbar,
+      color,
     };
   }
 

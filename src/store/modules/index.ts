@@ -5,6 +5,7 @@ import asset from "./asset";
 import vault from "./vault";
 import collateral from "./collateral";
 import oracle from "./oracle";
+import auctions from "./auctions";
 
 export default {
   account,
@@ -14,4 +15,5 @@ export default {
   vault,
   collateral,
   oracle,
+  auctions,
 };

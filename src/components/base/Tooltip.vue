@@ -17,7 +17,10 @@
     <template #activator="{ on }">
       <v-icon size="14" color="greyscale_3" v-on="on">$iconQuestion</v-icon>
     </template>
-    <template #title> {{ $t("tooltip.details") }} </template>
+
+    <f-bottom-sheet-title>
+      {{ $t("tooltip.details") }}
+    </f-bottom-sheet-title>
 
     <div class="pb-8 text-center">
       <div class="ma-4">{{ hint }}</div>

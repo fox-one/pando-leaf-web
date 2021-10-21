@@ -1,4 +1,11 @@
 import utils from "@foxone/utils";
+import { EVENTS } from "~/constants";
+
+export interface Callbacks {
+  success?: (...args: any) => void;
+  error?: (...args: any) => void;
+  checker?: (...args: any) => Promise<any>;
+}
 
 export function genPaymentUrl(data: {
   recipient: string;
@@ -32,4 +39,8 @@ export function showPaying(vm: Vue) {
 
 export function hidePaying(vm: Vue) {
   vm.$store.commit("app/SET_PAYING", { visible: false });
+}
+
+export function showPayQrDialog(vm: Vue, params: API.PayUrl) {
+  vm.$root.$emit(EVENTS.PAY_QR_CODE, params);
 }

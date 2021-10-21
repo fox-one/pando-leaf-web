@@ -1,10 +1,6 @@
 <template>
-  <v-sheet
-    class="rounded pt-6 pb-4"
-    :color="meta.bgColor"
-    @click="handleToDetail"
-  >
-    <v-layout align-center class="mb-4 mx-6">
+  <v-sheet class="rounded pa-6" :color="meta.bgColor" @click="handleToDetail">
+    <v-layout align-center class="mb-4">
       <vault-name :id="id" />
 
       <v-spacer />
@@ -14,12 +10,12 @@
       </v-btn>
     </v-layout>
 
-    <vault-detail-fields class="mx-4" v-if="meta.hasCollateral" :id="id" />
-    <empty-vault-place-holder v-else class="mx-4" />
+    <vault-detail-fields v-if="meta.hasCollateral" :id="id" />
+    <empty-vault-place-holder v-else />
 
-    <f-divider class="mt-6 mb-4" />
+    <f-divider class="my-6" />
 
-    <vault-actions class="mx-6" :id="id" :has-collateral="meta.hasCollateral" />
+    <vault-actions :id="id" :has-collateral="meta.hasCollateral" />
   </v-sheet>
 </template>
 

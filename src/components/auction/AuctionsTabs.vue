@@ -15,16 +15,16 @@
 import { Component, Vue, Model } from "vue-property-decorator";
 
 @Component
-class DetailTabs extends Vue {
+export default class AuctionsTabs extends Vue {
   @Model("change") value!: number;
 
   get tabs() {
     return [
       {
-        text: this.$t("vault.tab.details"),
+        text: this.$t("auction.list.tab.at-auction"),
       },
       {
-        text: this.$t("vault.tab.history"),
+        text: this.$t("auction.list.tab.done"),
       },
     ];
   }
@@ -33,5 +33,4 @@ class DetailTabs extends Vue {
     this.$emit("change", value);
   }
 }
-export default DetailTabs;
 </script>

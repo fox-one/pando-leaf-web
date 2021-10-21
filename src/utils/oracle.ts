@@ -43,3 +43,7 @@ export function getNextPairPrice(
     time: time?.toString(),
   };
 }
+
+export function isValidOracle(next: Utils.NextPrice | undefined) {
+  return next && next.price && dayjs(next.time).isAfter(Date.now());
+}

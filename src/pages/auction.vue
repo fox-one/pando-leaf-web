@@ -1,126 +1,22 @@
 <template>
   <v-container class="pa-0">
     <v-layout column>
-      <div class="py-2" v-if="loading">
-        <f-loading :loading="loading"></f-loading>
-      </div>
-
-      <v-layout
-        v-else
-        align-center
-        justify-space-between
-        class="pa-4 f-body-2 statusbar white--text"
-        :class="auctionStatus.bgcls"
-      >
-        <div class="text-center statusbar-left">
-          {{ auctionStatus.title }}
-        </div>
-        <div v-if="!meta.isDone" class="text-center statusbar-right">
-          <span class="ml-2 statusbar-right-ends">
-            {{ $t("auction.statusbar.ends") }}
-          </span>
-          {{ countDownText }}
-          <span class="ml-2 statusbar-right-ends">
-            {{ $t("auction.statusbar.ends-shuffix") }}
-          </span>
-        </div>
-      </v-layout>
+      <auction-status :flip="flip" />
 
       <f-panel
         elevation="none"
-        class="collateral pa-4 no-border-radius f-greyscale-1"
+        class="collateral pa-4 no-border-radius greyscale_1--text"
       >
         <v-layout column>
-          <v-layout column>
-            <div class="f-body-2 f-greyscale-3 mb-4">
-              {{
-                meta.isStage2
-                  ? $t("auction.label.debt")
-                  : $t("auction.label.collateral")
-              }}
-            </div>
-            <v-layout align-center>
-              <f-mixin-asset-logo
-                :size="24"
-                :logo="meta.isStage2 ? meta.debtLogo : meta.auctionLogo"
-              />
-              <div class="f-title-3 ml-2">
-                {{
-                  meta.isStage2
-                    ? `= ${flip.tab} ${meta.debtSymbol}`
-                    : `= ${flip.lot} ${meta.auctionSymbol}`
-                }}
-              </div>
-            </v-layout>
-            <div class="f-title-3 mt-3 ml-8">
-              {{
-                meta.isStage2
-                  ? `≈ $${meta.debtFiatValue}`
-                  : `≈ ${meta.colValue} ${meta.debtSymbol}`
-              }}
-            </div>
-            <div v-if="meta.isStage1" class="f-caption mt-3 ml-8 f-greyscale-3">
-              <div>{{ `≈ $${meta.collateralFiatValue}` }}</div>
-              <div class="mt-2">
-                {{ `${$t("form.info.current-price")}: ${meta.curPrice}` }}
-              </div>
-            </div>
-          </v-layout>
-          <v-divider class="my-4" />
-          <v-layout v-if="meta.isDone" column>
-            <div class="f-body-2 f-greyscale-3 mb-4">
-              {{ $t("auction.label.debt.highest") }}
-            </div>
-            <v-layout align-center>
-              <f-mixin-asset-logo :size="24" :logo="meta.debtLogo" />
-              <div class="f-title-3 ml-2">
-                {{ `= ${flip.bid} ${meta.debtSymbol}` }}
-              </div>
-            </v-layout>
-          </v-layout>
+          <auction-detail :flip="flip" />
+
+          <f-divider class="my-4" />
+
+          <auction-done-detail v-if="meta.isDone" :flip="flip" />
+
           <v-layout v-else column>
-            <div class="f-body-2 mb-4">
-              {{
-                $t(
-                  meta.isStage1
-                    ? "auction.label.stage.title.debt"
-                    : "auction.label.stage.title.collateral"
-                )
-              }}
-              <base-tooltip class="tooltip ml-1" :hint="true">
-                <template v-slot:tip>
-                  <div class="pa-4">
-                    <p>
-                      {{
-                        meta.isStage1
-                          ? $t("auction.rule.stage-price-1")
-                          : $t("auction.rule.stage-collateral-1")
-                      }}
-                    </p>
-                    <p>
-                      {{
-                        meta.isStage1
-                          ? $t("auction.rule.stage-price-2", {
-                              beg: begText,
-                              amount: flip.tab,
-                              symbol: meta.debtSymbol,
-                            })
-                          : $t("auction.rule.stage-collateral-2", {
-                              beg: begText,
-                            })
-                      }}
-                    </p>
-                    <p>
-                      {{
-                        meta.isStage1
-                          ? $t("auction.rule.stage-price-3")
-                          : $t("auction.rule.stage-collateral-3")
-                      }}
-                    </p>
-                  </div>
-                </template>
-              </base-tooltip>
-            </div>
+            <auction-rules :flip="flip" />
+
             <v-layout v-if="meta.isStage1" justify-start align-center>
               <f-mixin-asset-logo :size="24" :logo="meta.debtLogo" />
               <f-input
@@ -153,83 +49,43 @@
                       )}`
                 }}
               </div>
-              <div
+
+              <auction-min-bid
                 v-if="meta.isStage1"
-                class="mt-3 ml-8 f-greyscale-3 f-caption"
-              >
-                {{ $t("auction.label.stage.min.bid") }}
-                <span
-                  class="ml-1 f-greyscale-1 font-weight-bold"
-                  @click="autoBid('min')"
-                >
-                  {{
-                    `${meta.minBid} ${
-                      meta.isStage1 ? meta.debtSymbol : meta.auctionSymbol
-                    }`
-                  }}
-                  <v-icon class="ml-1 mt-n1" size="12">
-                    $iconAuctionDetail
-                  </v-icon>
-                </span>
-              </div>
-              <div class="mt-3 ml-8 f-greyscale-3 f-caption">
-                {{
-                  $t(
-                    meta.isStage1
-                      ? "auction.label.stage.max.bid"
-                      : "auction.label.stage.max.reduction"
-                  )
-                }}
-                <span
-                  class="ml-1 f-greyscale-1 font-weight-bold"
-                  @click="autoBid('max')"
-                >
-                  {{
-                    `${meta.maxBid} ${
-                      meta.isStage1 ? meta.debtSymbol : meta.auctionSymbol
-                    }`
-                  }}
-                  <v-icon class="ml-1 mt-n1" size="12">
-                    $iconAuctionDetail
-                  </v-icon>
-                </span>
-              </div>
-              <div
+                :flip="flip"
+                :debt-amount.sync="inputDebtAmount"
+              />
+
+              <auction-max-bid
+                :flip="flip"
+                :debt-amount.sync="inputDebtAmount"
+                :collateral-amount.sync="inputCollateralAmount"
+              />
+
+              <auction-bid-warning
                 v-if="meta.isStage2"
-                class="mt-3 ml-8 f-caption waining--text"
-              >
-                {{
-                  $t("auction.label.stage.reduction.agree", {
-                    price: `${flip.tab} ${meta.debtSymbol}`,
-                    amount: `${
-                      inputCollateralAmount ? inputCollateralAmount : "-"
-                    }`,
-                    collateral: `${meta.auctionSymbol}`,
-                  })
-                }}
-              </div>
+                :flip="flip"
+                :collateral-amount.sync="inputCollateralAmount"
+              />
             </v-layout>
 
             <base-connect-wallet-btn
-              v-if="!isLogged"
               rounded
               large
               depressed
               color="primary"
               @click="handleLogin"
             >
-              {{ $t("connect.wallet") }}
+              <f-button
+                :disabled="confirmDisabled"
+                color="primary"
+                style="height: 48px"
+                @click="bidding"
+                class="mt-8 mb-4 px-8 align-self-center"
+              >
+                {{ $t("auction.button.confirm") }}
+              </f-button>
             </base-connect-wallet-btn>
-            <f-button
-              v-else
-              :disabled="confirmDisabled"
-              color="primary"
-              style="height: 48px"
-              @click="bidding"
-              class="mt-8 mb-4 px-8 align-self-center"
-            >
-              {{ $t("auction.button.confirm") }}
-            </f-button>
           </v-layout>
         </v-layout>
       </f-panel>
@@ -260,30 +116,38 @@
 <script lang="ts" scoped>
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
-import { IAsset, ICollateral, IFlip, IFlipEvent } from "~/services/types/vo";
-import AuctionItem from "~/components/particles/AuctionItem.vue";
-import AuctionHistoryItem from "~/components/particles/AuctionHistoryItem.vue";
-import { Action, Getter } from "vuex-class";
-import { FlipAction, FlipRequestAction, TransactionStatus } from "~/types";
-import { IActionsParams } from "~/services/types/dto";
-import { isDesktop } from "~/utils/helper";
 import dayjs from "dayjs";
+import AuctionStatus from "@/components/auction/AuctionStatus.vue";
+import AuctionRules from "@/components/auction/AuctionRules.vue";
+import AuctionDetail from "@/components/auction/AuctionDetail.vue";
+import AuctionDoneDetail from "@/components/auction/AuctionDoneDetail.vue";
+import AuctionMinBid from "@/components/auction/AuctionMinBid.vue";
+import AuctionMaxBid from "@/components/auction/AuctionMaxBid.vue";
+import AuctionBidWarning from "@/components/auction/AuctionBidWarning.vue";
+import { Get } from "vuex-pathify";
+import { FlipAction, FlipRequestAction, TransactionStatus } from "~/enums";
+import { isDesktop } from "@foxone/utils/helper";
+import { EVENTS } from "~/constants";
 
 @Component({
   components: {
-    AuctionItem,
-    AuctionHistoryItem,
+    AuctionStatus,
+    AuctionRules,
+    AuctionDetail,
+    AuctionDoneDetail,
+    AuctionMinBid,
+    AuctionMaxBid,
+    AuctionBidWarning,
   },
 })
-export default class AuctionDetail extends Mixins(mixins.page) {
-  @Getter("global/getCollateral") getCollateral!: (id) => ICollateral;
-  @Getter("global/getAssetById") getAssetById!: (id) => IAsset;
-  @Action("global/syncMarkets") syncMarkets;
-  @Action("global/syncAssets") syncAssets;
+export default class AuctionPage extends Mixins(mixins.page) {
+  @Get("collateral/getCollateralById") getCollateral!: (id) => API.Collateral;
+  @Get("asset/getAssetById") getAssetById!: (id) => API.Asset;
+  @Get("account/userId") user_id;
 
   loading = false;
-  flip = {} as IFlip;
-  events = [] as IFlipEvent[];
+  flip = {} as API.Flip;
+  events = [] as API.FlipEvent[];
   inputDebtAmount = "";
   inputCollateralAmount = "";
   follow_id = "";
@@ -297,28 +161,8 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     };
   }
 
-  get auctionStatus() {
-    const status = {
-      title: "",
-      bgcls: "",
-    };
-    if (this.meta.isDone) {
-      status.title = this.$t("auction.statusbar.done") as string;
-      status.bgcls = "f-bg-greyscale-3";
-    } else if (this.meta.isStage1) {
-      status.title = this.$t("auction.statusbar.debt") as string;
-      status.bgcls = "statusbar-debt";
-    } else if (this.meta.isStage2) {
-      status.title = this.$t("auction.statusbar.collateral", {
-        symbol: this.meta.auctionSymbol,
-      }) as string;
-      status.bgcls = "statusbar-collateral";
-    }
-    return status;
-  }
-
   get begText() {
-    return this.$utils.number.toPercent(+this.collateral?.beg - 1);
+    return this.$utils.number.toPercent({ n: +this.collateral?.beg - 1 });
   }
 
   get collateral() {
@@ -371,47 +215,47 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     const isStage2 = this.flip.bid >= this.flip.tab;
     const collateralPrice = this.getAssetById?.(this.collateral?.gem)?.price;
     const debtPrice = this.getAssetById?.(this.collateral?.dai)?.price;
-    const colValue = this.$utils.number.toPrecision(
-      (Number(collateralPrice) * Number(this.flip?.lot)) / Number(debtPrice)
-    );
+    const colValue = this.$utils.number.toPrecision({
+      n: (Number(collateralPrice) * Number(this.flip?.lot)) / Number(debtPrice),
+    });
     const auctionSymbol = this.auctionAsset?.symbol;
     const debtSymbol = this.debtAsset?.symbol;
-    let minBid = 0,
-      maxBid = 0,
+    let minBid = 0 as any,
+      maxBid = 0 as any,
       curPrice = "",
       bidPrice = "",
       debtFiatValue = 0,
       collateralFiatValue = 0;
     if (!isDone) {
-      const debt2collateral = this.$utils.number.toPrecision(
-        +debtPrice / +collateralPrice
-      );
-      const collateral2debt = this.$utils.number.toPrecision(
-        1 / debt2collateral
-      );
-      minBid = this.$utils.number.toPrecision(
-        +this.flip.bid * +this.collateral?.beg,
-        8,
-        2
-      );
+      const debt2collateral = this.$utils.number.toPrecision({
+        n: +debtPrice / +collateralPrice,
+      });
+      const collateral2debt = this.$utils.number.toPrecision({
+        n: 1 / +debt2collateral,
+      });
+      minBid = this.$utils.number.toPrecision({
+        n: +this.flip.bid * +this.collateral?.beg,
+        dp: 8,
+        mode: 2,
+      });
       maxBid = isStage1
-        ? this.$utils.number.toPrecision(this.flip.tab, 8)
-        : this.$utils.number.toPrecision(
-            +this.flip.lot / +this.collateral?.beg,
-            8
-          );
+        ? this.$utils.number.toPrecision({ n: this.flip.tab, dp: 8 })
+        : this.$utils.number.toPrecision({
+            n: +this.flip.lot / +this.collateral?.beg,
+            dp: 8,
+          });
       if (minBid >= maxBid) minBid = maxBid;
 
       curPrice = isStage1
         ? `1 ${debtSymbol} = ${debt2collateral} ${auctionSymbol}`
         : `1 ${auctionSymbol} = ${collateral2debt} ${debtSymbol}`;
       bidPrice = isStage1
-        ? `1 ${debtSymbol} = ${this.$utils.number.toPrecision(
-            (+this.inputDebtAmount || 0) * debt2collateral
-          )} ${auctionSymbol}`
-        : `1 ${auctionSymbol} = ${this.$utils.number.toPrecision(
-            (+this.inputCollateralAmount || 0) * collateral2debt
-          )} ${debtSymbol}`;
+        ? `1 ${debtSymbol} = ${this.$utils.number.toPrecision({
+            n: (+this.inputDebtAmount || 0) * +debt2collateral,
+          })} ${auctionSymbol}`
+        : `1 ${auctionSymbol} = ${this.$utils.number.toPrecision({
+            n: (+this.inputCollateralAmount || 0) * +collateral2debt,
+          })} ${debtSymbol}`;
 
       debtFiatValue = +debtPrice * +this.flip.tab;
       collateralFiatValue = +collateralPrice * +this.flip.lot;
@@ -442,7 +286,6 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   }
   intervalId = 0 as any;
   mounted() {
-    this.syncMarkets();
     this.requestFlip(true);
     this.requestEvents();
     this.follow_id = this.$utils.helper.uuidV4();
@@ -458,7 +301,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
 
   async requestEvents() {
     const res = await this.$http.getFlipEvents(this.flipId);
-    this.events = res?.data?.events?.reverse();
+    this.events = res?.events?.reverse();
   }
 
   beforeDestroy() {
@@ -490,7 +333,7 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     this.loading = withLoading;
     try {
       const res = await this.$http.getFlip(this.flipId);
-      this.flip = res.data;
+      this.flip = res;
       this.countDownTimer = dayjs(this.flip.tic).diff(dayjs(), "seconds");
       if (
         dayjs(this.flip.tic).unix() === 0 ||
@@ -524,16 +367,12 @@ export default class AuctionDetail extends Mixins(mixins.page) {
         "decimal",
         this.flip.lot,
       ],
-    } as IActionsParams;
-    const url = await this.$utils.helper.requestPayment(this, request);
-    if (url && isDesktop() && !this.$fennec.connected) {
-      this.$utils.helper.showPayDialog(this, {
-        paymentUrl: url,
-      });
+    } as API.ActionPayload;
+    const pay_url = await this.$utils.payment.requestPayment(this, request);
+    if (pay_url && isDesktop() && !this.$fennec.connected) {
+      this.$emit(EVENTS.PAY_QR_CODE, { pay_url, follow_id: this.follow_id });
     } else {
-      this.$utils.helper.showPaying(this, {
-        timer: this.$utils.helper.uuidV4(),
-      });
+      this.$utils.payment.showPaying(this);
     }
     this.checkTransaction(this.follow_id);
   }
@@ -553,16 +392,15 @@ export default class AuctionDetail extends Mixins(mixins.page) {
         "decimal",
         this.inputCollateralAmount,
       ],
-    } as IActionsParams;
-    const url = await this.$utils.helper.requestPayment(this, request);
+    } as API.ActionPayload;
+    const url = await this.$utils.payment.requestPayment(this, request);
     if (url && isDesktop() && !this.$fennec.connected) {
-      this.$utils.helper.showPayDialog(this, {
-        paymentUrl: url,
+      this.$utils.payment.showPayQrDialog(this, {
+        pay_url: url as string,
+        follow_id: this.follow_id,
       });
     } else {
-      this.$utils.helper.showPaying(this, {
-        timer: this.$utils.helper.uuidV4(),
-      });
+      this.$utils.payment.showPaying(this);
     }
     this.checkTransaction(this.follow_id);
   }
@@ -573,16 +411,14 @@ export default class AuctionDetail extends Mixins(mixins.page) {
     intervalId = setInterval(async () => {
       const response = await this.$http.getTransaction(follow_id);
       if (
-        response.data?.status === TransactionStatus.OK ||
-        response.data?.status === TransactionStatus.Abort
+        response.status === TransactionStatus.OK ||
+        response.status === TransactionStatus.Abort
       ) {
         clearInterval(intervalId);
         this.requestFlip();
-        this.$utils.helper.hidePaying(this);
-        this.$utils.helper.hidePaymentDialog(this);
-        this.$utils.helper.toast(this, {
+        this.$utils.payment.hidePaying(this);
+        this.$uikit.toast.success({
           message: `${this.$t("message.auction.success")}`,
-          color: "success",
         });
       }
     }, 3000);
@@ -659,9 +495,5 @@ export default class AuctionDetail extends Mixins(mixins.page) {
   &-collateral {
     width: 100%;
   }
-}
-
-.tooltip {
-  display: inline-block;
 }
 </style>

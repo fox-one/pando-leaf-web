@@ -54,7 +54,7 @@ export async function checkFennecAuth(vm: Vue) {
 
 export async function logout(vm: Vue) {
   return Promise.all([
-    vm.$store.dispatch("auth/logout"),
+    vm.$store.commit("auth/CLEAR"),
     vm.$store.dispatch("vault/clear"),
     vm.$store.dispatch("asset/clear"),
   ]);

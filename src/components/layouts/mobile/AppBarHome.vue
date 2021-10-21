@@ -1,9 +1,10 @@
 <template>
-  <f-app-bar :show="appbar.show" app custom-content>
+  <f-app-bar :show="appbar.show" app custom-content class="appbar--no-shadow">
     <v-layout justify-center align-center class="appbar--home">
       <div class="account">
         <account />
       </div>
+
       <products-link />
     </v-layout>
   </f-app-bar>
@@ -30,6 +31,9 @@ export default AppBarHome;
 </script>
 
 <style lang="scss" scoped>
+.appbar--no-shadow {
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) !important;
+}
 .appbar--home {
   position: relative;
 

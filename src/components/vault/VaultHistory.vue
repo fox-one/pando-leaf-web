@@ -1,12 +1,15 @@
 <template>
-  <base-list-wrapper :action="requestVaultEvents">
-    <template v-slot:default="{ data }">
-      <vault-history-item
-        v-for="(item, index) in data"
-        :key="index"
-        :event="item"
-      />
-    </template>
+  <base-list-wrapper
+    :data="events"
+    :error="error"
+    :loading="loading"
+    @load="requestVaultEvents"
+  >
+    <vault-history-item
+      v-for="(item, index) in events"
+      :key="index"
+      :event="item"
+    />
   </base-list-wrapper>
 </template>
 
@@ -22,21 +25,35 @@ import VaultHistoryItem from "./VaultHistoryItem.vue";
 class VaultHistory extends Vue {
   @Prop() id!: string;
 
-  pagination: API.Pagination = {
-    next_cursor: "",
-    has_next: true,
-  };
+  cursor = "";
+
+  events: API.VaultEvent[] = [];
+
+  error = false;
+
+  loading = false;
+
+  hasNext = true;
 
   async requestVaultEvents() {
-    const params: API.PaginationParams = {
-      cursor: this.pagination?.next_cursor ?? "",
-      limit: 20,
-    };
-    const resp = await this.$http.getVaultEvents(this.id, params);
+    if (!this.hasNext || this.loading) return;
 
-    this.pagination = resp.pagination;
-    const has_next = resp.pagination?.has_next ?? false;
-    return { data: resp.events, ended: !has_next };
+    this.loading = true;
+    try {
+      const params: API.PaginationParams = {
+        cursor: this.cursor,
+        limit: 20,
+      };
+      const resp = await this.$http.getVaultEvents(this.id, params);
+
+      this.cursor = resp.pagination?.next_cursor ?? "";
+      this.hasNext = resp.pagination?.has_next ?? false;
+      this.events = resp.events;
+    } catch (error) {
+      this.$utils.helper.errorHandler(this, error);
+      this.error = true;
+    }
+    this.loading = false;
   }
 }
 export default VaultHistory;

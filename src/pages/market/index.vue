@@ -1,13 +1,31 @@
 <template>
-  <v-container class="fill-height"> asf </v-container>
+  <div>
+    <market-overview />
+
+    <market-item
+      v-for="market in collaterals"
+      :key="market.id"
+      :collateral="market"
+    />
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
+import MarketOverview from "@/components/market/MarketOverview.vue";
+import MarketItem from "@/components/market/MarketItem.vue";
+import { Sync } from "vuex-pathify";
 
-@Component
+@Component({
+  components: {
+    MarketOverview,
+    MarketItem,
+  },
+})
 class VaultPage extends Mixins(mixins.page) {
+  @Sync("collateral/collaterals") collaterals!: API.Collateral[];
+
   get title() {
     return this.$t("tab.market") as string;
   }

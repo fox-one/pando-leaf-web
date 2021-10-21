@@ -1,11 +1,11 @@
 <template>
   <v-app class="leaf-app">
-    <mobile-layout-appbar-home v-if="isHome" />
-    <mobile-layout-appbar-nav v-else />
+    <app-bar-home v-if="isHome" />
+    <app-bar-nav v-else />
     <v-main>
       <nuxt />
     </v-main>
-    <mobile-layout-bottom-nav />
+    <bottom-nav />
     <modals />
   </v-app>
 </template>
@@ -22,9 +22,9 @@ import { Get } from "vuex-pathify";
   name: "mobile-layout",
   components: {
     Modals,
-    "mobile-layout-appbar-home": AppBarHome,
-    "mobile-layout-appbar-nav": AppBarNav,
-    "mobile-layout-bottom-nav": BottomNav,
+    AppBarHome,
+    AppBarNav,
+    BottomNav,
   },
 })
 class DefaultLayout extends Vue {
