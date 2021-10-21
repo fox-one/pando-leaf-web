@@ -15,10 +15,9 @@
         </div>
       </slot>
     </template>
-    <template #title>
+    <f-bottom-sheet-title>
       <div class=""></div>
-      {{ "Jump To" }}
-    </template>
+    </f-bottom-sheet-title>
 
     <div
       v-for="(item, index) in items"

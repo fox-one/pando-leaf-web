@@ -4,8 +4,8 @@
     class="overview rounded pa-6 pa-md-12 pr-0"
     :class="[{ background: !composition }]"
   >
-    <div class="switcher hidden-md-and-up">
-      <v-switch v-model="composition" hide-details color="white" class="ma-0" />
+    <div class="switcher hidden-md-and-up mr-4">
+      <overview-switch v-model="composition" />
     </div>
 
     <div class="body-2 mb-2">
@@ -33,12 +33,14 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import VaultPositionRatio from "./VaultPositionRatio.vue";
+import OverviewSwitch from "./OverviewSwitch.vue";
 import { getVaultFields } from "@/utils/vault";
 import { Get } from "vuex-pathify";
 
 @Component({
   components: {
     VaultPositionRatio,
+    OverviewSwitch,
   },
 })
 class PositionOverview extends Vue {

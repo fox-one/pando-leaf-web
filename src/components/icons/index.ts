@@ -75,5 +75,11 @@ export function makeIconValues() {
     iconSetMax: {
       component: "icon-set-max",
     },
+    iconSwitchChart: {
+      component: "icon-switch-chart",
+    },
+    iconSwitchNumber: {
+      component: "icon-switch-number",
+    },
   };
 }
