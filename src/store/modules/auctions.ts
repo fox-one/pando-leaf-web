@@ -34,7 +34,7 @@ const mutations: MutationTree<State.Auctions> = {
   SET_RESULT(state, { pagination, flips }) {
     state.cursor = pagination.next_cursor;
     state.hasNext = pagination.has_next;
-    state.flips = flips;
+    state.flips = state.flips.concat(flips);
   },
   RESET(state) {
     state.hasNext = true;

@@ -1,4 +1,4 @@
-import utils, { mixin, number } from "@foxone/utils";
+import utils, { mixin } from "@foxone/utils";
 import * as app from "./app";
 import * as account from "./account";
 import * as asset from "./asset";
@@ -8,6 +8,7 @@ import * as helper from "./helper";
 import * as payment from "./payment";
 import * as vault from "./vault";
 import * as oracle from "./oracle";
+import * as number from "./number";
 import icons from "./icons";
 
 export default {
@@ -18,9 +19,9 @@ export default {
   collateral,
   payment,
   mixin,
-  number,
   vault,
   oracle,
+  number: { ...utils.number, ...number },
   helper: { ...utils.helper, ...helper },
   time: { ...utils.time, ...time },
 };

@@ -1,4 +1,3 @@
-import utils from "@foxone/utils";
 import { EVENTS } from "~/constants";
 import { TransactionStatus } from "~/enums";
 
@@ -54,9 +53,9 @@ export async function pollingTransferStatus(
       if (cbs?.checker && !checked) {
         vm.$utils.helper.showNetworkCongestion(vm);
       } else if (result.status === TransactionStatus.OK) {
-        cbs.success?.();
+        cbs.success?.(result);
       } else {
-        cbs.error?.();
+        cbs.error?.(result);
       }
 
       hidePaying(vm);
@@ -68,10 +67,12 @@ export async function pollingTransferStatus(
       setPayingTimer(vm, timer);
     }
   } catch (error: any) {
-    vm.$utils.helper.errorHandler(vm, {
-      code: error?.code ?? error,
-    });
-    cbs.error?.();
+    // 这里会报 404，用 helper.errorHandler 处理会反复弹出”资源不存在“
+    timer = setTimeout(() => {
+      pollingTransferStatus(vm, params, cbs);
+    }, 2000);
+
+    cbs.error?.(error);
   }
 }
 
@@ -84,7 +85,7 @@ export function showPaying(vm: Vue) {
 }
 
 export function hidePaying(vm: Vue) {
-  vm.$store.commit("app/SET_PAYING", { visible: false });
+  vm.$store.commit("app/SET_PAYING", { visible: false, timer: null });
 }
 
 export function setPayingTimer(vm: Vue, timer) {

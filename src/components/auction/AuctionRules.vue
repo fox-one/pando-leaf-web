@@ -1,6 +1,6 @@
 <template>
   <div class="label-1 mb-4">
-    {{ rules }}
+    {{ meta.rules }}
 
     <auction-rules-tip :flip="flip" />
   </div>

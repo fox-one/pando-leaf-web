@@ -11,8 +11,8 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
     const auctionAsset = getAssetById(collateral?.gem ?? "");
     const debtAsset = getAssetById(collateral?.dai ?? "");
     const isDone = flip.action === FlipAction.FlipDeal;
-    const isStage1 = Number(flip.bid) < Number(flip.tab);
-    const isStage2 = flip.bid >= flip.tab;
+    const isStage1 = Number(flip.bid) < Number(flip.tab) && !isDone;
+    const isStage2 = flip.bid >= flip.tab && !isDone;
     const collateralPrice = auctionAsset?.price ?? "";
     const debtPrice = debtAsset?.price ?? "";
     const collateralValue = toPrecision({
@@ -20,11 +20,13 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
     });
     const auctionSymbol = auctionAsset?.symbol ?? "";
     const debtSymbol = debtAsset?.symbol ?? "";
+
     let minBid = "0",
       maxBid = "0",
       curPrice = "",
       debtFiatValue = 0,
       collateralFiatValue = 0;
+
     if (!isDone) {
       const debt2collateral = toPrecision({
         n: +debtPrice / +collateralPrice,

@@ -69,13 +69,11 @@ export default class AuctionTimer extends Vue {
 
 <style lang="scss" scoped>
 .status-timer {
-  position: fixed;
   top: 44px;
-  left: 0;
   z-index: 99;
-  width: 100vw;
   line-height: 17px;
   font-weight: bold !important;
+
   &-ends {
     font-weight: normal !important;
     opacity: 0.5;

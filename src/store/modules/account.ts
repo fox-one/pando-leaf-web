@@ -30,6 +30,7 @@ const actions: ActionTree<State.Account, any> = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions,
 };

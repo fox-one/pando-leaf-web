@@ -1,6 +1,6 @@
 <template>
   <div @click="toDetail(flip)">
-    <v-card elevation="0" class="rounded-lg pa-0 greyscale_6">
+    <f-panel elevation="0" class="pa-0 greyscale_6">
       <auctions-list-item-header :flip="flip" />
 
       <auctions-list-item-info :flip="flip" />
@@ -8,7 +8,7 @@
       <f-divider class="mx-6 mt-2" />
 
       <auctions-list-item-footer :flip="flip" />
-    </v-card>
+    </f-panel>
   </div>
 </template>
 

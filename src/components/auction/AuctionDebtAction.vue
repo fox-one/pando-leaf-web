@@ -1,11 +1,11 @@
 <template>
-  <base-connect-wallet-btn>
+  <base-connect-wallet-btn class="mt-8 mb-4 text-center">
     <f-button
-      class="mt-8 mb-4 px-8 align-self-center"
+      class="px-8"
       color="primary"
       :loading="loading"
       :disabled="meta.confirmDisabled"
-      @click="bidding"
+      @click="confirm"
     >
       {{ $t("auction.button.confirm") }}
     </f-button>
@@ -31,10 +31,6 @@ export default class AuctionDebtAction extends Vue {
 
   loading = false;
 
-  meetDebt(val) {
-    return +val >= +this.meta.minBid && +val <= +this.meta.maxBid;
-  }
-
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
     const { isStage1, debtAsset, minBid, maxBid } = getters.getFlipFields(
@@ -43,7 +39,8 @@ export default class AuctionDebtAction extends Vue {
 
     let confirmDisabled = true;
     if (isStage1) {
-      confirmDisabled = !this.amount || !this.meetDebt(this.amount);
+      const meetDebt = +this.amount >= +minBid && +this.amount <= +maxBid;
+      confirmDisabled = !this.amount || !meetDebt;
     }
 
     return {
@@ -60,14 +57,12 @@ export default class AuctionDebtAction extends Vue {
     this.follow_id = this.$utils.helper.uuidV4();
   }
 
-  bidding() {
-    this.stage1Confirm();
-  }
   // 拍卖第一阶段 付款为输入金额，拍卖第二阶段，付款为总债务数额
   // 第二阶段才需要在parameter上附带 decimal 和 amount
-  async stage1Confirm() {
+  confirm() {
     if (this.loading) return;
     this.loading = true;
+
     this.follow_id = this.$utils.helper.uuidV4();
     const request = {
       user_id: this.user_id,
@@ -83,15 +78,16 @@ export default class AuctionDebtAction extends Vue {
         this.flip.lot,
       ],
     } as API.ActionPayload;
-    try {
-      this.$utils.payment.requestPayment(this, request, {
-        success: () => this.$emit("success"),
-      });
-    } catch (error) {
-      // handle error
-    } finally {
-      this.loading = false;
-    }
+
+    this.$utils.payment.requestPayment(this, request, {
+      success: () => {
+        this.loading = false;
+        this.$emit("success");
+      },
+      error: () => {
+        this.loading = false;
+      },
+    });
   }
 }
 </script>

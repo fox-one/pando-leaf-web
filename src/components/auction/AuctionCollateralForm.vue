@@ -1,16 +1,16 @@
 <template>
   <div>
-    <v-layout justify-start align-center>
-      <f-mixin-asset-logo :size="24" :logo="meta.auctionLogo" />
-
-      <f-input
-        v-model="inputCollateralAmount"
-        class="input-collateral ml-2"
-        type="number"
-        :label="meta.auctionSymbol"
-        :rules="[meetCollateral]"
-      />
-    </v-layout>
+    <f-input
+      v-model="inputCollateralAmount"
+      class="input-collateral"
+      type="number"
+      :label="meta.auctionSymbol"
+      :rules="[meetCollateral]"
+    >
+      <template #prepend>
+        <f-mixin-asset-logo :size="24" :logo="meta.auctionLogo" />
+      </template>
+    </f-input>
 
     <div class="mt-3 ml-8 greyscale_3--text f-caption">
       {{ meta.inputFiatValue }}
@@ -33,7 +33,6 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import AuctionMaxBid from "@/components/auction/AuctionMaxBid.vue";
 import AuctionBidWarning from "@/components/auction/AuctionBidWarning.vue";
 import AuctionCollateralAction from "@/components/auction/AuctionCollateralAction.vue";
-import { Get } from "vuex-pathify";
 
 @Component({
   components: {
@@ -43,18 +42,17 @@ import { Get } from "vuex-pathify";
   },
 })
 export default class AuctionCollateralForm extends Vue {
-  @Get("account/userId") user_id;
-
   @Prop() flip!: API.Flip;
 
   inputCollateralAmount = "";
 
-  loading = false;
-
-  follow_id = "";
-
   meetCollateral(val) {
-    return +val <= +this.meta.maxBid;
+    return (
+      +val <= +this.meta.maxBid ||
+      this.$t("auction.rule.stage-collateral-2", {
+        beg: this.meta.begText,
+      })
+    );
   }
 
   get meta() {
@@ -64,15 +62,19 @@ export default class AuctionCollateralForm extends Vue {
       auctionSymbol,
       isStage2,
       maxBid,
+      collateral,
       collateralPrice,
     } = getters.getFlipFields(this.flip);
-    const { toPrecision } = this.$utils.number;
+    const { toPrecision, toPercent } = this.$utils.number;
 
     return {
       auctionLogo: auctionAsset?.logo,
       auctionSymbol,
       isStage2,
       maxBid,
+      begText: toPercent({
+        n: +(collateral?.beg ?? "1.03") - 1,
+      }),
       inputFiatValue: `≈ $${toPrecision({
         n: +collateralPrice * +this.inputCollateralAmount,
       })}`,
@@ -80,6 +82,7 @@ export default class AuctionCollateralForm extends Vue {
   }
 
   handleSuccess() {
+    this.inputCollateralAmount = "";
     this.$emit("success");
   }
 }

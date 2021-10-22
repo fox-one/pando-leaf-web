@@ -1,15 +1,16 @@
 <template>
   <div>
-    <v-layout justify-start align-center>
-      <f-mixin-asset-logo :size="24" :logo="meta.debtLogo" />
-      <f-input
-        v-model="inputDebtAmount"
-        class="input-debt ml-2"
-        type="number"
-        :label="meta.debtSymbol"
-        :rules="[meetDebt]"
-      />
-    </v-layout>
+    <f-input
+      v-model="inputDebtAmount"
+      class="input-debt"
+      type="number"
+      :label="meta.debtSymbol"
+      :rules="[meetDebt]"
+    >
+      <template #prepend>
+        <f-mixin-asset-logo :size="24" :logo="meta.debtLogo" />
+      </template>
+    </f-input>
 
     <div class="mt-3 ml-8 greyscale_3--text f-caption">
       {{ meta.inputFiatValue }}
@@ -32,7 +33,6 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import AuctionMinBid from "@/components/auction/AuctionMinBid.vue";
 import AuctionMaxBid from "@/components/auction/AuctionMaxBid.vue";
 import AuctionDebtAction from "./AuctionDebtAction.vue";
-import { Get } from "vuex-pathify";
 
 @Component({
   components: {
@@ -42,20 +42,19 @@ import { Get } from "vuex-pathify";
   },
 })
 export default class AuctionDebtForm extends Vue {
-  @Get("account/userId") user_id;
-
   @Prop() flip!: API.Flip;
 
   inputDebtAmount = "";
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { toPrecision } = this.$utils.number;
+    const { toPrecision, toPercent } = this.$utils.number;
     const {
       isDone,
       debtSymbol,
       debtAsset,
       minBid,
+      collateral,
       maxBid,
       debtPrice,
     } = getters.getFlipFields(this.flip);
@@ -67,6 +66,9 @@ export default class AuctionDebtForm extends Vue {
       debtAsset,
       minBid,
       maxBid,
+      begText: toPercent({
+        n: +(collateral?.beg ?? "1.03") - 1,
+      }),
       inputFiatValue: `≈ $${toPrecision({
         n: +debtPrice * +this.inputDebtAmount,
       })}`,
@@ -75,10 +77,18 @@ export default class AuctionDebtForm extends Vue {
 
   meetDebt(val) {
     const isMeet = +val >= +this.meta.minBid && +val <= +this.meta.maxBid;
-    return isMeet;
+    return (
+      isMeet ||
+      this.$t("auction.rule.stage-price", {
+        beg: this.meta.begText,
+        amount: this.meta.maxBid,
+        symbol: this.meta.debtSymbol,
+      })
+    );
   }
 
   handleSuccess() {
+    this.inputDebtAmount = "";
     this.$emit("success");
   }
 }
