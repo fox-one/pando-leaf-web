@@ -67,6 +67,9 @@ declare namespace Getter {
     "asset/getAssetById": (id: string) => API.Asset | undefined;
     "asset/getWalletAssetById": (id: string) => API.MixinAsset | undefined;
 
+    "collateral/getCollateralById": State.GetCollateralById;
+    "collateral/getOverview": State.MarketOverview;
+
     "auctions/flipsDone": API.Flip[];
     "auctions/flipsAuctioning": API.Flip[];
 

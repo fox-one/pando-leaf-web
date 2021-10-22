@@ -2,14 +2,8 @@
   <base-tooltip class="tooltip ml-1" :hint="true">
     <template v-slot:tip>
       <div class="pa-4">
-        <p>
-          {{ meta.content1 }}
-        </p>
-        <p>
-          {{ meta.content2 }}
-        </p>
-        <p>
-          {{ meta.content3 }}
+        <p v-for="content in meta.contents" :key="content">
+          {{ meta.content }}
         </p>
       </div>
     </template>
@@ -54,9 +48,7 @@ export default class AuctionRulesTip extends Vue {
       : this.$t("auction.rule.stage-collateral-3");
 
     return {
-      content1,
-      content2,
-      content3,
+      contents: [content1, content2, content3],
     };
   }
 }

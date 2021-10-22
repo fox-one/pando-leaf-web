@@ -19,9 +19,7 @@ import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
 export default class AuctionMaxBid extends Vue {
   @Prop() flip!: API.Flip;
 
-  @PropSync("debtAmount") bindDebtAmount!: string;
-
-  @PropSync("collateralAmount") bindColAmount!: string;
+  @PropSync("amount") bindAmount!: string;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
@@ -50,9 +48,9 @@ export default class AuctionMaxBid extends Vue {
   autoBid() {
     if (this.meta.isDone) return;
     if (this.meta.isStage1) {
-      this.bindDebtAmount = this.meta.maxBid;
+      this.bindAmount = this.meta.maxBid;
     } else {
-      this.bindColAmount = this.meta.maxBid;
+      this.bindAmount = this.meta.maxBid;
     }
   }
 }

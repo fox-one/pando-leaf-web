@@ -17,97 +17,17 @@
           <v-layout v-else column>
             <auction-rules :flip="flip" />
 
-            <v-layout v-if="meta.isStage1" justify-start align-center>
-              <f-mixin-asset-logo :size="24" :logo="meta.debtLogo" />
-              <f-input
-                v-model="inputDebtAmount"
-                class="input-debt ml-2"
-                type="number"
-                :label="meta.debtSymbol"
-                :rules="[meetDebt]"
-              />
-            </v-layout>
-            <v-layout v-if="meta.isStage2" justify-start align-center>
-              <f-mixin-asset-logo :size="24" :logo="meta.auctionLogo" />
-              <f-input
-                v-model="inputCollateralAmount"
-                class="input-collateral ml-2"
-                type="number"
-                :label="meta.auctionSymbol"
-                :rules="[meetCollateral]"
-              />
-            </v-layout>
-            <v-layout v-if="!meta.isDone" column>
-              <div class="mt-3 ml-8 f-greyscale-3 f-caption">
-                {{
-                  meta.isStage1
-                    ? `≈ $${$utils.number.toPrecision(
-                        meta.debtPrice * inputDebtAmount
-                      )}`
-                    : `≈ $${$utils.number.toPrecision(
-                        meta.collateralPrice * inputCollateralAmount
-                      )}`
-                }}
-              </div>
+            <auction-debt-form v-if="meta.isStage1" />
 
-              <auction-min-bid
-                v-if="meta.isStage1"
-                :flip="flip"
-                :debt-amount.sync="inputDebtAmount"
-              />
-
-              <auction-max-bid
-                :flip="flip"
-                :debt-amount.sync="inputDebtAmount"
-                :collateral-amount.sync="inputCollateralAmount"
-              />
-
-              <auction-bid-warning
-                v-if="meta.isStage2"
-                :flip="flip"
-                :collateral-amount.sync="inputCollateralAmount"
-              />
-            </v-layout>
-
-            <base-connect-wallet-btn
-              rounded
-              large
-              depressed
-              color="primary"
-              @click="handleLogin"
-            >
-              <f-button
-                :disabled="confirmDisabled"
-                color="primary"
-                style="height: 48px"
-                @click="bidding"
-                class="mt-8 mb-4 px-8 align-self-center"
-              >
-                {{ $t("auction.button.confirm") }}
-              </f-button>
-            </base-connect-wallet-btn>
+            <auction-collateral-form v-else-if="meta.isStage2" />
           </v-layout>
         </v-layout>
       </f-panel>
 
-      <div class="mt-2 f-bg-greyscale-6" style="height: 8px"></div>
-      <f-panel
-        elevation="none"
-        v-if="events && events.length !== 0"
-        class="px-4 pt-6 pb-0 no-border-radius"
-      >
-        <div v-if="events && events.length !== 0" class="f-title-1 mb-2">
-          {{ $t("auction.history") }}
-        </div>
-        <template v-for="(event, index) in events">
-          <v-divider :key="`${index}_divider`" v-if="index !== 0" />
-          <auction-history-item
-            :key="`${event.lot}_${event.bid}_${event.created_at}`"
-            :flipEvent="event"
-            :flip="flip"
-          />
-        </template>
-      </f-panel>
+      <div class="mt-2 greyscale_6" style="height: 8px"></div>
+
+      <auction-event-history :flip="flip" :flip-id="flipId" />
+
       <div style="height: 70px"></div>
     </v-layout>
   </v-container>
@@ -116,14 +36,13 @@
 <script lang="ts" scoped>
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
-import dayjs from "dayjs";
 import AuctionStatus from "@/components/auction/AuctionStatus.vue";
 import AuctionRules from "@/components/auction/AuctionRules.vue";
 import AuctionDetail from "@/components/auction/AuctionDetail.vue";
 import AuctionDoneDetail from "@/components/auction/AuctionDoneDetail.vue";
-import AuctionMinBid from "@/components/auction/AuctionMinBid.vue";
-import AuctionMaxBid from "@/components/auction/AuctionMaxBid.vue";
-import AuctionBidWarning from "@/components/auction/AuctionBidWarning.vue";
+import AuctionEventHistory from "@/components/auction/AuctionEventHistory.vue";
+import AuctionDebtForm from "@/components/auction/AuctionDebtForm.vue";
+import AuctionCollateralForm from "@/components/auction/AuctionCollateralForm.vue";
 import { Get } from "vuex-pathify";
 import { FlipAction, FlipRequestAction, TransactionStatus } from "~/enums";
 import { isDesktop } from "@foxone/utils/helper";
@@ -135,9 +54,9 @@ import { EVENTS } from "~/constants";
     AuctionRules,
     AuctionDetail,
     AuctionDoneDetail,
-    AuctionMinBid,
-    AuctionMaxBid,
-    AuctionBidWarning,
+    AuctionEventHistory,
+    AuctionDebtForm,
+    AuctionCollateralForm,
   },
 })
 export default class AuctionPage extends Mixins(mixins.page) {
@@ -281,13 +200,10 @@ export default class AuctionPage extends Mixins(mixins.page) {
     };
   }
 
-  format(duration) {
-    return dayjs.duration(duration, "seconds").format("HH:mm:ss");
-  }
   intervalId = 0 as any;
+
   mounted() {
     this.requestFlip(true);
-    this.requestEvents();
     this.follow_id = this.$utils.helper.uuidV4();
     this.intervalId = setInterval(() => {
       if (this.flip?.action === FlipAction.FlipDeal) {
@@ -295,38 +211,11 @@ export default class AuctionPage extends Mixins(mixins.page) {
         return;
       }
       this.requestFlip();
-      this.requestEvents();
     }, 3000);
-  }
-
-  async requestEvents() {
-    const res = await this.$http.getFlipEvents(this.flipId);
-    this.events = res?.events?.reverse();
   }
 
   beforeDestroy() {
     clearInterval(this.intervalId);
-    clearInterval(this.countId);
-  }
-
-  countId = 0 as any;
-
-  startCountDown() {
-    if (this.countDownTimer <= 0) return;
-    clearInterval(this.countId);
-    this.countId = setInterval(() => {
-      this.countDownTimer = dayjs(this.flip.tic).diff(dayjs(), "seconds");
-      if (
-        dayjs(this.flip.tic).unix() === 0 ||
-        dayjs(this.flip.tic).isAfter(dayjs(this.flip.end))
-      ) {
-        this.countDownTimer = dayjs(this.flip.end).diff(dayjs(), "seconds");
-      }
-      this.countDownText = this.format(this.countDownTimer);
-      if (this.countDownTimer <= 0) {
-        clearInterval(this.countId);
-      }
-    }, 1000);
   }
 
   async requestFlip(withLoading = false) {
@@ -334,15 +223,6 @@ export default class AuctionPage extends Mixins(mixins.page) {
     try {
       const res = await this.$http.getFlip(this.flipId);
       this.flip = res;
-      this.countDownTimer = dayjs(this.flip.tic).diff(dayjs(), "seconds");
-      if (
-        dayjs(this.flip.tic).unix() === 0 ||
-        dayjs(this.flip.tic).isAfter(dayjs(this.flip.end))
-      ) {
-        this.countDownTimer = dayjs(this.flip.end).diff(dayjs(), "seconds");
-      }
-      this.countDownText = this.format(this.countDownTimer);
-      this.startCountDown();
     } catch (error) {
       this.loading = false;
     } finally {
@@ -430,16 +310,6 @@ export default class AuctionPage extends Mixins(mixins.page) {
     }
     if (this.meta.isStage2) {
       this.stage2Confirm();
-    }
-  }
-
-  autoBid(type: "min" | "max") {
-    // !逻辑强依赖变量名
-    if (this.meta.isDone) return;
-    if (this.meta.isStage1) {
-      this.inputDebtAmount = this.meta[`${type}Bid`];
-    } else {
-      this.inputCollateralAmount = this.meta[`${type}Bid`];
     }
   }
 

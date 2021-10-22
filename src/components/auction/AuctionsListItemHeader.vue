@@ -17,24 +17,19 @@
 <script lang="ts" scoped>
 import dayjs from "dayjs";
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { Get } from "vuex-pathify";
-import { FlipAction } from "~/enums";
 
 @Component
 export default class AuctionsListItemHeader extends Vue {
   @Prop() flip!: API.Flip;
 
-  @Get("collateral/getCollateralById") getCollateral!: (id) => API.Collateral;
-
-  @Get("asset/getAssetById") getAssetById!: (id) => API.Asset;
-
   get meta() {
     const { format } = this.$utils.time;
-    const collateral = this.getCollateral(this.flip?.collateral_id);
-    const auctionAsset = this.getAssetById(collateral?.gem);
-    const debtAsset = this.getAssetById(collateral?.dai);
+    const getters = this.$store.getters as Getter.GettersTree;
 
-    const isDone = this.flip.action === FlipAction.FlipDeal;
+    const { auctionAsset, debtAsset, isDone } = getters.getFlipFields(
+      this.flip
+    );
+
     let endTime;
 
     if (isDone) {

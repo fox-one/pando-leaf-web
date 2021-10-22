@@ -14,26 +14,24 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { Get } from "vuex-pathify";
 
 @Component({
   components: {},
 })
 export default class AuctionsListItem extends Vue {
   @Prop() flip!: API.Flip;
-  @Get("collateral/getCollateralById") getCollateral!: (id) => API.Collateral;
-  @Get("asset/getAssetById") getAssetById!: (id) => API.Asset;
 
   get meta() {
     const { toPercent } = this.$utils.number;
-    const collateral = this.getCollateral(this.flip?.collateral_id);
-    const auctionAsset = this.getAssetById(collateral?.gem);
-    const debtAsset = this.getAssetById(collateral?.dai);
+    const getters = this.$store.getters as Getter.GettersTree;
+    const { collateral, auctionSymbol, debtSymbol } = getters.getFlipFields(
+      this.flip
+    );
 
     return {
       chop: toPercent({ n: Number(collateral?.chop) - 1 }),
-      auctionSymbol: auctionAsset?.symbol,
-      debtSymbol: debtAsset?.symbol,
+      auctionSymbol,
+      debtSymbol,
     };
   }
 

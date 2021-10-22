@@ -13,7 +13,7 @@ import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
 export default class AuctionBidWarning extends Vue {
   @Prop() flip!: API.Flip;
 
-  @PropSync("collateralAmount") bindColAmount!: string;
+  @PropSync("amount") bindAmount!: string;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
@@ -23,7 +23,7 @@ export default class AuctionBidWarning extends Vue {
 
     const warning = this.$t("auction.label.stage.reduction.agree", {
       price: `${this.flip.tab} ${debtSymbol}`,
-      amount: `${this.bindColAmount ? this.bindColAmount : "-"}`,
+      amount: `${this.bindAmount ? this.bindAmount : "-"}`,
       collateral: auctionSymbol,
     });
 

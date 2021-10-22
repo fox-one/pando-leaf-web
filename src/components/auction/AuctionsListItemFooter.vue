@@ -1,11 +1,7 @@
 <template>
   <v-layout align-center class="mx-6" style="height: 49.5px">
     <div :class="`f-caption ${meta.isDone ? 'text--disabled' : ''}`">
-      {{
-        meta.isDone
-          ? $t("auction.item.status.done")
-          : $t("auction.item.status.in-auction")
-      }}
+      {{ meta.status }}
     </div>
 
     <v-spacer style="border-color: rgba(0, 0, 0, 0.1) !important" />
@@ -26,9 +22,13 @@ export default class AuctionsListItem extends Vue {
 
   get meta() {
     const isDone = this.flip.action === FlipAction.FlipDeal;
+    const status = isDone
+      ? this.$t("auction.item.status.done")
+      : this.$t("auction.item.status.in-auction");
 
     return {
       isDone,
+      status,
     };
   }
 }

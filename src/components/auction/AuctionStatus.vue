@@ -42,9 +42,10 @@ export default class AuctionStatus extends Vue {
 
     let title = "";
     let bgcls = "";
+
     if (isDone) {
       title = this.$t("auction.statusbar.done") as string;
-      bgcls = "f-bg-greyscale-3";
+      bgcls = "greyscale_3";
     } else if (isStage1) {
       title = this.$t("auction.statusbar.debt") as string;
       bgcls = "statusbar-debt";

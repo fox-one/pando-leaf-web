@@ -56,3 +56,12 @@ export function fiatUnit(vue: Vue) {
   const lang = vue.$vuetify.lang.current;
   return lang.includes("zh") ? "￥" : "$";
 }
+
+export function showNetworkCongestion(vm: Vue) {
+  vm.$uikit.dialog.show({
+    title: vm.$t("network.congestion.title") as string,
+    text: vm.$t("network.congestion.text") as string,
+    confirm: { text: vm.$t("network.congestion.confirm") as string },
+    cancel: { show: false },
+  });
+}
