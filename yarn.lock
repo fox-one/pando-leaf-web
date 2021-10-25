@@ -1241,7 +1241,7 @@
   dependencies:
     "@foxone/fennec-base" "0.3.8"
 
-"@foxone/finance-ui@^0.1.0-beta.0":
+"@foxone/finance-ui@^0.1.8":
   version "0.1.8"
   resolved "https://registry.npmjs.org/@foxone/finance-ui/-/finance-ui-0.1.8.tgz#f1d0e8b35e5e6f7f3e901f56fa4bf0c10df6e536"
   integrity sha512-Z+HkoS02Go9e4KlpyUTCUJ4jB2uPy/M7wgfmkke0RxU1RvXkrG3uzNCZW8Hzn9YQngmyExNyEeT/Xty0jmAf0A==

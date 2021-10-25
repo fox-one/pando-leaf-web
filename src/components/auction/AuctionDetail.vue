@@ -1,21 +1,21 @@
 <template>
   <v-layout column>
-    <div class="label-1 greyscale_3--text mb-4">
+    <div class="text-1 greyscale_3--text mb-4">
       {{ meta.title }}
     </div>
 
     <v-layout align-center>
       <f-mixin-asset-logo :size="24" :logo="meta.logo" />
-      <div class="text-1 ml-2">
+      <div class="text-2 ml-2">
         {{ meta.collateralAmountText }}
       </div>
     </v-layout>
 
-    <div class="text-1 mt-3 ml-8">
+    <div class="text-2 mt-3 ml-8">
       {{ meta.collateralValueText }}
     </div>
 
-    <div v-if="meta.isStage1" class="text-1 mt-3 ml-8 greyscale_3--text">
+    <div v-if="meta.isStage1" class="text-2 mt-3 ml-8 greyscale_3--text">
       <div>{{ `≈ $${meta.collateralFiatValue}` }}</div>
 
       <div class="mt-2">

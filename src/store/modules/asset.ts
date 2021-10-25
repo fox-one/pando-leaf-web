@@ -51,12 +51,12 @@ const actions: ActionTree<State.Asset, unknown> = {
   },
 
   async loadFennecWalletAssets({ commit }, { fennec }) {
-    const walletAssets = await fennec?.getAssets();
+    const walletAssets = await fennec.ctx?.wallet?.getAssets();
     commit("SET_WALLET_ASSETS", walletAssets || []);
   },
 
   async loadFennecWalletAsset({ commit }, { fennec, assetId }) {
-    const walletAsset = await fennec?.getAsset(assetId);
+    const walletAsset = await fennec.ctx?.wallet?.getAsset(assetId);
     if (walletAsset) {
       commit("SET_WALLET_ASSET", { id: assetId, data: walletAsset });
     }

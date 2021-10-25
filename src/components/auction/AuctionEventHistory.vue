@@ -4,7 +4,7 @@
     v-if="events && events.length !== 0"
     class="px-4 pt-6 pb-0 no-border-radius"
   >
-    <div v-if="events && events.length !== 0" class="text-1 mb-2">
+    <div v-if="events && events.length !== 0" class="text-2 mb-2">
       {{ $t("auction.history") }}
     </div>
 

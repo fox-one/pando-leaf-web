@@ -1,5 +1,5 @@
 <template>
-  <div class="label-1 mb-4">
+  <div class="text-1 mb-4">
     {{ meta.rules }}
 
     <auction-rules-tip :flip="flip" />

@@ -5,30 +5,30 @@
     overlay-opacity="0.9"
     max-width="800"
     desktop-wapper="dialog"
-    content-class="welcome-modal"
   >
     <template #activator="{ on }">
-      <slot name="activator" :on="{ on }">
+      <slot name="activator" :on="on">
         <f-button rounded depressed color="primary" :min-width="220" v-on="on">
+          <v-icon size="16">$FIconAdd</v-icon>
           <span>{{ $t("me.no-vault-button") }}</span>
         </f-button>
       </slot>
     </template>
 
-    <template #title>
+    <f-bottom-sheet-title>
       <div class="title text-center">
         {{ $t("vault.selector.title") }}
       </div>
-    </template>
+    </f-bottom-sheet-title>
 
-    <template #subheader>
+    <f-bottom-sheet-subtitle class="pb-0">
       <div class="px-1 text-center">
-        <div class="f-caption px-2 mb-6">
+        <div class="f-caption px-2 mb-6 text--disabled">
           {{ $t("vault.selector.tips") }}
         </div>
         <base-search v-model="filter" />
       </div>
-    </template>
+    </f-bottom-sheet-subtitle>
 
     <v-list height="500" class="overflow-auto">
       <collateral-list-item
@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import CollateralListItem from "./CollateralListItem.vue";
 import { Get } from "vuex-pathify";
 
@@ -64,7 +64,8 @@ class ActionCreateVault extends Vue {
   }
 
   handleAddVault(item: API.Collateral) {
-    this.$router.push({ name: "vault-open", query: { id: item.id } });
+    this.dialog = false;
+    this.$emit("itemclick", item);
   }
 }
 export default ActionCreateVault;

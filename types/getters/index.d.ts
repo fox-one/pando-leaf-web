@@ -62,10 +62,11 @@ declare namespace Getter {
     getVaultFields: (id: string) => VaultFields;
     getMarketFields: (id: string) => MarketFields;
     getFlipFields: (flip: API.Flip) => FlipFields;
+
     "asset/assetsMap": Record<string, API.Asset>;
     "asset/walletAssetsMap": Record<string, API.MixinAsset>;
-    "asset/getAssetById": (id: string) => API.Asset | undefined;
-    "asset/getWalletAssetById": (id: string) => API.MixinAsset | undefined;
+    "asset/getAssetById": State.GetAssetById;
+    "asset/getWalletAssetById": State.GetWalletAssetById;
 
     "collateral/getCollateralById": State.GetCollateralById;
     "collateral/getOverview": State.MarketOverview;

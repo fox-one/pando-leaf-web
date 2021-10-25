@@ -8,7 +8,7 @@
       v-else
       align-center
       justify-space-between
-      class="pa-4 label-1 statusbar white--text"
+      class="pa-4 text-1 statusbar white--text"
       :class="meta.bgcls"
     >
       <div class="text-center statusbar-left">

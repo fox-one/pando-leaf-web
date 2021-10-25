@@ -1,13 +1,13 @@
 <template>
   <v-layout column>
-    <div class="label-1 greyscale_3--text mb-4">
+    <div class="text-1 greyscale_3--text mb-4">
       {{ $t("auction.label.debt.highest") }}
     </div>
 
     <v-layout align-center>
       <f-mixin-asset-logo :size="24" :logo="meta.logo" />
 
-      <div class="text-1 ml-2">
+      <div class="text-2 ml-2">
         {{ `= ${flip.bid} ${meta.debtSymbol}` }}
       </div>
     </v-layout>

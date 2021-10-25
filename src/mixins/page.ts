@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 
 import type { TranslateResult } from "vue-i18n";
 
@@ -49,19 +49,17 @@ export default class PageView extends Vue {
   setLang() {
     const locale = this.$utils.helper.getLocale();
     this.$i18n.locale = locale;
+    this.$vuetify.lang.current = locale === "zh" ? "zhHans" : locale;
     this.$vuetify.lang.current = locale;
     document.title = this.title as string;
   }
 
+  @Watch("appbar", { deep: true })
   setPageConfig() {
     this.$store.commit("app/SET_BOTTOM_NAV", { value: this.bottomNav });
     this.$store.commit("app/SET_APPBAR", {
       title: this.title,
       ...this.appbar,
     });
-
-    setTimeout(() => {
-      this.$utils.mixin.loadMixinTheme();
-    }, 50);
   }
 }

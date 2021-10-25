@@ -1,5 +1,6 @@
 <template>
   <f-app-bar
+    v-if="appbar.show"
     app
     flat
     center

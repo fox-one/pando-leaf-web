@@ -13,6 +13,7 @@
         </span>
         <base-tooltip v-if="field.hint" :hint="field.hint" />
       </div>
+
       <div class="field__value mt-1" :style="[{ color: field.color }]">
         {{ field.value }}
       </div>

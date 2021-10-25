@@ -4,28 +4,28 @@
       <v-layout justify-space-between>
         <v-layout align-center>
           <base-pair-logo :base="meta.gemLogo" :quote="meta.daiLogo" />
-          <span class="subtitle-1 font-weight-bold">{{ collateral.name }}</span>
+          <span class="subtitle-1 font-weight-bold ml-2">
+            {{ collateral.name }}
+          </span>
         </v-layout>
 
         <v-btn depressed small fab color="primary">
-          <v-icon @click="$emit('add')">
-            {{ $icons.mdiPlus }}
-          </v-icon>
+          <v-icon @click="$emit('add')"> $FIconAdd </v-icon>
         </v-btn>
       </v-layout>
 
-      <v-layout justify-space-between class="mt-6 mb-4">
-        <div class="caption">
+      <v-layout justify-space-between class="f-caption mt-6 mb-4">
+        <div class="greyscale_3--text">
           {{ $t("vault.selector.min-collateral-ratio") }}
         </div>
-        <div class="caption">{{ meta.mat }}</div>
+        <div>{{ meta.mat }}</div>
       </v-layout>
 
-      <v-layout justify-space-between>
-        <div class="caption">
+      <v-layout justify-space-between class="f-caption">
+        <div class="greyscale_3--text">
           {{ $t("vault.selector.stability-fee") }}
         </div>
-        <div class="caption">{{ meta.duty }}</div>
+        <div>{{ meta.duty }}</div>
       </v-layout>
     </v-layout>
   </v-list-item>

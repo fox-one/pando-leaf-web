@@ -68,7 +68,7 @@ class PositionOverview extends Vue {
     );
 
     return {
-      collaterals: format({ n: total.collaterals, dp: 2 }),
+      collaterals: format({ n: total.collaterals, dp: 2, fixed: true }),
       debts: format({ n: total.debts, dp: 2, fixed: true }),
     };
   }

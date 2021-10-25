@@ -8,6 +8,7 @@ const state = (): State.App => ({
     title: "",
     show: true,
     back: false,
+    customContent: null,
   },
   settings: {
     dark: mixin.isDarkTheme(),
@@ -18,6 +19,10 @@ const state = (): State.App => ({
   paying: {
     visible: false,
     timer: null,
+  },
+  fiat: {
+    symbol: "$",
+    name: "USD",
   },
   visited: false,
   initing: true,
@@ -30,6 +35,16 @@ const mutations: MutationTree<State.App> = {
       clearTimeout(state.paying.timer as any);
     }
     state.paying = { ...state.paying, ...data };
+  },
+  SET_APPBAR(state, value) {
+    const defaultValue = {
+      title: "",
+      style: "",
+      show: true,
+      back: true,
+      color: "",
+    };
+    state.appbar = { ...defaultValue, ...value };
   },
 };
 

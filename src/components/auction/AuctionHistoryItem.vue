@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout column class="py-4">
-      <v-layout align-center justify-space-between class="mb-2 label-1">
+      <v-layout align-center justify-space-between class="mb-2 text-1">
         <span class="font-weight-bold">{{ meta.actionText }}</span>
         <span class="text-right f-caption greyscale_4--text">
           {{ meta.time }}

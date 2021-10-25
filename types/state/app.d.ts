@@ -4,6 +4,7 @@ declare namespace State {
     title: string;
     show: boolean;
     back: boolean;
+    customContent?: null | any;
   }
 
   export interface SettingsState {
@@ -19,6 +20,11 @@ declare namespace State {
     timer: any;
   }
 
+  export interface FiatState {
+    symbol: string;
+    name: string;
+  }
+
   export interface App {
     appbar: AppBarState;
     settings: SettingsState;
@@ -26,5 +32,6 @@ declare namespace State {
     paying: PayState;
     visited: boolean;
     initing: boolean;
+    fiat: FiatState;
   }
 }
