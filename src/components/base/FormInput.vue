@@ -79,7 +79,7 @@ export default class extends Vue {
       : null;
 
     return {
-      balance: walletAsset?.balance ?? "-",
+      balance,
       fiatAmount: isValid(fiatAmount) ? toFiat(this, { n: fiatAmount }) : false,
       placeholder: this.placeholder ?? this.$t("common.amount"),
       messages,

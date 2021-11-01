@@ -29,11 +29,16 @@ export function getRiskLevelMeta(current: number, min: number) {
 
   const risk = current / min;
 
-  if (risk < 0) {
+  return getRiskLevelMetaByPercent(risk);
+}
+
+// 根据抵押率计算风险
+export function getRiskLevelMetaByPercent(collateralRatio: number) {
+  if (collateralRatio < 0) {
     return RiskLevelMeta[RISK.NA];
-  } else if (risk <= 1.25) {
+  } else if (collateralRatio <= 1.25) {
     return RiskLevelMeta[RISK.HIGH];
-  } else if (risk <= 5 / 3) {
+  } else if (collateralRatio <= 5 / 3) {
     return RiskLevelMeta[RISK.MEDIUM];
   } else {
     return RiskLevelMeta[RISK.LOW];

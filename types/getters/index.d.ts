@@ -58,10 +58,23 @@ declare namespace Getter {
     collateralFiatValue: number;
   }
 
+  export interface PredictionFields {
+    collateralizationRatio: number;
+    liquidationPrice: number;
+    stabilityFee: number;
+    maxToGenerate: number;
+    maxAvailable: number;
+  }
+
   export type GettersTree = {
     getVaultFields: (id: string) => VaultFields;
     getMarketFields: (id: string) => MarketFields;
     getFlipFields: (flip: API.Flip) => FlipFields;
+    getPredictions: (
+      deposit: number,
+      mint: number,
+      collateral: API.Collateral
+    ) => PredictionFields;
 
     "asset/assetsMap": Record<string, API.Asset>;
     "asset/walletAssetsMap": Record<string, API.MixinAsset>;

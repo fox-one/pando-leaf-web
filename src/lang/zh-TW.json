@@ -121,7 +121,7 @@
     "form.hint.generate-ration": "抵押比例到達",
     "form.hint.risk-level": "處於{level}風險.",
     "form.hint.risk-level-low": "低",
-    "form.hint.risk-level-mid": "中",
+    "form.hint.risk-level-medium": "中",
     "form.hint.risk-level-high": "高",
     "form.hint.set-max": "設為最大",
     "form.hint.debt.intro": "因為利息按每分鐘累計，為保證您一次性成功還清貸款，我們將收取您略微高於當前全部貸款的金額，支付成功後多餘的部分將退款給您。",

@@ -115,7 +115,7 @@
   "form.hint.generate-ration": "Collateralization Ration reach",
   "form.hint.risk-level": "it’s {level}-risk now.",
   "form.hint.risk-level-low": "Low",
-  "form.hint.risk-level-mid": "Mid",
+  "form.hint.risk-level-medium": "Mid",
   "form.hint.risk-level-high": "High",
   "form.hint.set-max": "Set Max",
   "form.hint.debt.intro": "As the interests are calculated and added to the debt every minute, we charge you slightly higher than the outstanding debt amount to ensure you successfully pay off the debt and will return to your wallet any excess amount after your payment.",

@@ -1,7 +1,7 @@
 import { RISK } from "@/enums";
 
 export function maxAvailable(cat: API.Collateral) {
-  return Math.max(Number(cat.line) - Number(cat.art) * Number(cat.rate), 0);
+  return Math.max(Number(cat?.line) - Number(cat?.art) * Number(cat?.rate), 0);
 }
 
 export function getRiskLevelMeta(current: number, min: number) {

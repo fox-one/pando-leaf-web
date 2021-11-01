@@ -1,3 +1,4 @@
+import utils from "~/utils";
 import { getNextPairPrice } from "~/utils/oracle";
 
 export function getMarketFields(_: any, getters: Getter.GettersTree) {
@@ -65,6 +66,36 @@ export function getMarketFields(_: any, getters: Getter.GettersTree) {
       stabilityFee,
       liquidationPenalty,
       nextPrice,
+    };
+  };
+}
+
+export function getPredictions(_: any, getters: Getter.GettersTree) {
+  return (deposit: number, mint: number, collateral: API.Collateral) => {
+    // 抵押率
+    const collateralizationRatio = (deposit * Number(collateral?.price)) / mint;
+
+    // 清算价格计算
+    const liquidationPrice = (mint * Number(collateral?.mat || "0")) / deposit;
+
+    // stabilityFee: duty = 1.03 , fee rate: 0.03
+    const stabilityFee = +collateral?.duty - 1;
+
+    // 该类型最多可铸币
+    const maxToGenerate = utils.collateral.maxAvailable(collateral);
+
+    // 本仓库最大可铸币
+    let maxAvailable =
+      (deposit * Number(collateral?.price || "0")) / Number(collateral?.mat);
+    if (maxAvailable > maxToGenerate) {
+      maxAvailable = maxToGenerate;
+    }
+    return {
+      collateralizationRatio,
+      liquidationPrice,
+      stabilityFee,
+      maxToGenerate,
+      maxAvailable,
     };
   };
 }
