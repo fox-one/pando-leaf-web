@@ -11,9 +11,13 @@ declare namespace Getter {
     collateralAmountUSD: number;
     debtAmountUSD: number;
     stabilityFee: number;
+    stabilityFeeText: string;
     ratio: number;
+    ratioText: string;
     riskLevelMeta: Utils.VaultRiskLevelMeta;
+    liquidationRatio: number;
     liquidationPrice: number;
+    liquidationPriceText: string;
     liquidationPenalty: number;
     price: number;
     nextPrice: Utils.NextPrice | undefined;
@@ -22,6 +26,9 @@ declare namespace Getter {
   }
 
   export interface MarketFields {
+    minimumRatio: number;
+    minimumRatioText: string;
+    collateralPrice: number;
     collateral: API.Collateral | undefined;
     collateralAsset: API.Asset | undefined;
     debtAsset: API.Asset | undefined;
@@ -60,20 +67,25 @@ declare namespace Getter {
 
   export interface PredictionFields {
     collateralizationRatio: number;
+    collateralizationRatioText: string;
     liquidationPrice: number;
+    liquidationPriceText: string;
     stabilityFee: number;
+    stabilityFeeText: string;
     maxToGenerate: number;
+    maxToGenerateText: string;
     maxAvailable: number;
+    maxAvailableText: string;
   }
 
   export type GettersTree = {
     getVaultFields: (id: string) => VaultFields;
     getMarketFields: (id: string) => MarketFields;
     getFlipFields: (flip: API.Flip) => FlipFields;
-    getPredictions: (
+    openVaultPrediction: (
       deposit: number,
       mint: number,
-      collateral: API.Collateral
+      collateral: API.Collateral | null
     ) => PredictionFields;
 
     "asset/assetsMap": Record<string, API.Asset>;
@@ -88,5 +100,6 @@ declare namespace Getter {
     "auctions/flipsAuctioning": API.Flip[];
 
     "auth/isLogged": boolean;
+    "auth/canReadAsset": boolean;
   };
 }

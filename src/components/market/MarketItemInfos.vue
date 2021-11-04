@@ -24,7 +24,6 @@
 import dayjs from "dayjs";
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import { Get, Sync } from "vuex-pathify";
-import { isValidOracle } from "@/utils/oracle";
 
 @Component({
   components: {},
@@ -136,7 +135,6 @@ export default class MarketItemInfos extends Vue {
   @Watch("meta.nextPrice")
   onDaiOracleUpdate(newVal: Utils.NextPrice) {
     if (newVal && this.meta.isValidOracle) {
-      console.log(newVal, this.meta.nextPrice);
       clearInterval(this.countId);
       this.countDownTimer =
         dayjs(this.meta.nextPrice?.time).diff(Date.now()) / 1000;

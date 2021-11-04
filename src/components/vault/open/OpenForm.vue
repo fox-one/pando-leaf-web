@@ -5,7 +5,7 @@
     </div>
 
     <base-form-input
-      :amount.sync="depositAmount"
+      :amount.sync="bindDepositAmount"
       :asset="meta.collateralAsset"
       :placeholder="$t('form.hint.deposit-amount')"
     />
@@ -15,7 +15,7 @@
     </div>
 
     <base-form-input
-      :amount.sync="mintAmount"
+      :amount.sync="bindDebtAmount"
       :asset="meta.debtAsset"
       :balance="meta.maxAvailableText"
       :leftLabel="$t('form.info.max-available-to-generate')"
@@ -26,20 +26,20 @@
 
     <open-vault-action
       :collateral="collateral"
-      :deposit="depositAmount"
-      :mint="mintAmount"
+      :deposit="bindDepositAmount"
+      :mint="bindDebtAmount"
       :disabled="validate.disabled"
+      @success="handleSuccess"
     />
   </div>
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Watch, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
 import OpenAppBar from "./OpenAppBar.vue";
 import OpenVaultAction from "./OpenVaultAction.vue";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
-import BigNumber from "bignumber.js";
 import { RISK } from "~/enums";
 
 @Component({
@@ -53,69 +53,46 @@ import { RISK } from "~/enums";
 export default class OpenForm extends Vue {
   @Prop() collateral!: API.Collateral;
 
-  depositAmount = "";
+  @PropSync("depositAmount") bindDepositAmount!: string;
 
-  mintAmount = "";
+  @PropSync("debtAmount") bindDebtAmount!: string;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { toPercent, format, isValid } = this.$utils.number;
+    const { format } = this.$utils.number;
 
-    const depositNum = Number(this.depositAmount);
-    const mintNum = Number(this.mintAmount);
+    const depositNum = Number(this.bindDepositAmount);
+    const mintNum = Number(this.bindDebtAmount);
 
     const {
       collateralizationRatio,
       liquidationPrice,
-      stabilityFee,
-      maxToGenerate,
+      liquidationPriceText,
       maxAvailable,
-    } = getters.getPredictions(depositNum, mintNum, this.collateral);
+      maxAvailableText,
+    } = getters.openVaultPrediction(depositNum, mintNum, this.collateral);
     const marketFields = getters.getMarketFields(this.collateral?.id);
 
-    // 抵押率计算
-    let collateralizationRatioText = toPercent({
-      n: collateralizationRatio,
-      dp: 1,
-    });
-    if (!isValid(collateralizationRatio)) {
-      collateralizationRatioText = "-";
-    }
-    // 价格计算
-    let liquidationPriceText = format({ n: liquidationPrice });
-    if (!isValid(liquidationPrice) || liquidationPrice === 0) {
-      liquidationPriceText = `-`;
-    }
-    // fee
-    const stabilityFeeText = toPercent({ n: stabilityFee });
-    // 该类型最大可用额
-    const maxToGenerateText = format({ n: maxToGenerate });
-    // 实际最大可用
-    const maxAvailableText = format({
-      n: maxAvailable,
-      max_dp: 8,
-      mode: BigNumber.ROUND_DOWN,
-    });
     const progress = (mintNum / maxAvailable) * 100;
     return {
       ...marketFields,
       collateralizationRatio,
-      collateralizationRatioText,
       liquidationPrice,
       liquidationPriceText,
       currentDepositPrice: format({ n: this.collateral?.price || "0" }),
-      stabilityFeeText,
-      maxToGenerate,
-      maxToGenerateText,
-      maxAvailable,
       maxAvailableText,
       progress,
     };
   }
 
+  handleSuccess() {
+    this.bindDepositAmount = "";
+    this.bindDebtAmount = "";
+  }
+
   // todo 表单校验
   get validate() {
-    if (this.depositAmount === "" && this.mintAmount === "") {
+    if (this.bindDepositAmount === "" && this.bindDebtAmount === "") {
       return {
         disabled: true,
         type: "info",
@@ -123,8 +100,8 @@ export default class OpenForm extends Vue {
       };
     }
     if (
-      (this.depositAmount === "" && this.mintAmount !== "") ||
-      (this.depositAmount !== "" && this.mintAmount === "")
+      (this.bindDepositAmount === "" && this.bindDebtAmount !== "") ||
+      (this.bindDepositAmount !== "" && this.bindDebtAmount === "")
     ) {
       return {
         disabled: true,
@@ -132,8 +109,8 @@ export default class OpenForm extends Vue {
         tip: null,
       };
     }
-    if (this.depositAmount !== "" && this.mintAmount !== "") {
-      const ma = Number(this.mintAmount || "0");
+    if (this.bindDepositAmount !== "" && this.bindDebtAmount !== "") {
+      const ma = Number(this.bindDebtAmount || "0");
       const max = this.$utils.collateral?.maxAvailable(this.collateral);
       if (ma > max) {
         // mint 大于最大值
@@ -159,9 +136,9 @@ export default class OpenForm extends Vue {
       }
       //todo 这里要检查逻辑 || 重写
       const ratio =
-        +this.mintAmount &&
-        (+this.depositAmount * +this.meta.currentDepositPrice) /
-          +this.mintAmount;
+        +this.bindDebtAmount &&
+        (+this.bindDepositAmount * +this.meta.currentDepositPrice) /
+          +this.bindDebtAmount;
 
       const risk = this.$utils.vault.getRiskLevelMeta(
         ratio,

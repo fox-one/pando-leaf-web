@@ -1,3 +1,5 @@
+import { format, toPercent } from "@foxone/utils/number";
+import { isValid } from "~/utils/number";
 import { getNextPairPrice } from "~/utils/oracle";
 import { getRiskLevelMeta } from "~/utils/vault";
 
@@ -30,15 +32,27 @@ export function getVaultFields(_: any, getters: Getter.GettersTree) {
 
     // 稳定费率
     const stabilityFee = duty - 1;
+    const stabilityFeeText = toPercent({ n: stabilityFee });
 
     // 抵押率
     const ratio = debtAmount && (collateralAmount * price) / debtAmount;
+    let ratioText = toPercent({
+      n: ratio,
+      dp: 1,
+    });
+    if (!isValid(ratio)) {
+      ratioText = "-";
+    }
 
     // 风险等级
     const riskLevelMeta = getRiskLevelMeta(ratio, mat);
 
     // 清算价格
     const liquidationPrice = (debtAmount * mat) / collateralAmount;
+    let liquidationPriceText = format({ n: liquidationPrice });
+    if (!isValid(liquidationPrice) || liquidationPrice === 0) {
+      liquidationPriceText = `-`;
+    }
 
     //清算罚金费率
     const liquidationPenalty = chop;
@@ -67,9 +81,13 @@ export function getVaultFields(_: any, getters: Getter.GettersTree) {
       collateralAmountUSD,
       debtAmountUSD,
       stabilityFee,
+      stabilityFeeText,
       ratio,
+      ratioText,
       riskLevelMeta,
+      liquidationRatio: mat,
       liquidationPrice,
+      liquidationPriceText,
       liquidationPenalty,
       price,
       nextPrice,

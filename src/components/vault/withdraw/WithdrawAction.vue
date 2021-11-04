@@ -4,10 +4,10 @@
       :disabled="disabled"
       :loading="loading"
       color="primary"
-      @click="confirm"
+      @click="handleClick"
       class="px-8"
     >
-      {{ $t("form.open.button.confirm") }}
+      {{ $t("form.withdraw.button.confirm") }}
     </f-button>
   </base-connect-wallet-btn>
 </template>
@@ -15,18 +15,17 @@
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Get } from "vuex-pathify";
+import { ACTION_ASSET_ID } from "~/constants";
 
 @Component({
   components: {},
 })
-export default class OpenVaultAction extends Vue {
+export default class extends Vue {
   @Get("account/userId") user_id;
 
-  @Prop() collateral!: API.Collateral;
+  @Prop() vault!: API.Vault;
 
-  @Prop() deposit!: string;
-
-  @Prop() mint!: string;
+  @Prop() amount!: string;
 
   @Prop({ default: false }) disabled!: boolean;
 
@@ -38,23 +37,22 @@ export default class OpenVaultAction extends Vue {
     this.follow_id = this.$utils.helper.uuidV4();
   }
 
-  confirm() {
+  handleClick() {
+    if (!this.$utils.payment.shouldGetMoreActionAsset(this)) {
+      this.requestAction();
+    }
+  }
+
+  requestAction() {
     if (this.loading) return;
     this.loading = true;
     this.follow_id = this.$utils.helper.uuidV4();
     const request = {
       user_id: this.user_id,
       follow_id: this.follow_id,
-      amount: this.deposit,
-      asset_id: this.collateral?.gem,
-      parameters: [
-        "bit",
-        "31",
-        "uuid",
-        this.collateral?.id,
-        "decimal",
-        this.$utils.number.format({ n: this.mint, dp: 8 }),
-      ],
+      amount: "0.00000001",
+      asset_id: ACTION_ASSET_ID,
+      parameters: ["bit", "33", "uuid", this.vault.id, "decimal", this.amount],
     } as API.ActionPayload;
 
     try {

@@ -7,11 +7,20 @@
     </div>
 
     <div v-else>
-      <open-form :collateral="collateral" />
+      <open-form
+        :collateral="collateral"
+        :deposit-amount.sync="depositAmount"
+        :debt-amount.sync="debtAmount"
+      />
 
-      <div class="greyscale-6" style="height: 8px"></div>
+      <div class="greyscale_6" style="height: 8px"></div>
 
-      <!-- <prediction class="my-4" :out-data="infos" :collateral="collateral" /> -->
+      <open-vault-prediction
+        class="pa-4"
+        :collateral="collateral"
+        :deposit-amount="depositAmount"
+        :debt-amount="debtAmount"
+      />
       <!-- 
       <risk-info
         v-model="showCModel"
@@ -41,6 +50,7 @@ import OpenAppBar from "@/components/vault/open/OpenAppBar.vue";
 import OpenForm from "@/components/vault/open/OpenForm.vue";
 import RiskWarnings from "@/components/vault/open/RiskWarnings.vue";
 import BaseFormInput from "@/components/base/FormInput.vue";
+import OpenVaultPrediction from "@/components/vault/open/OpenVaultPrediction.vue";
 import { Get } from "vuex-pathify";
 
 @Component({
@@ -49,13 +59,20 @@ import { Get } from "vuex-pathify";
     OpenForm,
     RiskWarnings,
     BaseFormInput,
+    OpenVaultPrediction,
   },
 })
 export default class GenerateVault extends Mixins(mixins.page) {
   @Get("collateral/getCollateralById") getCollateral;
+
   @Get("auth/isLogged") isLogged;
 
   loading = true;
+
+  depositAmount = "";
+
+  debtAmount = "";
+
   riskInfo = {
     continue: {},
     confirm: {},

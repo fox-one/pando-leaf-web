@@ -1,4 +1,4 @@
-import { EVENTS } from "~/constants";
+import { ACTION_ASSET_ID, EVENTS } from "~/constants";
 import { TransactionStatus } from "~/enums";
 
 export interface Callbacks {
@@ -94,4 +94,30 @@ export function setPayingTimer(vm: Vue, timer) {
 
 export function showPayQrDialog(vm: Vue, params: API.PayUrl) {
   vm.$root.$emit(EVENTS.PAY_QR_CODE, params);
+}
+
+export function shouldGetMoreActionAsset(vm: Vue, cbs?: Callbacks) {
+  const getters = vm.$store.getters as Getter.GettersTree;
+  const isLogged = getters["auth/isLogged"];
+  const canReadAsset = getters["auth/canReadAsset"];
+  if (isLogged && canReadAsset) {
+    const getWalletAssetById = getters["asset/getWalletAssetById"];
+    if (Number(getWalletAssetById(ACTION_ASSET_ID)?.balance) <= 0) {
+      vm.$pandoseed.show({
+        token: vm.$store.state.auth.token,
+        success: () => {
+          if (cbs?.success) {
+            cbs?.success?.();
+          } else {
+            vm.$uikit.toast.success({
+              message: vm.$t("common.action-success") + "",
+            });
+          }
+          vm.$pandoseed.close();
+        },
+      });
+      return true;
+    }
+  }
+  return false;
 }

@@ -1,6 +1,6 @@
 import { RISK } from "@/enums";
 
-export function maxAvailable(cat: API.Collateral) {
+export function maxAvailable(cat: API.Collateral | null) {
   return Math.max(Number(cat?.line) - Number(cat?.art) * Number(cat?.rate), 0);
 }
 

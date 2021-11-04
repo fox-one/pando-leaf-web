@@ -1,18 +1,18 @@
 <template>
   <div class="ma-0 pa-4 pb-8">
-    <base-form-input
-      :amount.sync="bindDebtAmount"
-      :asset="meta.debtAsset"
-      :balance="meta.maxAvailable"
-      :leftLabel="$t('form.info.max-available-to-generate')"
-      :placeholder="$t('form.hint.mint-amount')"
+    <base-alert class="mb-4" close type="error" :show.sync="showTip">
+      {{ $t("form.hint.debt.intro") }}
+    </base-alert>
+
+    <payback-form-input
+      :amount.sync="bindAmount"
+      :shot-tip.sync="showTip"
+      :vault="vault"
     />
 
-    <base-risk-slider class="mt-6" :progress="meta.progress" />
-
-    <generate-action
+    <payback-action
       :vault="vault"
-      :amount="bindDebtAmount"
+      :amount="bindAmount"
       :disabled="validate.disabled"
       @success="handleSuccess"
     />
@@ -21,23 +21,25 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
-import BaseFormInput from "@/components/base/FormInput.vue";
+import PaybackFormInput from "./PaybackFormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
-import GenerateAction from "./GenerateAction.vue";
+import PaybackAction from "./PaybackAction.vue";
 import BigNumber from "bignumber.js";
 import { toPercent } from "@foxone/utils/number";
 
 @Component({
   components: {
-    BaseFormInput,
+    PaybackFormInput,
     BaseRiskSlider,
-    GenerateAction,
+    PaybackAction,
   },
 })
-export default class GenerateForm extends Vue {
+export default class PaybackForm extends Vue {
   @Prop() vault!: API.Vault;
 
-  @PropSync("debtAmount") bindDebtAmount!: string;
+  @PropSync("amount") bindAmount!: string;
+
+  showTip = false;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
@@ -52,7 +54,7 @@ export default class GenerateForm extends Vue {
     } = getters.getVaultFields(this.vault?.id ?? "");
     const marketFields = getters.getMarketFields(collateral?.id ?? "");
 
-    const inputAmount = Number(this.bindDebtAmount);
+    const inputAmount = Number(this.bindAmount);
 
     const maxAvailable = format({
       // 因为不允许直接借贷到恰好爆仓 => -0.00000001
@@ -61,23 +63,19 @@ export default class GenerateForm extends Vue {
       mode: BigNumber.ROUND_DOWN,
     });
 
-    const progress =
-      ((debtAmount + inputAmount) / (debtAmount + avaliableDebt)) * 100;
-
     return {
-      debtAsset: marketFields.debtAsset,
       ratio,
+      debtAmount: format({ n: debtAmount, dp: 8, mode: BigNumber.ROUND_DOWN }),
       ratioText: toPercent({ n: ratio }),
       liquidationPrice,
       liquidationPriceText: format({ n: liquidationPrice }),
       currentDepositPrice: format({ n: collateral?.price || "0" }),
       maxAvailable,
-      progress,
     };
   }
 
   handleSuccess() {
-    this.bindDebtAmount = "";
+    this.bindAmount = "";
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });

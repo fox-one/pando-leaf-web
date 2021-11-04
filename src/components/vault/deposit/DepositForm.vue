@@ -1,18 +1,14 @@
 <template>
   <div class="ma-0 pa-4 pb-8">
     <base-form-input
-      :amount.sync="bindDebtAmount"
-      :asset="meta.debtAsset"
-      :balance="meta.maxAvailable"
-      :leftLabel="$t('form.info.max-available-to-generate')"
-      :placeholder="$t('form.hint.mint-amount')"
+      :amount.sync="bindAmount"
+      :asset="meta.collateralAsset"
+      :placeholder="$t('form.hint.deposit-amount')"
     />
 
-    <base-risk-slider class="mt-6" :progress="meta.progress" />
-
-    <generate-action
+    <deposit-action
       :vault="vault"
-      :amount="bindDebtAmount"
+      :amount="bindAmount"
       :disabled="validate.disabled"
       @success="handleSuccess"
     />
@@ -23,61 +19,44 @@
 import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
-import GenerateAction from "./GenerateAction.vue";
-import BigNumber from "bignumber.js";
+import DepositAction from "./DepositAction.vue";
 import { toPercent } from "@foxone/utils/number";
 
 @Component({
   components: {
     BaseFormInput,
     BaseRiskSlider,
-    GenerateAction,
+    DepositAction,
   },
 })
-export default class GenerateForm extends Vue {
+export default class extends Vue {
   @Prop() vault!: API.Vault;
 
-  @PropSync("debtAmount") bindDebtAmount!: string;
+  @PropSync("amount") bindAmount!: string;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
     const { format } = this.$utils.number;
 
     const {
+      collateralAsset,
       liquidationPrice,
       collateral,
       ratio,
-      avaliableDebt,
-      debtAmount,
     } = getters.getVaultFields(this.vault?.id ?? "");
-    const marketFields = getters.getMarketFields(collateral?.id ?? "");
-
-    const inputAmount = Number(this.bindDebtAmount);
-
-    const maxAvailable = format({
-      // 因为不允许直接借贷到恰好爆仓 => -0.00000001
-      n: Math.min(avaliableDebt, marketFields.maxAvailable) - 0.00000001,
-      max_dp: 8,
-      mode: BigNumber.ROUND_DOWN,
-    });
-
-    const progress =
-      ((debtAmount + inputAmount) / (debtAmount + avaliableDebt)) * 100;
 
     return {
-      debtAsset: marketFields.debtAsset,
+      collateralAsset,
       ratio,
       ratioText: toPercent({ n: ratio }),
       liquidationPrice,
       liquidationPriceText: format({ n: liquidationPrice }),
       currentDepositPrice: format({ n: collateral?.price || "0" }),
-      maxAvailable,
-      progress,
     };
   }
 
   handleSuccess() {
-    this.bindDebtAmount = "";
+    this.bindAmount = "";
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });

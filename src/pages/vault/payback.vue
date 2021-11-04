@@ -1,25 +1,72 @@
 <template>
-  <v-container>
-    <base-alert close type="error">
-      {{ $t("form.hint.debt.intro") }}
-    </base-alert>
-  </v-container>
+  <div>
+    <div class="py-2" v-if="loading && meta.vault">
+      <f-loading :loading="loading"></f-loading>
+    </div>
+
+    <div v-else>
+      <payback-form :vault="meta.vault" :amount.sync="amount" />
+
+      <div class="greyscale_6" style="height: 8px"></div>
+
+      <payback-prediction class="pa-4" :vault="meta.vault" :amount="amount" />
+
+      <div style="height: 80px"></div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Mixins } from "vue-property-decorator";
+import PaybackForm from "@/components/vault/payback/PaybackForm.vue";
+import PaybackPrediction from "@/components/vault/payback/PaybackPrediction.vue";
 import mixins from "@/mixins";
+import { Call, Get } from "vuex-pathify";
 
-@Component
+@Component({
+  components: { PaybackForm, PaybackPrediction },
+})
 class VaultPaybackPage extends Mixins(mixins.page) {
-  get title() {
-    return this.$t("form.title.payback");
-  }
+  @Get("vault/getVaultById") getVault;
+
+  @Call("vault/loadVaults") loadVaults;
+
+  loading = true;
+
+  amount = "";
 
   get appbar() {
     return {
       back: true,
+      align: "center",
     };
+  }
+
+  get title() {
+    return this.$t("form.title.payback");
+  }
+
+  get meta() {
+    const vaultId = this.$route.query["id"];
+    return {
+      vaultId,
+      vault: this.getVault(vaultId),
+    };
+  }
+
+  mounted() {
+    if (!this.meta.vaultId) {
+      this.$uikit.toast.error({
+        message: "Vault ID not found.",
+      });
+      this.$router.replace("/");
+    }
+    this.refresh();
+  }
+
+  async refresh() {
+    await this.$utils.app.refresh(this);
+    this.loading = false;
   }
 }
 export default VaultPaybackPage;

@@ -3,19 +3,18 @@
     <f-asset-amount-input
       class="no-left-padding"
       v-model="bindAmount"
-      :assets="[asset]"
-      :asset.sync="asset"
-      :rules="rules"
+      :assets="[meta.collateralAsset]"
+      :asset.sync="meta.collateralAsset"
       :selectable="false"
+      :rules="rules"
       :placeholder="meta.placeholder"
-      :readonly="closed"
+      :readonly="false"
       hide-message
     >
       <template #tools>
         <form-input-tools
-          :left-label="leftLabel"
+          :left-label="$t('common.collateral')"
           :balance="meta.balance"
-          :fiat-amount="meta.fiatAmount"
           :messages="meta.messages"
           @fill="handleFill"
         />
@@ -26,7 +25,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
-import FormInputTools from "./FormInputTools.vue";
+import FormInputTools from "@/components/base/FormInputTools.vue";
+import BigNumber from "bignumber.js";
 
 @Component({
   components: {
@@ -36,52 +36,43 @@ import FormInputTools from "./FormInputTools.vue";
 export default class extends Vue {
   @PropSync("amount") bindAmount;
 
+  @Prop() vault!: API.Vault;
+
   @Prop({ default: null }) asset!: API.Asset;
-
-  @Prop({ default: () => [] }) rules!: ((amount: string) => boolean | string)[];
-
-  @Prop({ default: false }) closed!: boolean;
-
-  @Prop({ type: [String, Number], default: "" }) balance!: string;
-
-  @Prop({ type: [String, Number], default: "" }) fiatAmount!: boolean;
-
-  @Prop({ type: String, default: null }) leftLabel!: string;
-
-  @Prop({ default: null }) placeholder!: string;
 
   @Prop({ default: null }) messages;
 
-  get text() {
-    return {
-      balance: this.leftLabel ? this.leftLabel : this.$t("balance"),
-      connect_wallet: this.$t("connect_wallet"),
-    };
-  }
+  rules: any[] = [];
 
   get meta() {
-    const { isValid, toFiat } = this.$utils.number;
+    const { format } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
-    const getWalletAssetById: State.GetWalletAssetById =
-      getters["asset/getWalletAssetById"];
-
-    const walletAsset = getWalletAssetById(this.asset?.id);
-
-    const balance = this.balance ? this.balance : walletAsset?.balance ?? "-";
-    const price = +(walletAsset?.balance ?? "0") * +this.asset?.price;
-    const fiatAmount = +balance * price;
-
+    const {
+      collateralAsset,
+      avaliableWithdraw,
+      collateralSymbol,
+    } = getters.getVaultFields(this.vault?.id);
     const validateMessage = this.validate();
+
     const messages = this.messages
       ? this.messages
       : validateMessage !== true
       ? validateMessage
       : null;
+    const avaliableWithdrawText = format({
+      n: avaliableWithdraw,
+      dp: 8,
+      mode: BigNumber.ROUND_DOWN,
+    });
+
+    const balance = `${avaliableWithdrawText} ${collateralSymbol}`;
 
     return {
+      collateralAsset,
       balance,
-      fiatAmount: isValid(fiatAmount) ? toFiat(this, { n: fiatAmount }) : false,
-      placeholder: this.placeholder ?? this.$t("common.amount"),
+      avaliableWithdraw,
+      avaliableWithdrawText,
+      placeholder: this.$t("form.hint.payback-amount"),
       messages,
     };
   }
@@ -91,7 +82,8 @@ export default class extends Vue {
   }
 
   handleFill() {
-    this.bindAmount = this.meta.balance !== "-" ? this.meta.balance : "";
+    this.bindAmount =
+      this.meta.avaliableWithdraw > 0 ? this.meta.avaliableWithdrawText : "";
   }
 
   validate() {
