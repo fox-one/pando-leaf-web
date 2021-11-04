@@ -15,7 +15,7 @@
       <v-divider vertical />
       <div class="wrapper">
         <div class="welcome-title">
-          {{ $t("welcome.what-is") + "Pando" }}
+          {{ $t("welcome.what-is") }}
           <v-icon size="68" class="mx-1">$iconLeaf</v-icon>
         </div>
         <div class="greyscale_3--text mt-8">
@@ -30,7 +30,7 @@
     <v-layout v-else column align-center class="text-center pa-6">
       <v-icon class="mt-10" :size="327">$iconWelcomeImg</v-icon>
       <div class="welcome-title">
-        {{ $t("welcome.what-is") + "Pando" }}
+        {{ $t("welcome.what-is") }}
         <v-icon size="68" class="mx-1">$iconLeaf</v-icon>
       </div>
       <div class="greyscale_3--text mt-8">
@@ -56,7 +56,8 @@ class WelcomeModal extends Vue {
   desktop = this.$vuetify.breakpoint.mdAndUp;
 
   mounted() {
-    this.dialog = !this.visited;
+    // this.dialog = !this.visited;
+    this.dialog = true;
   }
 
   handleNext() {
