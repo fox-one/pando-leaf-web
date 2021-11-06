@@ -17,6 +17,18 @@ export async function requestAuthMixin(vm: Vue) {
   window.location.href = path;
 }
 
+export async function authMixin(vm: Vue, code: string) {
+  const res = await vm.$http.auth(code);
+  const redirect = localStorage.getItem("authPath") || "/";
+
+  await updateProfile(vm, {
+    token: res.token,
+    scope: res.scope,
+    channel: "mixin",
+  });
+  document.location.replace(redirect);
+}
+
 export async function authFennec(vm: Vue) {
   await vm.$fennec.connect("Pando Leaf");
 

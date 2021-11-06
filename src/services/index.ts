@@ -73,7 +73,7 @@ export default function (http: Http) {
 
     async getMe(): Promise<API.Profile> {
       const resp = await http.get(`${MIXIN_HOST}me`);
-      return resp.data;
+      return resp;
     },
 
     config(options: AxiosRequestConfig) {

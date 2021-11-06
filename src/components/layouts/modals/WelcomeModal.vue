@@ -36,7 +36,7 @@
       <div class="greyscale_3--text mt-8">
         {{ $t("welcome.description") }}
       </div>
-      <f-button class="my-8" @click="handleNext">
+      <f-button class="my-8 greyscale_1 greyscale_7--text" @click="handleNext">
         {{ $t("common.continue") }}
       </f-button>
     </v-layout>
@@ -56,8 +56,7 @@ class WelcomeModal extends Vue {
   desktop = this.$vuetify.breakpoint.mdAndUp;
 
   mounted() {
-    // this.dialog = !this.visited;
-    this.dialog = true;
+    this.dialog = !this.visited;
   }
 
   handleNext() {

@@ -30,16 +30,9 @@ class AuthPage extends Mixins(mixins.page) {
 
   async mounted() {
     try {
-      await this.$store.dispatch("auth/login", this.code);
-      const authPath = localStorage.getItem("authPath");
-
-      if (authPath) {
-        window.location.replace(authPath);
-      } else {
-        this.$router.push({ name: "index" });
-      }
+      await this.$utils.account.authMixin(this, this.code);
     } catch (error) {
-      this.$utils.helper.errorHandler(this, error as any);
+      this.$utils.helper.errorHandler(this, error);
       this.$router.push({ name: "index" });
     }
   }
