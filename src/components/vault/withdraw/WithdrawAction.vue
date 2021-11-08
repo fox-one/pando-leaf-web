@@ -15,7 +15,7 @@
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Get } from "vuex-pathify";
-import { ACTION_ASSET_ID } from "~/constants";
+import { ACTION_ASSET_ID, EVENTS } from "~/constants";
 
 @Component({
   components: {},
@@ -33,13 +33,45 @@ export default class extends Vue {
 
   follow_id = "";
 
+  get meta() {
+    const getters = this.$store.getters as Getter.GettersTree;
+    const {
+      debtAmount,
+      collateralAmount,
+      collateral,
+      price,
+    } = getters.getVaultFields(this.vault?.id);
+    const increasedDebt = Number(this.amount);
+
+    const ratio =
+      debtAmount && ((collateralAmount - increasedDebt) * price) / debtAmount;
+    const timer = Math.round(+(collateral?.mat ?? 0) * 100 - ratio * 100 + 60);
+    const isHighRisk = (ratio - +(collateral?.mat ?? 0)) * 100 < 61;
+    return {
+      ratio,
+      timer,
+      isHighRisk,
+    };
+  }
+
   mounted() {
     this.follow_id = this.$utils.helper.uuidV4();
   }
 
   handleClick() {
     if (!this.$utils.payment.shouldGetMoreActionAsset(this)) {
-      this.requestAction();
+      if (this.meta.isHighRisk) {
+        this.$root.$emit(EVENTS.OPEN_RISK_WARN, {
+          risk: this.meta.ratio,
+          timer: this.meta.timer,
+          action: {
+            text: this.$t("common.continue"),
+            callback: () => this.requestAction(),
+          },
+        });
+      } else {
+        this.requestAction();
+      }
     }
   }
 

@@ -41,8 +41,8 @@ const actions: ActionTree<State.Asset, unknown> = {
   },
 
   async loadWalletAssets({ commit }) {
-    const response = await this.$http.getAssets();
-    commit("SET_ASSETS", response.assets);
+    const response = await this.$http.getAssetsFromMixin();
+    commit("SET_WALLET_ASSETS", response || []);
   },
 
   async loadWalletAsset({ commit }, id) {

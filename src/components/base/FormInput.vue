@@ -9,14 +9,12 @@
       :selectable="false"
       :placeholder="meta.placeholder"
       :readonly="closed"
-      hide-message
     >
       <template #tools>
         <form-input-tools
           :left-label="leftLabel"
           :balance="meta.balance"
           :fiat-amount="meta.fiatAmount"
-          :messages="meta.messages"
           @fill="handleFill"
         />
       </template>
@@ -71,18 +69,10 @@ export default class extends Vue {
     const price = +(walletAsset?.balance ?? "0") * +this.asset?.price;
     const fiatAmount = +balance * price;
 
-    const validateMessage = this.validate();
-    const messages = this.messages
-      ? this.messages
-      : validateMessage !== true
-      ? validateMessage
-      : null;
-
     return {
       balance,
       fiatAmount: isValid(fiatAmount) ? toFiat(this, { n: fiatAmount }) : false,
       placeholder: this.placeholder ?? this.$t("common.amount"),
-      messages,
     };
   }
 
@@ -92,15 +82,6 @@ export default class extends Vue {
 
   handleFill() {
     this.bindAmount = this.meta.balance !== "-" ? this.meta.balance : "";
-  }
-
-  validate() {
-    for (let index = 0; index < this.rules.length; index++) {
-      const rule = this.rules[index];
-      const checked = rule(this.bindAmount);
-      if (checked !== true) return checked;
-    }
-    return true;
   }
 }
 </script>

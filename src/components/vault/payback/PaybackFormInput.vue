@@ -6,15 +6,14 @@
       :assets="[meta.debtAsset]"
       :asset.sync="meta.debtAsset"
       :selectable="false"
+      :rules="rules"
       :placeholder="meta.placeholder"
       :readonly="false"
-      hide-message
     >
       <template #tools>
         <form-input-tools
           :left-label="$t('form.hint.set-max')"
-          :balance="''"
-          :messages="meta.messages"
+          :balance="meta.debtAmountText"
           @fill="handleFill"
         >
           <template #right>
@@ -22,7 +21,7 @@
               <span class="greysclae_3--text">
                 {{ $t("form.info.wallet-balance") }}
               </span>
-              {{ meta.debtAmount }}
+              {{ meta.balance }}
             </span>
           </template>
         </form-input-tools>
@@ -50,25 +49,56 @@ export default class extends Vue {
 
   @Prop({ default: null }) messages;
 
-  rules: any[] = [];
-
   get meta() {
     const { format } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
-    const { debtAsset, debtAmount } = getters.getVaultFields(this.vault?.id);
-    const validateMessage = this.validate();
-    const messages = this.messages
-      ? this.messages
-      : validateMessage !== true
-      ? validateMessage
-      : null;
+    const {
+      debtAsset,
+      debtSymbol,
+      debtAmount,
+      collateral,
+    } = getters.getVaultFields(this.vault?.id);
+    const walletAsset = getters["asset/getWalletAssetById"](
+      debtAsset?.id ?? ""
+    );
+
+    const dustAmount = Number(collateral?.dust);
+
+    const leftDebt = debtAmount - +this.bindAmount;
 
     return {
+      balance: walletAsset?.balance,
       debtAsset,
-      debtAmount: format({ n: debtAmount, dp: 4, mode: BigNumber.ROUND_UP }),
+      debtAmount,
+      debtSymbol,
+      debtAmountText: format({
+        n: debtAmount,
+        dp: 4,
+        mode: BigNumber.ROUND_UP,
+      }),
       placeholder: this.$t("form.hint.payback-amount"),
-      messages,
+      leftDebt,
+      dustAmount,
+      dust: collateral?.dust,
     };
+  }
+
+  get rules() {
+    return [
+      (v: string) => !!v || this.$t("common.amount-required"),
+      (v: string) => +v > 0 || this.$t("common.amount-invalid"),
+      (v: string) =>
+        +v < +(this.meta.balance ?? Infinity) ||
+        this.$t("form.validate.insufficient-balance", {
+          symbol: this.meta.debtSymbol,
+        }),
+      (v: string) =>
+        (this.meta.leftDebt < this.meta.dustAmount && this.meta.leftDebt > 0) ||
+        this.$t("form.validate.remaining-dust-debt", {
+          amount: this.meta.dust,
+          symbol: this.meta.debtSymbol,
+        }),
+    ];
   }
 
   handleConnectWallet() {
@@ -77,16 +107,8 @@ export default class extends Vue {
 
   handleFill() {
     this.bindShowTip = true;
-    this.bindAmount = this.meta.debtAmount !== "-" ? this.meta.debtAmount : "";
-  }
-
-  validate() {
-    for (let index = 0; index < this.rules.length; index++) {
-      const rule = this.rules[index];
-      const checked = rule(this.bindAmount);
-      if (checked !== true) return checked;
-    }
-    return true;
+    this.bindAmount =
+      this.meta.debtAmountText !== "-" ? this.meta.debtAmountText : "";
   }
 }
 </script>

@@ -28,12 +28,15 @@ class AuthPage extends Mixins(mixins.page) {
     return this.$route.query.code as string;
   }
 
-  async mounted() {
+  mounted() {
+    this.login();
+  }
+
+  async login() {
     try {
       await this.$utils.account.authMixin(this, this.code);
     } catch (error) {
       this.$utils.helper.errorHandler(this, error);
-      this.$router.push({ name: "index" });
     }
   }
 }

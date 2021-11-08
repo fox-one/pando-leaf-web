@@ -9,6 +9,10 @@
     />
 
     <auth-modal />
+
+    <risk-warning-modal />
+
+    <pay-qr-code-modal />
   </div>
 </template>
 
@@ -16,12 +20,16 @@
 import { Component, Vue } from "vue-property-decorator";
 import WelcomeModal from "./WelcomeModal.vue";
 import AuthModal from "./AuthModal.vue";
+import RiskWarningModal from "./RiskWarningModal.vue";
+import PayQrCodeModal from "./PayQrCodeModal.vue";
 import { Sync } from "vuex-pathify";
 
 @Component({
   components: {
     WelcomeModal,
     AuthModal,
+    RiskWarningModal,
+    PayQrCodeModal,
   },
 })
 class DefaultLayoutModals extends Vue {

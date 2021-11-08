@@ -6,7 +6,7 @@
       :placeholder="$t('form.hint.mint-amount')"
     />
 
-    <v-layout class="mt-6 text-1" justify-space-between>
+    <v-layout class="mt-2 text-1" justify-space-between>
       <div class="greyscale_3--text">
         {{ $t("form.hint.withdraw-ratio") }}
       </div>
@@ -58,7 +58,6 @@ export default class extends Vue {
 
     const { avaliableWithdraw } = getters.getVaultFields(this.vault?.id ?? "");
 
-    const inputAmount = Number(this.bindAmount);
     const progress = (100 * +this.bindAmount) / avaliableWithdraw;
     const progressText = toPercent({ n: progress / 100 });
     return {

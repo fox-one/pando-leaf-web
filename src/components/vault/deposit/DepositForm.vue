@@ -3,13 +3,13 @@
     <base-form-input
       :amount.sync="bindAmount"
       :asset="meta.collateralAsset"
+      :rules="rules"
       :placeholder="$t('form.hint.deposit-amount')"
     />
 
     <deposit-action
       :vault="vault"
       :amount="bindAmount"
-      :disabled="validate.disabled"
       @success="handleSuccess"
     />
   </div>
@@ -42,11 +42,17 @@ export default class extends Vue {
       collateralAsset,
       liquidationPrice,
       collateral,
+      collateralSymbol,
       ratio,
     } = getters.getVaultFields(this.vault?.id ?? "");
+    const walletAsset = getters["asset/getWalletAssetById"](
+      collateralAsset?.id ?? ""
+    );
 
     return {
+      balance: walletAsset?.balance,
       collateralAsset,
+      collateralSymbol,
       ratio,
       ratioText: toPercent({ n: ratio }),
       liquidationPrice,
@@ -55,15 +61,23 @@ export default class extends Vue {
     };
   }
 
+  get rules() {
+    return [
+      (v: string) => !!v || this.$t("common.amount-required"),
+      (v: string) => +v > 0 || this.$t("common.amount-invalid"),
+      (v: string) =>
+        +v < +(this.meta.balance ?? Infinity) ||
+        this.$t("form.validate.insufficient-balance", {
+          symbol: this.meta.collateralSymbol,
+        }),
+    ];
+  }
+
   handleSuccess() {
     this.bindAmount = "";
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });
-  }
-
-  get validate() {
-    return { disabled: false };
   }
 }
 </script>

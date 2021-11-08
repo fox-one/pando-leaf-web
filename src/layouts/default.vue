@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <v-app>
     <f-loading v-if="initing" :loading="initing" :color="color" fullscreen />
 
     <template v-else>
       <desktop-layout v-if="desktop" />
+
       <mobile-layout v-else />
     </template>
-  </div>
+  </v-app>
 </template>
 
 <script lang="ts">

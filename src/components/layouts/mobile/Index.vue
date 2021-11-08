@@ -2,10 +2,13 @@
   <v-app class="leaf-app">
     <app-bar-home v-if="isHome" />
     <app-bar-nav v-else />
+
     <v-main>
       <nuxt />
     </v-main>
+
     <bottom-nav />
+
     <modals />
   </v-app>
 </template>

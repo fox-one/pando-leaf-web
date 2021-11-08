@@ -20,8 +20,8 @@ const mutations: MutationTree<State.Account> = {
 
 const actions: ActionTree<State.Account, any> = {
   async loadProfile({ commit, rootGetters }) {
-    const profile = await this.$http.getMe();
     if (rootGetters["auth/isLogged"]) {
+      const profile = await this.$http.getMe();
       commit("SET_PROFILE", profile);
     }
   },

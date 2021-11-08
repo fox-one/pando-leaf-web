@@ -13,11 +13,11 @@ export function getVaultFields(_: any, getters: Getter.GettersTree) {
     const vault = getVaultById(id);
     const collateral = getCollateralById(vault?.collateral_id ?? "");
     const art = Number(vault?.art ?? "0");
-    const mat = Number(collateral?.mat ?? "0");
     const rate = Number(collateral?.rate ?? "1");
     const price = Number(collateral?.price ?? "0");
     const duty = Number(collateral?.duty ?? "1");
     const chop = Number(collateral?.chop ?? "0");
+    const minimumRatio = Number(collateral?.mat ?? "0");
 
     const collateralAsset = getAssetById(collateral?.gem ?? "");
     const debtAsset = getAssetById(collateral?.dai ?? "");
@@ -45,10 +45,10 @@ export function getVaultFields(_: any, getters: Getter.GettersTree) {
     }
 
     // 风险等级
-    const riskLevelMeta = getRiskLevelMeta(ratio, mat);
+    const riskLevelMeta = getRiskLevelMeta(ratio, minimumRatio);
 
     // 清算价格
-    const liquidationPrice = (debtAmount * mat) / collateralAmount;
+    const liquidationPrice = (debtAmount * minimumRatio) / collateralAmount;
     let liquidationPriceText = format({ n: liquidationPrice });
     if (!isValid(liquidationPrice) || liquidationPrice === 0) {
       liquidationPriceText = `-`;
@@ -64,10 +64,12 @@ export function getVaultFields(_: any, getters: Getter.GettersTree) {
     });
 
     // 可借数量
-    const avaliableDebt = (collateralAmount * price) / mat - debtAmount;
+    const avaliableDebt =
+      (collateralAmount * price) / minimumRatio - debtAmount;
 
     // 可提现数量
-    const avaliableWithdraw = collateralAmount - (mat * debtAmount) / price;
+    const avaliableWithdraw =
+      collateralAmount - (minimumRatio * debtAmount) / price;
 
     return {
       vault,
@@ -85,7 +87,7 @@ export function getVaultFields(_: any, getters: Getter.GettersTree) {
       ratio,
       ratioText,
       riskLevelMeta,
-      liquidationRatio: mat,
+      liquidationRatio: minimumRatio,
       liquidationPrice,
       liquidationPriceText,
       liquidationPenalty,

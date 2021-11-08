@@ -17,7 +17,11 @@ export async function requestAuthMixin(vm: Vue) {
   window.location.href = path;
 }
 
+let logining = false;
+
 export async function authMixin(vm: Vue, code: string) {
+  if (logining) return;
+  logining = true;
   const res = await vm.$http.auth(code);
   const redirect = localStorage.getItem("authPath") || "/";
 
@@ -26,6 +30,9 @@ export async function authMixin(vm: Vue, code: string) {
     scope: res.scope,
     channel: "mixin",
   });
+
+  await vm.$store.dispatch("account/loadProfile");
+  logining = false;
   document.location.replace(redirect);
 }
 

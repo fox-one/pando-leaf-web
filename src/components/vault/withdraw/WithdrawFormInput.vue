@@ -9,13 +9,11 @@
       :rules="rules"
       :placeholder="meta.placeholder"
       :readonly="false"
-      hide-message
     >
       <template #tools>
         <form-input-tools
           :left-label="$t('common.collateral')"
           :balance="meta.balance"
-          :messages="meta.messages"
           @fill="handleFill"
         />
       </template>
@@ -27,6 +25,7 @@
 import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
 import FormInputTools from "@/components/base/FormInputTools.vue";
 import BigNumber from "bignumber.js";
+import { RISK } from "~/enums";
 
 @Component({
   components: {
@@ -42,7 +41,31 @@ export default class extends Vue {
 
   @Prop({ default: null }) messages;
 
-  rules: any[] = [];
+  get rules() {
+    return [
+      (v: string) => !!v || this.$t("common.amount-required"),
+      (v: string) => +v > 0 || this.$t("common.amount-invalid"),
+      (v: string) =>
+        +v <= this.meta.avaliableWithdraw || this.$t("common.amount-invalid"),
+      (v: string) => {
+        if (this.meta.risk.value === RISK.HIGH) {
+          if (this.meta.ratio < this.meta.liquidationRatio) {
+            return this.$t("form.validate.below-liquidation-rate");
+          }
+
+          return this.$t("form.validate.high-risk-withdraw", {
+            symbol: this.meta.collateralSymbol,
+          });
+        }
+        return true;
+      },
+      (v: string) =>
+        this.meta.risk.value !== RISK.MEDIUM ||
+        this.$t("form.validate.medium-risk-withdraw", {
+          symbol: this.meta.collateralSymbol,
+        }),
+    ];
+  }
 
   get meta() {
     const { format } = this.$utils.number;
@@ -51,14 +74,12 @@ export default class extends Vue {
       collateralAsset,
       avaliableWithdraw,
       collateralSymbol,
+      collateralAmount,
+      debtAmount,
+      liquidationRatio,
+      price,
     } = getters.getVaultFields(this.vault?.id);
-    const validateMessage = this.validate();
 
-    const messages = this.messages
-      ? this.messages
-      : validateMessage !== true
-      ? validateMessage
-      : null;
     const avaliableWithdrawText = format({
       n: avaliableWithdraw,
       dp: 8,
@@ -67,13 +88,19 @@ export default class extends Vue {
 
     const balance = `${avaliableWithdrawText} ${collateralSymbol}`;
 
+    const ratio = ((collateralAmount - +this.bindAmount) * price) / debtAmount;
+
+    const risk = this.$utils.vault.getRiskLevelMeta(ratio, liquidationRatio);
     return {
       collateralAsset,
       balance,
+      collateralSymbol,
       avaliableWithdraw,
       avaliableWithdrawText,
       placeholder: this.$t("form.hint.payback-amount"),
-      messages,
+      ratio,
+      risk,
+      liquidationRatio,
     };
   }
 
@@ -84,15 +111,6 @@ export default class extends Vue {
   handleFill() {
     this.bindAmount =
       this.meta.avaliableWithdraw > 0 ? this.meta.avaliableWithdrawText : "";
-  }
-
-  validate() {
-    for (let index = 0; index < this.rules.length; index++) {
-      const rule = this.rules[index];
-      const checked = rule(this.bindAmount);
-      if (checked !== true) return checked;
-    }
-    return true;
   }
 }
 </script>
