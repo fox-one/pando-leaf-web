@@ -42,11 +42,14 @@ export default class extends Vue {
       price,
     } = getters.getVaultFields(this.vault?.id);
     const increasedDebt = Number(this.amount);
+    const minimumRatio = +(collateral?.mat ?? 0);
 
     const ratio =
       debtAmount && ((collateralAmount - increasedDebt) * price) / debtAmount;
-    const timer = Math.round(+(collateral?.mat ?? 0) * 100 - ratio * 100 + 60);
-    const isHighRisk = (ratio - +(collateral?.mat ?? 0)) * 100 < 61;
+
+    const timer = Math.round(minimumRatio * 100 - ratio * 100 + 60);
+
+    const isHighRisk = debtAmount && (ratio - minimumRatio) * 100 < 61;
     return {
       ratio,
       timer,
