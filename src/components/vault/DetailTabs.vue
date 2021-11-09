@@ -1,5 +1,5 @@
 <template>
-  <f-segment-control :value="value" @change="handleChange">
+  <f-segment-control borderless mandatory :value="value" @change="handleChange">
     <f-button
       v-for="(item, index) in tabs"
       :key="index"

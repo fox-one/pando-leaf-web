@@ -19,15 +19,15 @@
       </v-row>
 
       <div class="d-flex align-center mt-8 mt-md-14">
-        <span class="subtitle-1 font-weight-bold mr-1">{{ "My Vault" }}</span>
-        <base-tooltip
-          hint="'Pando leaf is product description product description product description product description'"
-        />
+        <span class="subtitle-1 font-weight-bold mr-1">{{
+          $t("me.my-vault")
+        }}</span>
+        <base-tooltip :hint="myVaultHint" />
       </div>
 
       <vault-list class="mt-3" />
 
-      <div class="text-center mt-8">
+      <div class="text-center my-8">
         <action-create-vault @itemclick="handleItemclick" />
       </div>
     </v-layout>
@@ -74,6 +74,14 @@ class VaultPage extends Mixins(mixins.page) {
 
   get bottomNav() {
     return "vault";
+  }
+
+  get myVaultHint() {
+    return [
+      this.$t("me.my-vault.hint1"),
+      this.$t("me.my-vault.hint2"),
+      this.$t("me.my-vault.hint3"),
+    ];
   }
 
   handleItemclick(item: API.Collateral) {

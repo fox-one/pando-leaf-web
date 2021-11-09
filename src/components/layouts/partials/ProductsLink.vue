@@ -6,6 +6,7 @@
     nudge-top="-20"
     overlay-opacity="0.9"
     desktop-wapper="menu"
+    :title="$t('common.jump-to')"
   >
     <template #activator="{ on }">
       <slot name="activator" :on="{ on }">
@@ -15,10 +16,6 @@
         </div>
       </slot>
     </template>
-    <f-bottom-sheet-title>
-      <div class=""></div>
-    </f-bottom-sheet-title>
-
     <div
       v-for="(item, index) in items"
       align-center

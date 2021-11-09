@@ -3,7 +3,15 @@
     <template #activator="{ on }">
       <v-icon size="16" color="greyscale_3" v-on="on"> $iconQuestion </v-icon>
     </template>
-    <div>{{ hint }}</div>
+    <div>
+      <div
+        class="ma-4 f-caption greyscale_3--text"
+        v-for="content in contents"
+        :key="content"
+      >
+        {{ content }}
+      </div>
+    </div>
   </f-tooltip>
 
   <f-bottom-sheet
@@ -22,8 +30,14 @@
       {{ $t("tooltip.details") }}
     </f-bottom-sheet-title>
 
-    <div class="pb-8 text-center">
-      <div class="ma-4">{{ hint }}</div>
+    <div class="pb-8">
+      <div
+        class="ma-4 text-1 greyscale_3--text"
+        v-for="content in contents"
+        :key="content"
+      >
+        {{ content }}
+      </div>
       <div class="my-8 text-center">
         <f-button
           rounded

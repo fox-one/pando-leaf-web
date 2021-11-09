@@ -16,18 +16,18 @@
       <div class="greyscale_6 pb-2 mx-n4" />
 
       <vault-detail-infos :id="vaultId" class="infos" />
+
+      <div class="actions__wrapper">
+        <vault-actions
+          :id="id"
+          :has-collateral="meta.hasCollateral"
+          class="actions"
+        />
+      </div>
     </div>
 
     <div v-show="index === 1">
       <vault-history :id="vaultId" class="mt-4" />
-    </div>
-
-    <div class="actions__wrapper">
-      <vault-actions
-        :id="id"
-        :has-collateral="meta.hasCollateral"
-        class="actions"
-      />
     </div>
   </v-container>
 </template>
