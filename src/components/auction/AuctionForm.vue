@@ -12,7 +12,7 @@
 
         <auction-debt-form v-if="meta.isStage1" />
 
-        <auction-collateral-form v-else-if="meta.isStage2" />
+        <auction-collateral-form v-else />
       </div>
     </v-layout>
   </f-panel>
@@ -41,6 +41,7 @@ export default class AuctionPage extends Vue {
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
     const { isDone, isStage1, isStage2 } = getters.getFlipFields(this.flip);
+
     return {
       isDone,
       isStage1,

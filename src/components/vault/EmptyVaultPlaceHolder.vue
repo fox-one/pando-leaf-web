@@ -1,6 +1,6 @@
 <template>
-  <v-layout column align-center justify-center>
-    {{ "This vault don’t have any collateral" }}
+  <v-layout class="f-caption text--disabled" column justify-center>
+    {{ $t("me.vault-item.empty") }}
   </v-layout>
 </template>
 

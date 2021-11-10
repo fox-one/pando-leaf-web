@@ -16,7 +16,7 @@
     </div>
 
     <div v-if="meta.isStage1" class="text-2 mt-3 ml-8 greyscale_3--text">
-      <div>{{ `≈ $${meta.collateralFiatValue}` }}</div>
+      <div>{{ `≈ $${meta.collateralFiatValueText}` }}</div>
 
       <div class="mt-2">
         {{ `${$t("form.info.current-price")}: ${meta.curPrice}` }}
@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts" scoped>
+import { format } from "@foxone/utils/number";
 import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component
@@ -62,6 +63,10 @@ export default class AuctionDetail extends Vue {
       ? `≈ $${debtFiatValue}`
       : `≈ ${collateralValue} ${debtSymbol}`;
 
+    const collateralFiatValueText = this.$utils.number.format({
+      n: collateralFiatValue,
+    });
+
     return {
       isDone,
       title,
@@ -69,6 +74,7 @@ export default class AuctionDetail extends Vue {
       collateralAmountText,
       collateralValueText,
       collateralFiatValue,
+      collateralFiatValueText,
       curPrice,
       isStage1,
       isStage2,

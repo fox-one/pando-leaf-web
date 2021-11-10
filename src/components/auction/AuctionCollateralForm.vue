@@ -32,7 +32,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import AuctionMaxBid from "@/components/auction/AuctionMaxBid.vue";
 import AuctionBidWarning from "@/components/auction/AuctionBidWarning.vue";
-import AuctionCollateralAction from "@/components/auction/AuctionCollateralAction.vue";
+import AuctionCollateralAction from "./AuctionCollateralAction.vue";
 
 @Component({
   components: {

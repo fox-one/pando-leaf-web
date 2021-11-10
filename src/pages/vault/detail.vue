@@ -19,7 +19,7 @@
 
       <div class="actions__wrapper">
         <vault-actions
-          :id="id"
+          :id="vaultId"
           :has-collateral="meta.hasCollateral"
           class="actions"
         />
@@ -36,6 +36,7 @@
 import { Component, Mixins } from "vue-property-decorator";
 import DetailTabs from "@/components/vault/DetailTabs.vue";
 import VaultName from "@/components/vault/VaultName.vue";
+import EmptyVaultPlaceHolder from "@/components/vault/EmptyVaultPlaceHolder.vue";
 import VaultDetailFields from "@/components/vault/VaultDetailFields.vue";
 import VaultDetailInfos from "@/components/vault/VaultDetailInfos.vue";
 import VaultHistory from "@/components/vault/VaultHistory.vue";
@@ -46,6 +47,7 @@ import mixins from "@/mixins";
   components: {
     DetailTabs,
     VaultName,
+    EmptyVaultPlaceHolder,
     VaultDetailFields,
     VaultDetailInfos,
     VaultHistory,
@@ -70,10 +72,11 @@ class VaultDetailPage extends Mixins(mixins.page) {
   }
 
   get meta() {
-    const getVaultFields = this.$utils.vault.getVaultFields;
-    const { vault } = getVaultFields(this, this.vaultId);
+    const getters = this.$store.getters as Getter.GettersTree;
+    const { vault } = getters.getVaultFields(this.vaultId);
+    const hasCollateral = Number(vault?.ink) > 0;
 
-    return { vault, hasCollateral: Number(vault?.ink) > 0 };
+    return { vault, hasCollateral };
   }
 }
 export default VaultDetailPage;

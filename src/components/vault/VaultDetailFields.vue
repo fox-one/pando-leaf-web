@@ -5,6 +5,7 @@
       :key="index"
       :class="[{ 'field--emphasize': field.emphasize }]"
       cols="6"
+      md="4"
       class="field"
     >
       <div class="field__title">

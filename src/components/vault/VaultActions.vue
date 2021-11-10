@@ -1,8 +1,8 @@
 <template>
   <v-layout justify-space-between>
     <div
-      v-for="(item, index) in actions"
-      :key="index"
+      v-for="item in actions"
+      :key="item.value"
       class="action"
       :class="[{ 'action--disabled': item.disabled }]"
       @click.stop="handleClick(item)"
@@ -17,10 +17,10 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
-class VaultListItemActions extends Vue {
-  @Prop() hasCollateral!: boolean;
-
+class VaultActions extends Vue {
   @Prop() id!: string;
+
+  @Prop({ default: false }) hasCollateral!: boolean;
 
   get actions() {
     const { hasCollateral } = this;
@@ -61,7 +61,7 @@ class VaultListItemActions extends Vue {
     this.$router.push({ name: item.href, query: { id: this.id } });
   }
 }
-export default VaultListItemActions;
+export default VaultActions;
 </script>
 
 <style lang="scss" scoped>

@@ -17,7 +17,6 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { getVaultFields } from "@/utils/vault";
 
 @Component
 class VaultDetailInfos extends Vue {
@@ -27,6 +26,7 @@ class VaultDetailInfos extends Vue {
     const format = this.$utils.number.format;
     const toPercent = this.$utils.number.toPercent;
 
+    const getters = this.$store.getters as Getter.GettersTree;
     const {
       avaliableWithdraw,
       avaliableDebt,
@@ -34,7 +34,7 @@ class VaultDetailInfos extends Vue {
       debtSymbol,
       stabilityFee,
       liquidationPenalty,
-    } = getVaultFields(this, this.id);
+    } = getters.getVaultFields(this.id);
 
     return [
       {

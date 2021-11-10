@@ -12,7 +12,7 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
     const debtAsset = getAssetById(collateral?.dai ?? "");
     const isDone = flip.action === FlipAction.FlipDeal;
     const isStage1 = Number(flip.bid) < Number(flip.tab) && !isDone;
-    const isStage2 = flip.bid >= flip.tab && !isDone;
+    const isStage2 = Number(flip.bid) >= Number(flip.tab) && !isDone;
     const collateralPrice = auctionAsset?.price ?? "";
     const debtPrice = debtAsset?.price ?? "";
     const collateralValue = toPrecision({

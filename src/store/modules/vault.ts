@@ -1,7 +1,6 @@
 import { make } from "vuex-pathify";
 
 import type { GetterTree, ActionTree } from "vuex";
-import { isValid } from "~/utils/number";
 
 const state = (): State.Vault => ({
   vaults: [],

@@ -11,7 +11,7 @@
     </v-layout>
 
     <vault-detail-fields v-if="meta.hasCollateral" :id="id" />
-    <empty-vault-place-holder v-else />
+    <empty-vault-place-holder class="pt-2" v-else />
 
     <f-divider class="my-6" />
 

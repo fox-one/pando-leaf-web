@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { isValidOracle } from "~/utils/oracle";
 
 @Component
 export default class extends Vue {
@@ -18,7 +19,7 @@ export default class extends Vue {
   @Prop() amount!: string;
 
   get meta() {
-    const { format, toPercent } = this.$utils.number;
+    const { format, toPercent, isValid } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
 
     const {
@@ -32,6 +33,7 @@ export default class extends Vue {
       ratio,
       ratioText,
       stabilityFeeText,
+      nextPrice,
     } = getters.getVaultFields(this.vault?.id);
 
     const {
@@ -45,8 +47,17 @@ export default class extends Vue {
     const diffAmount = +this.amount;
     const changedPrice =
       (debtAmount * liquidationRatio) / (collateralAmount - diffAmount);
+    let changedPriceText = format({ n: changedPrice });
+    if (!isValid(changedPrice) || changedPrice === 0) {
+      changedPriceText = "N/A";
+    }
     const changedRatio =
+      debtAmount &&
       ((collateralAmount - diffAmount) * collateralPrice) / debtAmount;
+    let changedRatioText = toPercent({ n: changedRatio, dp: 1 });
+    if (!isValid(changedRatio) || changedRatio === 0) {
+      changedRatioText = "N/A";
+    }
     const changedRisk = this.$utils.collateral.getRiskLevelMeta(
       changedRatio,
       minimumRatio
@@ -56,7 +67,7 @@ export default class extends Vue {
       liquidationPriceText,
       ratio,
       ratioText,
-
+      nextPrice,
       currentPrice: format({ n: collateral?.price ?? 0 }),
       minimumRatio: minimumRatioText,
       stabilityFeeText,
@@ -64,13 +75,16 @@ export default class extends Vue {
       debtSymbol,
       risk,
       debtAmount: format({ n: debtAmount }),
-      changedPrice: format({ n: changedPrice }),
-      changedRatio: toPercent({ n: changedRatio, dp: 1 }),
+      changedPrice,
+      changedPriceText,
+      changedRatio,
+      changedRatioText,
       changedRisk,
     };
   }
 
   get infos() {
+    const { isValidOracle } = this.$utils.oracle;
     return [
       {
         label: this.$t("form.info.symbol-debt", {
@@ -85,9 +99,9 @@ export default class extends Vue {
         value: this.meta.ratioText,
         valueColor: this.meta.risk.color,
         hint: this.$t("form.tooltip.collateralization-ratio"),
-        changedValue: this.meta.changedRatio,
+        changedValue: this.meta.changedRatioText,
         changedValueColor: this.meta.changedRisk.color,
-        showChange: this.meta.ratioText !== this.meta.changedRatio,
+        showChange: this.meta.ratio !== this.meta.changedRatio,
       },
       {
         label: this.$t("form.info.minimum-ratio"),
@@ -99,8 +113,9 @@ export default class extends Vue {
         value: this.meta.liquidationPriceText,
         valueUnit: `${this.meta.debtSymbol}`,
         hint: this.$t("form.tooltip.liquidation-price"),
-        changedValue: this.meta.changedPrice,
-        showChange: this.meta.liquidationPriceText !== this.meta.changedPrice,
+        changedValue: this.meta.changedPriceText,
+        showChange:
+          this.meta.liquidationPriceText !== this.meta.changedPriceText,
       },
       {
         label: this.$t("form.info.current-symbol-price", {
@@ -108,6 +123,8 @@ export default class extends Vue {
         }),
         value: this.meta.currentPrice,
         valueUnit: `${this.meta.debtSymbol}`,
+        showChange: isValidOracle(this.meta.nextPrice),
+        changedValue: this.meta.nextPrice?.price,
       },
       {
         label: this.$t("form.info.stability-fee"),

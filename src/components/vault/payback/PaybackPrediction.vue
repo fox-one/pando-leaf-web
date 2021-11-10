@@ -18,7 +18,7 @@ export default class extends Vue {
   @Prop() amount!: string;
 
   get meta() {
-    const { format, toPercent } = this.$utils.number;
+    const { format, toPercent, isValid } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
 
     const {
@@ -31,6 +31,7 @@ export default class extends Vue {
       debtAmount,
       ratio,
       ratioText,
+      nextPrice,
       stabilityFeeText,
     } = getters.getVaultFields(this.vault?.id);
 
@@ -46,6 +47,7 @@ export default class extends Vue {
     let changedPrice =
       ((debtAmount - diffAmount) * liquidationRatio) / collateralAmount;
     let changedRatio =
+      debtAmount &&
       (collateralAmount * collateralPrice) / (debtAmount - diffAmount);
     const changedRisk = this.$utils.collateral.getRiskLevelMeta(
       changedRatio,
@@ -56,6 +58,16 @@ export default class extends Vue {
     if (changedRatio < 0) changedRatio = 0;
     if (changedPrice < 0) changedPrice = 0;
     if (changedAmount < 0) changedAmount = 0;
+
+    let changedPriceText = format({ n: changedPrice });
+    if (!isValid(changedPrice) || changedPrice === 0) {
+      changedPriceText = "N/A";
+    }
+
+    let changedRatioText = toPercent({ n: changedRatio, dp: 1 });
+    if (!isValid(changedRatio) || changedRatio === 0) {
+      changedRatioText = "N/A";
+    }
 
     return {
       liquidationPriceText,
@@ -68,14 +80,18 @@ export default class extends Vue {
       debtSymbol,
       risk,
       debtAmount: format({ n: debtAmount }),
-      changedPrice: format({ n: changedPrice }),
-      changedRatio: toPercent({ n: changedRatio, dp: 1 }),
+      changedPrice,
+      changedPriceText,
+      changedRatio,
+      changedRatioText,
       changedRisk,
+      nextPrice,
       changedAmount: format({ n: changedAmount }),
     };
   }
 
   get infos() {
+    const { isValidOracle } = this.$utils.oracle;
     return [
       {
         label: this.$t("form.info.collateralization-ratio"), // deposit * price / mint
@@ -84,7 +100,7 @@ export default class extends Vue {
         hint: this.$t("form.tooltip.collateralization-ratio"),
         changedValue: this.meta.changedRatio,
         changedValueColor: this.meta.changedRisk.color,
-        showChange: this.meta.ratioText !== this.meta.changedRatio,
+        showChange: this.meta.ratio !== this.meta.changedRatio,
       },
       {
         label: this.$t("form.info.minimum-ratio"),
@@ -96,8 +112,9 @@ export default class extends Vue {
         value: this.meta.liquidationPriceText,
         valueUnit: `${this.meta.debtSymbol}`,
         hint: this.$t("form.tooltip.liquidation-price"),
-        changedValue: this.meta.changedPrice,
-        showChange: this.meta.liquidationPriceText !== this.meta.changedPrice,
+        changedValue: this.meta.changedPriceText,
+        showChange:
+          this.meta.liquidationPriceText !== this.meta.changedPriceText,
       },
       {
         label: this.$t("form.info.current-symbol-price", {
@@ -105,6 +122,8 @@ export default class extends Vue {
         }),
         value: this.meta.currentPrice,
         valueUnit: `${this.meta.debtSymbol}`,
+        showChange: isValidOracle(this.meta.nextPrice),
+        changedValue: this.meta.nextPrice?.price,
       },
       {
         label: this.$t("form.info.symbol-debt", {
