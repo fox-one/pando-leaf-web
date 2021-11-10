@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 export function getNextPairPrice(
   getters: Getter.GettersTree,
   opts: { base: string; quote: string }
-) {
+): Utils.NextPrice | undefined {
   const getOracleById: State.GetOracleById = getters["oracle/getOracleById"];
 
   const baseOracle = getOracleById(opts.base);

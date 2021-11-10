@@ -22,8 +22,14 @@ class VaultList extends Vue {
   @Get("vault/vaults") vaults!: API.Vault[];
 
   get sortedVaults() {
+    const { isValid } = this.$utils.number;
     return this.vaults.sort((a, b) => {
-      return getVaultRisk(this, a) - getVaultRisk(this, b);
+      const riskA = getVaultRisk(this, a);
+      const riskB = getVaultRisk(this, b);
+
+      if (!isValid(riskA)) return 1;
+      if (!isValid(riskB)) return -1;
+      return riskA - riskB;
     });
   }
 }

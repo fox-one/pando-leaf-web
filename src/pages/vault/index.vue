@@ -19,9 +19,10 @@
       </v-row>
 
       <div class="d-flex align-center mt-8 mt-md-14">
-        <span class="subtitle-1 font-weight-bold mr-1">{{
-          $t("me.my-vault")
-        }}</span>
+        <span class="subtitle-1 font-weight-bold mr-1">
+          {{ $t("me.my-vault") }}
+        </span>
+
         <base-tooltip :hint="myVaultHint" />
       </div>
 
@@ -59,8 +60,6 @@ class VaultPage extends Mixins(mixins.page) {
   @Get("auth/isLogged") isLogged!: boolean;
 
   @Get("vault/haveVault") haveVault!: boolean;
-
-  @Get("vault/vaults") vaults!: API.Vault[];
 
   get title() {
     return this.$t("tab.home") as string;

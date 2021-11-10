@@ -1,7 +1,7 @@
 declare namespace Utils {
   export interface NextPrice {
-    price: number;
-    time: number;
+    price?: number;
+    time?: number | string;
   }
 
   export enum RISK {

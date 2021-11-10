@@ -30,7 +30,9 @@ import { Get, Sync } from "vuex-pathify";
 })
 export default class MarketItemInfos extends Vue {
   @Prop() collateral!: API.Collateral;
+
   @Sync("state/app@settings") settings;
+
   @Get("oracle/getOracleById") getOracleById;
 
   get meta() {
@@ -38,6 +40,7 @@ export default class MarketItemInfos extends Vue {
     const {
       collateralSymbol,
       debtSymbol,
+      collateralPrice,
       collateralAsset,
       collateralAmount,
       debtAmount,
@@ -49,6 +52,10 @@ export default class MarketItemInfos extends Vue {
     const { toPrecision, toPercent } = this.$utils.number;
 
     const rate = collateralFiat / Number(this.collateral.art);
+
+    const isValidOracle =
+      collateralPrice !== nextPrice?.price &&
+      this.$utils.oracle.isValidOracle(nextPrice);
     return {
       name: this.collateral.name,
       price: toPrecision({ n: this.collateral.price }),
@@ -62,7 +69,7 @@ export default class MarketItemInfos extends Vue {
       collateralLogo: collateralAsset?.logo,
       debtLogo: debtAsset?.logo,
       nextPrice,
-      isValidOracle: this.$utils.oracle.isValidOracle(nextPrice),
+      isValidOracle,
     };
   }
 
@@ -111,15 +118,13 @@ export default class MarketItemInfos extends Vue {
         valueClass: "f-greyscale-1",
       },
       {
-        title: this.meta.isValidOracle
-          ? this.$t("market.item.oracle-next")
-          : "",
+        title: this.$t("market.item.oracle-next"),
         value: this.meta.isValidOracle
           ? this.$utils.number.toPrecision({
               n: this.meta.nextPrice?.price ?? "0",
             })
-          : "",
-        valueUnit: this.meta.isValidOracle ? this.meta.debtSymbol : "",
+          : "-",
+        valueUnit: this.meta.debtSymbol,
         hint: this.meta.isValidOracle
           ? this.$t("form.info.oracle-price", {
               time: this.countDownText,
@@ -132,7 +137,7 @@ export default class MarketItemInfos extends Vue {
     return infoList;
   }
 
-  @Watch("meta.nextPrice")
+  @Watch("meta.nextPrice", { immediate: true })
   onDaiOracleUpdate(newVal: Utils.NextPrice) {
     if (newVal && this.meta.isValidOracle) {
       clearInterval(this.countId);

@@ -59,10 +59,12 @@ class VaultFields extends Vue {
     } = getVaultFields(this, this.id);
 
     const ratioText = debtAmount ? toPercent({ n: ratio }) : "N/A";
-    const nextPriceText = nextPrice?.price
+    const isValidPrice =
+      price !== nextPrice?.price && this.$utils.oracle.isValidOracle(nextPrice);
+    const nextPriceText = isValidPrice
       ? format({ n: nextPrice?.price ?? "" })
       : "-";
-    const nextPriceTime = nextPrice?.time ? time.format(nextPrice.time) : "-";
+    const nextPriceTime = isValidPrice ? time.format(nextPrice?.time) : "-";
 
     let items: VaultField[] = [];
 
@@ -91,6 +93,7 @@ class VaultFields extends Vue {
             value: ratioText,
             emphasize: true,
             color: this.$vuetify.theme.currentTheme[riskLevelMeta.color],
+            hint: this.$t("form.tooltip.collateralization-ratio"),
           },
           {
             title: this.$t("form.info.current-symbol-price", {
@@ -101,13 +104,16 @@ class VaultFields extends Vue {
           {
             title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
             value: `${format({ n: liquidationPrice })} ${debtSymbol}`,
+            hint: this.$t("form.tooltip.liquidation-price"),
           },
           {
             title: this.$t("me.vault-item.next-price"),
             value: `${nextPriceText} ${debtSymbol}`,
-            hint: this.$t("form.info.oracle-price", {
-              time: nextPriceTime,
-            }),
+            hint: isValidPrice
+              ? this.$t("form.info.oracle-price", {
+                  time: nextPriceTime,
+                })
+              : undefined,
           }
         );
       }
