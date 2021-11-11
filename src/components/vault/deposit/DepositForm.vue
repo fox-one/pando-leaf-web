@@ -66,7 +66,7 @@ export default class extends Vue {
       (v: string) => !!v || this.$t("common.amount-required"),
       (v: string) => +v > 0 || this.$t("common.amount-invalid"),
       (v: string) =>
-        +v < +(this.meta.balance ?? Infinity) ||
+        +v <= +(this.meta.balance ?? Infinity) ||
         this.$t("form.validate.insufficient-balance", {
           symbol: this.meta.collateralSymbol,
         }),
