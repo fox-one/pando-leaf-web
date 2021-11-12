@@ -7,6 +7,8 @@
       :key="market.id"
       :collateral="market"
     />
+
+    <div style="height: 70px"></div>
   </div>
 </template>
 

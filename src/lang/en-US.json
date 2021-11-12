@@ -104,6 +104,7 @@
   "market.item.total-asset-symbol": "Total {symbol}",
   "market.item.symbol-debt": "{symbol} Debt",
   "market.item.add-a-vault": "Add a vault",
+  "market.item.hint.total-asset": "Total amount of {symbol} collateralized in the market.",
   "market.item.oracle-next": "Next:",
   "market.item.oracle-content": "will be confirm after {time}",
   "form.title.open": "Open a {name} Vault",
