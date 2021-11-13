@@ -2,7 +2,7 @@
   <v-container>
     <f-loading fullscreen loading>
       <template #text>
-        {{ $t("common.login") }}
+        {{ $t("common.authing") }}
       </template>
     </f-loading>
   </v-container>
@@ -15,7 +15,7 @@ import mixins from "@/mixins";
 @Component
 class AuthPage extends Mixins(mixins.page) {
   get title() {
-    return this.$t("common.login") as string;
+    return this.$t("common.authing") as string;
   }
 
   get appbar() {

@@ -10,21 +10,21 @@
       <slot name="activator" :on="on">
         <f-button rounded depressed color="primary" :min-width="220" v-on="on">
           <v-icon size="16">$FIconAdd</v-icon>
-          <span>{{ $t("me.no-vault-button") }}</span>
+          <span>{{ $t("common.add-a-vault") }}</span>
         </f-button>
       </slot>
     </template>
 
     <f-bottom-sheet-title>
       <div class="title text-center">
-        {{ $t("vault.selector.title") }}
+        {{ $t("common.add-a-vault") }}
       </div>
     </f-bottom-sheet-title>
 
     <f-bottom-sheet-subtitle class="pb-0">
       <div class="px-1 text-center">
         <div class="f-caption px-2 mb-6 text--disabled">
-          {{ $t("vault.selector.tips") }}
+          {{ $t("tooltip.vault-selector") }}
         </div>
         <base-search v-model="filter" />
       </div>

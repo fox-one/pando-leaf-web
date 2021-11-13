@@ -6,7 +6,7 @@
       @click="confirm"
       class="px-8"
     >
-      {{ $t("auction.button.confirm") }}
+      {{ $t("auction.bid-now") }}
     </f-button>
   </base-connect-wallet-btn>
 </template>

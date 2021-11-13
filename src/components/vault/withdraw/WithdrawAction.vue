@@ -7,7 +7,7 @@
       @click="handleClick"
       class="px-8"
     >
-      {{ $t("form.withdraw.button.confirm") }}
+      {{ $t("common.withdraw") }}
     </f-button>
   </base-connect-wallet-btn>
 </template>

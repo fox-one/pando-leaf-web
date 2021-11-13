@@ -1,6 +1,6 @@
 <template>
   <div class="mt-3 ml-8 greyscale_3--text f-caption">
-    {{ $t("auction.label.stage.min.bid") }}
+    {{ $t("auction.min-bid") }}
 
     <span class="ml-1 greyscale_1--text font-weight-bold" @click="autoBid()">
       {{ `${meta.minBid} ${meta.symbol}` }}

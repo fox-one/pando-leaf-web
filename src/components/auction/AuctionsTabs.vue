@@ -21,10 +21,10 @@ export default class AuctionsTabs extends Vue {
   get tabs() {
     return [
       {
-        text: this.$t("auction.list.tab.at-auction"),
+        text: this.$t("common.ongoing"),
       },
       {
-        text: this.$t("auction.list.tab.done"),
+        text: this.$t("auction.done"),
       },
     ];
   }

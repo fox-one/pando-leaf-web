@@ -21,8 +21,8 @@ export default class AuctionRules extends Vue {
     const { isStage1 } = getters.getFlipFields(this.flip);
 
     const rules = isStage1
-      ? this.$t("auction.label.stage.title.debt")
-      : this.$t("auction.label.stage.title.collateral");
+      ? this.$t("auction.debt-to-pay-for")
+      : this.$t("auction.collateral-to-receive");
 
     return { rules };
   }

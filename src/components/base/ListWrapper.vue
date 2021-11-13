@@ -26,7 +26,7 @@
       >
         <slot v-if="filter" name="filter">{{ $t("not-found") }}</slot>
         <slot v-else name="empty">
-          {{ hint || $t("common.empty") }}
+          {{ hint || $t("common.no-data") }}
         </slot>
       </div>
     </div>

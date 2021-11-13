@@ -34,7 +34,7 @@
       <v-card-actions class="d-flex justify-center align-center pb-6">
         <div class="d-flex flex-column justify-center align-center">
           <f-button type="primary" block @click="dialog = false">
-            {{ $t("notice.cancel") }}
+            {{ $t("common.cancel") }}
           </f-button>
           <f-button
             type="subtitle"
@@ -43,7 +43,7 @@
             :disabled="!validated"
             @click="handleConfirm"
           >
-            {{ $t("notice.confirm") }}
+            {{ $t("common.continue") }}
             {{ counter ? `(${counter})` : "" }}
           </f-button>
         </div>

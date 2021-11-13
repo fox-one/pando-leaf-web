@@ -1,7 +1,7 @@
 <template>
   <v-layout column>
     <div class="text-1 greyscale_3--text mb-4">
-      {{ $t("auction.label.debt.highest") }}
+      {{ $t("auction.highest-call") }}
     </div>
 
     <v-layout align-center>

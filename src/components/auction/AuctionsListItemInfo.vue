@@ -38,15 +38,15 @@ export default class AuctionsListItem extends Vue {
   get infos() {
     return [
       {
-        label: this.$t("auction.item.collateral-symbol"),
+        label: this.$t("common.collateral"),
         value: `${this.flip.lot} ${this.meta.auctionSymbol}`,
       },
       {
-        label: this.$t("auction.item.debt-symbol"),
+        label: this.$t("common.debt"),
         value: `${this.flip.bid} ${this.meta.debtSymbol}`,
       },
       {
-        label: this.$t("form.info.liquidation-penalty"),
+        label: this.$t("common.liquidation-penalty"),
         value: this.meta.chop,
       },
     ];

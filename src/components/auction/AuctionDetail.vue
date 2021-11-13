@@ -19,7 +19,7 @@
       <div>{{ `≈ $${meta.collateralFiatValueText}` }}</div>
 
       <div class="mt-2">
-        {{ `${$t("form.info.current-price")}: ${meta.curPrice}` }}
+        {{ `${$t("common.current-price")}: ${meta.curPrice}` }}
       </div>
     </div>
   </v-layout>
@@ -50,8 +50,8 @@ export default class AuctionDetail extends Vue {
     } = getters.getFlipFields(this.flip);
 
     const title = isStage2
-      ? this.$t("auction.label.debt")
-      : this.$t("auction.label.collateral");
+      ? this.$t("common.total-debt")
+      : this.$t("common.collateral");
 
     const logo = isStage2 ? debtAsset?.logo : auctionAsset?.logo;
 

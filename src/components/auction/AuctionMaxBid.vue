@@ -32,8 +32,8 @@ export default class AuctionMaxBid extends Vue {
     } = getters.getFlipFields(this.flip);
 
     const title = isStage1
-      ? this.$t("auction.label.stage.max.bid")
-      : this.$t("auction.label.stage.max.reduction");
+      ? this.$t("auction.max-bid")
+      : this.$t("auction.max-reduction");
 
     const symbol = isStage1 ? debtSymbol : auctionSymbol;
     return {

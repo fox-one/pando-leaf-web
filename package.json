@@ -17,7 +17,8 @@
     "dev:prod": "APP_ENV=prod nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "i18n": "node ./scripts/i18n.js"
   },
   "dependencies": {
     "@foxone/fennec-base": "^0.3.8-1",

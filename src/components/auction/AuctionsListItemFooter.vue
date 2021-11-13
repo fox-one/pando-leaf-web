@@ -22,9 +22,7 @@ export default class AuctionsListItem extends Vue {
 
   get meta() {
     const isDone = this.flip.action === FlipAction.FlipDeal;
-    const status = isDone
-      ? this.$t("auction.item.status.done")
-      : this.$t("auction.item.status.in-auction");
+    const status = isDone ? this.$t("status.done") : this.$t("status.ongoing");
 
     return {
       isDone,

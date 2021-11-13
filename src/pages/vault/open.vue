@@ -92,7 +92,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
   }
 
   get title() {
-    const t = this.$t("form.title.open", {
+    const t = this.$t("title.open-a-new-vault", {
       name: this.collateral?.name,
     });
     return `${t}`;
@@ -129,19 +129,19 @@ export default class GenerateVault extends Mixins(mixins.page) {
 
     this.riskInfo = {
       continue: {
-        title: this.$t("risk.info.continue.title"),
+        title: this.$t("risk-info.continue.title"),
         highlights: [
-          this.$t("risk.info.continue.highlight-collateral-rate"),
-          this.$t("risk.info.continue.highlight-liquidation-ratio"),
+          this.$t("risk-info.continue.highlight-collateral-rate"),
+          this.$t("risk-info.continue.highlight-liquidation-ratio"),
         ],
-        btn_cancel: this.$t("risk.info.continue.btn-cancel"),
-        btn_continue: this.$t("risk.info.continue.btn-continue"),
+        btn_cancel: this.$t("risk-info.continue.btn-cancel"),
+        btn_continue: this.$t("risk-info.continue.btn-continue"),
       },
       confirm: {
-        title: this.$t("risk.info.confirm.title"),
-        content: this.$t("risk.info.confirm.content"),
-        btn_cancel: this.$t("risk.info.confirm.btn-cancel"),
-        btn_confirm: this.$t("risk.info.confirm.btn-confirm"),
+        title: this.$t("risk-info.confirm.title"),
+        content: this.$t("risk-info.confirm.content"),
+        btn_cancel: this.$t("risk-info.confirm.btn-cancel"),
+        btn_confirm: this.$t("common.confirm"),
       },
     };
   }

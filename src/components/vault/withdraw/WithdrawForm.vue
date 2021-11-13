@@ -3,12 +3,12 @@
     <withdraw-form-input
       :vault="vault"
       :amount.sync="bindAmount"
-      :placeholder="$t('form.hint.mint-amount')"
+      :placeholder="$t('form.mint-amount')"
     />
 
     <v-layout class="mt-2 text-1" justify-space-between>
       <div class="greyscale_3--text">
-        {{ $t("form.hint.withdraw-ratio") }}
+        {{ $t("form.withdraw-ratio") }}
       </div>
 
       <div class="greyscale_1--text font-weight-bold">

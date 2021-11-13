@@ -7,7 +7,7 @@
       @click="handleClick"
       class="px-8"
     >
-      {{ $t("form.deposit.button.confirm") }}
+      {{ $t("common.deposit") }}
     </f-button>
   </base-connect-wallet-btn>
 </template>

@@ -46,7 +46,7 @@ class VaultGeneratePage extends Mixins(mixins.page) {
   }
 
   get title() {
-    return this.$t("form.title.generate");
+    return this.$t("common.generate");
   }
 
   get meta() {

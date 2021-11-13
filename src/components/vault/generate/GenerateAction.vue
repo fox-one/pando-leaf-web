@@ -7,7 +7,7 @@
       @click="handleClick"
       class="px-8"
     >
-      {{ $t("form.generate.button.confirm") }}
+      {{ $t("common.generate") }}
     </f-button>
   </base-connect-wallet-btn>
 </template>

@@ -72,14 +72,14 @@ class VaultFields extends Vue {
     if (vault?.ink) {
       items.push(
         {
-          title: this.$t("me.vault-item.symbol-locked", {
+          title: this.$t("me.symbol-locked", {
             symbol: collateralSymbol,
           }),
           value: `${format({ n: collateralAmount })} ${collateralSymbol}`,
           emphasize: true,
         },
         {
-          title: this.$t("me.vault-item.outstanding-symbol-debt", {
+          title: this.$t("common.outstanding-symbol-debt", {
             symbol: debtSymbol,
           }),
           value: `${format({ n: debtAmount })} ${debtSymbol}`,
@@ -90,28 +90,28 @@ class VaultFields extends Vue {
       if (debtAmount > 0) {
         items.push(
           {
-            title: this.$t("me.vault-item.collateral-ratio"),
+            title: this.$t("common.collateral-ratio"),
             value: ratioText,
             emphasize: true,
             color: this.$vuetify.theme.currentTheme[riskLevelMeta.color],
-            hint: this.$t("form.tooltip.collateralization-ratio"),
+            hint: this.$t("tooltip.collateralization-ratio"),
           },
           {
-            title: this.$t("form.info.current-symbol-price", {
+            title: this.$t("common.current-symbol-price", {
               symbol: collateralSymbol,
             }),
             value: `${format({ n: price })} ${debtSymbol}`,
           },
           {
-            title: this.$t("form.info.liquidation-price"), // debt * ratio / collateral
+            title: this.$t("common.liquidation-price"), // debt * ratio / collateral
             value: `${format({ n: liquidationPrice })} ${debtSymbol}`,
-            hint: this.$t("form.tooltip.liquidation-price"),
+            hint: this.$t("tooltip.liquidation-price"),
           },
           {
-            title: this.$t("me.vault-item.next-price"),
+            title: this.$t("common.next-price"),
             value: `${nextPriceText} ${debtSymbol}`,
             hint: isValidPrice
-              ? this.$t("form.info.oracle-price", {
+              ? this.$t("tooltip.next-price", {
                   time: nextPriceTime,
                 })
               : undefined,

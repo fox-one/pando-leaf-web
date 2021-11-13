@@ -50,10 +50,10 @@ export default class extends Vue {
       (v: string) => {
         if (this.meta.risk.value === RISK.HIGH) {
           if (this.meta.ratio < this.meta.liquidationRatio) {
-            return this.$t("form.validate.below-liquidation-rate");
+            return this.$t("validate.below-liquidation-rate");
           }
 
-          return this.$t("form.validate.high-risk-withdraw", {
+          return this.$t("validate.high-risk-withdraw", {
             symbol: this.meta.collateralSymbol,
           });
         }
@@ -61,7 +61,7 @@ export default class extends Vue {
       },
       (v: string) =>
         this.meta.risk.value !== RISK.MEDIUM ||
-        this.$t("form.validate.medium-risk-withdraw", {
+        this.$t("validate.medium-risk-withdraw", {
           symbol: this.meta.collateralSymbol,
         }),
     ];
@@ -97,7 +97,7 @@ export default class extends Vue {
       collateralSymbol,
       avaliableWithdraw,
       avaliableWithdrawText,
-      placeholder: this.$t("form.hint.payback-amount"),
+      placeholder: this.$t("form.payback-amount"),
       ratio,
       risk,
       liquidationRatio,

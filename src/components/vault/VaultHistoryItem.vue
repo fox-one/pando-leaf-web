@@ -31,7 +31,7 @@ class VaultHistoryItem extends Vue {
     const fields = getVaultFields(this, event.vault_id);
     const { vault, collateralSymbol, debtSymbol } = fields;
 
-    const title = this.$t(`vault.event.action.${event.action?.toLowerCase()}`);
+    const title = this.$t(`event.action.${event.action?.toLowerCase()}`);
     const time = toRelative(event.created_at);
 
     const collateralText = `${dink} ${collateralSymbol}`;
@@ -40,7 +40,7 @@ class VaultHistoryItem extends Vue {
 
     switch (event.action) {
       case VatAction.VatOpen:
-        text = this.$t("vault.event.content.vatopen", {
+        text = this.$t("event.content.vatopen", {
           id: vault?.identity_id,
           deposit: collateralText,
           generate: debtText,
@@ -48,37 +48,37 @@ class VaultHistoryItem extends Vue {
         break;
 
       case VatAction.VatDeposit:
-        text = this.$t("vault.event.content.vatdeposit", {
+        text = this.$t("event.content.vatdeposit", {
           amount: collateralText,
         });
         break;
 
       case VatAction.VatWithdraw:
-        text = this.$t("vault.event.content.vatwithdraw", {
+        text = this.$t("event.content.vatwithdraw", {
           amount: collateralText,
         });
         break;
 
       case VatAction.VatPayback:
-        text = this.$t("vault.event.content.vatpayback", {
+        text = this.$t("event.content.vatpayback", {
           amount: debtText,
         });
         break;
       case VatAction.VatGenerate:
-        text = this.$t("vault.event.content.vatgenerate", {
+        text = this.$t("event.content.vatgenerate", {
           amount: debtText,
         });
         break;
 
       case VatAction.FlipKick:
-        text = this.$t("vault.event.content.flipkick", {
+        text = this.$t("event.content.flipkick", {
           collateral: collateralText,
           debt: debtText,
         });
         break;
 
       case VatAction.FlipBid:
-        text = this.$t("vault.event.content.flipbid", {
+        text = this.$t("event.content.flipbid", {
           amount: collateralText,
         });
         break;

@@ -5,8 +5,8 @@
       :asset="meta.debtAsset"
       :balance="meta.maxAvailableText"
       :rules="rules"
-      :leftLabel="$t('form.info.max-available-to-generate')"
-      :placeholder="$t('form.hint.mint-amount')"
+      :leftLabel="$t('form.max-available-to-generate')"
+      :placeholder="$t('form.mint-amount')"
     />
 
     <base-risk-slider class="mt-2" :progress="meta.progress" />
@@ -106,17 +106,17 @@ export default class GenerateForm extends Vue {
       (v: string) => +v > 0 || this.$t("common.amount-invalid"),
       (v: string) =>
         +v < this.meta.maxAvailable ||
-        this.$t("form.validate.max-debt", {
+        this.$t("validate.max-debt", {
           amount: this.meta.maxAvailableText,
           symbol: this.meta.debtSymbol,
         }),
       (v: string) => {
         if (this.meta.risk.value === RISK.HIGH) {
           if (this.meta.newRatio < this.meta.liquidationRatio) {
-            return this.$t("form.validate.below-liquidation-rate");
+            return this.$t("validate.below-liquidation-rate");
           }
 
-          return this.$t("form.validate.high-risk", {
+          return this.$t("validate.high-risk", {
             symbol: this.meta.debtSymbol,
           });
         }
@@ -124,7 +124,7 @@ export default class GenerateForm extends Vue {
       },
       (v: string) =>
         this.meta.risk.value !== RISK.MEDIUM ||
-        this.$t("form.validate.medium-risk", {
+        this.$t("validate.medium-risk", {
           symbol: this.meta.debtSymbol,
         }),
     ];

@@ -115,7 +115,7 @@ export default class AuctionPage extends Mixins(mixins.page) {
   }
 
   get title() {
-    return `${this.$t("auction.title.details")}`;
+    return `${this.$t("common.auction-details")}`;
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="ma-0 pa-4 pb-8">
     <base-alert class="mb-4" close type="error" :show.sync="showTip">
-      {{ $t("form.hint.debt.intro") }}
+      {{ $t("tooltip.payback-intro") }}
     </base-alert>
 
     <payback-form-input

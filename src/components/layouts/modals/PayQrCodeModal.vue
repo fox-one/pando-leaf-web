@@ -1,12 +1,20 @@
 <template>
   <v-dialog v-model="dialog" max-width="600">
     <f-panel class="payment">
-      <div class="my-3">{{ $t("pay.modal.title") }}</div>
+      <div class="my-3">{{ $t("pay-modal.title") }}</div>
 
       <f-qr-code v-if="meta.text" :text="meta.text" :size="180" class="my-5" />
 
-      <f-button color="primary" @click="handlePaid">
-        {{ $t("pay.modal.button") }}
+      <f-button color="primary" class="action-button" @click="handlePaid">
+        {{ $t("pay-modal.button") }}
+      </f-button>
+
+      <f-button
+        color="primary"
+        class="mt-2 action-button"
+        @click="handleCancel"
+      >
+        {{ $t("common.cancel") }}
       </f-button>
     </f-panel>
   </v-dialog>
@@ -43,8 +51,8 @@ class PayQrCodeModal extends Vue {
   async handlePaid() {
     this.dialog = false;
     if (!this.payment) return;
-    // this.$utils.payment.showPaying(this);
-    // this.$utils.payments.pollingTransferStatus(this, this.payment, this.cbs);
+    this.$utils.payment.showPaying(this);
+    this.$utils.payment.pollingTransferStatus(this, this.payment, this.cbs);
   }
 
   @Watch("dialog")
@@ -53,6 +61,11 @@ class PayQrCodeModal extends Vue {
       this.payment = null;
       this.cbs = {};
     }
+  }
+
+  handleCancel() {
+    this.cbs?.error?.();
+    this.dialog = false;
   }
 }
 export default PayQrCodeModal;
@@ -63,5 +76,8 @@ export default PayQrCodeModal;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.action-button {
+  min-width: 120px !important;
 }
 </style>

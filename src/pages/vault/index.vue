@@ -77,9 +77,9 @@ class VaultPage extends Mixins(mixins.page) {
 
   get myVaultHint() {
     return [
-      this.$t("me.my-vault.hint1"),
-      this.$t("me.my-vault.hint2"),
-      this.$t("me.my-vault.hint3"),
+      this.$t("tooltip.my-vault-hint-1"),
+      this.$t("tooltip.my-vault-hint-2"),
+      this.$t("tooltip.my-vault-hint-3"),
     ];
   }
 

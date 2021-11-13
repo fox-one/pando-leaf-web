@@ -46,7 +46,7 @@ class VaultDepositPage extends Mixins(mixins.page) {
   }
 
   get title() {
-    return this.$t("form.title.deposit");
+    return this.$t("common.deposit");
   }
 
   get meta() {

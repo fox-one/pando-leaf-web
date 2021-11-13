@@ -26,13 +26,13 @@ export default class extends Vue {
     }
     const risk = getRiskLevelMetaByPercent(100 / riskProgress);
 
-    const riskLevelText = this.$t(`form.hint.risk-level-${risk.value}`);
+    const riskLevelText = this.$t(`risk-level-${risk.value}`);
     let color = `color: var(--v-${risk.color}-base)`;
     return {
       color,
       riskText: toPercent({ n: riskProgress / 100 }),
-      tip: this.$t("form.hint.generate-ration"),
-      highlight: this.$t("form.hint.risk-level", {
+      tip: this.$t("form.generate-ration"),
+      highlight: this.$t("form.risk-level", {
         level: riskLevelText,
       }),
     };

@@ -1,6 +1,6 @@
 <template>
   <div class="empty f-body-2">
-    {{ $t("auction.list.tab.empty") }}
+    {{ $t("auction.empty") }}
   </div>
 </template>
 

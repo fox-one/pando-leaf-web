@@ -43,7 +43,7 @@ class VaultPaybackPage extends Mixins(mixins.page) {
   }
 
   get title() {
-    return this.$t("form.title.payback");
+    return this.$t("common.payback");
   }
 
   get meta() {

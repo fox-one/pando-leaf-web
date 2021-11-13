@@ -7,7 +7,7 @@
       :disabled="meta.confirmDisabled"
       @click="confirm"
     >
-      {{ $t("auction.button.confirm") }}
+      {{ $t("auction.bid-now") }}
     </f-button>
   </base-connect-wallet-btn>
 </template>

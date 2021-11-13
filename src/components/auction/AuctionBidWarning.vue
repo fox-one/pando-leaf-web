@@ -21,7 +21,7 @@ export default class AuctionBidWarning extends Vue {
       this.flip
     );
 
-    const warning = this.$t("auction.label.stage.reduction.agree", {
+    const warning = this.$t("auction.reduction-agreement", {
       price: `${this.flip.tab} ${debtSymbol}`,
       amount: `${this.bindAmount ? this.bindAmount : "-"}`,
       collateral: auctionSymbol,

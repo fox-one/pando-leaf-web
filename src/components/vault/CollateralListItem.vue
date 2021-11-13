@@ -16,14 +16,14 @@
 
       <v-layout justify-space-between class="f-caption mt-6 mb-4">
         <div class="greyscale_3--text">
-          {{ $t("vault.selector.min-collateral-ratio") }}
+          {{ $t("common.min-collateral-ratio") }}
         </div>
         <div>{{ meta.mat }}</div>
       </v-layout>
 
       <v-layout justify-space-between class="f-caption">
         <div class="greyscale_3--text">
-          {{ $t("vault.selector.stability-fee") }}
+          {{ $t("common.stability-fee") }}
         </div>
         <div>{{ meta.duty }}</div>
       </v-layout>

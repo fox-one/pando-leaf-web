@@ -21,10 +21,10 @@ class DetailTabs extends Vue {
   get tabs() {
     return [
       {
-        text: this.$t("vault.tab.details"),
+        text: this.$t("tab.details"),
       },
       {
-        text: this.$t("vault.tab.history"),
+        text: this.$t("common.history"),
       },
     ];
   }

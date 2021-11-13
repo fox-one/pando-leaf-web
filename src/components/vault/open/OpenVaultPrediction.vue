@@ -60,38 +60,38 @@ export default class OpenVaultPrediction extends Vue {
   get infos() {
     return [
       {
-        label: this.$t("form.info.liquidation-price"), // mint * mat / deposit
+        label: this.$t("common.liquidation-price"), // mint * mat / deposit
         value: this.meta.liquidationPriceText,
         valueUnit: `${this.meta.debtSymbol}`,
-        hint: this.$t("form.tooltip.liquidation-price"),
+        hint: this.$t("tooltip.liquidation-price"),
       },
       {
-        label: this.$t("form.info.current-symbol-price", {
+        label: this.$t("common.current-symbol-price", {
           symbol: `${this.meta.collateralSymbol}/${this.meta.debtSymbol}`,
         }),
         value: this.meta.currentPrice,
         valueUnit: `${this.meta.debtSymbol}`,
       },
       {
-        label: this.$t("form.info.collateralization-ratio"), // deposit * price / mint
+        label: this.$t("common.collateralization-ratio"), // deposit * price / mint
         value: this.meta.collateralizationRatioText,
         valueColor: this.meta.risk.color,
-        hint: this.$t("form.tooltip.collateralization-ratio"),
+        hint: this.$t("tooltip.collateralization-ratio"),
       },
       {
-        label: this.$t("form.info.minimum-ratio"),
+        label: this.$t("common.minimum-ratio"),
         value: this.meta.minimumRatio,
-        hint: this.$t("form.tooltip.minimum-ratio"),
+        hint: this.$t("tooltip.minimum-ratio"),
       },
       {
-        label: this.$t("form.info.market-debt-ceiling"), // line- debt
+        label: this.$t("form.market-debt-ceiling"), // line- debt
         value: this.meta.maxToGenerateText,
         valueUnit: this.meta.debtSymbol,
       },
       {
-        label: this.$t("form.info.stability-fee"),
+        label: this.$t("common.stability-fee"),
         value: this.meta.stabilityFeeText,
-        hint: this.$t("form.tooltip.stability-fee"),
+        hint: this.$t("tooltip.stability-fee"),
       },
     ];
   }

@@ -58,7 +58,7 @@ class VaultDetailPage extends Mixins(mixins.page) {
   index = 0;
 
   get title() {
-    return this.$t("vault.detail.title") as string;
+    return this.$t("common.vault-detail") as string;
   }
 
   get appbar() {

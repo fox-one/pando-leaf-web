@@ -12,14 +12,14 @@
     >
       <template #tools>
         <form-input-tools
-          :left-label="$t('form.hint.set-max')"
+          :left-label="$t('form.set-max')"
           :balance="meta.debtAmountText"
           @fill="handleFill"
         >
           <template #right>
             <span class="greyscale_1--text f-caption">
               <span class="greysclae_3--text">
-                {{ $t("form.info.wallet-balance") }}
+                {{ $t("common.wallet-balance") }}
               </span>
               {{ meta.balance }}
             </span>
@@ -76,7 +76,7 @@ export default class extends Vue {
         dp: 4,
         mode: BigNumber.ROUND_UP,
       }),
-      placeholder: this.$t("form.hint.payback-amount"),
+      placeholder: this.$t("form.payback-amount"),
       leftDebt,
       dustAmount,
       dust: collateral?.dust,
@@ -89,12 +89,12 @@ export default class extends Vue {
       (v: string) => +v > 0 || this.$t("common.amount-invalid"),
       (v: string) =>
         +v <= +(this.meta.balance ?? Infinity) ||
-        this.$t("form.validate.insufficient-balance", {
+        this.$t("validate.insufficient-balance", {
           symbol: this.meta.debtSymbol,
         }),
       (v: string) =>
         (this.meta.leftDebt < this.meta.dustAmount && this.meta.leftDebt > 0) ||
-        this.$t("form.validate.remaining-dust-debt", {
+        this.$t("validate.remaining-dust-debt", {
           amount: this.meta.dust,
           symbol: this.meta.debtSymbol,
         }),

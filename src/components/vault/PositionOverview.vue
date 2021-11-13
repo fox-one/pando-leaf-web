@@ -21,7 +21,7 @@
     </v-expand-transition>
 
     <div class="body-2 mb-2 mt-6 mt-md-12">
-      {{ $t("me.total-debts") }}
+      {{ $t("common.total-debt") }}
     </div>
     <div class="total-text">
       <span class="symbol bright_green--text">$</span>

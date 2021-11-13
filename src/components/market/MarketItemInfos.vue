@@ -76,40 +76,40 @@ export default class MarketItemInfos extends Vue {
   get infos() {
     const infoList = [
       {
-        title: this.$t("market.item.total-asset-symbol", {
+        title: this.$t("market.total-asset-symbol", {
           symbol: this.meta.collateralSymbol,
         }),
         value: this.meta.collateralAmount,
         valueUnit: this.meta.collateralSymbol,
         labelClass: "font-weight-bold f-greyscale-1",
         valueClass: "font-weight-bold f-greyscale-1",
-        hint: this.$t("market.item.hint.total-asset", {
+        hint: this.$t("tooltip.total-asset-in-market", {
           symbol: this.meta.collateralSymbol,
         }),
       },
       {
-        title: this.$t("market.item.max-available"),
+        title: this.$t("common.max-available"),
         value: this.meta.available,
         valueUnit: this.meta.debtSymbol,
         labelClass: "font-weight-bold f-greyscale-1",
         valueClass: "font-weight-bold f-greyscale-1",
       },
       {
-        title: this.$t("market.item.collateral-rate"),
+        title: this.$t("common.collateral-ratio"),
         value: this.meta.rate,
         labelClass: "font-weight-bold market-green",
         valueClass: "font-weight-bold market-green",
-        hint: this.$t("form.tooltip.collateralization-ratio"),
+        hint: this.$t("tooltip.collateralization-ratio"),
       },
       {
-        title: this.$t("market.item.price"),
+        title: this.$t("common.price"),
         value: this.meta.price,
         valueUnit: this.meta.debtSymbol,
         labelClass: "text--disabled f-greyscale-1 font-weight-regular",
         valueClass: "f-greyscale-1",
       },
       {
-        title: this.$t("market.item.symbol-debt", {
+        title: this.$t("common.symbol-debt", {
           symbol: this.meta.debtSymbol,
         }),
         value: this.meta.debtAmount,
@@ -118,7 +118,7 @@ export default class MarketItemInfos extends Vue {
         valueClass: "f-greyscale-1",
       },
       {
-        title: this.$t("market.item.oracle-next"),
+        title: this.$t("common.next-price"),
         value: this.meta.isValidOracle
           ? this.$utils.number.toPrecision({
               n: this.meta.nextPrice?.price ?? "0",
@@ -126,7 +126,7 @@ export default class MarketItemInfos extends Vue {
           : "-",
         valueUnit: this.meta.debtSymbol,
         hint: this.meta.isValidOracle
-          ? this.$t("form.info.oracle-price", {
+          ? this.$t("tooltip.next-price", {
               time: this.countDownText,
             })
           : false,

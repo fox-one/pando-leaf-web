@@ -4,7 +4,7 @@
       :amount.sync="bindAmount"
       :asset="meta.collateralAsset"
       :rules="rules"
-      :placeholder="$t('form.hint.deposit-amount')"
+      :placeholder="$t('form.deposit-amount')"
     />
 
     <deposit-action
@@ -67,7 +67,7 @@ export default class extends Vue {
       (v: string) => +v > 0 || this.$t("common.amount-invalid"),
       (v: string) =>
         +v <= +(this.meta.balance ?? Infinity) ||
-        this.$t("form.validate.insufficient-balance", {
+        this.$t("validate.insufficient-balance", {
           symbol: this.meta.collateralSymbol,
         }),
     ];

@@ -94,30 +94,30 @@ export default class extends Vue {
     const { isValidOracle } = this.$utils.oracle;
     return [
       {
-        label: this.$t("form.info.collateralization-ratio"), // deposit * price / mint
+        label: this.$t("common.collateralization-ratio"), // deposit * price / mint
         value: this.meta.ratioText,
         valueColor: this.meta.risk.color,
-        hint: this.$t("form.tooltip.collateralization-ratio"),
+        hint: this.$t("tooltip.collateralization-ratio"),
         changedValue: this.meta.changedRatio,
         changedValueColor: this.meta.changedRisk.color,
         showChange: this.meta.ratio !== this.meta.changedRatio,
       },
       {
-        label: this.$t("form.info.minimum-ratio"),
+        label: this.$t("common.minimum-ratio"),
         value: this.meta.minimumRatio,
-        hint: this.$t("form.tooltip.minimum-ratio"),
+        hint: this.$t("tooltip.minimum-ratio"),
       },
       {
-        label: this.$t("form.info.liquidation-price"), // mint * mat / deposit
+        label: this.$t("common.liquidation-price"), // mint * mat / deposit
         value: this.meta.liquidationPriceText,
         valueUnit: `${this.meta.debtSymbol}`,
-        hint: this.$t("form.tooltip.liquidation-price"),
+        hint: this.$t("tooltip.liquidation-price"),
         changedValue: this.meta.changedPriceText,
         showChange:
           this.meta.liquidationPriceText !== this.meta.changedPriceText,
       },
       {
-        label: this.$t("form.info.current-symbol-price", {
+        label: this.$t("common.current-symbol-price", {
           symbol: `${this.meta.collateralSymbol}/${this.meta.debtSymbol}`,
         }),
         value: this.meta.currentPrice,
@@ -126,7 +126,7 @@ export default class extends Vue {
         changedValue: this.meta.nextPrice?.price,
       },
       {
-        label: this.$t("form.info.symbol-debt", {
+        label: this.$t("common.outstanding-symbol-debt", {
           symbol: this.meta.debtSymbol,
         }), // line- debt
         value: this.meta.debtAmount,
@@ -134,9 +134,9 @@ export default class extends Vue {
         changedValue: this.meta.changedAmount,
       },
       {
-        label: this.$t("form.info.stability-fee"),
+        label: this.$t("common.stability-fee"),
         value: this.meta.stabilityFeeText,
-        hint: this.$t("form.tooltip.stability-fee"),
+        hint: this.$t("tooltip.stability-fee"),
       },
     ];
   }

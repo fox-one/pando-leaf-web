@@ -38,20 +38,20 @@ class VaultDetailInfos extends Vue {
 
     return [
       {
-        title: this.$t("form.info.available-to-withdraw"),
+        title: this.$t("common.available-to-withdraw"),
         value: `${format({ n: avaliableWithdraw })} ${collateralSymbol}`,
       },
       {
-        title: this.$t("form.info.available-to-generate"),
+        title: this.$t("common.available-to-generate"),
         value: `${format({ n: avaliableDebt })} ${debtSymbol}`,
       },
       {
-        title: this.$t("form.info.stability-fee"),
+        title: this.$t("common.stability-fee"),
         value: `${toPercent({ n: stabilityFee })}`,
-        hint: this.$t("form.tooltip.stability-fee"),
+        hint: this.$t("tooltip.stability-fee"),
       },
       {
-        title: this.$t("form.info.liquidation-penalty"),
+        title: this.$t("common.liquidation-penalty"),
         value: `${toPercent({ n: liquidationPenalty })}`,
       },
     ];

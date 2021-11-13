@@ -1,25 +1,25 @@
 <template>
   <div class="ma-0 pa-4 pb-8">
     <div class="text-3 mb-4 greyscale_1--text">
-      {{ $t("form.title.deposit") }}
+      {{ $t("common.deposit") }}
     </div>
 
     <base-form-input
       :amount.sync="bindDepositAmount"
       :asset="meta.collateralAsset"
-      :placeholder="$t('form.hint.deposit-amount')"
+      :placeholder="$t('form.deposit-amount')"
     />
 
     <div class="text-3 mt-8 mb-4 greyscale_1--text">
-      {{ $t("form.title.generate") }}
+      {{ $t("common.generate") }}
     </div>
 
     <base-form-input
       :amount.sync="bindDebtAmount"
       :asset="meta.debtAsset"
       :balance="meta.maxAvailableText"
-      :leftLabel="$t('form.info.max-available-to-generate')"
-      :placeholder="$t('form.hint.mint-amount')"
+      :leftLabel="$t('form.max-available-to-generate')"
+      :placeholder="$t('form.mint-amount')"
     />
 
     <base-risk-slider class="mt-6" :progress="meta.progress" />
@@ -117,7 +117,7 @@ export default class OpenForm extends Vue {
         return {
           disabled: true,
           type: "error",
-          tip: this.$t("form.validate.max-debt", {
+          tip: this.$t("validate.max-debt", {
             amount: this.$utils.number.toPrecision({ n: max }),
             symbol: this.meta.debtSymbol,
           }),
@@ -128,7 +128,7 @@ export default class OpenForm extends Vue {
         return {
           disabled: true,
           type: "error",
-          tip: this.$t("form.validate.minimum-debt", {
+          tip: this.$t("validate.minimum-debt", {
             amount: this.collateral?.dust,
             symbol: this.meta.debtSymbol,
           }),
@@ -154,14 +154,14 @@ export default class OpenForm extends Vue {
             return {
               disabled: true,
               type: "error",
-              tip: this.$t("form.validate.below-liquidation-rate"),
+              tip: this.$t("validate.below-liquidation-rate"),
             };
           }
           // 抵押率高于清算线，处于高风险区间
           return {
             disabled: false,
             type: "error",
-            tip: this.$t("form.validate.high-risk", {
+            tip: this.$t("validate.high-risk", {
               symbol: this.meta.debtSymbol,
             }),
           };
@@ -170,7 +170,7 @@ export default class OpenForm extends Vue {
           return {
             disabled: false,
             type: "warning",
-            tip: this.$t("form.validate.medium-risk", {
+            tip: this.$t("validate.medium-risk", {
               symbol: this.meta.debtSymbol,
             }),
           };

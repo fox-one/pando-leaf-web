@@ -1,6 +1,6 @@
 <template>
   <div class="f-greyscale-3 f-caption text-center pa-5">
-    {{ $t("empty") }}
+    {{ $t("common.no-data") }}
   </div>
 </template>
 

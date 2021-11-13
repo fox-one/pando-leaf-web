@@ -1,6 +1,6 @@
 <template>
   <v-layout class="f-caption text--disabled" column justify-center>
-    {{ $t("me.vault-item.empty") }}
+    {{ $t("me.vault-empty") }}
   </v-layout>
 </template>
 
