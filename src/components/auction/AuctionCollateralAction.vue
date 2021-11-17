@@ -35,7 +35,7 @@ export default class AuctionCollateralAction extends Vue {
     const { debtAsset, isStage2, maxBid } = getters.getFlipFields(this.flip);
 
     let confirmDisabled = true;
-    if (this.meta.isStage2) {
+    if (isStage2) {
       const meetCollateral = +this.amount <= +maxBid;
       confirmDisabled = !this.amount || !meetCollateral;
     }

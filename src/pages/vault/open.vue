@@ -21,20 +21,6 @@
         :deposit-amount="depositAmount"
         :debt-amount="debtAmount"
       />
-      <!-- 
-      <risk-info
-        v-model="showCModel"
-        :custom-text="riskInfo"
-        :custom-color="{
-          continue: {
-            btn_cancel: 'f-bg-greyscale-1',
-          },
-        }"
-        :impact="`${(meta.collateralizationRatio * 100).toFixed(1)}%`"
-        :countdown="countdown"
-        @confirm="confirm"
-        ref="riskInfo"
-      /> -->
 
       <risk-warnings />
 
@@ -126,33 +112,11 @@ export default class GenerateVault extends Mixins(mixins.page) {
       this.$router.replace("/");
     }
     this.collateral = this.getCollateral(this.queryId);
-
-    this.riskInfo = {
-      continue: {
-        title: this.$t("risk-info.continue.title"),
-        highlights: [
-          this.$t("risk-info.continue.highlight-collateral-rate"),
-          this.$t("risk-info.continue.highlight-liquidation-ratio"),
-        ],
-        btn_cancel: this.$t("risk-info.continue.btn-cancel"),
-        btn_continue: this.$t("risk-info.continue.btn-continue"),
-      },
-      confirm: {
-        title: this.$t("risk-info.confirm.title"),
-        content: this.$t("risk-info.confirm.content"),
-        btn_cancel: this.$t("risk-info.confirm.btn-cancel"),
-        btn_confirm: this.$t("common.confirm"),
-      },
-    };
   }
 
   destroyed() {
     clearInterval(0);
     clearInterval(this.intervalid);
-  }
-
-  toast() {
-    this.showSelectModal = !this.showSelectModal;
   }
 }
 </script>

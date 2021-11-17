@@ -21,6 +21,7 @@
         <vault-actions
           :id="vaultId"
           :has-collateral="meta.hasCollateral"
+          :has-debt="meta.hasDebt"
           class="actions"
         />
       </div>
@@ -73,10 +74,12 @@ class VaultDetailPage extends Mixins(mixins.page) {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { vault } = getters.getVaultFields(this.vaultId);
-    const hasCollateral = Number(vault?.ink) > 0;
+    const { vault, debtAmount } = getters.getVaultFields(this.vaultId);
 
-    return { vault, hasCollateral };
+    const hasCollateral = Number(vault?.ink) > 0;
+    const hasDebt = debtAmount > 0;
+
+    return { vault, hasCollateral, hasDebt };
   }
 }
 export default VaultDetailPage;

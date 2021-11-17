@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-form ref="form" autocomplete="off">
     <f-asset-amount-input
       class="no-left-padding"
       v-model="bindAmount"
@@ -18,11 +18,11 @@
         />
       </template>
     </f-asset-amount-input>
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
+import { Component, Vue, Prop, PropSync, Ref } from "vue-property-decorator";
 import FormInputTools from "@/components/base/FormInputTools.vue";
 import BigNumber from "bignumber.js";
 import { RISK } from "~/enums";
@@ -40,6 +40,8 @@ export default class extends Vue {
   @Prop({ default: null }) asset!: API.Asset;
 
   @Prop({ default: null }) messages;
+
+  @Ref("form") form;
 
   get rules() {
     return [
@@ -102,6 +104,10 @@ export default class extends Vue {
       risk,
       liquidationRatio,
     };
+  }
+
+  getForm() {
+    return this.form;
   }
 
   handleConnectWallet() {

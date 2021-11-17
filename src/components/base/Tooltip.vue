@@ -17,7 +17,7 @@
   <f-bottom-sheet
     v-else
     v-model="sheet"
-    :persistent="true"
+    :hide-close-icon="true"
     overlay-opacity="0.9"
     nudge-top="-10"
     max-width="600"
@@ -32,7 +32,7 @@
 
     <div class="pb-8">
       <div
-        class="ma-4 text-1 greyscale_3--text"
+        class="ma-4 tooltip-content greyscale_3--text"
         v-for="content in contents"
         :key="content"
       >
@@ -81,5 +81,13 @@ export default class Tooltip extends Vue {
 <style lang="scss" scoped>
 .tooltip {
   display: inline-block;
+}
+.tooltip-content {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.375rem;
+  text-align: center;
+  letter-spacing: 0.011em;
 }
 </style>

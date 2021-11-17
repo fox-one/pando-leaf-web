@@ -5,6 +5,7 @@
     </base-alert>
 
     <payback-form-input
+      ref="form-input"
       :amount.sync="bindAmount"
       :shot-tip.sync="showTip"
       :vault="vault"
@@ -20,7 +21,7 @@
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
+import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import PaybackFormInput from "./PaybackFormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import PaybackAction from "./PaybackAction.vue";
@@ -38,6 +39,8 @@ export default class PaybackForm extends Vue {
   @Prop() vault!: API.Vault;
 
   @PropSync("amount") bindAmount!: string;
+
+  @Ref("form-input") formInput!: PaybackFormInput;
 
   showTip = false;
 
@@ -75,7 +78,7 @@ export default class PaybackForm extends Vue {
   }
 
   handleSuccess() {
-    this.bindAmount = "";
+    this.formInput.getForm().reset();
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });

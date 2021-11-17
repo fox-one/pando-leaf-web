@@ -15,7 +15,11 @@
 
     <f-divider class="my-6" />
 
-    <vault-actions :id="id" :has-collateral="meta.hasCollateral" />
+    <vault-actions
+      :id="id"
+      :has-collateral="meta.hasCollateral"
+      :has-debt="meta.hasDebt"
+    />
   </v-sheet>
 </template>
 
@@ -44,6 +48,7 @@ class VaultListItem extends Vue {
       collateral,
       collateralAsset,
       debtAsset,
+      debtAmount,
       riskLevelMeta,
     } = getVaultFields(this, this.id);
 
@@ -52,6 +57,7 @@ class VaultListItem extends Vue {
       collateralAssetLogo: collateralAsset?.logo ?? "",
       debtAssetLogo: debtAsset?.logo ?? "",
       hasCollateral: Number(vault?.ink) > 0,
+      hasDebt: debtAmount > 0,
       bgColor: riskLevelMeta.bg_color,
     };
   }

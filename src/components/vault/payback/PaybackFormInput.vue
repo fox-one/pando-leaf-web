@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-form ref="form" autocomplete="off">
     <f-asset-amount-input
       class="no-left-padding"
       v-model="bindAmount"
@@ -27,11 +27,11 @@
         </form-input-tools>
       </template>
     </f-asset-amount-input>
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
+import { Component, Vue, Prop, PropSync, Ref } from "vue-property-decorator";
 import FormInputTools from "@/components/base/FormInputTools.vue";
 import BigNumber from "bignumber.js";
 
@@ -48,6 +48,8 @@ export default class extends Vue {
   @Prop() vault!: API.Vault;
 
   @Prop({ default: null }) messages;
+
+  @Ref("form") form;
 
   get meta() {
     const { format } = this.$utils.number;
@@ -99,6 +101,10 @@ export default class extends Vue {
           symbol: this.meta.debtSymbol,
         }),
     ];
+  }
+
+  getForm() {
+    return this.form;
   }
 
   handleConnectWallet() {

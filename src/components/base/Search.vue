@@ -5,6 +5,7 @@
     :label="$t('common.search')"
     @focus="handleFocus(true)"
     @blur="handleFocus(false)"
+    @input="(e) => $emit('change', e)"
     @change="(e) => $emit('change', e)"
   >
     <template #prependInner>

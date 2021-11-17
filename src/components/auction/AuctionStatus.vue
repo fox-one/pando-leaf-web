@@ -73,7 +73,7 @@ export default class AuctionStatus extends Vue {
   position: fixed;
   top: 44px;
   left: 0;
-  z-index: 99;
+  z-index: 3;
   width: 100vw;
   line-height: 17px;
   &-debt {

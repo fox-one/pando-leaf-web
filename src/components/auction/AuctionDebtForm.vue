@@ -12,7 +12,7 @@
       </template>
     </f-input>
 
-    <div class="mt-3 ml-8 greyscale_3--text f-caption">
+    <div class="ml-8 greyscale_3--text f-caption">
       {{ meta.inputFiatValue }}
     </div>
 

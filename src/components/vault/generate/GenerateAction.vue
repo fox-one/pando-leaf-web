@@ -44,7 +44,8 @@ export default class extends Vue {
     const increasedDebt = Number(this.amount);
 
     const ratio =
-      debtAmount && (collateralAmount * price) / (debtAmount + increasedDebt);
+      debtAmount + increasedDebt &&
+      (collateralAmount * price) / (debtAmount + increasedDebt);
     const timer = Math.round(+(collateral?.mat ?? 0) * 100 - ratio * 100 + 60);
     const isHighRisk = (ratio - +(collateral?.mat ?? 0)) * 100 < 61;
     return {

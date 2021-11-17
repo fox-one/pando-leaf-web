@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 ml-8 greyscale-3--text f-caption">
+  <div class="mt-3 ml-8 greyscale_3--text f-caption">
     {{ meta.title }}
 
     <span class="ml-1 greyscale_1--text font-weight-bold" @click="autoBid()">

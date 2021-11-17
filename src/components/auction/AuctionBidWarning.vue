@@ -1,6 +1,6 @@
 <template>
   <div v-if="meta.isStage2" class="mt-3 ml-8 f-caption warning--text">
-    {{ warning }}
+    {{ meta.warning }}
   </div>
 </template>
 

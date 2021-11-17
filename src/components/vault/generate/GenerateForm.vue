@@ -1,11 +1,12 @@
 <template>
   <div class="ma-0 pa-4 pb-8">
     <base-form-input
+      ref="form-input"
       :amount.sync="bindDebtAmount"
       :asset="meta.debtAsset"
-      :balance="meta.maxAvailableText"
+      :balance="meta.suggest"
       :rules="rules"
-      :leftLabel="$t('form.max-available-to-generate')"
+      :leftLabel="$t('common.suggest')"
       :placeholder="$t('form.mint-amount')"
     />
 
@@ -21,7 +22,7 @@
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
+import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import GenerateAction from "./GenerateAction.vue";
@@ -40,6 +41,8 @@ export default class GenerateForm extends Vue {
   @Prop() vault!: API.Vault;
 
   @PropSync("debtAmount") bindDebtAmount!: string;
+
+  @Ref("form-input") formInput!: BaseFormInput;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
@@ -63,8 +66,16 @@ export default class GenerateForm extends Vue {
     // 因为不允许直接借贷到恰好爆仓 => -0.00000001
     const maxAvailable =
       Math.min(avaliableDebt, marketFields.maxAvailable) - 0.00000001;
+
     const maxAvailableText = format({
       n: maxAvailable,
+      max_dp: 8,
+      mode: BigNumber.ROUND_DOWN,
+    });
+
+    const totalAvailableDebt = (collateralAmount * price) / liquidationRatio;
+    const suggest = format({
+      n: Math.max(totalAvailableDebt * 0.6 - debtAmount, 0),
       max_dp: 8,
       mode: BigNumber.ROUND_DOWN,
     });
@@ -73,7 +84,8 @@ export default class GenerateForm extends Vue {
       ((debtAmount + inputAmount) / (debtAmount + avaliableDebt)) * 100;
 
     const newRatio =
-      debtAmount && (collateralAmount * price) / (debtAmount + inputAmount);
+      debtAmount + inputAmount &&
+      (collateralAmount * price) / (debtAmount + inputAmount);
 
     const risk = this.$utils.vault.getRiskLevelMeta(newRatio, liquidationRatio);
     return {
@@ -87,6 +99,7 @@ export default class GenerateForm extends Vue {
       currentDepositPrice: format({ n: collateral?.price || "0" }),
       maxAvailable,
       maxAvailableText,
+      suggest,
       progress,
       newRatio,
       risk,
@@ -94,7 +107,7 @@ export default class GenerateForm extends Vue {
   }
 
   handleSuccess() {
-    this.bindDebtAmount = "";
+    this.formInput.getForm().reset();
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });

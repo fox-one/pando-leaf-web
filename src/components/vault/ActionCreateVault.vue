@@ -26,24 +26,31 @@
         <div class="f-caption px-2 mb-6 text--disabled">
           {{ $t("tooltip.vault-selector") }}
         </div>
+
         <base-search v-model="filter" />
       </div>
     </f-bottom-sheet-subtitle>
 
     <v-list height="500" class="overflow-auto">
-      <collateral-list-item
-        v-for="(item, index) in filtedCollaterals"
-        :key="index"
-        :collateral="item"
-        @click.native="handleAddVault(item)"
-        @add="handleAddVault(item)"
-      />
+      <div v-if="filtedCollaterals.length > 0">
+        <collateral-list-item
+          v-for="(item, index) in filtedCollaterals"
+          :key="index"
+          :collateral="item"
+          @click.native="handleAddVault(item)"
+          @add="handleAddVault(item)"
+        />
+      </div>
+
+      <div v-else class="greyscale_1--text text-1 text-center mt-2">
+        {{ $t("common.no-result") }}
+      </div>
     </v-list>
   </f-bottom-sheet>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import CollateralListItem from "./CollateralListItem.vue";
 import { Get } from "vuex-pathify";
 

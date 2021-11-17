@@ -1,6 +1,7 @@
 <template>
   <div class="ma-0 pa-4 pb-8">
     <base-form-input
+      ref="form-input"
       :amount.sync="bindAmount"
       :asset="meta.collateralAsset"
       :rules="rules"
@@ -16,7 +17,7 @@
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop, PropSync } from "vue-property-decorator";
+import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import DepositAction from "./DepositAction.vue";
@@ -33,6 +34,8 @@ export default class extends Vue {
   @Prop() vault!: API.Vault;
 
   @PropSync("amount") bindAmount!: string;
+
+  @Ref("form-input") formInput!: BaseFormInput;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
@@ -74,7 +77,7 @@ export default class extends Vue {
   }
 
   handleSuccess() {
-    this.bindAmount = "";
+    this.formInput.getForm().reset();
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });

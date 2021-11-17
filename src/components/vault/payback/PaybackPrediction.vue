@@ -47,7 +47,7 @@ export default class extends Vue {
     let changedPrice =
       ((debtAmount - diffAmount) * liquidationRatio) / collateralAmount;
     let changedRatio =
-      debtAmount &&
+      debtAmount - diffAmount &&
       (collateralAmount * collateralPrice) / (debtAmount - diffAmount);
     const changedRisk = this.$utils.collateral.getRiskLevelMeta(
       changedRatio,

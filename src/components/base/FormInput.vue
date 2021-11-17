@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-form ref="form" autocomplete="off">
     <f-asset-amount-input
       class="no-left-padding"
       v-model="bindAmount"
@@ -19,11 +19,11 @@
         />
       </template>
     </f-asset-amount-input>
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
+import { Component, Vue, Prop, PropSync, Ref } from "vue-property-decorator";
 import FormInputTools from "./FormInputTools.vue";
 
 @Component({
@@ -49,6 +49,12 @@ export default class extends Vue {
   @Prop({ default: null }) placeholder!: string;
 
   @Prop({ default: null }) messages;
+
+  @Ref("form") form;
+
+  getForm() {
+    return this.form;
+  }
 
   get text() {
     return {

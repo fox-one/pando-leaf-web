@@ -1,5 +1,5 @@
 <template>
-  <base-tooltip class="tooltip ml-1" :hint="true">
+  <base-tooltip class="tooltip ml-1" :hint="meta.contents">
     <template v-slot:tip>
       <div class="pa-4">
         <p v-for="content in meta.contents" :key="content">

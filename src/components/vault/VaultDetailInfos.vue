@@ -52,7 +52,7 @@ class VaultDetailInfos extends Vue {
       },
       {
         title: this.$t("common.liquidation-penalty"),
-        value: `${toPercent({ n: liquidationPenalty })}`,
+        value: `${toPercent({ n: liquidationPenalty - 1 })}`,
       },
     ];
   }

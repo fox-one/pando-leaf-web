@@ -51,7 +51,7 @@ export default class extends Vue {
       changedPriceText = "N/A";
     }
     const changedRatio =
-      debtAmount &&
+      debtAmount + diffAmount &&
       (collateralAmount * collateralPrice) / (debtAmount + diffAmount);
     let changedRatioText = toPercent({ n: changedRatio, dp: 1 });
     if (!isValid(changedRatio) || changedRatio === 0) {

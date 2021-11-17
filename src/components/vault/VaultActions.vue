@@ -22,15 +22,17 @@ class VaultActions extends Vue {
 
   @Prop({ default: false }) hasCollateral!: boolean;
 
+  @Prop({ default: false }) hasDebt!: boolean;
+
   get actions() {
-    const { hasCollateral } = this;
+    const { hasCollateral, hasDebt } = this;
 
     return [
       {
         icon: "$iconPayback",
         value: "payback",
         text: this.$t("common.pay-back"),
-        disabled: !hasCollateral,
+        disabled: !hasDebt,
         href: "vault-payback",
       },
       {

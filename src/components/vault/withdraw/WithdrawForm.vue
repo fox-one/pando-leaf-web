@@ -1,6 +1,7 @@
 <template>
   <div class="ma-0 pa-4 pb-8">
     <withdraw-form-input
+      ref="form-input"
       :vault="vault"
       :amount.sync="bindAmount"
       :placeholder="$t('form.mint-amount')"
@@ -32,7 +33,14 @@
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop, PropSync, Watch } from "vue-property-decorator";
+import {
+  Vue,
+  Component,
+  Prop,
+  PropSync,
+  Watch,
+  Ref,
+} from "vue-property-decorator";
 import WithdrawFormInput from "./WithdrawFormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import WithdrawAction from "./WithdrawAction.vue";
@@ -50,6 +58,8 @@ export default class extends Vue {
   @Prop() vault!: API.Vault;
 
   @PropSync("amount") bindAmount!: string;
+
+  @Ref("form-input") formInput!: WithdrawFormInput;
 
   showTip = false;
 
@@ -78,7 +88,7 @@ export default class extends Vue {
   }
 
   handleSuccess() {
-    this.bindAmount = "";
+    this.formInput.getForm().reset();
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });
