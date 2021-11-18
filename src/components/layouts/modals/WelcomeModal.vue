@@ -76,8 +76,7 @@ class WelcomeModal extends Vue {
   }
 
   mounted() {
-    // this.dialog = !this.visited;
-    this.dialog = true;
+    this.dialog = !this.visited;
   }
 
   @Watch("dialog")
