@@ -95,7 +95,8 @@ export default class extends Vue {
           symbol: this.meta.debtSymbol,
         }),
       (v: string) =>
-        (this.meta.leftDebt < this.meta.dustAmount && this.meta.leftDebt > 0) ||
+        this.meta.leftDebt >= this.meta.dustAmount ||
+        this.meta.leftDebt <= 0 ||
         this.$t("validate.remaining-dust-debt", {
           amount: this.meta.dust,
           symbol: this.meta.debtSymbol,
