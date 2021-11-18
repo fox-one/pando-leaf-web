@@ -102,7 +102,7 @@ export function shouldGetMoreActionAsset(vm: Vue, cbs?: Callbacks) {
   const canReadAsset = getters["auth/canReadAsset"];
   if (isLogged && canReadAsset) {
     const getWalletAssetById = getters["asset/getWalletAssetById"];
-    if (Number(getWalletAssetById(ACTION_ASSET_ID)?.balance) <= 0) {
+    if (Number(getWalletAssetById(ACTION_ASSET_ID)?.balance ?? "0") <= 0) {
       vm.$pandoseed.show({
         token: vm.$store.state.auth.token,
         success: () => {
