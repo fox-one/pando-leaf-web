@@ -73,6 +73,8 @@ export default class GenerateForm extends Vue {
       mode: BigNumber.ROUND_DOWN,
     });
 
+    const dustAmount = Number(collateral?.dust);
+
     const totalAvailableDebt = (collateralAmount * price) / liquidationRatio;
     const suggest = format({
       n: Math.max(totalAvailableDebt * 0.6 - debtAmount, 0),
@@ -90,6 +92,7 @@ export default class GenerateForm extends Vue {
     const risk = this.$utils.vault.getRiskLevelMeta(newRatio, liquidationRatio);
     return {
       debtAsset,
+      debtAmount,
       debtSymbol,
       ratio,
       ratioText: toPercent({ n: ratio }),
@@ -103,6 +106,8 @@ export default class GenerateForm extends Vue {
       progress,
       newRatio,
       risk,
+      dustAmount,
+      dust: collateral?.dust,
     };
   }
 
@@ -113,7 +118,7 @@ export default class GenerateForm extends Vue {
     });
   }
 
-  get rules() {
+  get validateRules() {
     return [
       (v: string) => !!v || this.$t("common.amount-required"),
       (v: string) => +v > 0 || this.$t("common.amount-invalid"),
@@ -123,6 +128,18 @@ export default class GenerateForm extends Vue {
           amount: this.meta.maxAvailableText,
           symbol: this.meta.debtSymbol,
         }),
+      (v: string) =>
+        this.meta.debtAmount + +v >= this.meta.dustAmount ||
+        this.meta.debtAmount + +v <= 0 ||
+        this.$t("validate.remaining-dust-debt", {
+          amount: this.meta.dust,
+          symbol: this.meta.debtSymbol,
+        }),
+    ];
+  }
+
+  get rules() {
+    return this.validateRules.concat([
       (v: string) => {
         if (this.meta.risk.value === RISK.HIGH) {
           if (this.meta.newRatio < this.meta.liquidationRatio) {
@@ -140,10 +157,15 @@ export default class GenerateForm extends Vue {
         this.$t("validate.medium-risk", {
           symbol: this.meta.debtSymbol,
         }),
-    ];
+    ]);
   }
 
   get validate() {
+    for (const rule of this.validateRules) {
+      if (true !== rule(this.bindDebtAmount)) {
+        return { disabled: true };
+      }
+    }
     return { disabled: false };
   }
 }

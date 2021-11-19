@@ -76,6 +76,15 @@ export default class extends Vue {
     ];
   }
 
+  get validate() {
+    for (const rule of this.rules) {
+      if (true !== rule(this.bindAmount)) {
+        return { disabled: true };
+      }
+    }
+    return { disabled: false };
+  }
+
   handleSuccess() {
     this.formInput.getForm().reset();
     this.$uikit.toast.success({

@@ -41,33 +41,9 @@ export default class extends Vue {
 
   @Prop({ default: null }) messages;
 
+  @Prop({ default: () => [] }) rules!: ((amount: string) => boolean | string)[];
+
   @Ref("form") form;
-
-  get rules() {
-    return [
-      (v: string) => !!v || this.$t("common.amount-required"),
-      (v: string) => +v > 0 || this.$t("common.amount-invalid"),
-      (v: string) =>
-        +v <= this.meta.avaliableWithdraw || this.$t("common.amount-invalid"),
-      (v: string) => {
-        if (this.meta.risk.value === RISK.HIGH) {
-          if (this.meta.ratio < this.meta.liquidationRatio) {
-            return this.$t("validate.below-liquidation-rate");
-          }
-
-          return this.$t("validate.high-risk-withdraw", {
-            symbol: this.meta.collateralSymbol,
-          });
-        }
-        return true;
-      },
-      (v: string) =>
-        this.meta.risk.value !== RISK.MEDIUM ||
-        this.$t("validate.medium-risk-withdraw", {
-          symbol: this.meta.collateralSymbol,
-        }),
-    ];
-  }
 
   get meta() {
     const { format } = this.$utils.number;
@@ -76,10 +52,6 @@ export default class extends Vue {
       collateralAsset,
       avaliableWithdraw,
       collateralSymbol,
-      collateralAmount,
-      debtAmount,
-      liquidationRatio,
-      price,
     } = getters.getVaultFields(this.vault?.id);
 
     const avaliableWithdrawText = format({
@@ -90,9 +62,6 @@ export default class extends Vue {
 
     const balance = `${avaliableWithdrawText} ${collateralSymbol}`;
 
-    const ratio = ((collateralAmount - +this.bindAmount) * price) / debtAmount;
-
-    const risk = this.$utils.vault.getRiskLevelMeta(ratio, liquidationRatio);
     return {
       collateralAsset,
       balance,
@@ -100,9 +69,6 @@ export default class extends Vue {
       avaliableWithdraw,
       avaliableWithdrawText,
       placeholder: this.$t("form.payback-amount"),
-      ratio,
-      risk,
-      liquidationRatio,
     };
   }
 

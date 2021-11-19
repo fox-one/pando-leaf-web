@@ -49,25 +49,19 @@ export default class extends Vue {
 
   @Prop({ default: null }) messages;
 
+  @Prop({ default: () => [] }) rules!: ((amount: string) => boolean | string)[];
+
   @Ref("form") form;
 
   get meta() {
     const { format } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
-    const {
-      debtAsset,
-      debtSymbol,
-      debtAmount,
-      collateral,
-    } = getters.getVaultFields(this.vault?.id);
+    const { debtAsset, debtSymbol, debtAmount } = getters.getVaultFields(
+      this.vault?.id
+    );
     const walletAsset = getters["asset/getWalletAssetById"](
       debtAsset?.id ?? ""
     );
-
-    const dustAmount = Number(collateral?.dust);
-
-    const leftDebt = debtAmount - +this.bindAmount;
-
     return {
       balance: walletAsset?.balance,
       debtAsset,
@@ -79,29 +73,7 @@ export default class extends Vue {
         mode: BigNumber.ROUND_UP,
       }),
       placeholder: this.$t("form.payback-amount"),
-      leftDebt,
-      dustAmount,
-      dust: collateral?.dust,
     };
-  }
-
-  get rules() {
-    return [
-      (v: string) => !!v || this.$t("common.amount-required"),
-      (v: string) => +v > 0 || this.$t("common.amount-invalid"),
-      (v: string) =>
-        +v <= +(this.meta.balance ?? Infinity) ||
-        this.$t("validate.insufficient-balance", {
-          symbol: this.meta.debtSymbol,
-        }),
-      (v: string) =>
-        this.meta.leftDebt >= this.meta.dustAmount ||
-        this.meta.leftDebt <= 0 ||
-        this.$t("validate.remaining-dust-debt", {
-          amount: this.meta.dust,
-          symbol: this.meta.debtSymbol,
-        }),
-    ];
   }
 
   getForm() {

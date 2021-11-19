@@ -3,6 +3,7 @@
     <withdraw-form-input
       ref="form-input"
       :vault="vault"
+      :rules="rules"
       :amount.sync="bindAmount"
       :placeholder="$t('form.mint-amount')"
     />
@@ -33,19 +34,13 @@
 </template>
 
 <script lang="ts" scoped>
-import {
-  Vue,
-  Component,
-  Prop,
-  PropSync,
-  Watch,
-  Ref,
-} from "vue-property-decorator";
+import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import WithdrawFormInput from "./WithdrawFormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import WithdrawAction from "./WithdrawAction.vue";
 import { toPercent } from "@foxone/utils/number";
 import BigNumber from "bignumber.js";
+import { RISK } from "~/enums";
 
 @Component({
   components: {
@@ -66,15 +61,62 @@ export default class extends Vue {
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
 
-    const { avaliableWithdraw } = getters.getVaultFields(this.vault?.id ?? "");
+    const {
+      avaliableWithdraw,
+      collateralSymbol,
+      collateralAmount,
+      debtAmount,
+      liquidationRatio,
+      price,
+    } = getters.getVaultFields(this.vault?.id ?? "");
 
     const progress = (100 * +this.bindAmount) / avaliableWithdraw;
     const progressText = toPercent({ n: progress / 100 });
+
+    const ratio = ((collateralAmount - +this.bindAmount) * price) / debtAmount;
+    const risk = this.$utils.vault.getRiskLevelMeta(ratio, liquidationRatio);
     return {
+      risk,
+      liquidationRatio,
+      ratio,
+      collateralSymbol,
       avaliableWithdraw,
       progress,
       progressText,
     };
+  }
+
+  get validateRules() {
+    return [
+      (v: string) => !!v || this.$t("common.amount-required"),
+      (v: string) => +v > 0 || this.$t("common.amount-invalid"),
+      (v: string) =>
+        +v <= this.meta.avaliableWithdraw || this.$t("common.amount-invalid"),
+      (v: string) => {
+        if (this.meta.ratio < this.meta.liquidationRatio) {
+          return this.$t("validate.below-liquidation-rate");
+        }
+        return true;
+      },
+    ];
+  }
+
+  get rules() {
+    return this.validateRules.concat([
+      (v: string) => {
+        if (this.meta.risk.value === RISK.HIGH) {
+          return this.$t("validate.high-risk-withdraw", {
+            symbol: this.meta.collateralSymbol,
+          });
+        }
+        return true;
+      },
+      (v: string) =>
+        this.meta.risk.value !== RISK.MEDIUM ||
+        this.$t("validate.medium-risk-withdraw", {
+          symbol: this.meta.collateralSymbol,
+        }),
+    ]);
   }
 
   handleSliderChange(value: string) {
@@ -95,6 +137,11 @@ export default class extends Vue {
   }
 
   get validate() {
+    for (const rule of this.validateRules) {
+      if (true !== rule(this.bindAmount)) {
+        return { disabled: true };
+      }
+    }
     return { disabled: false };
   }
 }

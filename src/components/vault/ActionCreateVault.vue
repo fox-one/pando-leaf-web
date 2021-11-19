@@ -31,11 +31,11 @@
       </div>
     </f-bottom-sheet-subtitle>
 
-    <v-list height="500" class="overflow-auto">
+    <v-list class="dialog-content overflow-auto">
       <div v-if="filtedCollaterals.length > 0">
         <collateral-list-item
-          v-for="(item, index) in filtedCollaterals"
-          :key="index"
+          v-for="item in filtedCollaterals"
+          :key="item.id"
           :collateral="item"
           @click.native="handleAddVault(item)"
           @add="handleAddVault(item)"
@@ -77,3 +77,9 @@ class ActionCreateVault extends Vue {
 }
 export default ActionCreateVault;
 </script>
+<style lang="scss" scoped>
+.dialog-content {
+  max-height: 500px;
+  height: calc(90vh - 220px);
+}
+</style>

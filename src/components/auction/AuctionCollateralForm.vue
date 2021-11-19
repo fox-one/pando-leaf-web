@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-form ref="form">
     <f-input
       v-model="inputCollateralAmount"
       class="input-collateral"
@@ -25,11 +25,11 @@
       :flip="flip"
       @success="handleSuccess"
     />
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, Ref } from "vue-property-decorator";
 import AuctionMaxBid from "@/components/auction/AuctionMaxBid.vue";
 import AuctionBidWarning from "@/components/auction/AuctionBidWarning.vue";
 import AuctionCollateralAction from "./AuctionCollateralAction.vue";
@@ -43,6 +43,8 @@ import AuctionCollateralAction from "./AuctionCollateralAction.vue";
 })
 export default class AuctionCollateralForm extends Vue {
   @Prop() flip!: API.Flip;
+
+  @Ref("form") form;
 
   inputCollateralAmount = "";
 
@@ -82,7 +84,7 @@ export default class AuctionCollateralForm extends Vue {
   }
 
   handleSuccess() {
-    this.inputCollateralAmount = "";
+    this.form.reset();
     this.$emit("success");
   }
 }

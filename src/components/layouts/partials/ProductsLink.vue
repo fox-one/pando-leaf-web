@@ -12,7 +12,7 @@
       <slot name="activator" :on="{ on }">
         <div v-on="on" class="d-flex align-center">
           <v-icon size="65" class="mr-1"> $iconLeaf </v-icon>
-          <v-icon size="16" color="primary"> $iconChevronDown </v-icon>
+          <v-icon size="16" color="primary"> $FIconChevronDown4P </v-icon>
         </div>
       </slot>
     </template>
@@ -28,7 +28,7 @@
         {{ item.title }}
       </div>
       <v-spacer />
-      <v-icon v-if="item.check" size="20"> {{ $icons.mdiCheck }}</v-icon>
+      <v-icon v-if="item.check" size="20"> $FIconCheck</v-icon>
     </div>
   </f-bottom-sheet>
 </template>
@@ -43,22 +43,22 @@ class PandoProductionNav extends Vue {
   get items() {
     return [
       {
-        title: "Pando Lakes (Coming soon)",
+        title: "Pando Lake",
         check: false,
-        disabled: true,
-        href: "#",
+        disabled: false,
+        href: "https://lake.pando.im",
       },
       {
         title: "Pando Leaf",
         check: true,
         disabled: false,
-        href: "#",
+        href: "https://leaf.pando.im",
       },
       {
-        title: "Pando Rings (Coming soon)",
+        title: "Pando Rings",
         check: false,
-        disabled: true,
-        href: "#",
+        disabled: false,
+        href: "https://leaf.pando.im",
       },
     ];
   }

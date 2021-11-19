@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-form ref="form">
     <f-input
       v-model="inputDebtAmount"
       class="input-debt"
@@ -25,11 +25,11 @@
       :flip="flip"
       @success="handleSuccess"
     />
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, Ref } from "vue-property-decorator";
 import AuctionMinBid from "@/components/auction/AuctionMinBid.vue";
 import AuctionMaxBid from "@/components/auction/AuctionMaxBid.vue";
 import AuctionDebtAction from "./AuctionDebtAction.vue";
@@ -43,6 +43,8 @@ import AuctionDebtAction from "./AuctionDebtAction.vue";
 })
 export default class AuctionDebtForm extends Vue {
   @Prop() flip!: API.Flip;
+
+  @Ref("form") form;
 
   inputDebtAmount = "";
 
@@ -88,7 +90,7 @@ export default class AuctionDebtForm extends Vue {
   }
 
   handleSuccess() {
-    this.inputDebtAmount = "";
+    this.form.reset();
     this.$emit("success");
   }
 }

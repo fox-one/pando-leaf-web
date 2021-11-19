@@ -109,6 +109,7 @@ export function shouldGetMoreActionAsset(vm: Vue, cbs?: Callbacks) {
           if (cbs?.success) {
             cbs?.success?.();
           } else {
+            vm.$utils.asset.loadWalletAsset(vm, ACTION_ASSET_ID);
             vm.$uikit.toast.success({
               message: vm.$t("common.action-success") + "",
             });
