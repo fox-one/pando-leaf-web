@@ -89,6 +89,7 @@
   "common.vault-detail": "Vault Details",
   "common.wallet-balance": "Bal.",
   "common.warning": "Warning",
+  "common.learn-more":"Learn More",
   "common.withdraw": "Withdraw",
   "connect.wallet": "Connect Wallet",
   "connect.wallet.hint": "Please connect wallet before adding vault",

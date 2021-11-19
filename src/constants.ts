@@ -41,3 +41,24 @@ export const EVENTS = {
   OPEN_AUTH: "OPEN_AUTH",
   OPEN_RISK_WARN: "OPEN_RISK_WARN",
 };
+
+export const LINKS = {
+  // 创建金库后的首页 我的金库
+  "home.vault": "https://docs.pando.im/docs/leaf/key-concepts/vaults/",
+  // 金库详情 添加⾦库/还款⻚/铸币⻚/取回⻚/存入⻚ 市场页 抵押率
+  "vault.liquidation-ratio":
+    "https://docs.pando.im/docs/leaf/key-concepts/liquidation/liquidation-ratio/",
+  // 金库详情 添加⾦库/还款⻚/铸币⻚/取回⻚/存入⻚ 清算价格
+  "vault.liquidation-price":
+    "https://docs.pando.im/docs/leaf/key-concepts/liquidation/liquidation-price/",
+  // 金库详情 市场页 下一价格 ETH/pUSD价格
+  "vault.price-oracles":
+    "https://docs.pando.im/docs/leaf/key-concepts/price-oracles",
+  // 添加⾦库/还款⻚/铸币⻚/取回⻚/存入⻚ 抵押率
+  "vault.liquidation":
+    "https://docs.pando.im/docs/leaf/key-concepts/liquidation/",
+  // 拍卖页 Debt you bid to pay for, Collateral you bid to receive
+  "auction.auction-participation":
+    "https://docs.pando.im/docs/leaf/tutorials/auction-participation/",
+  //
+};

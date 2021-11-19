@@ -23,7 +23,7 @@
           {{ $t("me.my-vault") }}
         </span>
 
-        <base-tooltip :hint="myVaultHint" />
+        <base-tooltip :hint="myVaultHint" :learn-more="meta.learnMore" />
       </div>
 
       <vault-list class="mt-3" />
@@ -45,6 +45,7 @@ import VaultList from "@/components/vault/VaultList.vue";
 import ActionCreateVault from "@/components/vault/ActionCreateVault.vue";
 import mixins from "@/mixins";
 import { Get } from "vuex-pathify";
+import { LINKS } from "~/constants";
 
 @Component({
   components: {
@@ -73,6 +74,12 @@ class VaultPage extends Mixins(mixins.page) {
 
   get bottomNav() {
     return "vault";
+  }
+
+  get meta() {
+    return {
+      learnMore: LINKS["home.vault"],
+    };
   }
 
   get myVaultHint() {

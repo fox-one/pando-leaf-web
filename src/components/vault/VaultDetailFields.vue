@@ -12,7 +12,11 @@
         <span class="mr-1" :style="[{ color: field.color }]">
           {{ field.title }}
         </span>
-        <base-tooltip v-if="field.hint" :hint="field.hint" />
+        <base-tooltip
+          v-if="field.hint"
+          :hint="field.hint"
+          :learn-more="field.learnMore"
+        />
       </div>
 
       <div class="field__value mt-1" :style="[{ color: field.color }]">
@@ -28,6 +32,7 @@ import { getVaultFields } from "@/utils/vault";
 
 import type { TranslateResult } from "vue-i18n";
 import type { VuetifyThemeItem } from "vuetify/types/services/theme";
+import { LINKS } from "~/constants";
 
 interface VaultField {
   title: TranslateResult;
@@ -35,6 +40,7 @@ interface VaultField {
   hint?: TranslateResult;
   emphasize?: boolean;
   color?: VuetifyThemeItem;
+  learnMore?: string;
 }
 
 @Component
@@ -95,6 +101,7 @@ class VaultFields extends Vue {
             emphasize: true,
             color: this.$vuetify.theme.currentTheme[riskLevelMeta.color],
             hint: this.$t("tooltip.collateralization-ratio"),
+            learnMore: LINKS["vault.liquidation-ratio"],
           },
           {
             title: this.$t("common.current-symbol-price", {
@@ -106,6 +113,7 @@ class VaultFields extends Vue {
             title: this.$t("common.liquidation-price"), // debt * ratio / collateral
             value: `${format({ n: liquidationPrice })} ${debtSymbol}`,
             hint: this.$t("tooltip.liquidation-price"),
+            learnMore: LINKS["vault.liquidation-price"],
           },
           {
             title: this.$t("common.next-price"),
@@ -115,6 +123,7 @@ class VaultFields extends Vue {
                   time: nextPriceTime,
                 })
               : undefined,
+            learnMore: LINKS["vault.price-oracles"],
           }
         );
       }

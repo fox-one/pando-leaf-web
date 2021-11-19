@@ -1,17 +1,15 @@
 <template>
-  <base-tooltip class="tooltip ml-1" :hint="meta.contents">
-    <template v-slot:tip>
-      <div class="pa-4">
-        <p v-for="content in meta.contents" :key="content">
-          {{ meta.content }}
-        </p>
-      </div>
-    </template>
+  <base-tooltip
+    class="tooltip ml-1"
+    :hint="meta.contents"
+    :learn-more="meta.learnMore"
+  >
   </base-tooltip>
 </template>
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
+import { LINKS } from "~/constants";
 
 @Component({
   components: {},
@@ -49,6 +47,7 @@ export default class AuctionRulesTip extends Vue {
 
     return {
       contents: [content1, content2, content3],
+      learnMore: LINKS["auction.auction-participation"],
     };
   }
 }

@@ -4,7 +4,11 @@
       <v-layout align-center>
         <div class="greyscale_3--text">{{ label }}</div>
 
-        <base-tooltip v-if="hint" :hint="hint"></base-tooltip>
+        <base-tooltip
+          v-if="hint"
+          :hint="hint"
+          :learn-more="learnMore"
+        ></base-tooltip>
 
         <v-spacer />
 
@@ -54,6 +58,8 @@ export default class extends Vue {
   @Prop() changedValueColor!: string | undefined | null;
 
   @Prop({ default: false }) showChange!: boolean;
+
+  @Prop({ default: null }) learnMore!: string;
 
   @Prop() last!: boolean;
 

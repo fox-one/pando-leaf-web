@@ -26,7 +26,6 @@
 </template>
 
 <script lang="ts" scoped>
-import { format } from "@foxone/utils/number";
 import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component

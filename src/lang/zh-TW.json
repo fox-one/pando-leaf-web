@@ -92,6 +92,7 @@
   "common.vault-detail": "金庫詳情",
   "common.wallet-balance": "餘額",
   "common.warning": "警告",
+  "common.learn-more":"了解詳情",
   "common.withdraw": "取回",
   "connect.wallet": "連接錢包",
   "connect.wallet.hint": "添加金庫前請先連接錢包",

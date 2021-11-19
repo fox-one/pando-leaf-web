@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { isValidOracle } from "~/utils/oracle";
+import { LINKS } from "~/constants";
 
 @Component
 export default class extends Vue {
@@ -31,6 +31,7 @@ export default class extends Vue {
       liquidationPriceText,
       debtAmount,
       ratio,
+      price,
       ratioText,
       stabilityFeeText,
       nextPrice,
@@ -63,10 +64,16 @@ export default class extends Vue {
       minimumRatio
     );
 
+    const isValidPrice =
+      price !== nextPrice?.price && this.$utils.oracle.isValidOracle(nextPrice);
+    const nextPriceTime = isValidPrice
+      ? this.$utils.time.format(nextPrice?.time)
+      : "-";
     return {
       liquidationPriceText,
       ratio,
       ratioText,
+      nextPriceTime,
       nextPrice,
       currentPrice: format({ n: collateral?.price ?? 0 }),
       minimumRatio: minimumRatioText,
@@ -99,6 +106,7 @@ export default class extends Vue {
         value: this.meta.ratioText,
         valueColor: this.meta.risk.color,
         hint: this.$t("tooltip.collateralization-ratio"),
+        learnMore: LINKS["vault.liquidation"],
         changedValue: this.meta.changedRatioText,
         changedValueColor: this.meta.changedRisk.color,
         showChange: this.meta.ratio !== this.meta.changedRatio,
@@ -107,12 +115,14 @@ export default class extends Vue {
         label: this.$t("common.minimum-ratio"),
         value: this.meta.minimumRatio,
         hint: this.$t("tooltip.minimum-ratio"),
+        learnMore: LINKS["vault.liquidation-ratio"],
       },
       {
         label: this.$t("common.liquidation-price"), // mint * mat / deposit
         value: this.meta.liquidationPriceText,
         valueUnit: `${this.meta.debtSymbol}`,
         hint: this.$t("tooltip.liquidation-price"),
+        learnMore: LINKS["vault.liquidation"],
         changedValue: this.meta.changedPriceText,
         showChange:
           this.meta.liquidationPriceText !== this.meta.changedPriceText,
@@ -123,6 +133,12 @@ export default class extends Vue {
         }),
         value: this.meta.currentPrice,
         valueUnit: `${this.meta.debtSymbol}`,
+        hint: isValidOracle(this.meta.nextPrice)
+          ? this.$t("tooltip.next-price", {
+              time: this.meta.nextPriceTime,
+            })
+          : null,
+        learnMore: LINKS["vault.price-oracles"],
         showChange: isValidOracle(this.meta.nextPrice),
         changedValue: this.meta.nextPrice?.price,
       },

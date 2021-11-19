@@ -7,7 +7,11 @@
     >
       <div class="greyscale_3--text">
         <span class="mr-1">{{ item.title }}</span>
-        <base-tooltip v-if="item.hint" :hint="item.hint"></base-tooltip>
+        <base-tooltip
+          v-if="item.hint"
+          :hint="item.hint"
+          :learn-more="item.learnMore"
+        ></base-tooltip>
       </div>
       <v-spacer />
       <div>{{ item.value }}</div>
@@ -17,6 +21,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { LINKS } from "~/constants";
 
 @Component
 class VaultDetailInfos extends Vue {

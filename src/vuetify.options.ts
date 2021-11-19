@@ -1,9 +1,9 @@
 import zh from "vuetify/es5/locale/zh-Hans";
 import en from "vuetify/es5/locale/en";
 import ja from "vuetify/es5/locale/ja";
-import enUIKit from "@foxone/uikit/src/locales/en";
-import jaUIKit from "@foxone/uikit/src/locales/ja";
-import zhUIKit from "@foxone/uikit/src/locales/zh-Hans";
+import enUIKit from "@foxone/uikit/src/locales/en-US.json";
+import jaUIKit from "@foxone/uikit/src/locales/ja-JP.json";
+import zhUIKit from "@foxone/uikit/src/locales/zh-TW.json";
 import { makeIconValues } from "@/components/icons";
 import UIKit from "@foxone/uikit";
 import icons from "@/utils/icons";

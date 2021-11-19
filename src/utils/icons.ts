@@ -22,6 +22,7 @@ const ficons = [
   "FIconConnect3PFill",
   "FIconChevronDown4P",
   "FIconChevronRight4P",
+  "FIconLink4P",
 ].reduce((m, k) => ({ ...m, [k]: { component: FIcons[k] } }), {});
 
 const icons = [

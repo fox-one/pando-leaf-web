@@ -10,7 +10,12 @@
     >
       <div :class="`market-item-label ${item.labelClass}`">
         {{ item.title }}
-        <base-tooltip v-if="item.hint" class="ml-1" :hint="item.hint" />
+        <base-tooltip
+          v-if="item.hint"
+          class="ml-1"
+          :hint="item.hint"
+          :learn-more="item.learnMore"
+        />
       </div>
 
       <div :class="`market-item-value ${item.valueClass}`">
@@ -24,6 +29,7 @@
 import dayjs from "dayjs";
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import { Get, Sync } from "vuex-pathify";
+import { LINKS } from "~/constants";
 
 @Component({
   components: {},
@@ -100,6 +106,7 @@ export default class MarketItemInfos extends Vue {
         labelClass: "font-weight-bold market-green",
         valueClass: "font-weight-bold market-green",
         hint: this.$t("tooltip.collateralization-ratio"),
+        learnMore: LINKS["vault.liquidation-ratio"],
       },
       {
         title: this.$t("common.price"),
@@ -130,6 +137,7 @@ export default class MarketItemInfos extends Vue {
               time: this.countDownText,
             })
           : false,
+        learnMore: LINKS["vault.price-oracles"],
         labelClass: "text--disabled f-greyscale-1 font-weight-regular",
         valueClass: "f-greyscale-1",
       },

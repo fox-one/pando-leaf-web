@@ -6,10 +6,17 @@
     <div>
       <div
         class="ma-4 f-caption greyscale_3--text"
-        v-for="content in contents"
+        v-for="(content, index) in contents"
         :key="content"
       >
         {{ content }}
+        <a
+          :href="learnMore"
+          class="blue--text vertical-center"
+          v-if="learnMore && index == contents.length - 1"
+        >
+          {{ $t("common.learn-more") }}
+        </a>
       </div>
     </div>
   </f-tooltip>
@@ -33,10 +40,19 @@
     <div class="pb-8">
       <div
         class="ma-4 tooltip-content greyscale_3--text"
-        v-for="content in contents"
+        v-for="(content, index) in contents"
         :key="content"
       >
         {{ content }}
+
+        <a
+          :href="learnMore"
+          class="blue--text vertical-center"
+          v-if="learnMore && index == contents.length - 1"
+        >
+          {{ $t("common.learn-more") }}
+          <v-icon color="blue" size="14"> $FIconLink4P </v-icon>
+        </a>
       </div>
       <div class="my-8 text-center">
         <f-button
@@ -60,6 +76,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class Tooltip extends Vue {
   @Prop() hint!: string;
+
+  @Prop({ default: null }) learnMore!: string;
 
   tooltip = false;
 
@@ -89,5 +107,9 @@ export default class Tooltip extends Vue {
   line-height: 1.375rem;
   text-align: center;
   letter-spacing: 0.011em;
+}
+.vertical-center {
+  display: inline-flex;
+  align-items: center;
 }
 </style>

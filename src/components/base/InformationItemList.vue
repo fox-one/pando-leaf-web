@@ -18,6 +18,7 @@
         :value-unit="item.valueUnit"
         :show-change="item.showChange"
         :last="informations[index + 1] === 'divider'"
+        :learn-more="item.learnMore"
       />
     </template>
   </div>
