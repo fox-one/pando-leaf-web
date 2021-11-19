@@ -52,5 +52,5 @@ export function setUpTask(vm: Vue) {
 
   intervalId = setInterval(() => {
     refresh(vm);
-  }, 15000);
+  }, 5000);
 }
