@@ -11,7 +11,14 @@
       content-class="welcome-modal"
     >
       <v-layout column align-center class="text-center welcome-modal pa-6">
-        <v-icon class="mt-10" :size="327">$iconWelcomeImg</v-icon>
+        <div class="welcome-icon">
+          <v-img
+            :src="meta.image"
+            :max-width="meta.size"
+            :max-height="meta.size"
+            class="mx-6"
+          ></v-img>
+        </div>
         <div class="welcome-title">
           {{ $t("welcome.what-is") }}
           <v-icon size="68" class="mx-1">$iconLeaf</v-icon>
@@ -60,6 +67,8 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { Sync } from "vuex-pathify";
 
+import welcomeImg from "@/assets/images/welcome.png";
+
 @Component
 class WelcomeModal extends Vue {
   @Sync("app/visited") visited!: boolean;
@@ -67,6 +76,17 @@ class WelcomeModal extends Vue {
   dialog = false;
 
   desktop = this.$vuetify.breakpoint.mdAndUp;
+
+  get meta() {
+    const width = document.body.offsetWidth;
+    const height = document.body.offsetHeight;
+
+    const size = Math.min(width - 48, height - 346, 327);
+    return {
+      image: welcomeImg,
+      size,
+    };
+  }
 
   get dialogProps() {
     return {
@@ -98,6 +118,12 @@ export default WelcomeModal;
   .f-bottom-sheet__body {
     padding-bottom: 0 !important;
   }
+}
+
+.welcome-icon {
+  max-width: 327px;
+  min-width: 180px;
+  min-height: 180px;
 }
 
 .welcome-title {
