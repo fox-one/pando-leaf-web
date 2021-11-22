@@ -1,31 +1,29 @@
 <template>
-  <v-sheet
-    dark
-    class="overview rounded pa-6 pa-md-12 pr-0"
-    :class="[{ background: !composition }]"
-  >
-    <div class="switcher hidden-md-and-up mr-4">
-      <overview-switch v-model="composition" />
-    </div>
+  <v-sheet dark class="overview rounded pa-md-12 pr-0">
+    <div class="pa-6" :class="[{ background: !composition }]">
+      <div class="switcher hidden-md-and-up mr-4">
+        <overview-switch v-model="composition" />
+      </div>
 
-    <div class="body-2 mb-2">
-      {{ $t("me.total-collaterals") }}
-    </div>
-    <div class="total-text">
-      <span class="symbol bright_green--text">$</span>
-      <span>{{ meta.collaterals }}</span>
-    </div>
+      <div class="body-2 mb-2">
+        {{ $t("me.total-collaterals") }}
+      </div>
+      <div class="total-text">
+        <span class="symbol bright_green--text">$</span>
+        <span>{{ meta.collaterals }}</span>
+      </div>
 
-    <v-expand-transition>
-      <vault-position-ratio v-show="composition" />
-    </v-expand-transition>
+      <v-expand-transition>
+        <vault-position-ratio v-show="composition" />
+      </v-expand-transition>
 
-    <div class="body-2 mb-2 mt-6 mt-md-12">
-      {{ $t("common.total-debt") }}
-    </div>
-    <div class="total-text">
-      <span class="symbol bright_green--text">$</span>
-      <span>{{ meta.debts }}</span>
+      <div class="body-2 mb-2 mt-6 mt-md-12">
+        {{ $t("common.total-debt") }}
+      </div>
+      <div class="total-text">
+        <span class="symbol bright_green--text">$</span>
+        <span>{{ meta.debts }}</span>
+      </div>
     </div>
   </v-sheet>
 </template>
@@ -80,14 +78,15 @@ export default PositionOverview;
 .overview {
   position: relative;
   height: 100%;
-  background-color: linear-gradient(
+  background: linear-gradient(
     137.85deg,
     #323232 22.46%,
     #333333 86.42%
   ) !important;
 
-  &.background {
-    background-image: url("../../assets/images/bg_overview.svg");
+  .background {
+    background-image: url("../../assets/images/bg_overview.svg") !important;
+    background-repeat: no-repeat;
     background-position: 100% 100%;
     background-size: 144px;
   }
