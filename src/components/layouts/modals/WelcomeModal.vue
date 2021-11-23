@@ -81,6 +81,8 @@ class WelcomeModal extends Vue {
     const width = document.body.offsetWidth;
     const height = document.body.offsetHeight;
 
+    // 48  = 左右两侧边距各24
+    // 346 = 文本 + 按钮 + 预留上下少量空间
     const size = Math.min(width - 48, height - 346, 327);
     return {
       image: welcomeImg,
@@ -96,7 +98,8 @@ class WelcomeModal extends Vue {
   }
 
   mounted() {
-    this.dialog = !this.visited;
+    // this.dialog = !this.visited;
+    this.dialog = true;
   }
 
   @Watch("dialog")
