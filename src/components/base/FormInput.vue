@@ -72,9 +72,9 @@ export default class extends Vue {
     const walletAsset = getWalletAssetById(this.asset?.id);
 
     const balance = this.balance ? this.balance : walletAsset?.balance ?? "-";
-    const price = +(walletAsset?.balance ?? "0") * +this.asset?.price;
-    const fiatAmount = +balance * price;
-
+    const inputAmount = +(this.bindAmount ?? "0");
+    const price = +this.asset?.price;
+    const fiatAmount = inputAmount * price;
     return {
       balance,
       fiatAmount: isValid(fiatAmount) ? toFiat(this, { n: fiatAmount }) : false,
