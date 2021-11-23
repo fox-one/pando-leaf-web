@@ -37,9 +37,11 @@ export default class MarketOverview extends Vue {
       "collateral/getOverview"
     ];
 
-    const { format, toPercent } = this.$utils.number;
-    const collateralsText = collaterals ? format({ n: collaterals }) : "-";
-    const supplyText = supply ? format({ n: supply }) : "-";
+    const { toPercent, toFiat } = this.$utils.number;
+    const collateralsText = collaterals
+      ? toFiat(this, { n: collaterals, short: true })
+      : "-";
+    const supplyText = supply ? toFiat(this, { n: supply, short: true }) : "-";
     const collaterilazationText = !Number.isNaN(collaterilazation)
       ? toPercent({ n: collaterilazation })
       : "-";

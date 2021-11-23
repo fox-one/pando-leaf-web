@@ -55,7 +55,7 @@ export default class MarketItemInfos extends Vue {
       maxAvailable,
       nextPrice,
     } = getters.getMarketFields(this.collateral.id);
-    const { toPrecision, toPercent } = this.$utils.number;
+    const { toPrecision, toPercent, toFiat } = this.$utils.number;
 
     const rate = collateralFiat / Number(this.collateral.art);
 
@@ -65,10 +65,10 @@ export default class MarketItemInfos extends Vue {
     return {
       name: this.collateral.name,
       price: toPrecision({ n: this.collateral.price }),
-      available: toPrecision({ n: maxAvailable }),
+      available: toFiat(this, { n: maxAvailable, short: true }),
       rate: Number.isNaN(rate) ? "-" : toPercent({ n: rate }),
-      collateralAmount: toPrecision({ n: collateralAmount }),
-      debtAmount: toPrecision({ n: debtAmount }),
+      collateralAmount: toFiat(this, { n: collateralAmount, short: true }),
+      debtAmount: toFiat(this, { n: debtAmount, short: true }),
       collateralFiat: "$" + toPrecision({ n: collateralFiat }),
       collateralSymbol,
       debtSymbol,
