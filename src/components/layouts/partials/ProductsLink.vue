@@ -58,7 +58,7 @@ class PandoProductionNav extends Vue {
         title: "Pando Rings",
         check: false,
         disabled: false,
-        href: "https://leaf.pando.im",
+        href: "https://rings.pando.im",
       },
     ];
   }
