@@ -10,7 +10,7 @@
         </v-layout>
 
         <v-btn depressed small fab color="primary">
-          <v-icon @click="$emit('add')"> $FIconAdd </v-icon>
+          <v-icon @click="$emit('add')" color="greyscale_7"> $FIconAdd </v-icon>
         </v-btn>
       </v-layout>
 
