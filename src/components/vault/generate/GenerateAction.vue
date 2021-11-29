@@ -76,10 +76,12 @@ export default class extends Vue {
     }
   }
 
-  requestAction() {
+  async requestAction() {
     if (this.loading) return;
+
     this.loading = true;
     this.follow_id = this.$utils.helper.uuidV4();
+
     const request = {
       user_id: this.user_id,
       follow_id: this.follow_id,
@@ -89,7 +91,7 @@ export default class extends Vue {
     } as API.ActionPayload;
 
     try {
-      this.$utils.payment.requestPayment(this, request, {
+      await this.$utils.payment.requestPayment(this, request, {
         success: () => {
           this.loading = false;
           this.$emit("success");
@@ -99,6 +101,7 @@ export default class extends Vue {
         },
       });
     } catch (error) {
+      this.$utils.helper.errorHandler(this, error);
       this.loading = false;
     }
   }

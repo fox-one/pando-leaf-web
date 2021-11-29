@@ -2,15 +2,7 @@ import Vue from "vue";
 import { TransactionStatus } from "@/enums";
 import { v4 as uuid } from "uuid";
 
-export function errorHandler(
-  vm: Vue,
-  error: {
-    status?: number;
-    message?: string;
-    msg?: string;
-    code: string | number;
-  }
-) {
+export function errorHandler(vm: Vue, error: any) {
   const fallback = "未知错误";
   const errorcode = error.code !== -1 ? error.code : error.status;
   const i18nMessage = vm.$t(`errorcode.${errorcode}`).toString();
