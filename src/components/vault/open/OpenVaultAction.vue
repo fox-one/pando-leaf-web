@@ -55,7 +55,7 @@ export default class OpenVaultAction extends Vue {
         "uuid",
         this.collateral?.id,
         "decimal",
-        this.$utils.number.format({ n: this.mint, dp: 8 }),
+        this.mint,
       ],
     } as API.ActionPayload;
 

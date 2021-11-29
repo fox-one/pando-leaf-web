@@ -20,7 +20,7 @@ import { ACTION_ASSET_ID, EVENTS } from "~/constants";
 @Component({
   components: {},
 })
-export default class extends Vue {
+export default class GenerateAction extends Vue {
   @Get("account/userId") user_id;
 
   @Prop() vault!: API.Vault;
