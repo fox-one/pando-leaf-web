@@ -59,7 +59,7 @@ export default class AuctionDebtAction extends Vue {
 
   // 拍卖第一阶段 付款为输入金额，拍卖第二阶段，付款为总债务数额
   // 第二阶段才需要在parameter上附带 decimal 和 amount
-  confirm() {
+  async confirm() {
     if (this.loading) return;
     this.loading = true;
 
@@ -79,15 +79,20 @@ export default class AuctionDebtAction extends Vue {
       ],
     } as API.ActionPayload;
 
-    this.$utils.payment.requestPayment(this, request, {
-      success: () => {
-        this.loading = false;
-        this.$emit("success");
-      },
-      error: () => {
-        this.loading = false;
-      },
-    });
+    try {
+      this.$utils.payment.requestPayment(this, request, {
+        success: () => {
+          this.loading = false;
+          this.$emit("success");
+        },
+        error: () => {
+          this.loading = false;
+        },
+      });
+    } catch (error) {
+      this.$utils.helper.errorHandler(this, error);
+      this.loading = false;
+    }
   }
 }
 </script>
