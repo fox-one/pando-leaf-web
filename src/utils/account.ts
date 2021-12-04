@@ -80,6 +80,22 @@ export async function logout(vm: Vue) {
   ]);
 }
 
+export function requestLogout(vm: Vue, cbs: { onDisconnect?: any }) {
+  vm.$uikit.dialog.show({
+    title: vm.$t("common.confirm") as string,
+    text: vm.$t("disconnect.confrirm") as string,
+    type: "warning",
+    confirm: {
+      text: vm.$t("disconnect") as string,
+      callback: () => {
+        vm.$utils.account.logout(vm);
+
+        cbs?.onDisconnect?.();
+      },
+    },
+  });
+}
+
 export function openAuth(vm: Vue) {
   vm.$root.$emit(EVENTS.OPEN_AUTH);
 }

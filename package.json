@@ -20,17 +20,24 @@
     "generate": "nuxt generate",
     "i18n": "node ./scripts/i18n.js"
   },
+  "resolutions": {
+    "vuetify": "2.5.8",
+    "nuxt": "2.15.8",
+    "vue": "2.6.12",
+    "@foxone/icons": "^3.0.1-47",
+    "@foxone/uikit": "^3.0.1-47"
+  },
   "dependencies": {
-    "@foxone/fennec-base": "^0.3.8-1",
-    "@foxone/fennec-dapp": "^0.3.8-1",
-    "@foxone/finance-ui": "^0.1.8",
-    "@foxone/icons": "^3.0.1-44",
+    "@foxone/fennec-base": "^0.4.5-2",
+    "@foxone/fennec-dapp": "^0.4.5-2",
+    "@foxone/icons": "^3.0.1-47",
+    "@foxone/pando-ui": "^0.0.2-9",
     "@foxone/pandoseed": "^0.9.13",
-    "@foxone/uikit": "^3.0.1-44",
-    "@foxone/utils": "^0.2.12",
+    "@foxone/uikit": "^3.0.1-47",
+    "@foxone/utils": "^0.2.19",
     "@mdi/js": "^5.5.55",
-    "@nuxt/types": "^2.15.8",
-    "@nuxtjs/axios": "^5.13.6",
+    "@nuxt/types": "^2.14.6",
+    "@nuxtjs/axios": "5.12.2",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.2",
     "@vue/composition-api": "^1.1.1",
@@ -82,6 +89,8 @@
     "nodemon": "^2.0.7",
     "prettier": "^2.1.2",
     "stylus": "^0.54.7",
-    "stylus-loader": "^4.0.0"
+    "stylus-loader": "^4.0.0",
+    "ts-node": "^9.1.1"
+
   }
 }

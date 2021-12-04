@@ -88,6 +88,7 @@ declare namespace Getter {
       collateral: API.Collateral | null
     ) => PredictionFields;
 
+    "asset/walletBlance": number;
     "asset/assetsMap": Record<string, API.Asset>;
     "asset/walletAssetsMap": Record<string, API.MixinAsset>;
     "asset/getAssetById": State.GetAssetById;

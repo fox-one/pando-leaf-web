@@ -3,6 +3,7 @@ import createHttpService from "~/services/create";
 import utils from "@/utils";
 import { CONFIG } from "~/constants";
 import Fennec from "@foxone/fennec-dapp";
+import type { PandoSeedMethods } from "@foxone/pandoseed/types/utils/plugin";
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -10,6 +11,7 @@ declare module "vue/types/vue" {
     $http: ReturnType<typeof createHttpService>;
     $icons: typeof utils.icons;
     $fennec: Fennec;
+    $pandoseed: PandoSeedMethods;
   }
 }
 
@@ -19,6 +21,7 @@ declare module "@nuxt/types" {
     $http: ReturnType<typeof createHttpService>;
     $icons: typeof utils.icons;
     $fennec: Fennec;
+    $pandoseed: PandoSeedMethods;
   }
 }
 
@@ -28,6 +31,7 @@ declare module "vuex/types/index" {
     $http: ReturnType<typeof createHttpService>;
     $icons: typeof utils.icons;
     $fennec: Fennec;
+    $pandoseed: PandoSeedMethods;
   }
 }
 

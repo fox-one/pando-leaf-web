@@ -5,18 +5,17 @@
         <account />
       </div>
 
-      <products-link />
+      <pando-products :current-id="'leaf'" z-index="111" />
     </v-layout>
   </f-app-bar>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import ProductsLink from "../partials/ProductsLink.vue";
 import Account from "../partials/Account.vue";
 
 @Component({
-  components: { Account, ProductsLink },
+  components: { Account },
 })
 class AppBarHome extends Vue {
   get appbar() {
