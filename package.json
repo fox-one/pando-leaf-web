@@ -20,14 +20,17 @@
     "generate": "nuxt generate",
     "i18n": "node ./scripts/i18n.js"
   },
+  "resolutions": {
+    "@foxone/utils": "^0.2.19"
+  },
   "dependencies": {
-    "@foxone/fennec-base": "^0.3.8-1",
-    "@foxone/fennec-dapp": "^0.3.8-1",
+    "@foxone/fennec-base": "^0.4.5-2",
+    "@foxone/fennec-dapp": "^0.4.5-2",
     "@foxone/finance-ui": "^0.1.8",
     "@foxone/icons": "^3.0.1-44",
     "@foxone/pandoseed": "^0.9.13",
     "@foxone/uikit": "^3.0.1-44",
-    "@foxone/utils": "^0.2.12",
+    "@foxone/utils": "^0.2.19",
     "@mdi/js": "^5.5.55",
     "@nuxt/types": "^2.15.8",
     "@nuxtjs/axios": "^5.13.6",

@@ -1224,7 +1224,7 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@foxone/fennec-base@0.3.8", "@foxone/fennec-base@^0.3.7", "@foxone/fennec-base@^0.3.8-1":
+"@foxone/fennec-base@0.3.8", "@foxone/fennec-base@^0.3.7":
   version "0.3.8"
   resolved "https://registry.npmjs.org/@foxone/fennec-base/-/fennec-base-0.3.8.tgz#bcc7b570d9c49c07323003e5341f7ebd81481a4c"
   integrity sha512-lWpN89c5KQDJPP+Rb2qcG+SjZ8OzVQoRkdmGpusOKFhIHIp7Hm3C6x2QtQz2CEDYtJ55VSpHvsbKtU+mds6lOw==
@@ -1234,12 +1234,29 @@
     lodash "^4.17.21"
     rxjs "^6.6.3"
 
-"@foxone/fennec-dapp@^0.3.7", "@foxone/fennec-dapp@^0.3.8-1":
+"@foxone/fennec-base@0.4.5-2", "@foxone/fennec-base@^0.4.5-2":
+  version "0.4.5-2"
+  resolved "https://registry.npmjs.org/@foxone/fennec-base/-/fennec-base-0.4.5-2.tgz#77633b1396c347a34dc99a2f810dee92f1c2e0cd"
+  integrity sha512-3w7EBH6TeuPzecbBAlGy2pdd/I3qxNm5inlf+pm/c5vHLDTc0t0nZ/qwdi1dktJh98xPg6gmU5zkvlqS/KXtTg==
+  dependencies:
+    browser-passworder "^2.0.3"
+    extensionizer "^1.0.1"
+    lodash "^4.17.21"
+    rxjs "^6.6.3"
+
+"@foxone/fennec-dapp@^0.3.7":
   version "0.3.8"
   resolved "https://registry.npmjs.org/@foxone/fennec-dapp/-/fennec-dapp-0.3.8.tgz#2bb45ce82b1ce358d5c760d2b215026316e56934"
   integrity sha512-5mALuf0wlH8CVP0ZU1HyOf281rNA705KvJTU5LIgJ1UaNot65nXwtnbB9JUs5yrNf3tyZTqHdtv4SsH9mImDZA==
   dependencies:
     "@foxone/fennec-base" "0.3.8"
+
+"@foxone/fennec-dapp@^0.4.5-2":
+  version "0.4.5-2"
+  resolved "https://registry.npmjs.org/@foxone/fennec-dapp/-/fennec-dapp-0.4.5-2.tgz#3758fb14d241070d2a4eeeafbc7809de80eed6be"
+  integrity sha512-pAc3hWDUbxB6yI4SblbHQ/tPXbsfpGF25eZxrUcB+XAVFMUL4uIoKdZrM/26k2RFiaGpGgioc9DRKemLOBnvyg==
+  dependencies:
+    "@foxone/fennec-base" "0.4.5-2"
 
 "@foxone/finance-ui@^0.1.8":
   version "0.1.8"
@@ -1324,19 +1341,10 @@
     vue-class-component "^7.2.3"
     vue-property-decorator "^9.1.2"
 
-"@foxone/utils@^0.2.12":
-  version "0.2.12"
-  resolved "https://registry.npmjs.org/@foxone/utils/-/utils-0.2.12.tgz#4caa774885ada9475cc75db1de0f4060a8c288e1"
-  integrity sha512-2M9YWEJKWOtUDvLNMtkGuxy9//afEtqRs6BzEOIjpm6a0lPbdlZV4iynD2Ouz8u+IAjoLUgIHjaApymGXbVwsQ==
-  dependencies:
-    axios "^0.21.1"
-    bignumber.js "^9.0.1"
-    dayjs "^1.10.4"
-
-"@foxone/utils@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.nlark.com/@foxone/utils/download/@foxone/utils-0.2.6.tgz#b9e8b6fa8529d065d253c84b610a1c888d3821f7"
-  integrity sha1-uei2+oUp0GXSU8hLYQociI04Ifc=
+"@foxone/utils@^0.2.12", "@foxone/utils@^0.2.19", "@foxone/utils@^0.2.6":
+  version "0.2.19"
+  resolved "https://registry.npmjs.org/@foxone/utils/-/utils-0.2.19.tgz#b542625596630f017266380b7c82114241f69bfc"
+  integrity sha512-e9XFo3z9wofvGGglkygI/1+r2RvTVKN0zgb6rllag7ZEokve3wDVTXqP3A5c9uSUubj6DJbzJUDywUgNe4Zivg==
   dependencies:
     axios "^0.21.1"
     bignumber.js "^9.0.1"
