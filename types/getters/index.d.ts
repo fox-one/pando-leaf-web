@@ -63,6 +63,8 @@ declare namespace Getter {
     curPrice: string;
     debtFiatValue: number;
     collateralFiatValue: number;
+    vaultCollateralAmount: string;
+    vaultDebtAmount: string;
   }
 
   export interface PredictionFields {
@@ -99,6 +101,7 @@ declare namespace Getter {
 
     "auctions/flipsDone": API.Flip[];
     "auctions/flipsAuctioning": API.Flip[];
+    "auctions/flipKickEvent": API.FlipEvent | undefined;
 
     "auth/isLogged": boolean;
     "auth/canReadAsset": boolean;

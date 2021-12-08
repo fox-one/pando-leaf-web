@@ -5,16 +5,12 @@
     </div>
 
     <v-layout v-else column>
-      <auction-status :flip="flip" />
-
       <f-panel
         elevation="none"
         class="collateral mt-4 pa-4 no-border-radius greyscale_1--text"
       >
         <v-layout column>
-          <auction-detail :flip="flip" />
-
-          <f-divider class="my-4" />
+          <auction-detail v-if="!meta.isDone" :flip="flip" />
 
           <auction-done-detail v-if="meta.isDone" :flip="flip" />
 

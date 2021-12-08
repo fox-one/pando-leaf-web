@@ -24,6 +24,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import AuctionHistoryItem from "./AuctionHistoryItem.vue";
 import { FlipAction } from "~/enums";
+import { Sync } from "vuex-pathify";
 
 @Component({
   components: {
@@ -34,11 +35,12 @@ export default class AuctionEventHistory extends Vue {
   @Prop() flipId!: string;
   @Prop() flip!: API.Flip;
 
-  events: API.FlipEvent[] = [];
+  @Sync("auctions/events") events!: API.FlipEvent[];
 
   intervalId = 0 as any;
 
   mounted() {
+    this.events = [];
     this.requestEvents();
     this.intervalId = setInterval(() => {
       if (this.flip?.action === FlipAction.FlipDeal) {
