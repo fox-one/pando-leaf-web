@@ -1,24 +1,38 @@
 <template>
   <v-form ref="form">
-    <f-input
-      v-model="inputCollateralAmount"
-      class="input-collateral"
-      type="number"
-      :label="meta.auctionSymbol"
-      :rules="[meetCollateral]"
-    >
-      <template #prepend>
-        <f-mixin-asset-logo :size="24" :logo="meta.auctionLogo" />
-      </template>
-    </f-input>
-
-    <div class="ml-8 greyscale_3--text f-caption">
-      {{ meta.inputFiatValue }}
+    <div class="text-3 greyscale_1--text my-6">
+      {{ $t("auction.collateral-to-receive") }}
     </div>
 
-    <auction-max-bid :flip="flip" :amount.sync="inputCollateralAmount" />
+    <base-form-input
+      :amount.sync="inputCollateralAmount"
+      type="number"
+      :label="meta.auctionSymbol"
+      :assets="[meta.auctionAsset]"
+      :asset.sync="meta.auctionAsset"
+      :selectable="false"
+      hide-details
+      fullfilled
+      :placeholder="$t('auction.collateral-amount-placeholder')"
+      :fillable="false"
+      :rules="[meetCollateral]"
+    >
+    </base-form-input>
 
-    <auction-bid-warning :flip="flip" :amount.sync="inputCollateralAmount" />
+    <auction-max-bid
+      class="my-3"
+      :flip="flip"
+      :amount.sync="inputCollateralAmount"
+    />
+
+    <auction-form-infos
+      class="my-3"
+      :amount="inputCollateralAmount"
+      :type="'collateral'"
+      :flip="flip"
+    ></auction-form-infos>
+
+    <div class="my-3 tip greyscale_3--text">{{ meta.stageEndTip }}</div>
 
     <auction-collateral-action
       :amount="inputCollateralAmount"
@@ -33,12 +47,14 @@ import { Vue, Component, Prop, Ref } from "vue-property-decorator";
 import AuctionMaxBid from "@/components/auction/AuctionMaxBid.vue";
 import AuctionBidWarning from "@/components/auction/AuctionBidWarning.vue";
 import AuctionCollateralAction from "./AuctionCollateralAction.vue";
+import AuctionFormInfos from "./AuctionFormInfos.vue";
 
 @Component({
   components: {
     AuctionMaxBid,
     AuctionBidWarning,
     AuctionCollateralAction,
+    AuctionFormInfos,
   },
 })
 export default class AuctionCollateralForm extends Vue {
@@ -48,6 +64,34 @@ export default class AuctionCollateralForm extends Vue {
 
   inputCollateralAmount = "";
 
+  get meta() {
+    const getters = this.$store.getters as Getter.GettersTree;
+    const {
+      auctionAsset,
+      auctionSymbol,
+      debtSymbol,
+      isStage2,
+      maxBid,
+      collateral,
+    } = getters.getFlipFields(this.flip);
+    const { toPercent } = this.$utils.number;
+
+    return {
+      auctionLogo: auctionAsset?.logo,
+      auctionAsset,
+      auctionSymbol,
+      isStage2,
+      maxBid,
+      begText: toPercent({
+        n: +(collateral?.beg ?? "1.03") - 1,
+      }),
+      stageEndTip: this.$t("auction.rule.stage-collateral-end", {
+        amount: this.flip.bid,
+        symbol: debtSymbol,
+      }),
+    };
+  }
+
   meetCollateral(val) {
     return (
       +val <= +this.meta.maxBid ||
@@ -55,32 +99,6 @@ export default class AuctionCollateralForm extends Vue {
         beg: this.meta.begText,
       })
     );
-  }
-
-  get meta() {
-    const getters = this.$store.getters as Getter.GettersTree;
-    const {
-      auctionAsset,
-      auctionSymbol,
-      isStage2,
-      maxBid,
-      collateral,
-      collateralPrice,
-    } = getters.getFlipFields(this.flip);
-    const { toPrecision, toPercent } = this.$utils.number;
-
-    return {
-      auctionLogo: auctionAsset?.logo,
-      auctionSymbol,
-      isStage2,
-      maxBid,
-      begText: toPercent({
-        n: +(collateral?.beg ?? "1.03") - 1,
-      }),
-      inputFiatValue: `≈ $${toPrecision({
-        n: +collateralPrice * +this.inputCollateralAmount,
-      })}`,
-    };
   }
 
   handleSuccess() {

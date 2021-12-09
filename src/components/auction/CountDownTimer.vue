@@ -41,22 +41,27 @@ export default class AuctionTimer extends Vue {
 
     clearInterval(this.countId);
     this.countDownTimer = this.diffSeconds;
+    this.setUpTimer();
     this.countId = setInterval(() => {
-      this.countDownTimer--;
-      this.countDownText = this.format(this.countDownTimer);
-      this.countDownText.split(":").forEach((item, index) => {
-        if (index === 0) {
-          this.hour = item;
-        } else if (index === 1) {
-          this.minute = item;
-        } else if (index === 2) {
-          this.second = item;
-        }
-      });
-      if (this.countDownTimer <= 0) {
-        clearInterval(this.countId);
-      }
+      this.setUpTimer();
     }, 1000);
+  }
+
+  setUpTimer() {
+    this.countDownTimer--;
+    this.countDownText = this.format(this.countDownTimer);
+    this.countDownText.split(":").forEach((item, index) => {
+      if (index === 0) {
+        this.hour = item;
+      } else if (index === 1) {
+        this.minute = item;
+      } else if (index === 2) {
+        this.second = item;
+      }
+    });
+    if (this.countDownTimer <= 0) {
+      clearInterval(this.countId);
+    }
   }
 
   stop() {

@@ -51,9 +51,14 @@
             {{ `${meta.vaultCollateralAmount} ${meta.auctionSymbol}` }}
           </div>
 
-          <div class="action-detail-label" v-if="isStage2">Current Bid</div>
+          <div class="action-detail-label" v-if="meta.isStage2">
+            Current Bid
+          </div>
 
-          <div class="action-detail-value font-weight-medium" v-if="isStage2">
+          <div
+            class="action-detail-value font-weight-medium"
+            v-if="meta.isStage2"
+          >
             {{ `${flip.lot} ${meta.auctionSymbol}` }}
           </div>
         </v-col>
@@ -134,10 +139,10 @@ export default class AuctionDetail extends Vue {
       vaultDebtAmount,
       vaultCollateralAmount,
       curPrice,
-      isStage1: true,
+      isStage1,
       isStage2,
       bidLabel,
-      diffSeconds: 1500,
+      diffSeconds,
     };
   }
 }

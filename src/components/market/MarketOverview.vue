@@ -1,14 +1,10 @@
 <template>
   <div class="mx-4">
-    <div class="market-overview-label mt-10 greyscale_1--text">
-      {{ $t("market.overview") }}
-    </div>
-
-    <v-row no-gutters class="pt-6 mb-6">
+    <v-row no-gutters class="mt-5">
       <v-col
         v-for="info in infos"
         :key="`${info.title}_${info.value}`"
-        class="my-4 pa-0"
+        class="mb-5 pa-0"
         cols="6"
         sm="4"
         md="4"

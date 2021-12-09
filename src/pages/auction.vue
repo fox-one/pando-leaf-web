@@ -7,7 +7,7 @@
     <v-layout v-else column>
       <f-panel
         elevation="none"
-        class="collateral mt-4 pa-4 no-border-radius greyscale_1--text"
+        class="collateral pa-4 no-border-radius greyscale_1--text"
       >
         <v-layout column>
           <auction-detail v-if="!meta.isDone" :flip="flip" />
@@ -15,8 +15,6 @@
           <auction-done-detail v-if="meta.isDone" :flip="flip" />
 
           <v-layout v-else column>
-            <auction-rules :flip="flip" />
-
             <auction-debt-form v-if="meta.isStage1" :flip="flip" />
 
             <auction-collateral-form v-else-if="meta.isStage2" :flip="flip" />
@@ -37,7 +35,6 @@
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import AuctionStatus from "@/components/auction/AuctionStatus.vue";
-import AuctionRules from "@/components/auction/AuctionRules.vue";
 import AuctionDetail from "@/components/auction/AuctionDetail.vue";
 import AuctionDoneDetail from "@/components/auction/AuctionDoneDetail.vue";
 import AuctionEventHistory from "@/components/auction/AuctionEventHistory.vue";
@@ -48,7 +45,6 @@ import { FlipAction } from "~/enums";
 @Component({
   components: {
     AuctionStatus,
-    AuctionRules,
     AuctionDetail,
     AuctionDoneDetail,
     AuctionEventHistory,
