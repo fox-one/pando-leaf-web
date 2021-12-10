@@ -10,13 +10,17 @@
         <v-col cols="6" class="pl-6">
           <f-mixin-asset-logo :size="32" :logo="meta.debtLogo" />
 
-          <div class="action-detail-label greyscale_1--text">Vault Debt</div>
+          <div class="action-detail-label greyscale_1--text">
+            {{ $t("auction.vault-debt") }}
+          </div>
 
           <div class="action-detail-value">
             {{ `${meta.vaultDebtAmount} ${meta.debtSymbol}` }}
           </div>
 
-          <div class="action-detail-label">Final Debt Bid</div>
+          <div class="action-detail-label">
+            {{ $t("auction.final-debt-bid") }}
+          </div>
 
           <div class="action-detail-value font-weight-medium">
             {{ `${flip.bid} ${meta.debtSymbol}` }}
@@ -28,14 +32,16 @@
           <f-mixin-asset-logo :size="32" :logo="meta.auctionLogo" />
 
           <div class="action-detail-label greyscale_1--text">
-            Vault Collateral
+            {{ $t("auction.vault-collateral") }}
           </div>
 
           <div class="action-detail-value">
             {{ `${meta.vaultCollateralAmount} ${meta.auctionSymbol}` }}
           </div>
 
-          <div class="action-detail-label">Final Collateral Bid</div>
+          <div class="action-detail-label">
+            {{ $t("auction.final-collateral-bid") }}
+          </div>
 
           <div class="action-detail-value font-weight-medium">
             {{ `${flip.lot} ${meta.auctionSymbol}` }}

@@ -24,7 +24,9 @@
         >
           <f-mixin-asset-logo :size="32" :logo="meta.debtLogo" />
 
-          <div class="action-detail-label mt-2">Vault Debt</div>
+          <div class="action-detail-label mt-2">
+            {{ $t("auction.vault-debt") }}
+          </div>
 
           <div class="action-detail-value">
             {{ `${meta.vaultDebtAmount} ${meta.debtSymbol}` }}
@@ -51,7 +53,9 @@
         >
           <f-mixin-asset-logo :size="32" :logo="meta.auctionLogo" />
 
-          <div class="action-detail-label mt-2">Vault Collateral</div>
+          <div class="action-detail-label mt-2">
+            {{ $t("auction.vault-collateral") }}
+          </div>
 
           <div class="action-detail-value">
             {{ `${meta.vaultCollateralAmount} ${meta.auctionSymbol}` }}
@@ -62,7 +66,7 @@
             :class="meta.isYourBid ? 'your-bid' : ''"
             v-if="meta.isStage2"
           >
-            Current Bid {{ meta.isYourBid ? "(You)" : "" }}
+            {{ $t("auction.current-bid") }} {{ meta.isYourBid ? "(You)" : "" }}
           </div>
 
           <div class="action-detail-value" v-if="meta.isStage2">
@@ -93,14 +97,10 @@ export default class AuctionDetail extends Vue {
       isDone,
       isStage1,
       isStage2,
-      debtFiatValue,
-      collateralValue,
       auctionSymbol,
       debtSymbol,
       debtAsset,
       auctionAsset,
-      curPrice,
-      collateralFiatValue,
       vaultDebtAmount,
       vaultCollateralAmount,
       isYourBid,
@@ -109,21 +109,9 @@ export default class AuctionDetail extends Vue {
     const debtLogo = debtAsset?.logo;
     const auctionLogo = auctionAsset?.logo;
 
-    const collateralAmountText = isStage2
-      ? `${this.flip.tab} ${debtSymbol}`
-      : `${this.flip.lot} ${auctionSymbol}`;
-
-    const collateralValueText = isStage2
-      ? `$${debtFiatValue}`
-      : `${collateralValue} ${debtSymbol}`;
-
-    const collateralFiatValueText = this.$utils.number.format({
-      n: collateralFiatValue,
-    });
-
     const header = isStage2 ? "ROUND 2" : "ROUND 1";
 
-    const bidLabel = isStage1 ? "Current Bid" : "ROUND 1 Bid";
+    const bidLabel = isStage1 ? this.$t("auction.current-bid") : "ROUND 1 Bid";
 
     let diffSeconds = dayjs(this.flip.tic).diff(dayjs(), "seconds");
     if (
@@ -140,13 +128,8 @@ export default class AuctionDetail extends Vue {
       auctionLogo,
       debtSymbol,
       auctionSymbol,
-      collateralAmountText,
-      collateralValueText,
-      collateralFiatValue,
-      collateralFiatValueText,
       vaultDebtAmount,
       vaultCollateralAmount,
-      curPrice,
       isStage1,
       isStage2,
       bidLabel,
