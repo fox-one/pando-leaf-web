@@ -49,7 +49,7 @@ export default class AuctionMaxBid extends Vue {
         "Highest bids = The vault’s original debt",
       ],
       minBid,
-      value: `${format({ n: minBid })} ${auctionSymbol}`,
+      value: `${format({ n: maxBid, dp: 8 })} ${auctionSymbol}`,
       fillable: true,
     };
   }

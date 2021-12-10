@@ -29,6 +29,7 @@
   "auction.rule.stage-collateral-1": "您現在處於拍賣第二階段-您將支付全部債務的金額，獲得您輸入的抵押物的數量。願意獲得最少抵押物的競拍人將勝出。",
   "auction.rule.stage-collateral-2": "您的出價須最少低於前一出價人{beg}。",
   "auction.rule.stage-collateral-3": "競拍不可取消。若競拍成功，拍賣結束後您將收到抵押物；如若失敗，您所支付的金額將退還給您。",
+  "auction.rule.stage-collateral-end":"倒計時結束後，出價最低者將贏得拍賣，本阶段出價者需支付第一輪競價的金額",
   "auction.rule.stage-price": "每次加價不得少於當前出價的 {beg}，最高出價 {amount} {symbol}",
   "auction.rule.stage-price-1": "您現在處於拍賣第一階段-競拍債務數量，願意負擔最多債務的競拍人將勝出。",
   "auction.rule.stage-price-2": "您的出價須至少高於前一出價人{beg}。最高可出價金額為{amount} {symbol}，為本次待拍賣的全部債務金額。",

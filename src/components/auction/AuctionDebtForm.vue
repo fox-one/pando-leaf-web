@@ -19,11 +19,7 @@
     >
     </base-form-input>
 
-    <auction-max-bid
-      class="my-3"
-      :flip="flip"
-      :amount.sync="inputCollateralAmount"
-    />
+    <auction-max-bid class="my-3" :flip="flip" :amount.sync="inputDebtAmount" />
 
     <auction-form-infos
       class="my-3"

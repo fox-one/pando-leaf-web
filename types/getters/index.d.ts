@@ -65,6 +65,7 @@ declare namespace Getter {
     collateralFiatValue: number;
     vaultCollateralAmount: string;
     vaultDebtAmount: string;
+    isYourBid: boolean;
   }
 
   export interface PredictionFields {
@@ -105,5 +106,7 @@ declare namespace Getter {
 
     "auth/isLogged": boolean;
     "auth/canReadAsset": boolean;
+
+    "account/userId": string;
   };
 }

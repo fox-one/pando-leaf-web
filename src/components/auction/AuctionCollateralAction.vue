@@ -3,6 +3,7 @@
     <f-button
       :disabled="meta.confirmDisabled"
       color="primary"
+      :loading="loading"
       @click="confirm"
       class="px-8"
     >

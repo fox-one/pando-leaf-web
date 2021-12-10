@@ -8,8 +8,6 @@
       <auction-done-detail v-if="meta.isDone" :flip="flip" />
 
       <div v-else>
-        <auction-rules :flip="flip" />
-
         <auction-debt-form v-if="meta.isStage1" />
 
         <auction-collateral-form v-else />
@@ -20,7 +18,6 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
-import AuctionRules from "@/components/auction/AuctionRules.vue";
 import AuctionDetail from "@/components/auction/AuctionDetail.vue";
 import AuctionDoneDetail from "@/components/auction/AuctionDoneDetail.vue";
 import AuctionDebtForm from "@/components/auction/AuctionDebtForm.vue";
@@ -28,7 +25,6 @@ import AuctionCollateralForm from "@/components/auction/AuctionCollateralForm.vu
 
 @Component({
   components: {
-    AuctionRules,
     AuctionDetail,
     AuctionDoneDetail,
     AuctionDebtForm,

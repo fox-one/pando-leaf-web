@@ -24,15 +24,21 @@
         >
           <f-mixin-asset-logo :size="32" :logo="meta.debtLogo" />
 
-          <div class="action-detail-label semibold">Vault Debt</div>
+          <div class="action-detail-label mt-2">Vault Debt</div>
 
           <div class="action-detail-value">
             {{ `${meta.vaultDebtAmount} ${meta.debtSymbol}` }}
           </div>
 
-          <div class="action-detail-label">{{ meta.bidLabel }}</div>
+          <div
+            class="action-detail-label"
+            :class="meta.isYourBid && meta.isStage1 ? 'your-bid' : ''"
+          >
+            {{ meta.bidLabel }}
+            {{ meta.isYourBid && meta.isStage1 ? "(You)" : "" }}
+          </div>
 
-          <div class="action-detail-value font-weight-medium">
+          <div class="action-detail-value">
             {{ `${flip.bid} ${meta.debtSymbol}` }}
           </div>
         </v-col>
@@ -45,20 +51,21 @@
         >
           <f-mixin-asset-logo :size="32" :logo="meta.auctionLogo" />
 
-          <div class="action-detail-label semibold">Vault Collateral</div>
+          <div class="action-detail-label mt-2">Vault Collateral</div>
 
           <div class="action-detail-value">
             {{ `${meta.vaultCollateralAmount} ${meta.auctionSymbol}` }}
           </div>
 
-          <div class="action-detail-label" v-if="meta.isStage2">
-            Current Bid
-          </div>
-
           <div
-            class="action-detail-value font-weight-medium"
+            class="action-detail-label"
+            :class="meta.isYourBid ? 'your-bid' : ''"
             v-if="meta.isStage2"
           >
+            Current Bid {{ meta.isYourBid ? "(You)" : "" }}
+          </div>
+
+          <div class="action-detail-value" v-if="meta.isStage2">
             {{ `${flip.lot} ${meta.auctionSymbol}` }}
           </div>
         </v-col>
@@ -96,6 +103,7 @@ export default class AuctionDetail extends Vue {
       collateralFiatValue,
       vaultDebtAmount,
       vaultCollateralAmount,
+      isYourBid,
     } = getters.getFlipFields(this.flip);
 
     const debtLogo = debtAsset?.logo;
@@ -143,6 +151,7 @@ export default class AuctionDetail extends Vue {
       isStage2,
       bidLabel,
       diffSeconds,
+      isYourBid,
     };
   }
 }
@@ -172,6 +181,7 @@ export default class AuctionDetail extends Vue {
 }
 
 .auction-detail-card {
+  font-weight: 500;
   background: #2e2e2e;
   color: #ccc;
 
@@ -185,6 +195,7 @@ export default class AuctionDetail extends Vue {
 
   .active {
     color: #fff;
+    font-weight: 600 !important;
     background: linear-gradient(
       180deg,
       rgba(143, 230, 19, 0.21) 0%,
@@ -195,18 +206,16 @@ export default class AuctionDetail extends Vue {
 }
 
 .action-detail-label {
-  font-weight: 500;
   font-size: 12px;
   line-height: 15px;
   margin-top: 24px;
-  &.semibold {
-    font-weight: 600;
-    margin-top: 8px;
+
+  &.your-bid {
+    color: rgba(143, 230, 19, 1);
   }
 }
 
 .action-detail-value {
-  font-weight: 600;
   font-size: 13px;
   line-height: 16px;
   margin-top: 8px;

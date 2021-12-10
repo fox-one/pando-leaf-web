@@ -32,7 +32,10 @@
       :flip="flip"
     ></auction-form-infos>
 
-    <div class="my-3 tip greyscale_3--text">{{ meta.stageEndTip }}</div>
+    <div class="my-3 tip greyscale_3--text">
+      {{ meta.stageEndTip }}
+      <span class="greyscale_1--text">{{ meta.stageEndTipAmount }}</span>
+    </div>
 
     <auction-collateral-action
       :amount="inputCollateralAmount"
@@ -85,10 +88,8 @@ export default class AuctionCollateralForm extends Vue {
       begText: toPercent({
         n: +(collateral?.beg ?? "1.03") - 1,
       }),
-      stageEndTip: this.$t("auction.rule.stage-collateral-end", {
-        amount: this.flip.bid,
-        symbol: debtSymbol,
-      }),
+      stageEndTip: this.$t("auction.rule.stage-collateral-end"),
+      stageEndTipAmount: `(${this.flip.bid} ${debtSymbol})`,
     };
   }
 
@@ -109,7 +110,9 @@ export default class AuctionCollateralForm extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.input-collateral {
-  width: 100%;
+.tip {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
 }
 </style>
