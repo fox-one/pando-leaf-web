@@ -21,6 +21,7 @@ module.exports = {
     camelcase: "off",
     "no-empty": "off",
     "no-undef": "off",
+    "vue/script-setup-uses-vars": "off",
     "@typescript-eslint/camelcase": ["off"],
     "@typescript-eslint/no-explicit-any": ["off"],
     "@typescript-eslint/explicit-module-boundary-types": ["off"],
