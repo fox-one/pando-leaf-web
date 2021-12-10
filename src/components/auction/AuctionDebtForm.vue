@@ -1,24 +1,36 @@
 <template>
   <v-form ref="form">
-    <f-input
-      v-model="inputDebtAmount"
-      class="input-debt"
-      type="number"
-      :label="meta.debtSymbol"
-      :rules="[meetDebt]"
-    >
-      <template #prepend>
-        <f-mixin-asset-logo :size="24" :logo="meta.debtLogo" />
-      </template>
-    </f-input>
-
-    <div class="ml-8 greyscale_3--text f-caption">
-      {{ meta.inputFiatValue }}
+    <div class="text-3 greyscale_1--text my-6">
+      {{ $t("auction.debt-to-pay-for") }}
     </div>
 
-    <auction-min-bid :flip="flip" :debt-amount.sync="inputDebtAmount" />
+    <base-form-input
+      :amount.sync="inputDebtAmount"
+      type="number"
+      :label="meta.debtSymbol"
+      :assets="[meta.debtAsset]"
+      :asset.sync="meta.debtAsset"
+      :selectable="false"
+      hide-details
+      fullfilled
+      :placeholder="$t('auction.debt-amount-placeholder')"
+      :fillable="false"
+      :rules="[meetDebt]"
+    >
+    </base-form-input>
 
-    <auction-max-bid :flip="flip" :amount.sync="inputDebtAmount" />
+    <auction-max-bid class="my-3" :flip="flip" :amount.sync="inputDebtAmount" />
+
+    <auction-form-infos
+      class="my-3"
+      :amount="inputDebtAmount"
+      :type="'debt'"
+      :flip="flip"
+    />
+
+    <div class="my-3 tip greyscale_3--text">
+      {{ $t("auction.rule.stage-price-end") }}
+    </div>
 
     <auction-debt-action
       :amount="inputDebtAmount"
@@ -33,12 +45,16 @@ import { Vue, Component, Prop, Ref } from "vue-property-decorator";
 import AuctionMinBid from "@/components/auction/AuctionMinBid.vue";
 import AuctionMaxBid from "@/components/auction/AuctionMaxBid.vue";
 import AuctionDebtAction from "./AuctionDebtAction.vue";
+import AuctionFormInfos from "./AuctionFormInfos.vue";
+import BaseFormInput from "@/components/base/FormInput.vue";
 
 @Component({
   components: {
     AuctionMinBid,
     AuctionMaxBid,
     AuctionDebtAction,
+    AuctionFormInfos,
+    BaseFormInput,
   },
 })
 export default class AuctionDebtForm extends Vue {
@@ -50,7 +66,7 @@ export default class AuctionDebtForm extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { toPrecision, toPercent } = this.$utils.number;
+    const { toPercent } = this.$utils.number;
     const {
       isDone,
       debtSymbol,
@@ -58,7 +74,6 @@ export default class AuctionDebtForm extends Vue {
       minBid,
       collateral,
       maxBid,
-      debtPrice,
     } = getters.getFlipFields(this.flip);
 
     return {
@@ -71,9 +86,6 @@ export default class AuctionDebtForm extends Vue {
       begText: toPercent({
         n: +(collateral?.beg ?? "1.03") - 1,
       }),
-      inputFiatValue: `≈ $${toPrecision({
-        n: +debtPrice * +this.inputDebtAmount,
-      })}`,
     };
   }
 
@@ -97,7 +109,9 @@ export default class AuctionDebtForm extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.input-debt {
-  width: 100%;
+.tip {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
 }
 </style>

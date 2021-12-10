@@ -5,6 +5,7 @@ declare namespace State {
     limit: number;
     cursor: string | null;
     hasNext: boolean;
+    events: API.FlipEvent[];
   }
 
   export type GetFlipById = (id: string) => API.Flip | undefined;

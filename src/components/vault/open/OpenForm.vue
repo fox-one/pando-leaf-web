@@ -1,11 +1,10 @@
 <template>
-  <div class="ma-0 pa-4 pb-8">
+  <v-form ref="form" class="ma-0 pa-4 pb-8" autocomplete="off">
     <div class="text-3 mb-4 greyscale_1--text">
       {{ $t("common.deposit") }}
     </div>
 
     <base-form-input
-      ref="form-deposit"
       :amount.sync="bindDepositAmount"
       :asset="meta.collateralAsset"
       :rules="rulesDeposit"
@@ -17,7 +16,6 @@
     </div>
 
     <base-form-input
-      ref="form-debt"
       :amount.sync="bindDebtAmount"
       :asset="meta.debtAsset"
       :balance="meta.suggest"
@@ -35,7 +33,7 @@
       :disabled="validate.disabled"
       @success="handleSuccess"
     />
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts" scoped>
@@ -62,9 +60,7 @@ export default class OpenForm extends Vue {
 
   @PropSync("debtAmount") bindDebtAmount!: string;
 
-  @Ref("form-deposit") formDeposit!: BaseFormInput;
-
-  @Ref("form-debt") formDebt!: BaseFormInput;
+  @Ref("form") form!: any;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
@@ -100,8 +96,7 @@ export default class OpenForm extends Vue {
   }
 
   handleSuccess() {
-    this.formDeposit.getForm().reset();
-    this.formDebt.getForm().reset();
+    this.form.reset();
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });

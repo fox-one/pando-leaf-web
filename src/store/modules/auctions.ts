@@ -9,6 +9,7 @@ const state = (): State.Auctions => ({
   limit: 20,
   cursor: null,
   hasNext: true,
+  events: [],
 });
 
 const getters: GetterTree<State.Auctions, unknown> = {
@@ -27,6 +28,10 @@ const getters: GetterTree<State.Auctions, unknown> = {
   haveFlips(state) {
     return state.flips && state.flips?.length > 0;
   },
+
+  flipKickEvent(state) {
+    return state.events?.find((v) => v.action === FlipAction.FlipKick);
+  },
 };
 
 const mutations: MutationTree<State.Auctions> = {
@@ -40,6 +45,7 @@ const mutations: MutationTree<State.Auctions> = {
     state.hasNext = true;
     state.cursor = null;
     state.flips = [];
+    state.events = [];
   },
 };
 const actions: ActionTree<State.Auctions, any> = {
@@ -67,7 +73,7 @@ const actions: ActionTree<State.Auctions, any> = {
   },
 
   async clear({ commit }) {
-    commit("SET_VAULTS", []);
+    commit("RESET");
   },
 };
 

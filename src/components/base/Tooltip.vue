@@ -43,17 +43,23 @@
         v-for="(content, index) in contents"
         :key="content"
       >
-        {{ content }}
+        <div class="d-flex">
+          <div v-if="contents.length > 1" class="mr-1">{{ index }}.</div>
+          <div>
+            {{ content }}
 
-        <a
-          :href="learnMore"
-          class="blue--text vertical-center"
-          v-if="learnMore && index == contents.length - 1"
-        >
-          {{ $t("common.learn-more") }}
-          <v-icon color="blue" size="14"> $FIconLink4P </v-icon>
-        </a>
+            <a
+              :href="learnMore"
+              class="blue--text vertical-center"
+              v-if="learnMore && index == contents.length - 1"
+            >
+              {{ $t("common.learn-more") }}
+              <v-icon color="blue" size="14"> $FIconLink4P </v-icon>
+            </a>
+          </div>
+        </div>
       </div>
+
       <div class="my-8 text-center">
         <f-button
           rounded
@@ -103,10 +109,8 @@ export default class Tooltip extends Vue {
 .tooltip-content {
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
-  line-height: 1.375rem;
-  text-align: center;
-  letter-spacing: 0.011em;
+  font-size: 16px;
+  line-height: 24px;
 }
 .vertical-center {
   display: inline-flex;

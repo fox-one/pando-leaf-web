@@ -1,7 +1,6 @@
 <template>
-  <div class="ma-0 pa-4 pb-8">
+  <v-form ref="form" class="ma-0 pa-4 pb-8" autocomplete="off">
     <withdraw-form-input
-      ref="form-input"
       :vault="vault"
       :rules="rules"
       :amount.sync="bindAmount"
@@ -30,7 +29,7 @@
       :disabled="validate.disabled"
       @success="handleSuccess"
     />
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts" scoped>
@@ -54,7 +53,7 @@ export default class extends Vue {
 
   @PropSync("amount") bindAmount!: string;
 
-  @Ref("form-input") formInput!: WithdrawFormInput;
+  @Ref("form") form!: any;
 
   showTip = false;
 
@@ -130,7 +129,7 @@ export default class extends Vue {
   }
 
   handleSuccess() {
-    this.formInput.getForm().reset();
+    this.form.reset();
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });

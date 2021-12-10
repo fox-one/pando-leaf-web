@@ -2,6 +2,10 @@
   <div>
     <market-overview />
 
+    <f-divider />
+
+    <div class="text-3 ml-4 mt-8">{{ $t("all-markets") }}</div>
+
     <market-item
       v-for="market in collaterals"
       :key="market.id"

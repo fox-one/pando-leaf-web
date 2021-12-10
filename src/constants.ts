@@ -36,6 +36,8 @@ export const CNB_ASSET_ID = "965e5c6e-434c-3fa9-b780-c50f43cd955c";
 
 export const ACTION_ASSET_ID = PandoSeed.PS_ASSET_ID;
 
+export const PANDO_DOC = "https://docs.pando.im/docs/leaf/intro";
+
 export const EVENTS = {
   PAY_QR_CODE: "PAY_QR_CODE",
   OPEN_AUTH: "OPEN_AUTH",

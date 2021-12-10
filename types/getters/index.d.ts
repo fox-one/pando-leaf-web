@@ -63,6 +63,9 @@ declare namespace Getter {
     curPrice: string;
     debtFiatValue: number;
     collateralFiatValue: number;
+    vaultCollateralAmount: string;
+    vaultDebtAmount: string;
+    isYourBid: boolean;
   }
 
   export interface PredictionFields {
@@ -88,6 +91,7 @@ declare namespace Getter {
       collateral: API.Collateral | null
     ) => PredictionFields;
 
+    "asset/walletBlance": number;
     "asset/assetsMap": Record<string, API.Asset>;
     "asset/walletAssetsMap": Record<string, API.MixinAsset>;
     "asset/getAssetById": State.GetAssetById;
@@ -98,8 +102,11 @@ declare namespace Getter {
 
     "auctions/flipsDone": API.Flip[];
     "auctions/flipsAuctioning": API.Flip[];
+    "auctions/flipKickEvent": API.FlipEvent | undefined;
 
     "auth/isLogged": boolean;
     "auth/canReadAsset": boolean;
+
+    "account/userId": string;
   };
 }

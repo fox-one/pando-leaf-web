@@ -1,10 +1,6 @@
 {
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "vue"
-  ],
-  // "files.autoSave": "afterDelay",
+  "eslint.validate": ["javascript", "javascriptreact", "vue"],
+  "files.autoSave": "off",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "vetur.format.defaultFormatter.js": "prettier-eslint",
@@ -15,10 +11,10 @@
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "i18n-ally.localesPaths": "src/lang",
-  "i18n-ally.keystyle": "nested",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "i18n-ally.localesPaths": "src/lang",
+  "i18n-ally.keystyle": "nested",
   "editor.wordWrapColumn": 150
 }

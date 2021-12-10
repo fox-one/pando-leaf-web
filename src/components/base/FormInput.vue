@@ -1,25 +1,28 @@
 <template>
-  <v-form ref="form" autocomplete="off">
-    <f-asset-amount-input
-      class="no-left-padding"
-      v-model="bindAmount"
-      :assets="[asset]"
-      :asset.sync="asset"
-      :rules="rules"
-      :selectable="false"
-      :placeholder="meta.placeholder"
-      :readonly="closed"
-    >
-      <template #tools>
-        <form-input-tools
-          :left-label="leftLabel"
-          :balance="meta.balance"
-          :fiat-amount="meta.fiatAmount"
-          @fill="handleFill"
-        />
-      </template>
-    </f-asset-amount-input>
-  </v-form>
+  <f-asset-amount-input
+    v-model="bindAmount"
+    :assets="[asset]"
+    :asset.sync="asset"
+    :rules="rules"
+    :selectable="false"
+    :placeholder="meta.placeholder"
+    :readonly="closed"
+    hide-details
+    fullfilled
+    v-bind="$attrs"
+  >
+    <template #tools="{ messages }">
+      <f-asset-input-tools
+        :wallet-connected="meta.logged"
+        :balance="meta.balance"
+        :fiat-amount="meta.fiatAmount"
+        :messages="messages"
+        :fillable="fillable"
+        @fill="handleFill"
+        @connect-wallet="handleConnectWallet"
+      />
+    </template>
+  </f-asset-amount-input>
 </template>
 
 <script lang="ts">
@@ -50,11 +53,7 @@ export default class extends Vue {
 
   @Prop({ default: null }) messages;
 
-  @Ref("form") form;
-
-  getForm() {
-    return this.form;
-  }
+  @Prop({ default: true }) fillable!: boolean;
 
   get text() {
     return {
@@ -77,7 +76,8 @@ export default class extends Vue {
     const fiatAmount = inputAmount * price;
     return {
       balance,
-      fiatAmount: isValid(fiatAmount) ? toFiat(this, { n: fiatAmount }) : false,
+      logged: getters["auth/isLogged"],
+      fiatAmount: isValid(fiatAmount) ? toFiat(this, { n: fiatAmount }) : "-",
       placeholder: this.placeholder ?? this.$t("common.amount"),
     };
   }
@@ -92,12 +92,4 @@ export default class extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.no-left-padding {
-  ::v-deep {
-    .v-input__append-inner {
-      padding-left: 0px !important;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

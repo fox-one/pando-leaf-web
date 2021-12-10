@@ -1,31 +1,28 @@
 <template>
-  <v-form ref="form" autocomplete="off">
-    <f-asset-amount-input
-      class="no-left-padding"
-      v-model="bindAmount"
-      :assets="[meta.collateralAsset]"
-      :asset.sync="meta.collateralAsset"
-      :selectable="false"
-      :rules="rules"
-      :placeholder="meta.placeholder"
-      :readonly="false"
-    >
-      <template #tools>
-        <form-input-tools
-          :left-label="$t('common.collateral')"
-          :balance="meta.balance"
-          @fill="handleFill"
-        />
-      </template>
-    </f-asset-amount-input>
-  </v-form>
+  <f-asset-amount-input
+    class="no-left-padding"
+    v-model="bindAmount"
+    :assets="[meta.collateralAsset]"
+    :asset.sync="meta.collateralAsset"
+    :selectable="false"
+    :rules="rules"
+    :placeholder="meta.placeholder"
+    :readonly="false"
+  >
+    <template #tools>
+      <form-input-tools
+        :left-label="$t('common.collateral')"
+        :balance="meta.balance"
+        @fill="handleFill"
+      />
+    </template>
+  </f-asset-amount-input>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, PropSync, Ref } from "vue-property-decorator";
+import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
 import FormInputTools from "@/components/base/FormInputTools.vue";
 import BigNumber from "bignumber.js";
-import { RISK } from "~/enums";
 
 @Component({
   components: {
@@ -42,8 +39,6 @@ export default class extends Vue {
   @Prop({ default: null }) messages;
 
   @Prop({ default: () => [] }) rules!: ((amount: string) => boolean | string)[];
-
-  @Ref("form") form;
 
   get meta() {
     const { format } = this.$utils.number;
@@ -70,10 +65,6 @@ export default class extends Vue {
       avaliableWithdrawText,
       placeholder: this.$t("form.payback-amount"),
     };
-  }
-
-  getForm() {
-    return this.form;
   }
 
   handleConnectWallet() {

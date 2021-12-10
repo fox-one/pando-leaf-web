@@ -9,6 +9,11 @@ const state = () => ({
 });
 
 const getters: GetterTree<State.Asset, any> = {
+  walletBalance(state) {
+    return state.walletAssets.reduce((total, next) => {
+      return total + +next.price_usd * +next.balance;
+    }, 0);
+  },
   walletAssetsMap(state) {
     return state.walletAssets.reduce((m, x) => ({ ...m, [x.asset_id]: x }), {});
   },

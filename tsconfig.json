@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "es2019",
+    "module": "commonjs",
     "moduleResolution": "node",
     "lib": ["esnext", "esnext.asynciterable", "dom"],
     "experimentalDecorators": true,
@@ -25,5 +25,6 @@
       "vuetify"
     ]
   },
+  "include": ["types/**/*.ts", "node_modules/vuetify", "src/**/*.ts"],
   "exclude": ["node_modules"]
 }

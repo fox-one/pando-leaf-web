@@ -13,6 +13,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
   },
+  globals: {
+    API: true,
+  },
   rules: {
     "arrow-parens": ["error", "always"],
     camelcase: "off",
