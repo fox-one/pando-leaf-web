@@ -1,7 +1,6 @@
 <template>
-  <div class="ma-0 pa-4 pb-8">
+  <v-form ref="form" class="ma-0 pa-4 pb-8" autocomplete="off">
     <base-form-input
-      ref="form-input"
       :amount.sync="bindAmount"
       :asset="meta.collateralAsset"
       :rules="rules"
@@ -13,7 +12,7 @@
       :amount="bindAmount"
       @success="handleSuccess"
     />
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts" scoped>
@@ -35,7 +34,7 @@ export default class extends Vue {
 
   @PropSync("amount") bindAmount!: string;
 
-  @Ref("form-input") formInput!: BaseFormInput;
+  @Ref("form") form!: any;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
@@ -86,7 +85,7 @@ export default class extends Vue {
   }
 
   handleSuccess() {
-    this.formInput.getForm().reset();
+    this.form.reset();
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });

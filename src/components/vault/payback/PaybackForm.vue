@@ -1,11 +1,10 @@
 <template>
-  <div class="ma-0 pa-4 pb-8">
+  <v-form ref="form" class="ma-0 pa-4 pb-8" autocomplete="off">
     <base-alert class="mb-4" close type="error" :show.sync="showTip">
       {{ $t("tooltip.payback-intro") }}
     </base-alert>
 
     <payback-form-input
-      ref="form-input"
       :amount.sync="bindAmount"
       :shot-tip.sync="showTip"
       :rules="rules"
@@ -18,7 +17,7 @@
       :disabled="validate.disabled"
       @success="handleSuccess"
     />
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts" scoped>
@@ -41,7 +40,7 @@ export default class PaybackForm extends Vue {
 
   @PropSync("amount") bindAmount!: string;
 
-  @Ref("form-input") formInput!: PaybackFormInput;
+  @Ref("form") form!: any;
 
   showTip = false;
 
@@ -91,7 +90,7 @@ export default class PaybackForm extends Vue {
   }
 
   handleSuccess() {
-    this.formInput.getForm().reset();
+    this.form.reset();
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });

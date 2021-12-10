@@ -1,37 +1,35 @@
 <template>
-  <v-form ref="form" autocomplete="off">
-    <f-asset-amount-input
-      class="no-left-padding"
-      v-model="bindAmount"
-      :assets="[meta.debtAsset]"
-      :asset.sync="meta.debtAsset"
-      :selectable="false"
-      :rules="rules"
-      :placeholder="meta.placeholder"
-      :readonly="false"
-    >
-      <template #tools>
-        <form-input-tools
-          :left-label="$t('form.set-max')"
-          :balance="meta.debtAmountText"
-          @fill="handleFill"
-        >
-          <template #right>
-            <span class="greyscale_1--text f-caption">
-              <span class="greysclae_3--text">
-                {{ $t("common.wallet-balance") }}
-              </span>
-              {{ meta.balance }}
+  <f-asset-amount-input
+    class="no-left-padding"
+    v-model="bindAmount"
+    :assets="[meta.debtAsset]"
+    :asset.sync="meta.debtAsset"
+    :selectable="false"
+    :rules="rules"
+    :placeholder="meta.placeholder"
+    :readonly="false"
+  >
+    <template #tools>
+      <form-input-tools
+        :left-label="$t('form.set-max')"
+        :balance="meta.debtAmountText"
+        @fill="handleFill"
+      >
+        <template #right>
+          <span class="greyscale_1--text f-caption">
+            <span class="greysclae_3--text">
+              {{ $t("common.wallet-balance") }}
             </span>
-          </template>
-        </form-input-tools>
-      </template>
-    </f-asset-amount-input>
-  </v-form>
+            {{ meta.balance }}
+          </span>
+        </template>
+      </form-input-tools>
+    </template>
+  </f-asset-amount-input>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, PropSync, Ref } from "vue-property-decorator";
+import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
 import FormInputTools from "@/components/base/FormInputTools.vue";
 import BigNumber from "bignumber.js";
 
@@ -50,8 +48,6 @@ export default class extends Vue {
   @Prop({ default: null }) messages;
 
   @Prop({ default: () => [] }) rules!: ((amount: string) => boolean | string)[];
-
-  @Ref("form") form;
 
   get meta() {
     const { format } = this.$utils.number;
@@ -74,10 +70,6 @@ export default class extends Vue {
       }),
       placeholder: this.$t("form.payback-amount"),
     };
-  }
-
-  getForm() {
-    return this.form;
   }
 
   handleConnectWallet() {

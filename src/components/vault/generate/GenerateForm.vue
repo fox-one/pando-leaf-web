@@ -1,7 +1,6 @@
 <template>
-  <div class="ma-0 pa-4 pb-8">
+  <v-form ref="form" class="ma-0 pa-4 pb-8" autocomplete="off">
     <base-form-input
-      ref="form-input"
       :amount.sync="bindDebtAmount"
       :asset="meta.debtAsset"
       :balance="meta.suggest"
@@ -18,7 +17,7 @@
       :disabled="validate.disabled"
       @success="handleSuccess"
     />
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts" scoped>
@@ -42,7 +41,7 @@ export default class GenerateForm extends Vue {
 
   @PropSync("debtAmount") bindDebtAmount!: string;
 
-  @Ref("form-input") formInput!: BaseFormInput;
+  @Ref("form") form!: any;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
@@ -63,9 +62,8 @@ export default class GenerateForm extends Vue {
     const marketFields = getters.getMarketFields(collateral?.id ?? "");
 
     const inputAmount = Number(this.bindDebtAmount);
-    // 因为不允许直接借贷到恰好爆仓 => -0.00000001
-    const maxAvailable =
-      Math.min(avaliableDebt, marketFields.maxAvailable) - 0.00000001;
+
+    const maxAvailable = Math.min(avaliableDebt, marketFields.maxAvailable);
 
     const maxAvailableText = format({
       n: maxAvailable,
@@ -112,7 +110,7 @@ export default class GenerateForm extends Vue {
   }
 
   handleSuccess() {
-    this.formInput.getForm().reset();
+    this.form.reset();
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });
