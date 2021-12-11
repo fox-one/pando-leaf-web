@@ -108,7 +108,7 @@ export default class extends Vue {
         valueColor: this.meta.risk.color,
         hint: this.$t("tooltip.collateralization-ratio"),
         learnMore: LINKS["vault.liquidation"],
-        changedValue: this.meta.changedRatio,
+        changedValue: this.meta.changedRatioText,
         changedValueColor: this.meta.changedRisk.color,
         showChange: this.meta.ratio !== this.meta.changedRatio,
       },
