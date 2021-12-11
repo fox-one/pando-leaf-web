@@ -17,7 +17,10 @@
           @fill="handleFill"
         >
           <template #right>
-            <span class="greyscale_1--text f-caption">
+            <span
+              class="greyscale_1--text f-caption"
+              @click="handleBalanceFill"
+            >
               <span class="greysclae_3--text">
                 {{ $t("common.wallet-balance") }}
               </span>
@@ -85,9 +88,25 @@ export default class extends Vue {
   }
 
   handleFill() {
-    this.bindShowTip = true;
-    this.bindAmount =
-      this.meta.debtAmountText !== "-" ? this.meta.debtAmountText : "";
+    const { toPrecision } = this.$utils.number;
+    const inputAmount = toPrecision({
+      n: this.meta.debtAmount,
+      dp: 4,
+      mode: BigNumber.ROUND_UP,
+    });
+
+    if (this.meta.debtAmount !== 0) {
+      this.bindAmount = inputAmount;
+      this.bindShowTip = true;
+    }
+  }
+
+  handleBalanceFill() {
+    const balance = +(this.meta.balance ?? 0);
+
+    if (balance !== 0) {
+      this.bindAmount = this.meta.balance;
+    }
   }
 }
 </script>

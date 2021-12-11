@@ -25,7 +25,6 @@
 import { Component, Vue, Prop, PropSync, Ref } from "vue-property-decorator";
 import FormInputTools from "@/components/base/FormInputTools.vue";
 import BigNumber from "bignumber.js";
-import { RISK } from "~/enums";
 
 @Component({
   components: {
@@ -81,8 +80,13 @@ export default class extends Vue {
   }
 
   handleFill() {
-    this.bindAmount =
-      this.meta.avaliableWithdraw > 0 ? this.meta.avaliableWithdrawText : "";
+    const { toPrecision } = this.$utils.number;
+    const inputAmount = toPrecision({
+      n: this.meta.avaliableWithdraw,
+      dp: 8,
+      mode: BigNumber.ROUND_DOWN,
+    });
+    this.bindAmount = this.meta.avaliableWithdraw > 0 ? inputAmount : "";
   }
 }
 </script>
