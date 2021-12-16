@@ -1,5 +1,5 @@
 {
-  "app-name": "Pando",
+  "app-name": "Pando Leaf",
   "auction.bid-now": "競標",
   "auction.collateral-to-receive": "您出價接受的抵押品",
   "auction.debt-to-pay-for": "你出價償還的債務",
@@ -138,7 +138,7 @@
   "form.button.deposit-to-generate": "存入資產以生成",
   "form.deposit-amount": "存入數量",
   "form.generate-amount": "鑄幣數量",
-  "form.generate-ration": "抵押比例到達",
+  "form.generate-ration": "貸款/貸款限額",
   "form.market-debt-ceiling": "市場最多可出借",
   "form.max-available-to-generate": "最多可鑄幣",
   "form.mint-amount": "生成數量",

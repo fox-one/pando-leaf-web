@@ -1,5 +1,5 @@
 {
-  "app-name": "Pando",
+  "app-name": "Pando Leaf",
   "auction.bid-now": "Bid Now",
   "auction.collateral-to-receive": "Collateral you bid to receive",
   "auction.debt-to-pay-for": "Debt you bid to pay for",
@@ -135,7 +135,7 @@
   "form.button.deposit-to-generate": "Deposit to Generate",
   "form.deposit-amount": "Deposit amount",
   "form.generate-amount": "Generate amount",
-  "form.generate-ration": "Collateralization Ration reach",
+  "form.generate-ration": "Debt/ Debt Limit reach",
   "form.market-debt-ceiling": "Market Debt Ceiling",
   "form.max-available-to-generate": "Max available to Generate",
   "form.mint-amount": "Mint amount",
