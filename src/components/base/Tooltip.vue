@@ -30,7 +30,9 @@
     max-width="600"
   >
     <template #activator="{ on }">
-      <v-icon size="14" color="greyscale_3" v-on="on">$iconQuestion</v-icon>
+      <v-icon size="14" color="greyscale_3" v-on="on"
+        >$FIconInformation3PFill</v-icon
+      >
     </template>
 
     <f-bottom-sheet-title>
@@ -44,7 +46,7 @@
         :key="content"
       >
         <div class="d-flex">
-          <div v-if="contents.length > 1" class="mr-1">{{ index }}.</div>
+          <div v-if="contents.length > 1" class="mr-1">{{ index + 1 }}.</div>
           <div>
             {{ content }}
 

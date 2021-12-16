@@ -48,15 +48,19 @@ export default class AuctionFormInfos extends Vue {
     let priceDifference = 0;
     let priceDifferenceText = "-";
 
-    const currentPrice = +(auctionAsset?.price ?? 0) / +(debtAsset?.price ?? 0);
-    currentPriceText = `1 ${auctionSymbol} = ${format({
+    const getWalletAssetById = getters["asset/getWalletAssetById"];
+    const debtPrice = getWalletAssetById(debtAsset?.id ?? "")?.price_usd ?? 0;
+    const auctionPrice =
+      getWalletAssetById(auctionAsset?.id ?? "")?.price_usd ?? 0;
+    const currentPrice = +auctionPrice / +debtPrice;
+    currentPriceText = `1 ${auctionSymbol} ≈ ${format({
       n: currentPrice,
     })} ${debtSymbol}`;
 
     if (this.type === "debt") {
       const inputBidPrice = +this.amount / +this.flip.lot;
       if (inputBidPrice !== 0) {
-        inputBidPriceText = `1 ${auctionSymbol} = ${format({
+        inputBidPriceText = `1 ${auctionSymbol} ≈ ${format({
           n: inputBidPrice,
         })} ${debtSymbol}`;
       }
@@ -72,7 +76,7 @@ export default class AuctionFormInfos extends Vue {
     if (this.type === "collateral") {
       const inputBidPrice = +this.flip.bid / +this.amount;
       if (inputBidPrice !== 0) {
-        inputBidPriceText = `1 ${auctionSymbol} = ${format({
+        inputBidPriceText = `1 ${auctionSymbol} ≈ ${format({
           n: inputBidPrice,
         })} ${debtSymbol}`;
       }
