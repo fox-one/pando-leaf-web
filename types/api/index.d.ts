@@ -146,6 +146,7 @@ declare namespace API {
     created_at: string;
     flip_id: string;
     lot: string; // 对于竞标拍卖物数量的出价
+    is_me: boolean;
   }
 
   export interface Oracle {

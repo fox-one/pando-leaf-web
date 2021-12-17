@@ -55,10 +55,18 @@
 
           <div class="action-detail-label mt-2">
             {{ $t("auction.vault-collateral") }}
+            <v-icon
+              size="12"
+              color="greyscale_7"
+              class="greyscale_2 rounded-circle exchange-icon"
+              @click="changeCollateral"
+            >
+              $FIconExchange4PBold
+            </v-icon>
           </div>
 
           <div class="action-detail-value">
-            {{ `${meta.vaultCollateralAmount} ${meta.auctionSymbol}` }}
+            {{ meta.vaultCollateralValueText }}
           </div>
 
           <div
@@ -91,7 +99,10 @@ import dayjs from "dayjs";
 export default class AuctionDetail extends Vue {
   @Prop() flip!: API.Flip;
 
+  showFiat = false;
+
   get meta() {
+    const { toFiat } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
     const {
       isDone,
@@ -105,6 +116,10 @@ export default class AuctionDetail extends Vue {
       vaultCollateralAmount,
       isYourBid,
     } = getters.getFlipFields(this.flip);
+
+    const walletAuctionAsset = getters["asset/getWalletAssetById"](
+      auctionAsset?.id ?? ""
+    );
 
     const debtLogo = debtAsset?.logo;
     const auctionLogo = auctionAsset?.logo;
@@ -120,6 +135,12 @@ export default class AuctionDetail extends Vue {
     ) {
       diffSeconds = dayjs(this.flip.end).diff(dayjs(), "seconds");
     }
+    let vaultCollateralValueText = `${vaultCollateralAmount} ${auctionSymbol}`;
+    if (this.showFiat) {
+      vaultCollateralValueText = toFiat(this, {
+        n: +vaultCollateralAmount * +(walletAuctionAsset?.price_usd ?? 0),
+      });
+    }
 
     return {
       isDone,
@@ -130,12 +151,17 @@ export default class AuctionDetail extends Vue {
       auctionSymbol,
       vaultDebtAmount,
       vaultCollateralAmount,
+      vaultCollateralValueText,
       isStage1,
       isStage2,
       bidLabel,
       diffSeconds,
       isYourBid,
     };
+  }
+
+  changeCollateral() {
+    this.showFiat = !this.showFiat;
   }
 }
 </script>
@@ -189,12 +215,18 @@ export default class AuctionDetail extends Vue {
 }
 
 .action-detail-label {
+  display: flex;
+  align-items: center;
   font-size: 12px;
-  line-height: 15px;
   margin-top: 24px;
 
   &.your-bid {
     color: rgba(143, 230, 19, 1);
+  }
+
+  .exchange-icon {
+    margin-left: 3px;
+    padding: 1px;
   }
 }
 

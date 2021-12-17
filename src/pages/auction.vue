@@ -34,7 +34,6 @@
 <script lang="ts" scoped>
 import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
-import AuctionStatus from "@/components/auction/AuctionStatus.vue";
 import AuctionDetail from "@/components/auction/AuctionDetail.vue";
 import AuctionDoneDetail from "@/components/auction/AuctionDoneDetail.vue";
 import AuctionEventHistory from "@/components/auction/AuctionEventHistory.vue";
@@ -44,7 +43,6 @@ import { FlipAction } from "~/enums";
 
 @Component({
   components: {
-    AuctionStatus,
     AuctionDetail,
     AuctionDoneDetail,
     AuctionEventHistory,

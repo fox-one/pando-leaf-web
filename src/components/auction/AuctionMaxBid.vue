@@ -39,15 +39,19 @@ export default class AuctionMaxBid extends Vue {
       ? this.$t("auction.max-bid")
       : this.$t("auction.max-reduction");
 
+    const hint = isStage1
+      ? [this.$t("auction.max-bid-hint-1"), this.$t("auction.max-bid-hint-2")]
+      : [
+          this.$t("auction.max-reduction-hint-1"),
+          this.$t("auction.max-reduction-hint-2"),
+        ];
+
     return {
       isDone,
       isStage1,
       maxBid,
       label,
-      hint: [
-        "Each time the amount of the bid is reduced or increase by a minimum of 3%",
-        "Highest bids = The vault’s original debt",
-      ],
+      hint,
       minBid,
       value: `${format({ n: maxBid, dp: 8 })} ${auctionSymbol}`,
       fillable: true,

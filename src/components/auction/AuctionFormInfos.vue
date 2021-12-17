@@ -82,7 +82,7 @@ export default class AuctionFormInfos extends Vue {
       }
 
       priceDifference = (inputBidPrice - currentPrice) / currentPrice;
-      if (isValid(priceDifference)) {
+      if (isValid(priceDifference) && isValid(+this.amount)) {
         priceDifferenceText = `${toPercent({
           n: priceDifference,
         })}`;

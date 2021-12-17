@@ -15,6 +15,7 @@
         :key="`${event.lot}_${event.bid}_${event.created_at}`"
         :flip-event="event"
         :flip="flip"
+        :is-your-bid="index === 0 && meta.isYourBid"
       />
     </template>
   </f-panel>
@@ -38,6 +39,13 @@ export default class AuctionEventHistory extends Vue {
   @Sync("auctions/events") events!: API.FlipEvent[];
 
   intervalId = 0 as any;
+
+  get meta() {
+    const getters = this.$store.getters as Getter.GettersTree;
+    return {
+      isYourBid: this.flip.guy === getters["account/userId"],
+    };
+  }
 
   mounted() {
     this.events = [];

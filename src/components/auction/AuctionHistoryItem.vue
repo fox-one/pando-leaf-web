@@ -2,9 +2,9 @@
   <div>
     <v-layout column class="py-4">
       <v-layout align-center justify-space-between class="mb-2 text-1">
-        <span class="font-weight-bold"
-          >{{ meta.actionText
-          }}<span v-if="meta.isYourBid" class="tag ml-1">You</span>
+        <span class="font-weight-bold">
+          {{ meta.actionText
+          }}<span v-if="meta.is_me" class="tag ml-1">You</span>
         </span>
         <span class="text-right f-caption greyscale_4--text">
           {{ meta.time }}
@@ -28,8 +28,6 @@ export default class AuctionHistoryItem extends Vue {
     const getters = this.$store.getters as Getter.GettersTree;
     const getAssetById = getters["asset/getAssetById"];
     const getCollateral = getters["collateral/getCollateralById"];
-
-    const isYourBid = this.flip.guy === getters["account/userId"];
     const collateral = getCollateral(this.flip?.collateral_id);
     const collateralAsset = getAssetById(collateral?.gem ?? "");
     const debtAsset = getAssetById(collateral?.dai ?? "");
@@ -64,7 +62,7 @@ export default class AuctionHistoryItem extends Vue {
       actionText,
       actionContent,
       time: this.$utils.time.toRelative(this.flipEvent.created_at),
-      isYourBid,
+      is_me: this.flipEvent.is_me,
     };
   }
 }

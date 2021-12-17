@@ -1,7 +1,7 @@
 <template>
   <v-layout column>
     <div class="text-3 greyscale_1--text mb-4">
-      {{ $t("auction.highest-call") }}
+      {{ $t("auction.done-title") }}
     </div>
 
     <f-panel class="greyscale_6 py-6 pl-0">
@@ -33,10 +33,18 @@
 
           <div class="action-detail-label greyscale_1--text">
             {{ $t("auction.vault-collateral") }}
+            <v-icon
+              size="12"
+              color="greyscale_1"
+              class="greyscale_5 rounded-circle exchange-icon"
+              @click="showFiat = !showFiat"
+            >
+              $FIconExchange4PBold
+            </v-icon>
           </div>
 
           <div class="action-detail-value">
-            {{ `${meta.vaultCollateralAmount} ${meta.auctionSymbol}` }}
+            {{ meta.vaultCollateralValueText }}
           </div>
 
           <div class="action-detail-label">
@@ -59,7 +67,10 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 export default class AuctionDoneDetail extends Vue {
   @Prop() flip!: API.Flip;
 
+  showFiat = false;
+
   get meta() {
+    const { toFiat } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
     const {
       debtSymbol,
@@ -73,6 +84,16 @@ export default class AuctionDoneDetail extends Vue {
     const debtLogo = debtAsset?.logo;
     const auctionLogo = auctionAsset?.logo;
 
+    const walletAuctionAsset = getters["asset/getWalletAssetById"](
+      auctionAsset?.id ?? ""
+    );
+
+    let vaultCollateralValueText = `${vaultCollateralAmount} ${auctionSymbol}`;
+    if (this.showFiat) {
+      vaultCollateralValueText = toFiat(this, {
+        n: +vaultCollateralAmount * +(walletAuctionAsset?.price_usd ?? 0),
+      });
+    }
     return {
       debtSymbol,
       debtLogo,
@@ -80,6 +101,7 @@ export default class AuctionDoneDetail extends Vue {
       auctionLogo,
       vaultCollateralAmount,
       vaultDebtAmount,
+      vaultCollateralValueText,
     };
   }
 }
@@ -87,16 +109,21 @@ export default class AuctionDoneDetail extends Vue {
 
 <style lang="scss" scoped>
 .action-detail-label {
+  display: flex;
+  align-items: center;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
-  line-height: 15px;
   color: var(--v-greyscale_3-base);
   margin-top: 24px;
   &.greyscale_1--text {
     font-weight: 600;
     margin-top: 8px;
   }
+}
+.exchange-icon {
+  margin-left: 3px;
+  padding: 1px;
 }
 .action-detail-value {
   font-style: normal;
