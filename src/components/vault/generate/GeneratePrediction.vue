@@ -1,11 +1,5 @@
 <template>
-  <div>
-    <div class="mt-4 mb-2 title greyscale_1--text">
-      {{ $t("form.predication") }}
-    </div>
-
-    <base-information-item-list :informations="infos" />
-  </div>
+  <base-information-item-list :informations="infos" />
 </template>
 
 <script lang="ts">
@@ -95,6 +89,7 @@ export default class extends Vue {
 
   get infos() {
     const { isValidOracle } = this.$utils.oracle;
+    const { isValid } = this.$utils.number;
     return [
       {
         label: this.$t("common.collateralization-ratio"), // deposit * price / mint
@@ -104,7 +99,7 @@ export default class extends Vue {
         learnMore: LINKS["vault.liquidation"],
         changedValue: this.meta.changedRatioText,
         changedValueColor: this.meta.changedRisk.color,
-        showChange: this.meta.ratio !== this.meta.changedRatio,
+        showChange: isValid(+this.amount),
       },
       {
         label: this.$t("common.minimum-ratio"),

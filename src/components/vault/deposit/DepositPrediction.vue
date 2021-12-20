@@ -1,11 +1,5 @@
 <template>
-  <div>
-    <div class="mt-4 mb-2 title greyscale_1--text">
-      {{ $t("form.predication") }}
-    </div>
-
-    <base-information-item-list :informations="infos" />
-  </div>
+  <base-information-item-list :informations="infos" />
 </template>
 
 <script lang="ts">
@@ -97,13 +91,6 @@ export default class extends Vue {
     const { isValidOracle } = this.$utils.oracle;
     return [
       {
-        label: this.$t("common.outstanding-symbol-debt", {
-          symbol: this.meta.debtSymbol,
-        }), // line- debt
-        value: this.meta.debtAmount,
-        valueUnit: this.meta.debtSymbol,
-      },
-      {
         label: this.$t("common.collateralization-ratio"), // deposit * price / mint
         value: this.meta.ratioText,
         valueColor: this.meta.risk.color,
@@ -112,6 +99,13 @@ export default class extends Vue {
         changedValue: this.meta.changedRatioText,
         changedValueColor: this.meta.changedRisk.color,
         showChange: this.meta.ratio !== this.meta.changedRatio,
+      },
+      {
+        label: this.$t("common.outstanding-symbol-debt", {
+          symbol: this.meta.debtSymbol,
+        }), // line- debt
+        value: this.meta.debtAmount,
+        valueUnit: this.meta.debtSymbol,
       },
       {
         label: this.$t("common.minimum-ratio"),

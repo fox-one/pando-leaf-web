@@ -1,8 +1,8 @@
 <template>
   <div class="infomation-item">
-    <v-layout class="py-4" column>
+    <v-layout class="py-3" column>
       <v-layout align-center>
-        <div class="greyscale_3--text">{{ label }}</div>
+        <div class="greyscale_3--text mr-1">{{ label }}</div>
 
         <base-tooltip
           v-if="hint"
@@ -12,29 +12,16 @@
 
         <v-spacer />
 
-        <div :class="meta.valueColor">
+        <div :class="showChange ? meta.changedValueColor : meta.valueColor">
           <span>
-            {{ value }}
+            {{ showChange ? changedValue : value }}
           </span>
           <span>
             {{ valueUnit }}
           </span>
         </div>
       </v-layout>
-
-      <v-layout class="change-value" v-if="showChange" justify-end align-center>
-        <v-icon class="mx-2" size="14"> $iconPointerRight </v-icon>
-
-        <div class="greyscale_1--text">
-          <span :class="meta.changedValueColor">
-            {{ changedValue }}
-          </span>
-
-          <span>{{ valueUnit }}</span>
-        </div>
-      </v-layout>
     </v-layout>
-    <f-divider v-if="!last" />
   </div>
 </template>
 
@@ -61,18 +48,14 @@ export default class extends Vue {
 
   @Prop({ default: null }) learnMore!: string;
 
-  @Prop() last!: boolean;
-
   get meta() {
-    let valueColor = this.showChange
-      ? "greyscale_3--text"
-      : "greyscale_1--text";
+    let valueColor = "greyscale_1--text";
     if (this.valueColor) {
       valueColor = `${this.valueColor}--text`;
     }
     const changedValueColor = this.changedValueColor
       ? `${this.changedValueColor}--text`
-      : "";
+      : valueColor;
     return {
       valueColor,
       changedValueColor,
@@ -84,9 +67,8 @@ export default class extends Vue {
 <style lang="scss" scoped>
 .infomation-item {
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
   font-size: 14px;
-  line-height: 17px;
   letter-spacing: -0.006em;
 }
 </style>

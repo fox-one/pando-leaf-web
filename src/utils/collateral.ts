@@ -13,7 +13,6 @@ export function getRiskLevelMeta(current: number, min: number) {
   };
 
   if (min <= 0 || current <= 0) return meta[RISK.NA];
-
   const risk = current / min;
   if (risk < 0) {
     return meta[RISK.NA];

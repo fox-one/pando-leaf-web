@@ -1,11 +1,5 @@
 <template>
-  <div>
-    <div class="mt-4 mb-2 title greyscale_1--text">
-      {{ $t("form.predication") }}
-    </div>
-
-    <base-information-item-list :informations="infos" />
-  </div>
+  <base-information-item-list :informations="infos" />
 </template>
 
 <script lang="ts">

@@ -7,9 +7,11 @@
     <div v-else>
       <generate-form :vault="meta.vault" :debt-amount.sync="amount" />
 
-      <div class="greyscale_6" style="height: 8px"></div>
-
-      <generate-prediction class="pa-4" :vault="meta.vault" :amount="amount" />
+      <generate-prediction
+        class="px-4 mt-n1"
+        :vault="meta.vault"
+        :amount="amount"
+      />
 
       <div style="height: 80px"></div>
     </div>

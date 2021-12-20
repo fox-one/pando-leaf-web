@@ -1,28 +1,26 @@
 <template>
   <f-asset-amount-input
-    class="no-left-padding"
     v-model="bindAmount"
     :assets="[meta.debtAsset]"
     :asset.sync="meta.debtAsset"
-    :selectable="false"
     :rules="rules"
+    :selectable="false"
     :placeholder="meta.placeholder"
     :readonly="false"
+    hide-details
+    fullfilled
+    v-bind="$attrs"
+    :balance="$t('form.set-max')"
   >
-    <template #tools>
+    <template #tools="{ messages }">
       <form-input-tools
-        :left-label="$t('form.set-max')"
         :balance="meta.debtAmountText"
+        :fiat-amount="meta.fiatAmount"
+        :messages="messages"
+        :fillable="true"
+        :leftLabel="text.balance"
         @fill="handleFill"
       >
-        <template #right>
-          <span class="greyscale_1--text f-caption">
-            <span class="greysclae_3--text">
-              {{ $t("common.wallet-balance") }}
-            </span>
-            {{ meta.balance }}
-          </span>
-        </template>
       </form-input-tools>
     </template>
   </f-asset-amount-input>
@@ -30,13 +28,11 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
-import FormInputTools from "@/components/base/FormInputTools.vue";
 import BigNumber from "bignumber.js";
+import FormInputTools from "@/components/base/FormInputTools.vue";
 
 @Component({
-  components: {
-    FormInputTools,
-  },
+  components: { FormInputTools },
 })
 export default class extends Vue {
   @PropSync("amount") bindAmount;
@@ -45,12 +41,16 @@ export default class extends Vue {
 
   @Prop() vault!: API.Vault;
 
-  @Prop({ default: null }) messages;
-
   @Prop({ default: () => [] }) rules!: ((amount: string) => boolean | string)[];
 
+  get text() {
+    return {
+      balance: this.$t("form.set-max"),
+    };
+  }
+
   get meta() {
-    const { format } = this.$utils.number;
+    const { isValid, format, toFiat } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
     const { debtAsset, debtSymbol, debtAmount } = getters.getVaultFields(
       this.vault?.id
@@ -58,11 +58,17 @@ export default class extends Vue {
     const walletAsset = getters["asset/getWalletAssetById"](
       debtAsset?.id ?? ""
     );
+
+    const inputAmount = +(this.bindAmount ?? "0");
+    const price = +(walletAsset?.price_usd ?? 0);
+    const fiatAmount = inputAmount * price;
+
     return {
       balance: walletAsset?.balance,
       debtAsset,
       debtAmount,
       debtSymbol,
+      fiatAmount: isValid(fiatAmount) ? toFiat(this, { n: fiatAmount }) : "-",
       debtAmountText: format({
         n: debtAmount,
         dp: 4,
@@ -77,19 +83,10 @@ export default class extends Vue {
   }
 
   handleFill() {
-    this.bindShowTip = true;
     this.bindAmount =
       this.meta.debtAmountText !== "-" ? this.meta.debtAmountText : "";
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.no-left-padding {
-  ::v-deep {
-    .v-input__append-inner {
-      padding-left: 0px !important;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

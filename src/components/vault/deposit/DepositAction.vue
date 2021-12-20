@@ -1,15 +1,26 @@
 <template>
-  <base-connect-wallet-btn class="mt-8 mb-4 text-center">
-    <f-button
-      :disabled="disabled"
-      :loading="loading"
-      color="primary"
-      @click="handleClick"
-      class="px-8"
+  <f-action-bar
+    :elevation="2"
+    fixed
+    custom-content
+    class="flex-grow-1"
+    style="border-radius: 0 !important"
+  >
+    <base-connect-wallet-btn
+      class="text-center"
+      style="flex: 1 0 auto; width: 100%"
     >
-      {{ $t("common.deposit") }}
-    </f-button>
-  </base-connect-wallet-btn>
+      <f-button
+        :disabled="disabled"
+        :loading="loading"
+        color="primary"
+        style="width: 100%"
+        @click="handleClick"
+      >
+        {{ $t("common.deposit") }}
+      </f-button>
+    </base-connect-wallet-btn>
+  </f-action-bar>
 </template>
 
 <script lang="ts" scoped>

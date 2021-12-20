@@ -1,27 +1,41 @@
 <template>
-  <v-form ref="form" class="ma-0 pa-4 pb-8" autocomplete="off">
-    <withdraw-form-input
-      :vault="vault"
-      :rules="rules"
+  <v-form ref="form" class="ma-0 pa-4" autocomplete="off">
+    <base-form-input
       :amount.sync="bindAmount"
-      :placeholder="$t('form.mint-amount')"
+      :asset="meta.collateralAsset"
+      :rules="rules"
+      :fillable="false"
+      :placeholder="$t('form.withdraw-amount')"
     />
 
-    <v-layout class="mt-2 text-1" justify-space-between>
+    <v-layout class="slider-text mt-5" align-center justify-space-between>
+      <div class="greyscale_3--text">
+        {{ $t("common.collateral") }}
+      </div>
+
+      <div class="greyscale_1--text">
+        {{ meta.collateralAmount }}
+      </div>
+    </v-layout>
+
+    <v-layout class="slider-text mt-3" align-center justify-space-between>
       <div class="greyscale_3--text">
         {{ $t("form.withdraw-ratio") }}
       </div>
 
-      <div class="greyscale_1--text font-weight-bold">
+      <f-slider
+        class="flex-grow-1 mx-2"
+        :value="meta.progress"
+        hide-details
+        @change="handleSliderChange"
+      />
+
+      <div class="greyscale_1--text">
         {{ meta.progressText }}
       </div>
     </v-layout>
 
-    <f-slider
-      class="mt-4"
-      :value="meta.progress"
-      @change="handleSliderChange"
-    />
+    <f-divider class="mt-5" />
 
     <withdraw-action
       :vault="vault"
@@ -34,7 +48,6 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
-import WithdrawFormInput from "./WithdrawFormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import WithdrawAction from "./WithdrawAction.vue";
 import { toPercent } from "@foxone/utils/number";
@@ -43,7 +56,6 @@ import { RISK } from "~/enums";
 
 @Component({
   components: {
-    WithdrawFormInput,
     BaseRiskSlider,
     WithdrawAction,
   },
@@ -61,6 +73,7 @@ export default class extends Vue {
     const getters = this.$store.getters as Getter.GettersTree;
 
     const {
+      collateralAsset,
       avaliableWithdraw,
       collateralSymbol,
       collateralAmount,
@@ -78,7 +91,9 @@ export default class extends Vue {
       risk,
       liquidationRatio,
       ratio,
+      collateralAsset,
       collateralSymbol,
+      collateralAmount,
       avaliableWithdraw,
       progress,
       progressText,
@@ -145,3 +160,10 @@ export default class extends Vue {
   }
 }
 </script>
+<style lang="scss" scoped>
+.slider-text {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+</style>

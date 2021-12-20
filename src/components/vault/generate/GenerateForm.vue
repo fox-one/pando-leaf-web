@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" class="ma-0 pa-4 pb-8" autocomplete="off">
+  <v-form ref="form" class="ma-0 pa-4" autocomplete="off">
     <base-form-input
       :amount.sync="bindDebtAmount"
       :asset="meta.debtAsset"
@@ -8,8 +8,6 @@
       :leftLabel="$t('common.suggest')"
       :placeholder="$t('form.mint-amount')"
     />
-
-    <base-risk-slider class="mt-2" :progress="meta.progress" />
 
     <generate-action
       :vault="vault"

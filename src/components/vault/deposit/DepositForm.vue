@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" class="ma-0 pa-4 pb-8" autocomplete="off">
+  <v-form ref="form" class="ma-0 pa-4" autocomplete="off">
     <base-form-input
       :amount.sync="bindAmount"
       :asset="meta.collateralAsset"

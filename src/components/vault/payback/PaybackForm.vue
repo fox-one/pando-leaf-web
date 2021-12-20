@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" class="ma-0 pa-4 pb-8" autocomplete="off">
+  <v-form ref="form" class="ma-0 pa-4" autocomplete="off">
     <base-alert class="mb-4" close type="error" :show.sync="showTip">
       {{ $t("tooltip.payback-intro") }}
     </base-alert>
@@ -9,6 +9,7 @@
       :shot-tip.sync="showTip"
       :rules="rules"
       :vault="vault"
+      :leftLabel="$t('form.set-max')"
     />
 
     <payback-action
@@ -76,8 +77,14 @@ export default class PaybackForm extends Vue {
     return {
       balance: walletAsset?.balance,
       ratio,
+      debtAsset,
       debtAmount: format({ n: debtAmount, dp: 8, mode: BigNumber.ROUND_DOWN }),
       debtSymbol,
+      debtAmountText: format({
+        n: debtAmount,
+        dp: 4,
+        mode: BigNumber.ROUND_UP,
+      }),
       ratioText: toPercent({ n: ratio }),
       liquidationPrice,
       liquidationPriceText: format({ n: liquidationPrice }),
@@ -87,6 +94,10 @@ export default class PaybackForm extends Vue {
       dustAmount,
       dust: collateral?.dust,
     };
+  }
+
+  handleFill() {
+    this.showTip = true;
   }
 
   handleSuccess() {

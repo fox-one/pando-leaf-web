@@ -7,9 +7,15 @@
     <div v-else>
       <deposit-form :vault="meta.vault" :amount.sync="amount" />
 
-      <div class="greyscale_6" style="height: 8px"></div>
+      <deposit-prediction
+        class="px-4 mt-n1"
+        :vault="meta.vault"
+        :amount="amount"
+      />
 
-      <deposit-prediction class="pa-4" :vault="meta.vault" :amount="amount" />
+      <f-divider class="my-4" />
+
+      <base-safety-warning class="px-4 pt-2" />
 
       <div style="height: 80px"></div>
     </div>

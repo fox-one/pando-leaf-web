@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mx-4">
     <v-layout align-center class="form-input-tools">
       <slot name="left">
         <f-button
@@ -17,40 +17,31 @@
         <div v-else class="greyscale_3--text d-flex align-center">
           <span class="mr-1"> {{ text.leftLabel }} </span>
 
-          <span
-            @click.stop="handleFill"
-            class="greyscale_1--text font-weight-semibold"
-          >
+          <span @click.stop="handleFill">
             {{ balance }}
           </span>
-          <v-icon size="12" class="ml-1" @click.stop="handleFill">$fill</v-icon>
+
+          <v-icon
+            size="12"
+            class="ml-1"
+            v-if="fillable"
+            @click.stop="handleFill"
+            >$fill</v-icon
+          >
         </div>
       </slot>
 
       <v-spacer />
 
       <slot name="right">
-        <template>
-          <span
-            v-if="walletConnected && fiatAmount"
-            class="greyscale_3--text fiat-amount"
-          >
-            ≈ {{ fiatAmount }}
-          </span>
+        <template v-if="showMessages">
+          <v-messages color="error" :value="messages" class="text-right" />
+        </template>
+        <template v-else>
+          <span class="greyscale_3--text fiat-amount"> {{ fiatAmount }} </span>
         </template>
       </slot>
     </v-layout>
-
-    <slot name="messages">
-      <template>
-        <v-messages
-          v-if="messages"
-          color="error"
-          :value="messages"
-          class="text-right"
-        />
-      </template>
-    </slot>
   </div>
 </template>
 
@@ -68,6 +59,8 @@ export default class extends Vue {
 
   @Prop({ type: [String, Number, Boolean], default: false }) fiatAmount;
 
+  @Prop({ default: true }) fillable!: boolean;
+
   @Prop({ default: null }) leftLabel!: string | null;
 
   @Prop() messages;
@@ -79,12 +72,18 @@ export default class extends Vue {
     };
   }
 
+  get showMessages() {
+    return this.messages && this.messages?.length > 0;
+  }
+
   handleConnectWallet() {
     this.$utils.account.openAuth(this);
   }
 
   handleFill() {
-    this.$emit("fill", this.balance);
+    if (this.fillable) {
+      this.$emit("fill", this.balance);
+    }
   }
 }
 </script>
