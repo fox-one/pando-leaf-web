@@ -46,6 +46,10 @@ const config: NuxtConfig = {
         href: "/favicon-16x16.png",
       },
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      {
+        rel: "stylesheet",
+        href: "https://static.fox.one/font/inter/style.css",
+      },
     ],
     script: [
       {
@@ -107,7 +111,8 @@ const config: NuxtConfig = {
       enabled: false,
       runtimeCaching: [
         {
-          urlPattern: /^(https:\/\/images\.mixin\.one\/|https:\/\/mixin-images\.zeromesh\.net\/).*$/,
+          urlPattern:
+            /^(https:\/\/images\.mixin\.one\/|https:\/\/mixin-images\.zeromesh\.net\/).*$/,
           handler: "CacheFirst",
         },
       ],
