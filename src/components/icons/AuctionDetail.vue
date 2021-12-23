@@ -28,13 +28,13 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-class IconSearch extends Vue {
+class AuctionDetail extends Vue {
   get color() {
     const dark = this.$vuetify.theme.dark;
     return dark ? ["#ffffff", "#000000"] : ["#000000", "#ffffff"];
   }
 }
-export default IconSearch;
+export default AuctionDetail;
 </script>
 
 <style lang="scss" scoped>

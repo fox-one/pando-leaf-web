@@ -11,7 +11,7 @@
           <h4 class="mx-1">
             {{ appbar.customTitle }}
           </h4>
-          <v-icon size="16" color="primary"> $iconChevronDown </v-icon>
+          <v-icon size="16" color="primary"> $FIconChevronDown4P </v-icon>
         </v-layout>
       </template>
     </action-create-vault>

@@ -31,7 +31,7 @@ class VaultCardActions extends Vue {
 
     if (hasDebt) {
       actions.push({
-        icon: "$FIconRepay4P",
+        icon: "$iconPayback",
         value: "payback",
         text: this.$t("common.pay-back"),
         disabled: !hasDebt,
@@ -57,7 +57,7 @@ class VaultCardActions extends Vue {
       );
     }
     actions.push({
-      icon: "$FIconAdd4P",
+      icon: "$iconDeposit",
       value: "deposit",
       text: this.$t("common.deposit"),
       disabled: false,

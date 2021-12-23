@@ -14,7 +14,7 @@
         :color="item.color"
         >{{ item.icon }}</v-icon
       >
-      <div class="caption label">{{ item.text }}</div>
+      <div class="f-caption label greyscale_3--text">{{ item.text }}</div>
     </div>
   </v-layout>
 </template>
@@ -35,7 +35,7 @@ class VaultActions extends Vue {
 
     return [
       {
-        icon: "$FIconRepay4P",
+        icon: "$iconPayback",
         value: "payback",
         text: this.$t("common.pay-back"),
         disabled: !hasDebt,
@@ -62,7 +62,7 @@ class VaultActions extends Vue {
         clazz: "bg-color",
       },
       {
-        icon: "$FIconAdd4P",
+        icon: "$iconDeposit",
         value: "deposit",
         text: this.$t("common.deposit"),
         disabled: false,
@@ -94,7 +94,8 @@ export default VaultActions;
 }
 
 .label {
-  margin-top: 2px;
+  font-weight: 500;
+  margin-top: 8px;
 }
 
 .bg-color {

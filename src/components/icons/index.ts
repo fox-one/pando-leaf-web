@@ -15,12 +15,6 @@ requireComponent.keys().forEach((fileName) => {
 
 export function makeIconValues() {
   return {
-    iconChevronDown: {
-      component: "icon-chevron-down",
-    },
-    iconListArrow: {
-      component: "icon-list-arrow",
-    },
     iconHome: {
       component: "icon-home",
     },
@@ -29,15 +23,6 @@ export function makeIconValues() {
     },
     iconAuctions: {
       component: "icon-auctions",
-    },
-    iconPointerRight: {
-      component: "icon-pointer-right",
-    },
-    iconQuestion: {
-      component: "icon-question",
-    },
-    iconSearch: {
-      component: "icon-search",
     },
     iconDeposit: {
       component: "icon-deposit",
@@ -51,9 +36,6 @@ export function makeIconValues() {
     iconGenerate: {
       component: "icon-generate",
     },
-    iconMoreInfo: {
-      component: "icon-more-info",
-    },
     iconAuctionDetail: {
       component: "icon-auction-detail",
     },
@@ -65,15 +47,6 @@ export function makeIconValues() {
     },
     iconNoVault: {
       component: "icon-no-vault",
-    },
-    iconTotalCardTexture: {
-      component: "icon-total-card-texture",
-    },
-    iconPusd: {
-      component: "icon-pusd",
-    },
-    iconSetMax: {
-      component: "icon-set-max",
     },
     iconSwitchChart: {
       component: "icon-switch-chart",
