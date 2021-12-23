@@ -1,5 +1,5 @@
 <template>
-  <div class="infomation-item">
+  <div class="infomation-item" :style="[{ fontSize: `${fontSize}px` }]">
     <v-layout class="py-3" column>
       <v-layout align-center>
         <div class="greyscale_3--text mr-1">{{ label }}</div>
@@ -48,6 +48,8 @@ export default class extends Vue {
 
   @Prop({ default: null }) learnMore!: string;
 
+  @Prop({ default: 14 }) fontSize!: number;
+
   get meta() {
     let valueColor = "greyscale_1--text";
     if (this.valueColor) {
@@ -68,7 +70,6 @@ export default class extends Vue {
 .infomation-item {
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
   letter-spacing: -0.006em;
 }
 </style>

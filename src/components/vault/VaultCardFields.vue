@@ -1,16 +1,17 @@
 <template>
-  <div>
-    <v-row
-      no-gutters
+  <v-row>
+    <v-col
       v-for="(field, index) in fields"
       :key="index"
-      class="field py-3"
+      :class="[{ 'field--emphasize': field.emphasize }]"
+      cols="6"
+      md="4"
+      class="field"
     >
-      <div class="field__title greyscale_3--text">
-        <span class="mr-1">
+      <div class="field__title">
+        <span class="mr-1" :style="[{ color: field.color }]">
           {{ field.title }}
         </span>
-
         <base-tooltip
           v-if="field.hint"
           :hint="field.hint"
@@ -18,20 +19,16 @@
         />
       </div>
 
-      <v-spacer />
-
-      <div
-        class="field__value greyscale_1--text"
-        :style="[{ color: field.color }]"
-      >
+      <div class="field__value mt-1" :style="[{ color: field.color }]">
         {{ field.value }}
       </div>
-    </v-row>
-  </div>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { getVaultFields } from "@/utils/vault";
 
 import type { TranslateResult } from "vue-i18n";
 import type { VuetifyThemeItem } from "vuetify/types/services/theme";
@@ -52,11 +49,11 @@ class VaultFields extends Vue {
 
   get fields() {
     const time = this.$utils.time;
-    const { format, toPercent } = this.$utils.number;
-    const getters = this.$store.getters as Getter.GettersTree;
+    const format = this.$utils.number.format;
+    const toPercent = this.$utils.number.toPercent;
+
     const {
       vault,
-      collateral,
       collateralSymbol,
       collateralAmount,
       debtSymbol,
@@ -66,11 +63,7 @@ class VaultFields extends Vue {
       price,
       nextPrice,
       liquidationPrice,
-    } = getters.getVaultFields(this.id);
-
-    const { liquidationPenalty, minimumRatio } = getters.getMarketFields(
-      collateral?.id ?? ""
-    );
+    } = getVaultFields(this, this.id);
 
     const ratioText = debtAmount ? toPercent({ n: ratio }) : "N/A";
     const isValidPrice =
@@ -85,32 +78,37 @@ class VaultFields extends Vue {
     if (vault?.ink) {
       items.push(
         {
-          title: this.$t("common.collateral-ratio"),
-          value: ratioText,
-          color: this.$vuetify.theme.currentTheme[riskLevelMeta.color],
-          hint: this.$t("tooltip.collateralization-ratio"),
-          learnMore: LINKS["vault.liquidation-ratio"],
+          title: this.$t("common.outstanding-symbol-debt", {
+            symbol: debtSymbol,
+          }),
+          value: `${format({ n: debtAmount })} ${debtSymbol}`,
+          emphasize: true,
         },
         {
-          title: this.$t("common.current-symbol-price", {
+          title: this.$t("me.symbol-locked", {
             symbol: collateralSymbol,
           }),
-          value: `${format({ n: price })} ${debtSymbol}`,
-        },
-        {
-          title: this.$t("common.next-price"),
-          value: `${nextPriceText} ${debtSymbol}`,
-          hint: isValidPrice
-            ? this.$t("tooltip.next-price", {
-                time: nextPriceTime,
-              })
-            : undefined,
-          learnMore: LINKS["vault.price-oracles"],
+          value: `${format({ n: collateralAmount })} ${collateralSymbol}`,
+          emphasize: true,
         }
       );
 
       if (debtAmount > 0) {
         items.push(
+          {
+            title: this.$t("common.collateral-ratio"),
+            value: ratioText,
+            emphasize: true,
+            color: this.$vuetify.theme.currentTheme[riskLevelMeta.color],
+            hint: this.$t("tooltip.collateralization-ratio"),
+            learnMore: LINKS["vault.liquidation-ratio"],
+          },
+          {
+            title: this.$t("common.current-symbol-price", {
+              symbol: collateralSymbol,
+            }),
+            value: `${format({ n: price })} ${debtSymbol}`,
+          },
           {
             title: this.$t("common.liquidation-price"), // debt * ratio / collateral
             value: `${format({ n: liquidationPrice })} ${debtSymbol}`,
@@ -118,15 +116,14 @@ class VaultFields extends Vue {
             learnMore: LINKS["vault.liquidation-price"],
           },
           {
-            title: this.$t("common.liquidation-penalty"),
-            value: toPercent({
-              n: liquidationPenalty - 1,
-              dp: 0,
-            }),
-          },
-          {
-            title: this.$t("common.minimum-ratio"),
-            value: toPercent({ n: minimumRatio, dp: 0 }),
+            title: this.$t("common.next-price"),
+            value: `${nextPriceText} ${debtSymbol}`,
+            hint: isValidPrice
+              ? this.$t("tooltip.next-price", {
+                  time: nextPriceTime,
+                })
+              : undefined,
+            learnMore: LINKS["vault.price-oracles"],
           }
         );
       }
@@ -140,19 +137,23 @@ export default VaultFields;
 
 <style lang="scss" scoped>
 .field {
-  align-items: center;
-
   &__title {
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 12px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
   }
 
   &__value {
-    align-items: center;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  &--emphasize {
+    .field__title,
+    .field__value {
+      font-weight: bold;
+    }
   }
 }
 </style>

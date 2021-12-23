@@ -1,14 +1,21 @@
 <template>
-  <f-segment-control borderless mandatory :value="value" @change="handleChange">
-    <f-button
+  <f-tabs
+    borderless
+    mandatory
+    fixed-tabs
+    :value="value"
+    disableSliderLength
+    @change="handleChange"
+  >
+    <v-tab
       v-for="(item, index) in tabs"
       :key="index"
       :data-value="index"
       :ripple="false"
     >
       <span>{{ item.text }}</span>
-    </f-button>
-  </f-segment-control>
+    </v-tab>
+  </f-tabs>
 </template>
 
 <script lang="ts">
@@ -24,7 +31,7 @@ class DetailTabs extends Vue {
         text: this.$t("tab.details"),
       },
       {
-        text: this.$t("common.history"),
+        text: this.$t("tab.market"),
       },
     ];
   }

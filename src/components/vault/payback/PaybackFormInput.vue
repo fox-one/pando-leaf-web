@@ -10,15 +10,13 @@
     hide-details
     fullfilled
     v-bind="$attrs"
-    :balance="$t('form.set-max')"
   >
     <template #tools="{ messages }">
       <form-input-tools
-        :balance="meta.debtAmountText"
+        :balance="meta.balance"
         :fiat-amount="meta.fiatAmount"
         :messages="messages"
-        :fillable="true"
-        :leftLabel="text.balance"
+        :fillable="false"
         @fill="handleFill"
       >
       </form-input-tools>
@@ -32,7 +30,9 @@ import BigNumber from "bignumber.js";
 import FormInputTools from "@/components/base/FormInputTools.vue";
 
 @Component({
-  components: { FormInputTools },
+  components: {
+    FormInputTools,
+  },
 })
 export default class extends Vue {
   @PropSync("amount") bindAmount;
@@ -43,28 +43,26 @@ export default class extends Vue {
 
   @Prop({ default: () => [] }) rules!: ((amount: string) => boolean | string)[];
 
-  get text() {
-    return {
-      balance: this.$t("form.set-max"),
-    };
-  }
-
   get meta() {
     const { isValid, format, toFiat } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
     const { debtAsset, debtSymbol, debtAmount } = getters.getVaultFields(
       this.vault?.id
     );
-    const walletAsset = getters["asset/getWalletAssetById"](
-      debtAsset?.id ?? ""
-    );
+
+    const getWalletAssetById: State.GetWalletAssetById =
+      getters["asset/getWalletAssetById"];
+
+    const walletAsset = getWalletAssetById(debtAsset?.id ?? "");
+
+    const balance = walletAsset?.balance ?? "-";
 
     const inputAmount = +(this.bindAmount ?? "0");
     const price = +(walletAsset?.price_usd ?? 0);
     const fiatAmount = inputAmount * price;
 
     return {
-      balance: walletAsset?.balance,
+      balance,
       debtAsset,
       debtAmount,
       debtSymbol,

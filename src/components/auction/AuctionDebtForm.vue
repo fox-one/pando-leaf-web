@@ -15,7 +15,7 @@
       fullfilled
       :placeholder="$t('auction.debt-amount-placeholder')"
       :fillable="false"
-      :rules="[meetDebt]"
+      :rules="rules"
     >
     </base-form-input>
 
@@ -67,14 +67,8 @@ export default class AuctionDebtForm extends Vue {
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
     const { toPercent } = this.$utils.number;
-    const {
-      isDone,
-      debtSymbol,
-      debtAsset,
-      minBid,
-      collateral,
-      maxBid,
-    } = getters.getFlipFields(this.flip);
+    const { isDone, debtSymbol, debtAsset, minBid, collateral, maxBid } =
+      getters.getFlipFields(this.flip);
 
     return {
       isDone,
@@ -89,16 +83,20 @@ export default class AuctionDebtForm extends Vue {
     };
   }
 
-  meetDebt(val) {
-    const isMeet = +val >= +this.meta.minBid && +val <= +this.meta.maxBid;
-    return (
-      isMeet ||
-      this.$t("auction.rule.stage-price", {
-        beg: this.meta.begText,
-        amount: this.meta.maxBid,
-        symbol: this.meta.debtSymbol,
-      })
-    );
+  get rules() {
+    return [
+      (val) =>
+        +val >= +this.meta.minBid ||
+        this.$t("auction.rule.stage-price-less-beg", {
+          beg: this.meta.begText,
+        }),
+      (val) =>
+        +val <= +this.meta.maxBid ||
+        this.$t("auction.rule.stage-price-maximum", {
+          amount: this.meta.maxBid,
+          symbol: this.meta.debtSymbol,
+        }),
+    ];
   }
 
   handleSuccess() {

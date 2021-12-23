@@ -4,7 +4,11 @@
 
     <market-item-infos :collateral="collateral" />
 
-    <market-item-action class="mx-6 pb-6" :collateral="collateral" />
+    <market-item-action
+      v-if="showButton"
+      class="mx-6 pb-6"
+      :collateral="collateral"
+    />
   </v-card>
 </template>
 
@@ -23,6 +27,8 @@ import MarketItemInfos from "./MarketItemInfos.vue";
 })
 export default class MarketItem extends Vue {
   @Prop() collateral!: API.Collateral;
+
+  @Prop({ default: true }) showButton!: boolean;
 }
 </script>
 

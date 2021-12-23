@@ -1,36 +1,48 @@
 <template>
-  <v-container class="detail-page">
-    <v-layout justify-center>
+  <div>
+    <v-layout class="tabs__wrapper" justify-center>
       <detail-tabs v-model="index" />
     </v-layout>
 
-    <div v-show="index === 0">
-      <vault-name :id="vaultId" class="my-8" />
+    <div v-show="index === 0" class="px-4">
+      <vault-name :id="vaultId" class="mt-4" />
+
       <vault-detail-fields
         v-if="meta.hasCollateral"
         :id="vaultId"
-        class="mb-3"
+        class="my-3"
       />
+
       <empty-vault-place-holder v-else />
 
-      <div class="greyscale_6 pb-2 mx-n4" />
+      <f-divider class="my-3" />
 
       <vault-detail-infos :id="vaultId" class="infos" />
 
-      <div class="actions__wrapper">
-        <vault-actions
-          :id="vaultId"
-          :has-collateral="meta.hasCollateral"
-          :has-debt="meta.hasDebt"
-          class="actions"
-        />
+      <div class="my-3 mx-n4 greyscale_1" style="height: 8px; opacity: 0.05" />
+
+      <div class="mt-5 mb-2 greyscale_1--text title">
+        {{ $t("common.history") }}
       </div>
+
+      <vault-history class="end-blank" :id="vaultId" />
     </div>
 
     <div v-show="index === 1">
-      <vault-history :id="vaultId" class="mt-4" />
+      <market-item :collateral="meta.collateral" :show-button="false" />
     </div>
-  </v-container>
+
+    <div class="actions__wrapper">
+      <f-divider />
+
+      <vault-actions
+        :id="vaultId"
+        :has-collateral="meta.hasCollateral"
+        :has-debt="meta.hasDebt"
+        class="actions"
+      />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -42,6 +54,7 @@ import VaultDetailFields from "@/components/vault/VaultDetailFields.vue";
 import VaultDetailInfos from "@/components/vault/VaultDetailInfos.vue";
 import VaultHistory from "@/components/vault/VaultHistory.vue";
 import VaultActions from "@/components/vault/VaultActions.vue";
+import MarketItem from "@/components/market/MarketItem.vue";
 import mixins from "@/mixins";
 
 @Component({
@@ -53,6 +66,7 @@ import mixins from "@/mixins";
     VaultDetailInfos,
     VaultHistory,
     VaultActions,
+    MarketItem,
   },
 })
 class VaultDetailPage extends Mixins(mixins.page) {
@@ -74,20 +88,22 @@ class VaultDetailPage extends Mixins(mixins.page) {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { vault, debtAmount } = getters.getVaultFields(this.vaultId);
+    const { vault, debtAmount, collateral } = getters.getVaultFields(
+      this.vaultId
+    );
 
     const hasCollateral = Number(vault?.ink) > 0;
     const hasDebt = debtAmount > 0;
 
-    return { vault, hasCollateral, hasDebt };
+    return { vault, hasCollateral, hasDebt, collateral };
   }
 }
 export default VaultDetailPage;
 </script>
 
 <style lang="scss" scoped>
-.infos {
-  margin-bottom: 200px;
+.tabs__wrapper {
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.06);
 }
 
 .actions__wrapper {
@@ -95,16 +111,26 @@ export default VaultDetailPage;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 30px 16px 50px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 
   .actions {
-    background: var(--v-risk_mid_bg-base);
+    background: var(--v-greyscale_7-base);
+    height: calc(110px + env(safe-area-inset-bottom));
+    align-items: flex-start;
     max-width: 800px;
-    border-radius: 8px;
+    border-radius: 0px;
     padding: 16px;
   }
+}
+.title {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+}
+.end-blank {
+  margin-bottom: 200px;
 }
 
 .theme--light {

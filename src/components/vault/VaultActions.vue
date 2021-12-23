@@ -1,5 +1,5 @@
 <template>
-  <v-layout justify-space-between>
+  <v-layout justify-space-around>
     <div
       v-for="item in actions"
       :key="item.value"
@@ -7,7 +7,13 @@
       :class="[{ 'action--disabled': item.disabled }]"
       @click.stop="handleClick(item)"
     >
-      <v-icon size="32" :color="'primary'">{{ item.icon }}</v-icon>
+      <v-icon
+        size="56"
+        class="pa-4 rounded-circle"
+        :class="item.clazz"
+        :color="item.color"
+        >{{ item.icon }}</v-icon
+      >
       <div class="caption label">{{ item.text }}</div>
     </div>
   </v-layout>
@@ -29,11 +35,13 @@ class VaultActions extends Vue {
 
     return [
       {
-        icon: "$iconPayback",
+        icon: "$FIconRepay4P",
         value: "payback",
         text: this.$t("common.pay-back"),
         disabled: !hasDebt,
         href: "vault-payback",
+        color: "primary",
+        clazz: "bg-color",
       },
       {
         icon: "$iconGenerate",
@@ -41,6 +49,8 @@ class VaultActions extends Vue {
         text: this.$t("common.generate"),
         disabled: !hasCollateral,
         href: "vault-generate",
+        color: "primary",
+        clazz: "bg-color",
       },
       {
         icon: "$iconWithdraw",
@@ -48,13 +58,17 @@ class VaultActions extends Vue {
         text: this.$t("common.withdraw"),
         disabled: !hasCollateral,
         href: "vault-withdraw",
+        color: "primary",
+        clazz: "bg-color",
       },
       {
-        icon: "$iconDeposit",
+        icon: "$FIconAdd4P",
         value: "deposit",
         text: this.$t("common.deposit"),
         disabled: false,
         href: "vault-deposit",
+        color: "greyscale_7",
+        clazz: "bg-color-opposite",
       },
     ];
   }
@@ -81,5 +95,12 @@ export default VaultActions;
 
 .label {
   margin-top: 2px;
+}
+
+.bg-color {
+  background-color: var(--v-greyscale_6-base);
+}
+.bg-color-opposite {
+  background-color: var(--v-greyscale_1-base);
 }
 </style>

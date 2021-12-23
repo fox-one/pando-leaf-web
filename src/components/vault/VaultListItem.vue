@@ -1,21 +1,27 @@
 <template>
   <v-sheet class="rounded pa-6" :color="meta.bgColor" @click="handleToDetail">
-    <v-layout align-center class="mb-4">
-      <vault-name :id="id" />
+    <div class="name-text">
+      {{ meta.name }}
+    </div>
 
-      <v-spacer />
-
-      <v-btn text fab circle rounded small>
+    <v-row>
+      <v-col cols="6" class="py-0">
+        <f-mixin-asset-logo :size="32" :logo="meta.debtAssetLogo" />
+      </v-col>
+      <v-col cols="6" class="py-0">
+        <f-mixin-asset-logo :size="32" :logo="meta.collateralAssetLogo" />
+      </v-col>
+      <!--  <v-btn text fab circle rounded small>
         <v-icon size="40" color="primary">$iconMoreInfo</v-icon>
-      </v-btn>
-    </v-layout>
+      </v-btn> -->
+    </v-row>
 
-    <vault-detail-fields v-if="meta.hasCollateral" :id="id" />
-    <empty-vault-place-holder class="pt-2" v-else />
+    <vault-card-fields v-if="meta.hasCollateral" :id="id" />
 
-    <f-divider class="my-6" />
+    <empty-vault-place-holder class="py-6 mt-3" v-else />
 
-    <vault-actions
+    <vault-card-actions
+      class="mt-4 rounded-pill actions__wrapper"
       :id="id"
       :has-collateral="meta.hasCollateral"
       :has-debt="meta.hasDebt"
@@ -26,17 +32,17 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import VaultName from "./VaultName.vue";
-import VaultDetailFields from "./VaultDetailFields.vue";
+import VaultCardFields from "./VaultCardFields.vue";
 import EmptyVaultPlaceHolder from "./EmptyVaultPlaceHolder.vue";
-import VaultActions from "./VaultActions.vue";
+import VaultCardActions from "./VaultCardActions.vue";
 import { getVaultFields } from "@/utils/vault";
 
 @Component({
   components: {
     VaultName,
-    VaultDetailFields,
+    VaultCardFields,
     EmptyVaultPlaceHolder,
-    VaultActions,
+    VaultCardActions,
   },
 })
 class VaultListItem extends Vue {
@@ -53,7 +59,7 @@ class VaultListItem extends Vue {
     } = getVaultFields(this, this.id);
 
     return {
-      name: `${collateral?.name ?? ""} #${vault?.identity_id}`,
+      name: `#${vault?.identity_id}`,
       collateralAssetLogo: collateralAsset?.logo ?? "",
       debtAssetLogo: debtAsset?.logo ?? "",
       hasCollateral: Number(vault?.ink) > 0,
@@ -68,3 +74,20 @@ class VaultListItem extends Vue {
 }
 export default VaultListItem;
 </script>
+<style lang="scss" scoped>
+.name-text {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: right;
+  margin-right: -4px;
+  margin-top: -4px;
+  opacity: 0.2;
+}
+.actions__wrapper {
+  padding: 16px 32px;
+  width: 100%;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.03);
+  background: var(--v-greyscale_7-base);
+}
+</style>

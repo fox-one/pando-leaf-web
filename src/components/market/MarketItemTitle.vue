@@ -21,11 +21,11 @@ export default class MarketItemTitle extends Vue {
     const getters = this.$store.getters as Getter.GettersTree;
 
     const { collateralAsset, debtAsset } = getters.getMarketFields(
-      this.collateral.id
+      this.collateral?.id
     );
 
     return {
-      name: this.collateral.name,
+      name: this.collateral?.name,
       collateralLogo: collateralAsset?.logo,
       debtLogo: debtAsset?.logo,
     };

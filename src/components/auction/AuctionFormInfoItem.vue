@@ -8,7 +8,11 @@
 
     <v-spacer />
 
-    <div class="font-weight-medium" :class="valueColor + '--text'">
+    <div
+      class="font-weight-medium"
+      :class="valueColor + '--text'"
+      @click.stop="handleFill"
+    >
       {{ value }}
     </div>
 

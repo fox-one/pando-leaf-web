@@ -1,29 +1,38 @@
 <template>
   <div class="vault-infos">
-    <v-layout
-      v-for="(item, index) in infos"
-      :key="index"
-      class="info-item py-4"
-    >
-      <div class="greyscale_3--text">
-        <span class="mr-1">{{ item.title }}</span>
-        <base-tooltip
-          v-if="item.hint"
-          :hint="item.hint"
-          :learn-more="item.learnMore"
-        ></base-tooltip>
-      </div>
-      <v-spacer />
-      <div>{{ item.value }}</div>
-    </v-layout>
+    <infomation-item
+      v-for="item in infos.slice(0, 2)"
+      :key="item.title"
+      :font-size="13"
+      :label="item.title"
+      :hint="item.hint"
+      :learn-more="item.learnMore"
+      :value="item.value"
+    ></infomation-item>
+
+    <f-divider class="my-3" />
+
+    <infomation-item
+      v-for="item in infos.slice(2, 3)"
+      :key="item.title"
+      :font-size="13"
+      :label="item.title"
+      :hint="item.hint"
+      :learn-more="item.learnMore"
+      :value="item.value"
+    ></infomation-item>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { LINKS } from "~/constants";
+import InfomationItem from "@/components/base/InformationItem.vue";
 
-@Component
+@Component({
+  components: {
+    InfomationItem,
+  },
+})
 class VaultDetailInfos extends Vue {
   @Prop() id!: string;
 
@@ -38,7 +47,6 @@ class VaultDetailInfos extends Vue {
       collateralSymbol,
       debtSymbol,
       stabilityFee,
-      liquidationPenalty,
     } = getters.getVaultFields(this.id);
 
     return [
@@ -54,10 +62,6 @@ class VaultDetailInfos extends Vue {
         title: this.$t("common.stability-fee"),
         value: `${toPercent({ n: stabilityFee })}`,
         hint: this.$t("tooltip.stability-fee"),
-      },
-      {
-        title: this.$t("common.liquidation-penalty"),
-        value: `${toPercent({ n: liquidationPenalty - 1 })}`,
       },
     ];
   }

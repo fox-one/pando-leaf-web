@@ -36,7 +36,7 @@ export default class AuctionCollateralFormInfos extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { toPrecision, toPercent, format } = this.$utils.number;
+    const { isValid, toPrecision, toPercent, format } = this.$utils.number;
     const {
       isDone,
       debtSymbol,
@@ -57,7 +57,7 @@ export default class AuctionCollateralFormInfos extends Vue {
     let inputBidPriceText = "-";
     let priceDifference = "-";
 
-    if (inputBidPrice !== 0) {
+    if (inputBidPrice !== 0 && isValid(+this.inputCollateralAmount)) {
       inputBidPriceText = `1 ${auctionSymbol} = ${format({
         n: inputBidPrice,
       })} ${debtSymbol}`;

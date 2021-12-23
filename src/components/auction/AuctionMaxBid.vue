@@ -27,17 +27,12 @@ export default class AuctionMaxBid extends Vue {
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
     const { format } = this.$utils.number;
-    const {
-      minBid,
-      maxBid,
-      auctionSymbol,
-      isDone,
-      isStage1,
-    } = getters.getFlipFields(this.flip);
+    const { minBid, maxBid, auctionSymbol, isDone, isStage1 } =
+      getters.getFlipFields(this.flip);
 
     const label = isStage1
       ? this.$t("auction.max-bid")
-      : this.$t("auction.max-reduction");
+      : this.$t("auction.min-bid-amount");
 
     const hint = isStage1
       ? [this.$t("auction.max-bid-hint-1"), this.$t("auction.max-bid-hint-2")]

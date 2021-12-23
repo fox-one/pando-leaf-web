@@ -23,13 +23,8 @@ export default class AuctionMinBid extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const {
-      minBid,
-      isDone,
-      isStage1,
-      debtSymbol,
-      auctionSymbol,
-    } = getters.getFlipFields(this.flip);
+    const { minBid, isDone, isStage1, debtSymbol, auctionSymbol } =
+      getters.getFlipFields(this.flip);
 
     const symbol = isStage1 ? debtSymbol : auctionSymbol;
     return { isDone, isStage1, minBid, symbol };

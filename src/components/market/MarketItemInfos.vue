@@ -26,7 +26,6 @@
 </template>
 
 <script lang="ts" scoped>
-import { simplize } from "@foxone/utils/number";
 import dayjs from "dayjs";
 import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import { Get, Sync } from "vuex-pathify";
@@ -55,17 +54,17 @@ export default class MarketItemInfos extends Vue {
       collateralFiat,
       maxAvailable,
       nextPrice,
-    } = getters.getMarketFields(this.collateral.id);
+    } = getters.getMarketFields(this.collateral?.id);
     const { toPrecision, toPercent, simplize } = this.$utils.number;
 
-    const rate = collateralFiat / Number(this.collateral.art);
+    const rate = collateralFiat / Number(this.collateral?.art ?? "0");
 
     const isValidOracle =
       collateralPrice !== nextPrice?.price &&
       this.$utils.oracle.isValidOracle(nextPrice);
     return {
-      name: this.collateral.name,
-      price: toPrecision({ n: this.collateral.price }),
+      name: this.collateral?.name ?? "",
+      price: toPrecision({ n: this.collateral?.price ?? 0 }),
       available: simplize({ n: maxAvailable }),
       rate: Number.isNaN(rate) ? "-" : toPercent({ n: rate }),
       collateralAmount: simplize({ n: collateralAmount }),

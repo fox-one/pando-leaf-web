@@ -29,9 +29,8 @@ import { Vue, Component } from "vue-property-decorator";
 @Component({})
 export default class MarketOverview extends Vue {
   get infos() {
-    const { collaterals, supply, collaterilazation } = this.$store.getters[
-      "collateral/getOverview"
-    ];
+    const { collaterals, supply, collaterilazation } =
+      this.$store.getters["collateral/getOverview"];
 
     const { toPercent, simplize } = this.$utils.number;
     const collateralsText = collaterals ? simplize({ n: collaterals }) : "-";
