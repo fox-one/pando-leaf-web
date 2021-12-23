@@ -63,5 +63,8 @@ export function makeIconValues() {
     iconSortDesc: {
       component: "icon-sort-desc",
     },
+    iconUpdateRight: {
+      component: "icon-update-right",
+    },
   };
 }

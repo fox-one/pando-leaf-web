@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" class="ma-0 pa-4" autocomplete="off">
-    <base-alert class="mb-4" close type="error" :show.sync="showTip">
+    <base-alert class="mb-4" close type="warning" :show.sync="showTip">
       {{ $t("tooltip.payback-intro") }}
     </base-alert>
 
@@ -11,6 +11,10 @@
       :vault="vault"
       :leftLabel="$t('form.set-max')"
     />
+
+    <payback-helper class="mt-3" :vault="vault" :amount.sync="bindAmount" />
+
+    <f-divider class="mt-3" />
 
     <payback-action
       :vault="vault"
@@ -26,6 +30,7 @@ import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import PaybackFormInput from "./PaybackFormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import PaybackAction from "./PaybackAction.vue";
+import PaybackHelper from "./PaybackHelper.vue";
 import BigNumber from "bignumber.js";
 import { toPercent } from "@foxone/utils/number";
 
@@ -34,6 +39,7 @@ import { toPercent } from "@foxone/utils/number";
     PaybackFormInput,
     BaseRiskSlider,
     PaybackAction,
+    PaybackHelper,
   },
 })
 export default class PaybackForm extends Vue {
@@ -43,7 +49,7 @@ export default class PaybackForm extends Vue {
 
   @Ref("form") form!: any;
 
-  showTip = false;
+  showTip = true;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;

@@ -19,7 +19,7 @@ import { mdiCloseCircle } from "@mdi/js";
 
 @Component
 class Alert extends Vue {
-  @Prop() type!: "error";
+  @Prop() type!: "error" | "warning";
 
   @Prop({ type: Boolean, default: false }) close!: boolean;
 
@@ -33,6 +33,7 @@ class Alert extends Vue {
     const theme = this.$vuetify.theme.currentTheme;
     const meta = {
       error: [theme.error, "rgba(244, 76, 76, 0.1)"],
+      warning: [theme.warning, "rgba(252, 248, 240, 1)"],
     };
 
     return meta[this.type];
