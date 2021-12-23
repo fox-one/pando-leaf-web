@@ -8,9 +8,8 @@
   >
     <template #activator="{ on }">
       <slot name="activator" :on="on">
-        <f-button rounded depressed color="primary" :min-width="220" v-on="on">
+        <f-button depressed fab color="primary" class="xx-small" v-on="on">
           <v-icon size="16">$FIconAdd</v-icon>
-          <span>{{ $t("common.add-a-vault") }}</span>
         </f-button>
       </slot>
     </template>
@@ -78,6 +77,11 @@ class ActionCreateVault extends Vue {
 export default ActionCreateVault;
 </script>
 <style lang="scss" scoped>
+.xx-small {
+  width: 24px;
+  height: 24px;
+}
+
 .dialog-content {
   max-height: 500px;
   height: calc(90vh - 220px);

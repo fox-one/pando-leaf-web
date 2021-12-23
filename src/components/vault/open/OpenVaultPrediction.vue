@@ -31,12 +31,8 @@ export default class OpenVaultPrediction extends Vue {
       this.collateral
     );
 
-    const {
-      debtSymbol,
-      collateralSymbol,
-      nextPrice,
-      collateralPrice,
-    } = getters.getMarketFields(this.collateral?.id);
+    const { debtSymbol, collateralSymbol, nextPrice, collateralPrice } =
+      getters.getMarketFields(this.collateral?.id);
 
     const risk = this.$utils.collateral.getRiskLevelMeta(
       collateralizationRatio,
@@ -70,6 +66,19 @@ export default class OpenVaultPrediction extends Vue {
     const { isValidOracle } = this.$utils.oracle;
     return [
       {
+        label: this.$t("common.collateralization-ratio"), // deposit * price / mint
+        value: this.meta.collateralizationRatioText,
+        valueColor: this.meta.risk.color,
+        hint: this.$t("tooltip.collateralization-ratio"),
+        learnMore: LINKS["vault.liquidation"],
+      },
+      {
+        label: this.$t("common.minimum-ratio"),
+        value: this.meta.minimumRatio,
+        hint: this.$t("tooltip.minimum-ratio"),
+        learnMore: LINKS["vault.liquidation-ratio"],
+      },
+      {
         label: this.$t("common.liquidation-price"), // mint * mat / deposit
         value: this.meta.liquidationPriceText,
         valueUnit: `${this.meta.debtSymbol}`,
@@ -90,19 +99,6 @@ export default class OpenVaultPrediction extends Vue {
         learnMore: LINKS["vault.price-oracles"],
         showChange: isValidOracle(this.meta.nextPrice),
         changedValue: this.meta.nextPrice?.price,
-      },
-      {
-        label: this.$t("common.collateralization-ratio"), // deposit * price / mint
-        value: this.meta.collateralizationRatioText,
-        valueColor: this.meta.risk.color,
-        hint: this.$t("tooltip.collateralization-ratio"),
-        learnMore: LINKS["vault.liquidation"],
-      },
-      {
-        label: this.$t("common.minimum-ratio"),
-        value: this.meta.minimumRatio,
-        hint: this.$t("tooltip.minimum-ratio"),
-        learnMore: LINKS["vault.liquidation-ratio"],
       },
       {
         label: this.$t("form.market-debt-ceiling"), // line- debt

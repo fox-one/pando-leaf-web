@@ -115,6 +115,7 @@
   "common.warning": "警告",
   "common.learn-more":"了解詳情",
   "common.withdraw": "取回",
+  "common.create-time":"創建時間",
   "connect.wallet": "連接錢包",
   "connect.wallet.hint": "添加金庫前請先連接錢包",
   "disconnect": "中斷連線",

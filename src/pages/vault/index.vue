@@ -7,30 +7,22 @@
 
     <empty-vaults-place-holder v-else-if="!haveVault" />
 
-    <v-layout column v-else class="pt-md-6">
-      <v-row>
-        <v-col cols="12" md="6">
-          <position-overview />
-        </v-col>
+    <v-layout column v-else>
+      <position-overview class="mb-4" />
 
-        <v-col cols="12" md="6" class="hidden-sm-and-down">
-          <deskotp-position-ratio-card />
-        </v-col>
-      </v-row>
-
-      <div class="d-flex align-center mt-8 mt-md-14">
+      <div class="d-flex align-center py-4">
         <span class="subtitle-1 font-weight-bold mr-1">
           {{ $t("me.my-vault") }}
         </span>
 
-        <base-tooltip :hint="myVaultHint" :learn-more="meta.learnMore" />
-      </div>
+        <v-spacer />
 
-      <vault-list class="mt-3" />
-
-      <div class="text-center my-8">
         <action-create-vault @itemclick="handleItemclick" />
       </div>
+
+      <vault-sorter :sort.sync="sortedBy" />
+
+      <vault-list class="mt-1" :sort="sortedBy" />
     </v-layout>
   </v-container>
 </template>
@@ -42,10 +34,12 @@ import EmptyVaultsPlaceHolder from "~/components/vault/EmptyVaultsPlaceHolder.vu
 import PositionOverview from "@/components/vault/PositionOverview.vue";
 import DeskotpPositionRatioCard from "@/components/vault/desktop/PositionRatioCard.vue";
 import VaultList from "@/components/vault/VaultList.vue";
+import VaultSorter from "@/components/vault/VaultSorter.vue";
 import ActionCreateVault from "@/components/vault/ActionCreateVault.vue";
 import mixins from "@/mixins";
 import { Get } from "vuex-pathify";
 import { LINKS } from "~/constants";
+import { SortBy } from "~/enums";
 
 @Component({
   components: {
@@ -54,6 +48,7 @@ import { LINKS } from "~/constants";
     PositionOverview,
     DeskotpPositionRatioCard,
     VaultList,
+    VaultSorter,
     ActionCreateVault,
   },
 })
@@ -61,6 +56,8 @@ class VaultPage extends Mixins(mixins.page) {
   @Get("auth/isLogged") isLogged!: boolean;
 
   @Get("vault/haveVault") haveVault!: boolean;
+
+  sortedBy: SortBy = SortBy.CREATE_TIME_ASC;
 
   get title() {
     return this.$t("tab.home") as string;

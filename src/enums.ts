@@ -44,3 +44,10 @@ export enum FlipRequestAction {
   FlipBid = "42",
   FlipDeal = "43",
 }
+
+export enum SortBy {
+  CREATE_TIME_ASC = "CREATE_TIME_ASC",
+  CREATE_TIME_DESC = "CREATE_TIME_DESC",
+  COLLATERAL_RATIO_ASC = "COLLATERAL_RATIO_ASC",
+  COLLATERAL_RATIO_DESC = "COLLATERAL_RATIO_DESC",
+}

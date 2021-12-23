@@ -81,5 +81,14 @@ export function makeIconValues() {
     iconSwitchNumber: {
       component: "icon-switch-number",
     },
+    iconSort: {
+      component: "icon-sort",
+    },
+    iconSortAsc: {
+      component: "icon-sort-asc",
+    },
+    iconSortDesc: {
+      component: "icon-sort-desc",
+    },
   };
 }

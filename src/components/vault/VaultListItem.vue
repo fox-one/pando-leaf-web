@@ -11,9 +11,6 @@
       <v-col cols="6" class="py-0">
         <f-mixin-asset-logo :size="32" :logo="meta.collateralAssetLogo" />
       </v-col>
-      <!--  <v-btn text fab circle rounded small>
-        <v-icon size="40" color="primary">$iconMoreInfo</v-icon>
-      </v-btn> -->
     </v-row>
 
     <vault-card-fields v-if="meta.hasCollateral" :id="id" />

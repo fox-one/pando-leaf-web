@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" class="ma-0 pa-4 pb-8" autocomplete="off">
+  <v-form ref="form" class="ma-0 pa-4" autocomplete="off">
     <div class="text-3 mb-4 greyscale_1--text">
       {{ $t("common.deposit") }}
     </div>
@@ -24,7 +24,7 @@
       :placeholder="$t('form.mint-amount')"
     />
 
-    <base-risk-slider class="mt-6" :progress="meta.progress" />
+    <!-- <base-risk-slider class="mt-6" :progress="meta.progress" /> -->
 
     <open-vault-action
       :collateral="collateral"

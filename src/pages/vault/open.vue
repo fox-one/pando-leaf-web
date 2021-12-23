@@ -13,18 +13,18 @@
         :debt-amount.sync="debtAmount"
       />
 
-      <div class="greyscale_6" style="height: 8px"></div>
-
       <open-vault-prediction
-        class="pa-4"
+        class="pa-4 mt-n4"
         :collateral="collateral"
         :deposit-amount="depositAmount"
         :debt-amount="debtAmount"
       />
 
+      <f-divider class="" />
+
       <risk-warnings />
 
-      <div style="height: 80px"></div>
+      <div style="height: 200px"></div>
     </div>
   </v-container>
 </template>
