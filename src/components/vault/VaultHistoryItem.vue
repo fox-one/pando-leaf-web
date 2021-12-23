@@ -5,8 +5,19 @@
       <v-spacer />
       <span class="caption greyscale_4--text">{{ meta.time }}</span>
     </v-layout>
-    <div class="caption greyscale_3--text mt-2">
-      {{ meta.text }}
+
+    <div class="d-flex justify-space-between caption greyscale_3--text mt-2">
+      <span class="d-flex align-center">
+        <f-mixin-asset-logo
+          v-if="meta.logo"
+          class="mr-1"
+          :size="16"
+          :logo="meta.logo"
+        />
+        {{ meta.text }}
+      </span>
+
+      <span v-if="meta.fiat"> {{ meta.fiat }} </span>
     </div>
   </div>
 </template>
@@ -23,20 +34,28 @@ class VaultHistoryItem extends Vue {
 
   get meta() {
     const toRelative = this.$utils.time.toRelative;
-    const getVaultFields = this.$utils.vault.getVaultFields;
+    const getters = this.$store.getters as Getter.GettersTree;
+    const { toFiat } = this.$utils.number;
     const { event } = this;
 
     const dink = event.dink?.replace("-", "");
     const debt = event.debt?.replace("-", "");
-    const fields = getVaultFields(this, event.vault_id);
-    const { vault, collateralSymbol, debtSymbol } = fields;
+    const fields = getters.getVaultFields(event.vault_id);
+    const { vault, collateralSymbol, debtSymbol, collateralAsset, debtAsset } =
+      fields;
 
     const title = this.$t(`event.action.${event.action?.toLowerCase()}`);
     const time = toRelative(event.created_at);
 
     const collateralText = `${dink} ${collateralSymbol}`;
     const debtText = `${debt} ${debtSymbol}`;
+
+    const collateralPrice = +(collateralAsset?.price ?? "0");
+    const debtPrice = +(debtAsset?.price ?? "0");
+
     let text: TranslateResult = "";
+    let logo: string | undefined = "";
+    let fiat = "";
 
     switch (event.action) {
       case VatAction.VatOpen:
@@ -48,25 +67,34 @@ class VaultHistoryItem extends Vue {
         break;
 
       case VatAction.VatDeposit:
-        text = this.$t("event.content.vatdeposit", {
-          amount: collateralText,
+        text = collateralText;
+        logo = fields.collateralAsset?.logo;
+        fiat = toFiat(this, {
+          n: +(dink ?? 0) * collateralPrice,
         });
         break;
 
       case VatAction.VatWithdraw:
-        text = this.$t("event.content.vatwithdraw", {
-          amount: collateralText,
+        text = collateralText;
+        logo = fields.collateralAsset?.logo;
+        fiat = toFiat(this, {
+          n: +(dink ?? 0) * collateralPrice,
         });
         break;
 
       case VatAction.VatPayback:
-        text = this.$t("event.content.vatpayback", {
-          amount: debtText,
+        text = debtText;
+        logo = fields.debtAsset?.logo;
+        fiat = toFiat(this, {
+          n: +(debt ?? 0) * debtPrice,
         });
         break;
+
       case VatAction.VatGenerate:
-        text = this.$t("event.content.vatgenerate", {
-          amount: debtText,
+        text = debtText;
+        logo = fields.debtAsset?.logo;
+        fiat = toFiat(this, {
+          n: +(debt ?? 0) * debtPrice,
         });
         break;
 
@@ -78,16 +106,20 @@ class VaultHistoryItem extends Vue {
         break;
 
       case VatAction.FlipBid:
-        text = this.$t("event.content.flipbid", {
-          amount: collateralText,
+        text = collateralText;
+        logo = fields.collateralAsset?.logo;
+        fiat = toFiat(this, {
+          n: +(dink ?? 0) * collateralPrice,
         });
         break;
     }
 
     return {
       text,
+      logo,
       title,
       time,
+      fiat,
     };
   }
 }
