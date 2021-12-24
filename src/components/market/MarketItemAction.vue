@@ -1,12 +1,11 @@
 <template>
   <div>
     <f-button
-      block
+      fab
       @click="generateNewVault"
-      class="greyscale_1 greyscale_7--text"
+      class="greyscale_1 greyscale_7--text xx-small"
     >
-      <v-icon size="16" class="mr-2">$FIconAdd</v-icon>
-      {{ $t("common.add-a-vault") }}
+      <v-icon size="16">$FIconAdd</v-icon>
     </f-button>
   </div>
 </template>
@@ -26,4 +25,11 @@ export default class MarketItemAction extends Vue {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.xx-small {
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+</style>

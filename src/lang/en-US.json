@@ -92,7 +92,7 @@
   "common.liquidation-price": "Liquidation Price",
   "common.max-available": "Max available",
   "common.menu": "Menu",
-  "common.min-collateral-ratio": "Minimum Collateral Ratio",
+  "common.min-collateral-ratio": "Min Collateral Ratio",
   "common.minimum-ratio": "Liquidation Ratio",
   "common.next-price": "Next Price",
   "common.next-price-time": "will be confirm after {time}",

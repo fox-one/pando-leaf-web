@@ -1,12 +1,9 @@
 <template>
   <div class="vault-name" :style="[{ background: meta.color }]">
-    <!-- <base-pair-logo
-      :base="meta.collateralAssetLogo"
-      :quote="meta.debtAssetLogo"
-    /> -->
     <div class="name-text">
       {{ meta.name }}
     </div>
+
     <v-row no-gutters class="pb-6">
       <v-col cols="6" class="vault-content">
         <f-mixin-asset-logo :size="32" :logo="meta.debtAssetLogo" />

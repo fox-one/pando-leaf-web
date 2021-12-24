@@ -3,19 +3,14 @@
     <div class="body-2">
       {{ $t("me.collaterals-ratio") }}
     </div>
-
-    <vault-position-ratio />
   </v-sheet>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import VaultPositionRatio from "../VaultPositionRatio.vue";
 
 @Component({
-  components: {
-    VaultPositionRatio,
-  },
+  components: {},
 })
 class PositionRatioCard extends Vue {}
 export default PositionRatioCard;

@@ -1,38 +1,65 @@
 <template>
-  <v-row no-gutters class="pb-2">
-    <v-col
-      class="mt-2 mb-4 pl-6"
-      cols="6"
-      md="4"
-      lg="3"
-      v-for="(item, ix) in infos"
+  <v-row no-gutters class="pb-2" @click="bindExpand = !bindExpand">
+    <market-infos-item
+      class="mb-4 px-6"
+      cols="12"
+      v-for="(item, ix) in infos.slice(0, 5)"
       :key="ix"
+      :label-class="item.labelClass"
+      :value-class="item.valueClass"
+      :title="item.title"
+      :value="item.value"
+      :value-unit="item.valueUnit"
+      :learn-more="item.learnMore"
+      :hint="item.hint"
     >
-      <div :class="`market-item-label ${item.labelClass}`">
-        {{ item.title }}
-        <base-tooltip
-          v-if="item.hint"
-          class="ml-1"
-          :hint="item.hint"
-          :learn-more="item.learnMore"
-        />
-      </div>
+    </market-infos-item>
 
-      <div :class="`market-item-value ${item.valueClass}`">
-        {{ item.value }} {{ item.valueUnit }}
-      </div>
+    <v-row
+      no-gutters
+      class="expand-transition content"
+      :class="bindExpand || disabled ? 'expanded' : 'collapse'"
+    >
+      <market-infos-item
+        class="mb-4 px-6"
+        cols="12"
+        v-for="(item, ix) in infos.slice(5, infos.length)"
+        :key="ix"
+        :label-class="item.labelClass"
+        :value-class="item.valueClass"
+        :title="item.title"
+        :value="item.value"
+        :value-unit="item.valueUnit"
+        :learn-more="item.learnMore"
+        :hint="item.hint"
+      >
+      </market-infos-item>
+    </v-row>
+
+    <v-col class="d-flex justify-center" v-if="!disabled">
+      <v-icon
+        size="14"
+        color="greyscale_4"
+        class="expand-transition"
+        :class="bindExpand ? 'expand' : ''"
+      >
+        $FIconChevronDown4P
+      </v-icon>
     </v-col>
   </v-row>
 </template>
 
 <script lang="ts" scoped>
 import dayjs from "dayjs";
-import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+import { Vue, Component, Prop, Watch, PropSync } from "vue-property-decorator";
+import MarketInfosItem from "./MarketInfosItem.vue";
 import { Get, Sync } from "vuex-pathify";
 import { LINKS } from "~/constants";
 
 @Component({
-  components: {},
+  components: {
+    MarketInfosItem,
+  },
 })
 export default class MarketItemInfos extends Vue {
   @Prop() collateral!: API.Collateral;
@@ -40,6 +67,10 @@ export default class MarketItemInfos extends Vue {
   @Sync("state/app@settings") settings;
 
   @Get("oracle/getOracleById") getOracleById;
+
+  @PropSync("expand") bindExpand!: boolean;
+
+  @Prop({ default: false }) disabled!: boolean;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
@@ -54,6 +85,8 @@ export default class MarketItemInfos extends Vue {
       collateralFiat,
       maxAvailable,
       nextPrice,
+      minimumRatioText,
+      stabilityFee,
     } = getters.getMarketFields(this.collateral?.id);
     const { toPrecision, toPercent, simplize } = this.$utils.number;
 
@@ -76,18 +109,27 @@ export default class MarketItemInfos extends Vue {
       debtLogo: debtAsset?.logo,
       nextPrice,
       isValidOracle,
+      minimumRatioText,
+      stabilityFee: toPercent({ n: stabilityFee }),
     };
   }
 
   get infos() {
     const infoList = [
       {
+        title: this.$t("common.min-collateral-ratio"),
+        value: this.meta.minimumRatioText,
+      },
+      {
+        title: this.$t("common.stability-fee"),
+        value: this.meta.stabilityFee,
+      },
+      {
         title: this.$t("market.total-asset-symbol", {
           symbol: this.meta.collateralSymbol,
         }),
         value: this.meta.collateralAmount,
         valueUnit: this.meta.collateralSymbol,
-        labelClass: "font-weight-bold f-greyscale-1",
         valueClass: "font-weight-bold f-greyscale-1",
         hint: this.$t("tooltip.total-asset-in-market", {
           symbol: this.meta.collateralSymbol,
@@ -97,13 +139,20 @@ export default class MarketItemInfos extends Vue {
         title: this.$t("common.max-available"),
         value: this.meta.available,
         valueUnit: this.meta.debtSymbol,
-        labelClass: "font-weight-bold f-greyscale-1",
         valueClass: "font-weight-bold f-greyscale-1",
       },
       {
+        title: this.$t("common.symbol-debt", {
+          symbol: this.meta.debtSymbol,
+        }),
+        value: this.meta.debtAmount,
+        valueUnit: this.meta.debtSymbol,
+        valueClass: "f-greyscale-1",
+      },
+
+      {
         title: this.$t("common.collateral-ratio"),
         value: this.meta.rate,
-        labelClass: "font-weight-bold market-green",
         valueClass: "font-weight-bold market-green",
         hint: this.$t("tooltip.collateralization-ratio"),
         learnMore: LINKS["vault.liquidation-ratio"],
@@ -112,16 +161,6 @@ export default class MarketItemInfos extends Vue {
         title: this.$t("common.price"),
         value: this.meta.price,
         valueUnit: this.meta.debtSymbol,
-        labelClass: "text--disabled f-greyscale-1 font-weight-regular",
-        valueClass: "f-greyscale-1",
-      },
-      {
-        title: this.$t("common.symbol-debt", {
-          symbol: this.meta.debtSymbol,
-        }),
-        value: this.meta.debtAmount,
-        valueUnit: this.meta.debtSymbol,
-        labelClass: "text--disabled f-greyscale-1 font-weight-regular",
         valueClass: "f-greyscale-1",
       },
       {
@@ -138,7 +177,6 @@ export default class MarketItemInfos extends Vue {
             })
           : false,
         learnMore: LINKS["vault.price-oracles"],
-        labelClass: "text--disabled f-greyscale-1 font-weight-regular",
         valueClass: "f-greyscale-1",
       },
     ];
@@ -178,21 +216,28 @@ export default class MarketItemInfos extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.market-item-label {
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  font-size: 12px;
-}
-.market-item-value {
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: -0.006em;
-}
 .vertical-center {
   vertical-align: middle;
+}
+.expand {
+  transform: rotateX(180deg);
+}
+.expand-transition {
+  transition: cubic-bezier(0.6, 0, 0.2, 1) 1s;
+
+  &.content {
+    transition-property: height, opacity, margin-top;
+  }
+
+  &.collapse {
+    height: 0px;
+    opacity: 0;
+    margin-top: -16px;
+  }
+
+  &.expanded {
+    height: 96px;
+    opacity: 1;
+  }
 }
 </style>

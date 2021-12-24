@@ -29,7 +29,11 @@
     </div>
 
     <div v-show="index === 1">
-      <market-item :collateral="meta.collateral" :show-button="false" />
+      <market-item
+        :collateral="meta.collateral"
+        :show-button="false"
+        :disabled="true"
+      />
     </div>
 
     <div class="actions__wrapper">

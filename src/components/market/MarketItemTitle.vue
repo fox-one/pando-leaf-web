@@ -1,21 +1,31 @@
 <template>
-  <v-layout align-center class="ma-4 mt-4">
+  <v-layout align-center class="pa-6">
     <base-pair-logo :base="meta.collateralLogo" :quote="meta.debtLogo" />
 
-    <span class="ml-2"> {{ meta.name }}</span>
+    <span class="ml-3"> {{ meta.name }}</span>
 
     <v-spacer />
+
+    <market-item-action
+      v-if="showButton"
+      :collateral="collateral"
+    ></market-item-action>
   </v-layout>
 </template>
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
+import MarketItemAction from "./MarketItemAction.vue";
 
 @Component({
-  components: {},
+  components: {
+    MarketItemAction,
+  },
 })
 export default class MarketItemTitle extends Vue {
   @Prop() collateral!: API.Collateral;
+
+  @Prop({ default: true }) showButton!: boolean;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
