@@ -13,7 +13,7 @@
         :amount="amount"
       />
 
-      <div style="height: 80px"></div>
+      <div style="height: 200px"></div>
     </div>
   </div>
 </template>

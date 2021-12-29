@@ -84,6 +84,7 @@
   "common.continue": "繼續",
   "common.current-price": "當前價格",
   "common.current-symbol-price": "當前 {symbol} 價格",
+  "common.symbol-price":"{symbol} 價格",
   "common.debt": "債務",
   "common.deposit": "存入",
   "common.generate": "鑄幣",

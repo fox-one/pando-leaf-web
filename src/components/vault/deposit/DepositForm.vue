@@ -10,6 +10,7 @@
     <deposit-action
       :vault="vault"
       :amount="bindAmount"
+      :disabled="validate.disabled"
       @success="handleSuccess"
     />
   </v-form>
@@ -20,7 +21,6 @@ import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import DepositAction from "./DepositAction.vue";
-import { toPercent } from "@foxone/utils/number";
 
 @Component({
   components: {
@@ -38,7 +38,7 @@ export default class extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { format } = this.$utils.number;
+    const { format, toPercent } = this.$utils.number;
 
     const {
       collateralAsset,
@@ -76,6 +76,12 @@ export default class extends Vue {
   }
 
   get validate() {
+    const isValid = this.$utils.number.isValid;
+    if (this.bindAmount === "" || !isValid(+this.bindAmount)) {
+      return {
+        disabled: true,
+      };
+    }
     for (const rule of this.rules) {
       if (true !== rule(this.bindAmount)) {
         return { disabled: true };

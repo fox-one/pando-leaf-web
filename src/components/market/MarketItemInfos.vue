@@ -85,12 +85,15 @@ export default class MarketItemInfos extends Vue {
       collateralFiat,
       maxAvailable,
       nextPrice,
+      minimumRatio,
       minimumRatioText,
       stabilityFee,
     } = getters.getMarketFields(this.collateral?.id);
     const { toPrecision, toPercent, simplize } = this.$utils.number;
 
     const rate = collateralFiat / Number(this.collateral?.art ?? "0");
+
+    const riskLevel = this.$utils.vault.getRiskLevelMeta(rate, minimumRatio);
 
     const isValidOracle =
       collateralPrice !== nextPrice?.price &&
@@ -110,6 +113,7 @@ export default class MarketItemInfos extends Vue {
       nextPrice,
       isValidOracle,
       minimumRatioText,
+      riskLevel,
       stabilityFee: toPercent({ n: stabilityFee }),
     };
   }
@@ -153,7 +157,7 @@ export default class MarketItemInfos extends Vue {
       {
         title: this.$t("common.collateral-ratio"),
         value: this.meta.rate,
-        valueClass: "font-weight-bold market-green",
+        valueClass: `font-weight-bold ${this.meta.riskLevel.color}--text`,
         hint: this.$t("tooltip.collateralization-ratio"),
         learnMore: LINKS["vault.liquidation-ratio"],
       },

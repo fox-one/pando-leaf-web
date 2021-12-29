@@ -81,8 +81,15 @@ export default class extends Vue {
   }
 
   handleFill() {
-    this.bindAmount =
-      this.meta.debtAmountText !== "-" ? this.meta.debtAmountText : "";
+    const toPrecision = this.$utils.number.toPrecision;
+    if (this.meta.debtAmountText !== "-") {
+      this.bindAmount = toPrecision({
+        n: this.meta.debtAmount,
+        dp: 4,
+        mode: BigNumber.ROUND_UP,
+      });
+      this.bindShowTip = true;
+    }
   }
 }
 </script>

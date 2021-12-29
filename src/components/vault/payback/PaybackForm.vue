@@ -12,7 +12,12 @@
       :leftLabel="$t('form.set-max')"
     />
 
-    <payback-helper class="mt-3" :vault="vault" :amount.sync="bindAmount" />
+    <payback-helper
+      class="mt-3"
+      :vault="vault"
+      :amount.sync="bindAmount"
+      :shot-tip.sync="showTip"
+    />
 
     <f-divider class="mt-3" />
 
@@ -49,7 +54,7 @@ export default class PaybackForm extends Vue {
 
   @Ref("form") form!: any;
 
-  showTip = true;
+  showTip = false;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
@@ -100,10 +105,6 @@ export default class PaybackForm extends Vue {
       dustAmount,
       dust: collateral?.dust,
     };
-  }
-
-  handleFill() {
-    this.showTip = true;
   }
 
   handleSuccess() {

@@ -81,6 +81,7 @@
   "common.continue": "Continue",
   "common.current-price": "Current Price",
   "common.current-symbol-price": "Current {symbol} Price",
+  "common.symbol-price":"{symbol} Price",
   "common.debt": "Debt",
   "common.deposit": "Deposit",
   "common.generate": "Generate",

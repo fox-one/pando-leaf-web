@@ -5,10 +5,14 @@
     </div>
 
     <v-row>
-      <v-col cols="6" class="py-0">
+      <v-col cols="6" class="py-0" v-if="meta.hasCollateral">
         <f-mixin-asset-logo :size="32" :logo="meta.debtAssetLogo" />
       </v-col>
-      <v-col cols="6" class="py-0">
+      <v-col
+        :cols="meta.hasCollateral ? 6 : 12"
+        class="py-0"
+        :class="meta.hasCollateral ? '' : 'text-center'"
+      >
         <f-mixin-asset-logo :size="32" :logo="meta.collateralAssetLogo" />
       </v-col>
     </v-row>
@@ -17,8 +21,17 @@
 
     <empty-vault-place-holder class="py-6 mt-3" v-else />
 
+    <div
+      v-if="meta.inHighRisk"
+      class="risk_high--text mt-4 mb-1 f-caption font-weight-semibold"
+    >
+      *This vault will be liquidated, please supply more collateral or repay
+      debts.
+    </div>
+
     <vault-card-actions
       class="mt-4 rounded-pill actions__wrapper"
+      :class="meta.actionColor"
       :id="id"
       :has-collateral="meta.hasCollateral"
       :has-debt="meta.hasDebt"
@@ -33,6 +46,7 @@ import VaultCardFields from "./VaultCardFields.vue";
 import EmptyVaultPlaceHolder from "./EmptyVaultPlaceHolder.vue";
 import VaultCardActions from "./VaultCardActions.vue";
 import { getVaultFields } from "@/utils/vault";
+import { RISK } from "~/enums";
 
 @Component({
   components: {
@@ -55,13 +69,24 @@ class VaultListItem extends Vue {
       riskLevelMeta,
     } = getVaultFields(this, this.id);
 
+    const bgColor = riskLevelMeta.bg_color;
+    const isDark = this.$vuetify.theme.dark;
+    const actionColor = isDark
+      ? riskLevelMeta.value === RISK.NA
+        ? "greyscale_5"
+        : bgColor + "_action"
+      : "greyscale_7";
+    const inHighRisk = riskLevelMeta.value === RISK.HIGH;
+
     return {
       name: `#${vault?.identity_id}`,
       collateralAssetLogo: collateralAsset?.logo ?? "",
       debtAssetLogo: debtAsset?.logo ?? "",
       hasCollateral: Number(vault?.ink) > 0,
       hasDebt: debtAmount > 0,
-      bgColor: riskLevelMeta.bg_color,
+      bgColor,
+      actionColor,
+      inHighRisk,
     };
   }
 
@@ -85,6 +110,5 @@ export default VaultListItem;
   padding: 16px 32px;
   width: 100%;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.03);
-  background: var(--v-greyscale_7-base);
 }
 </style>

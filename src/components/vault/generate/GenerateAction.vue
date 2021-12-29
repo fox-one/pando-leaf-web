@@ -17,7 +17,7 @@
         style="width: 100%"
         @click="handleClick"
       >
-        {{ $t("common.generate") }}
+        {{ $t("common.confirm") }}
       </f-button>
     </base-connect-wallet-btn>
   </f-action-bar>
@@ -46,12 +46,8 @@ export default class GenerateAction extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const {
-      debtAmount,
-      collateralAmount,
-      collateral,
-      price,
-    } = getters.getVaultFields(this.vault?.id);
+    const { debtAmount, collateralAmount, collateral, price } =
+      getters.getVaultFields(this.vault?.id);
     const increasedDebt = Number(this.amount);
 
     const ratio =

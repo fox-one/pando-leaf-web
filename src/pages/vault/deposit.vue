@@ -17,7 +17,7 @@
 
       <base-safety-warning class="px-4 pt-2" />
 
-      <div style="height: 80px"></div>
+      <div style="height: 200px"></div>
     </div>
   </div>
 </template>

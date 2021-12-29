@@ -17,7 +17,7 @@
         style="width: 100%"
         @click="handleClick"
       >
-        {{ $t("common.deposit") }}
+        {{ $t("common.confirm") }}
       </f-button>
     </base-connect-wallet-btn>
   </f-action-bar>

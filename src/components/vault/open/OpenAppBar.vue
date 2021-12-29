@@ -42,6 +42,9 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 .appbar--no-shadow {
+  position: sticky;
+  top: 0px;
+  z-index: 10;
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) !important;
 }
 </style>

@@ -3,7 +3,7 @@ import { getNextPairPrice } from "./oracle";
 
 const RiskLevelMeta = {
   [RISK.NA]: {
-    color: "",
+    color: "greyscale_1",
     bg_color: "greyscale_6",
     value: RISK.NA,
   },

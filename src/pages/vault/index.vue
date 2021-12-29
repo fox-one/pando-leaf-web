@@ -10,7 +10,7 @@
     <v-layout column v-else>
       <position-overview class="mb-4" />
 
-      <div class="d-flex align-center py-4">
+      <div class="d-flex align-center py-4 sticky greyscale_7">
         <span class="subtitle-1 font-weight-bold mr-1">
           {{ $t("me.my-vault") }}
         </span>
@@ -91,3 +91,11 @@ class VaultPage extends Mixins(mixins.page) {
 }
 export default VaultPage;
 </script>
+
+<style lang="scss" scoped>
+.sticky {
+  position: sticky;
+  top: 44px;
+  z-index: 14;
+}
+</style>

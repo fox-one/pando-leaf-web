@@ -66,5 +66,8 @@ export function makeIconValues() {
     iconUpdateRight: {
       component: "icon-update-right",
     },
+    iconExclamationMark: {
+      component: "icon-exclamation-mark",
+    },
   };
 }

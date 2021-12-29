@@ -17,7 +17,7 @@
         color="primary"
         @click="handleClick"
       >
-        {{ $t("common.payback") }}
+        {{ $t("common.confirm") }}
       </f-button>
     </base-connect-wallet-btn>
   </f-action-bar>

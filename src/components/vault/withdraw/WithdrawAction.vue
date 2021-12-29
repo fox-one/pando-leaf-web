@@ -17,7 +17,7 @@
         color="primary"
         @click="handleClick"
       >
-        {{ $t("common.withdraw") }}
+        {{ $t("common.confirm") }}
       </f-button>
     </base-connect-wallet-btn>
   </f-action-bar>
@@ -46,12 +46,8 @@ export default class extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const {
-      debtAmount,
-      collateralAmount,
-      collateral,
-      price,
-    } = getters.getVaultFields(this.vault?.id);
+    const { debtAmount, collateralAmount, collateral, price } =
+      getters.getVaultFields(this.vault?.id);
     const increasedDebt = Number(this.amount);
     const minimumRatio = +(collateral?.mat ?? 0);
 

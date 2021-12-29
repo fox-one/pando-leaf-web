@@ -29,6 +29,20 @@
         <span> {{ meta.changedValue }} {{ meta.debtSymbol }} </span>
       </v-layout>
     </v-layout>
+
+    <v-snackbar
+      :timeout="3000"
+      v-model="showNotEnough"
+      absolute
+      centered
+      class="custom-shadow"
+      color="white"
+    >
+      <div class="inline greyscale_1--text">
+        <v-icon color="risk_mid" size="16"> $iconExclamationMark </v-icon>
+        {{ $t("notice.not-enough-balance") }}
+      </div>
+    </v-snackbar>
   </div>
 </template>
 
@@ -41,6 +55,10 @@ export default class extends Vue {
   @Prop() vault!: API.Vault;
 
   @PropSync("amount") bindAmount!: string;
+
+  @PropSync("shotTip") bindShowTip!: boolean;
+
+  showNotEnough = false;
 
   get meta() {
     const { toPrecision } = this.$utils.number;
@@ -74,11 +92,10 @@ export default class extends Vue {
   handleClick() {
     if (this.meta.notEnough) {
       this.bindAmount = this.meta.balance;
-      this.$uikit.toast.warning({
-        message: this.$t("notice.not-enough-balance") + "",
-      });
+      this.showNotEnough = true;
     } else {
       this.bindAmount = this.meta.debtText;
+      this.bindShowTip = true;
     }
   }
 }
@@ -88,5 +105,15 @@ export default class extends Vue {
 .infomation-item {
   font-weight: 500;
   font-size: 13px;
+}
+.inline {
+  display: inline-block;
+}
+.custom-shadow {
+  ::v-deep {
+    .v-sheet.v-snack__wrapper {
+      box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.1);
+    }
+  }
 }
 </style>

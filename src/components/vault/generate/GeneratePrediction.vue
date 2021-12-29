@@ -31,11 +31,8 @@ export default class extends Vue {
       stabilityFeeText,
     } = getters.getVaultFields(this.vault?.id);
 
-    const {
-      minimumRatio,
-      minimumRatioText,
-      collateralPrice,
-    } = getters.getMarketFields(this.vault?.collateral_id);
+    const { minimumRatio, minimumRatioText, collateralPrice } =
+      getters.getMarketFields(this.vault?.collateral_id);
 
     const risk = this.$utils.collateral.getRiskLevelMeta(ratio, minimumRatio);
 
@@ -118,7 +115,7 @@ export default class extends Vue {
           this.meta.liquidationPriceText !== this.meta.changedPriceText,
       },
       {
-        label: this.$t("common.current-symbol-price", {
+        label: this.$t("common.symbol-price", {
           symbol: `${this.meta.collateralSymbol}/${this.meta.debtSymbol}`,
         }),
         value: this.meta.currentPrice,

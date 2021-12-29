@@ -19,7 +19,7 @@
     <pando-account-overview
       :balance="meta.balance"
       :logged="logged"
-      :name="$t('channel.name')"
+      :name="$t('app-name')"
       :version="VERSION"
       @close="handleClose"
       @connect="handleConnect"

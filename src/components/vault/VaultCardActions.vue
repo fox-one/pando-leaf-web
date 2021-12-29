@@ -33,7 +33,7 @@ class VaultCardActions extends Vue {
       actions.push({
         icon: "$iconPayback",
         value: "payback",
-        text: this.$t("common.pay-back"),
+        text: this.$t("common.payback"),
         disabled: !hasDebt,
         href: "vault-payback",
       });

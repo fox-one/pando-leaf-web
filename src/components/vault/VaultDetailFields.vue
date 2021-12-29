@@ -20,10 +20,7 @@
 
       <v-spacer />
 
-      <div
-        class="field__value greyscale_1--text"
-        :style="[{ color: field.color }]"
-      >
+      <div class="field__value" :style="[{ color: field.color }]">
         {{ field.value }}
       </div>
     </v-row>
@@ -153,6 +150,7 @@ export default VaultFields;
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
+    color: var(--v-greyscale_1-base);
   }
 }
 </style>
