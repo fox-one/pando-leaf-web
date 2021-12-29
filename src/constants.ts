@@ -5,7 +5,7 @@ export const VERSION = pkg.version;
 
 export const isProduct = process.env.APP_ENV === "prod";
 
-export const GA = "";
+export const GA = "UA-112996081-17";
 
 export const NODE_ENV = process.env.NODE_ENV;
 export const APP_TOKEN = process.env.TOKEN;
