@@ -33,6 +33,7 @@
         :collateral="meta.collateral"
         :show-button="false"
         :disabled="true"
+        :expanded="true"
       />
     </div>
 

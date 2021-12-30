@@ -31,7 +31,7 @@ export default class AuctionMaxBid extends Vue {
       getters.getFlipFields(this.flip);
 
     const label = isStage1
-      ? this.$t("auction.max-bid")
+      ? this.$t("auction.max-bid-amount")
       : this.$t("auction.min-bid-amount");
 
     const hint = isStage1

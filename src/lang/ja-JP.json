@@ -101,6 +101,7 @@
   "common.learn-more":"Learn More",
   "common.withdraw": "Withdraw",
   "common.create-time":"Create Time",
+  "common.my-vault":"My Vault",
   "connect.wallet": "Connect Wallet",
   "connect.wallet.hint": "Please connect wallet before adding vault",
   "disconnect": "Disconnect",

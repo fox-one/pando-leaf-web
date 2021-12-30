@@ -36,7 +36,7 @@
       absolute
       centered
       class="custom-shadow"
-      color="white"
+      color="greyscale_7"
     >
       <div class="inline greyscale_1--text">
         <v-icon color="risk_mid" size="16"> $iconExclamationMark </v-icon>
@@ -90,6 +90,7 @@ export default class extends Vue {
   }
 
   handleClick() {
+    this.showNotEnough = true;
     if (this.meta.notEnough) {
       this.bindAmount = this.meta.balance;
       this.showNotEnough = true;

@@ -22,7 +22,7 @@
         </v-layout>
       </f-panel>
 
-      <div class="mt-2 greyscale_6" style="height: 8px"></div>
+      <f-divider v-if="!meta.isDone" class="mb-2"></f-divider>
 
       <auction-event-history :flip="flip" :flip-id="flipId" />
 

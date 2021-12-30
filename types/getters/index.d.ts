@@ -66,6 +66,7 @@ declare namespace Getter {
     vaultCollateralAmount: string;
     vaultDebtAmount: string;
     isYourBid: boolean;
+    isMyVault: boolean;
   }
 
   export interface PredictionFields {
