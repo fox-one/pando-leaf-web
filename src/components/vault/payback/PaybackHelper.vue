@@ -29,20 +29,6 @@
         <span> {{ meta.changedValue }} {{ meta.debtSymbol }} </span>
       </v-layout>
     </v-layout>
-
-    <v-snackbar
-      :timeout="3000"
-      v-model="showNotEnough"
-      absolute
-      centered
-      class="custom-shadow"
-      color="greyscale_7"
-    >
-      <div class="inline greyscale_1--text">
-        <v-icon color="risk_mid" size="16"> $iconExclamationMark </v-icon>
-        {{ $t("notice.not-enough-balance") }}
-      </div>
-    </v-snackbar>
   </div>
 </template>
 
@@ -90,10 +76,14 @@ export default class extends Vue {
   }
 
   handleClick() {
-    this.showNotEnough = true;
+    this.$uikit.toast.warning({
+      message: this.$t("notice.not-enough-balance") + "",
+    });
     if (this.meta.notEnough) {
       this.bindAmount = this.meta.balance;
-      this.showNotEnough = true;
+      this.$uikit.toast.warning({
+        message: this.$t("notice.not-enough-balance") + "",
+      });
     } else {
       this.bindAmount = this.meta.debtText;
       this.bindShowTip = true;
