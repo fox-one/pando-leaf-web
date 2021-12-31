@@ -44,6 +44,7 @@ import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import { RISK } from "~/enums";
 import BigNumber from "bignumber.js";
+import { toPrecision } from "@foxone/utils/number";
 
 @Component({
   components: {
@@ -79,9 +80,9 @@ export default class OpenForm extends Vue {
 
     const progress = (mintNum / maxAvailable) * 100;
 
-    const suggest = format({
+    const suggest = toPrecision({
       n: maxAvailable * 0.6,
-      max_dp: 8,
+      dp: 8,
       mode: BigNumber.ROUND_DOWN,
     });
     return {

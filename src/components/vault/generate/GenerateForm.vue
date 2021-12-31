@@ -24,7 +24,7 @@ import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import GenerateAction from "./GenerateAction.vue";
 import BigNumber from "bignumber.js";
-import { toPercent } from "@foxone/utils/number";
+import { toPercent, toPrecision } from "@foxone/utils/number";
 import { RISK } from "~/enums";
 
 @Component({
@@ -72,9 +72,9 @@ export default class GenerateForm extends Vue {
     const dustAmount = Number(collateral?.dust);
 
     const totalAvailableDebt = (collateralAmount * price) / liquidationRatio;
-    const suggest = format({
+    const suggest = toPrecision({
       n: Math.max(totalAvailableDebt * 0.6 - debtAmount, 0),
-      max_dp: 8,
+      dp: 8,
       mode: BigNumber.ROUND_DOWN,
     });
 
