@@ -44,8 +44,6 @@ export default class extends Vue {
 
   @PropSync("shotTip") bindShowTip!: boolean;
 
-  showNotEnough = false;
-
   get meta() {
     const { toPrecision } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
@@ -76,9 +74,6 @@ export default class extends Vue {
   }
 
   handleClick() {
-    this.$uikit.toast.warning({
-      message: this.$t("notice.not-enough-balance") + "",
-    });
     if (this.meta.notEnough) {
       this.bindAmount = this.meta.balance;
       this.$uikit.toast.warning({

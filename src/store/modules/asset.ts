@@ -75,18 +75,7 @@ const actions: ActionTree<State.Asset, unknown> = {
 
   async loadFennecWalletAssets({ commit, state }, { fennec }) {
     const walletAssets = await fennec.ctx?.wallet?.getAssets();
-    const newAssets: API.MixinAsset[] = [];
-    state.walletAssets.forEach((asset) => {
-      const newAsset = walletAssets.find((x) => {
-        return x.asset_id === asset.asset_id;
-      });
-      if (newAsset) {
-        newAssets.push(newAsset);
-      } else {
-        newAssets.push(asset);
-      }
-    });
-    commit("SET_WALLET_ASSETS", newAssets || []);
+    commit("SET_WALLET_ASSETS", walletAssets || []);
   },
 
   async loadFennecWalletAsset({ commit }, { fennec, assetId }) {
