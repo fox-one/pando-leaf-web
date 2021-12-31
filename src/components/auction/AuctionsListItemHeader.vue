@@ -2,7 +2,7 @@
   <v-layout align-center class="mx-6 pt-6">
     <base-pair-logo :base="meta.auctionLogo" :quote="meta.debtLogo" />
 
-    <div v-if="meta.isMyVault" class="ml-2 tag greyscale_2--text">
+    <div v-if="meta.isMyVault" class="ml-2 tag">
       {{ $t("common.my-vault") }}
     </div>
     <div v-else class="f-caption ml-2 greyscale_4--text">
@@ -67,6 +67,7 @@ export default class AuctionsListItemHeader extends Vue {
   justify-content: center;
   align-items: center;
   padding: 2px 4px;
+  color: #2e2e2e;
   background: #8fe613;
   border-radius: 4px;
   font-weight: 600;
