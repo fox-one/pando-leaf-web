@@ -47,51 +47,39 @@ export default class AuctionFormInfos extends Vue {
     let currentPriceText = "-";
     let priceDifference = 0;
     let priceDifferenceText = "-";
+    let inputBidPrice = 0;
 
-    const getWalletAssetById = getters["asset/getWalletAssetById"];
-    const debtPrice = getWalletAssetById(debtAsset?.id ?? "")?.price_usd ?? 0;
-    const auctionPrice =
-      getWalletAssetById(auctionAsset?.id ?? "")?.price_usd ?? 0;
+    const getNetworkAssetById = getters["asset/getNetworkAssetById"];
+    const debtWalletAsset = getNetworkAssetById(debtAsset?.id ?? "");
+    const debtPrice = debtWalletAsset?.price_usd ?? 0;
+    const auctionWalletAsset = getNetworkAssetById(auctionAsset?.id ?? "");
 
+    const auctionPrice = auctionWalletAsset?.price_usd ?? 0;
     const currentPrice = +auctionPrice / +debtPrice;
+
     if (isValid(currentPrice)) {
       currentPriceText = `1 ${auctionSymbol} ≈ ${format({
         n: currentPrice,
       })} ${debtSymbol}`;
-    } else {
-      currentPriceText = "-";
     }
 
     if (this.type === "debt") {
-      const inputBidPrice = +this.amount / +this.flip.lot;
-      if (inputBidPrice !== 0 && isValid(+this.amount)) {
-        inputBidPriceText = `1 ${auctionSymbol} ≈ ${format({
-          n: inputBidPrice,
-        })} ${debtSymbol}`;
-      }
-
-      priceDifference = (inputBidPrice - currentPrice) / currentPrice;
-      if (isValid(priceDifference) && isValid(+this.amount)) {
-        priceDifferenceText = `${toPercent({
-          n: priceDifference,
-        })}`;
-      }
+      inputBidPrice = +this.amount / +this.flip.lot;
+    } else if (this.type === "collateral") {
+      inputBidPrice = +this.flip.bid / +this.amount;
     }
 
-    if (this.type === "collateral") {
-      const inputBidPrice = +this.flip.bid / +this.amount;
-      if (inputBidPrice !== 0 && isValid(+this.amount)) {
-        inputBidPriceText = `1 ${auctionSymbol} ≈ ${format({
-          n: inputBidPrice,
-        })} ${debtSymbol}`;
-      }
+    if (inputBidPrice !== 0 && isValid(+this.amount) && +this.amount > 0) {
+      inputBidPriceText = `1 ${auctionSymbol} ≈ ${format({
+        n: inputBidPrice,
+      })} ${debtSymbol}`;
+    }
 
-      priceDifference = (inputBidPrice - currentPrice) / currentPrice;
-      if (isValid(priceDifference) && isValid(+this.amount)) {
-        priceDifferenceText = `${toPercent({
-          n: priceDifference,
-        })}`;
-      }
+    priceDifference = (inputBidPrice - currentPrice) / currentPrice;
+    if (isValid(priceDifference) && isValid(+this.amount) && +this.amount > 0) {
+      priceDifferenceText = `${toPercent({
+        n: priceDifference,
+      })}`;
     }
 
     return {

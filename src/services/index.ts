@@ -71,6 +71,14 @@ export default function (http: Http) {
       return http.get(`${MIXIN_HOST}/assets/${id}`);
     },
 
+    getNetworkAssets(): Promise<API.MixinAsset[]> {
+      return http.get(`${MIXIN_HOST}/network/assets/top`);
+    },
+
+    getNetworkAsset(id: string): Promise<API.MixinAsset> {
+      return http.get(`${MIXIN_HOST}/network/assets/${id}`);
+    },
+
     async getMe(): Promise<API.Profile> {
       const resp = await http.get(`${MIXIN_HOST}/me`);
       return resp;

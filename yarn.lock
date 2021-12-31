@@ -981,12 +981,25 @@
   dependencies:
     "@foxone/fennec-base" "0.4.5-2"
 
-"@foxone/icons@3.0.1-45", "@foxone/icons@3.0.1-49", "@foxone/icons@^3.0.1-48":
+"@foxone/icons@3.0.1-45", "@foxone/icons@3.0.1-49", "@foxone/icons@3.0.1-51", "@foxone/icons@^3.0.1-48":
   version "3.0.1-49"
   resolved "https://registry.yarnpkg.com/@foxone/icons/-/icons-3.0.1-49.tgz#bddc97bf1e822999bb841572a1ea247a0c56d50e"
   integrity sha512-5BoTGLvQTgC8m4KR0j92ea0ye3UmteCVD0bIns3vWB25QBUeV7V+6AGkwu4vkteOzdBq67Vo+CxwAjawKQv7hg==
   dependencies:
     "@foxone/uikit" "3.0.1-49"
+    vue "^2.6.12"
+    vue-class-component "^7.2.3"
+    vue-property-decorator "^9.1.2"
+    vue-router "^3.2.0"
+    vuetify "^2.5.6"
+    vuex "^3.4.0"
+
+"@foxone/icons@^3.0.1-51":
+  version "3.0.1-51"
+  resolved "https://registry.yarnpkg.com/@foxone/icons/-/icons-3.0.1-51.tgz#0b37bd6408002726c699024e1224394a1025c6c2"
+  integrity sha512-9+EtdWs0nnWnFgdpFBBh9RxVNE6DB1nztV2ezohLLmJBMC8hyhsH4lL+Hvio0ipfFO4cxLViWbgbo6QeQ0uMKQ==
+  dependencies:
+    "@foxone/uikit" "3.0.1-51"
     vue "^2.6.12"
     vue-class-component "^7.2.3"
     vue-property-decorator "^9.1.2"
@@ -1033,12 +1046,25 @@
     vuex "^3.6.2"
     vuex-persistedstate "^3.0.1"
 
-"@foxone/uikit@3.0.1-45", "@foxone/uikit@3.0.1-49", "@foxone/uikit@^3.0.1-27", "@foxone/uikit@^3.0.1-48":
+"@foxone/uikit@3.0.1-45", "@foxone/uikit@3.0.1-49", "@foxone/uikit@3.0.1-51", "@foxone/uikit@^3.0.1-27", "@foxone/uikit@^3.0.1-48":
   version "3.0.1-49"
   resolved "https://registry.yarnpkg.com/@foxone/uikit/-/uikit-3.0.1-49.tgz#bf2e614878ef6fff2dd4cb16674edba6afd7c583"
   integrity sha512-3YF39KS8NtKKfkjtc3sqmBZZ5qiFEYglKWZripUTe2xQ4hQARjoxScvRvzoMsnjcz48Q3Y3NXp8EulAg2K+O9Q==
   dependencies:
     "@foxone/icons" "3.0.1-49"
+    "@foxone/utils" "^0.2.6"
+    bignumber.js "^9.0.1"
+    qrcode "^1.4.4"
+    tinycolor2 "^1.4.2"
+    vue-class-component "^7.2.3"
+    vue-property-decorator "^9.1.2"
+
+"@foxone/uikit@^3.0.1-51":
+  version "3.0.1-51"
+  resolved "https://registry.yarnpkg.com/@foxone/uikit/-/uikit-3.0.1-51.tgz#5a5f82cfdf8ab4117f72474387993172251309ab"
+  integrity sha512-68hleDv3FDKU7FTdBC6ag4Nsg0MDmVgIAXZYDJ2spRFAt790iXG1u9/nhahEh+5kq6J/EPHVdExmrYEw7vUvWg==
+  dependencies:
+    "@foxone/icons" "3.0.1-51"
     "@foxone/utils" "^0.2.6"
     bignumber.js "^9.0.1"
     qrcode "^1.4.4"

@@ -6,6 +6,7 @@ import type { GetterTree, ActionTree, MutationTree } from "vuex";
 const state = () => ({
   walletAssets: [],
   assets: [],
+  networkAssets: [],
 });
 
 const getters: GetterTree<State.Asset, any> = {
@@ -17,6 +18,12 @@ const getters: GetterTree<State.Asset, any> = {
   walletAssetsMap(state) {
     return state.walletAssets.reduce((m, x) => ({ ...m, [x.asset_id]: x }), {});
   },
+  networkAssetsMap(state) {
+    return state.networkAssets.reduce(
+      (m, x) => ({ ...m, [x.asset_id]: x }),
+      {}
+    );
+  },
   assetsMap(state) {
     return state.assets.reduce((m, x) => ({ ...m, [x.id]: x }), {});
   },
@@ -25,6 +32,9 @@ const getters: GetterTree<State.Asset, any> = {
   },
   getAssetById(_, getters) {
     return (id: string) => getters["assetsMap"][id];
+  },
+  getNetworkAssetById(_, getters) {
+    return (id: string) => getters["networkAssetsMap"][id];
   },
 };
 
@@ -35,7 +45,15 @@ const mutations: MutationTree<State.Asset> = {
   },
 
   SET_WALLET_ASSET(state, { data, id }) {
-    Vue.set(state.walletAssets, id, data);
+    const index = state.walletAssets.findIndex((x) => x.asset_id === id);
+    if (index !== -1) {
+      Vue.set(state.walletAssets, index, data);
+    } else {
+      Vue.set(state.walletAssets, state.walletAssets.length, data);
+    }
+  },
+  SET_NETWORK_ASSETS(state, data: API.MixinAsset[]) {
+    state.networkAssets = data;
   },
 };
 
@@ -55,9 +73,20 @@ const actions: ActionTree<State.Asset, unknown> = {
     commit("SET_WALLET_ASSET", { id, data: response });
   },
 
-  async loadFennecWalletAssets({ commit }, { fennec }) {
+  async loadFennecWalletAssets({ commit, state }, { fennec }) {
     const walletAssets = await fennec.ctx?.wallet?.getAssets();
-    commit("SET_WALLET_ASSETS", walletAssets || []);
+    const newAssets: API.MixinAsset[] = [];
+    state.walletAssets.forEach((asset) => {
+      const newAsset = walletAssets.find((x) => {
+        return x.asset_id === asset.asset_id;
+      });
+      if (newAsset) {
+        newAssets.push(newAsset);
+      } else {
+        newAssets.push(asset);
+      }
+    });
+    commit("SET_WALLET_ASSETS", newAssets || []);
   },
 
   async loadFennecWalletAsset({ commit }, { fennec, assetId }) {
@@ -65,6 +94,11 @@ const actions: ActionTree<State.Asset, unknown> = {
     if (walletAsset) {
       commit("SET_WALLET_ASSET", { id: assetId, data: walletAsset });
     }
+  },
+
+  async loadNetworkAssets({ commit }) {
+    const assets = await this.$http.getNetworkAssets();
+    commit("SET_NETWORK_ASSETS", assets || []);
   },
 
   async clear({ commit }) {

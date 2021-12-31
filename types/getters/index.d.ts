@@ -95,8 +95,10 @@ declare namespace Getter {
     "asset/walletBlance": number;
     "asset/assetsMap": Record<string, API.Asset>;
     "asset/walletAssetsMap": Record<string, API.MixinAsset>;
+    "asset/networkAssetsMap": Record<string, API.MixinAsset>;
     "asset/getAssetById": State.GetAssetById;
     "asset/getWalletAssetById": State.GetWalletAssetById;
+    "asset/getNetworkAssetById": State.GetNetworkAssetById;
 
     "collateral/getCollateralById": State.GetCollateralById;
     "collateral/getOverview": State.MarketOverview;

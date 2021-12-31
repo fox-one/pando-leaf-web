@@ -14,10 +14,10 @@
 
           <auction-done-detail v-if="meta.isDone" :flip="flip" />
 
-          <v-layout v-else column>
+          <v-layout column>
             <auction-debt-form v-if="meta.isStage1" :flip="flip" />
 
-            <auction-collateral-form v-else-if="meta.isStage2" :flip="flip" />
+            <auction-collateral-form :flip="flip" />
           </v-layout>
         </v-layout>
       </f-panel>

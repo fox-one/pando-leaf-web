@@ -22,6 +22,7 @@ export async function initApp(vm: Vue) {
 export async function loadMarket(vm: Vue) {
   await Promise.all([
     vm.$store.dispatch("asset/loadAssets"),
+    vm.$store.dispatch("asset/loadNetworkAssets"),
     vm.$store.dispatch("oracle/loadOracles"),
     vm.$store.dispatch("collateral/loadCollaterals"),
   ]);

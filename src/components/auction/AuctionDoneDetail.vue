@@ -84,14 +84,14 @@ export default class AuctionDoneDetail extends Vue {
     const debtLogo = debtAsset?.logo;
     const auctionLogo = auctionAsset?.logo;
 
-    const walletAuctionAsset = getters["asset/getWalletAssetById"](
+    const networkAuctionAsset = getters["asset/getNetworkAssetById"](
       auctionAsset?.id ?? ""
     );
 
     let vaultCollateralValueText = `${vaultCollateralAmount} ${auctionSymbol}`;
     if (this.showFiat) {
       vaultCollateralValueText = toFiat(this, {
-        n: +vaultCollateralAmount * +(walletAuctionAsset?.price_usd ?? 0),
+        n: +vaultCollateralAmount * +(networkAuctionAsset?.price_usd ?? 0),
       });
     }
     return {

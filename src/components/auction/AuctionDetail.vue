@@ -117,7 +117,7 @@ export default class AuctionDetail extends Vue {
       isYourBid,
     } = getters.getFlipFields(this.flip);
 
-    const walletAuctionAsset = getters["asset/getWalletAssetById"](
+    const networkAuctionAsset = getters["asset/getNetworkAssetById"](
       auctionAsset?.id ?? ""
     );
 
@@ -138,7 +138,7 @@ export default class AuctionDetail extends Vue {
     let vaultCollateralValueText = `${vaultCollateralAmount} ${auctionSymbol}`;
     if (this.showFiat) {
       vaultCollateralValueText = toFiat(this, {
-        n: +vaultCollateralAmount * +(walletAuctionAsset?.price_usd ?? 0),
+        n: +vaultCollateralAmount * +(networkAuctionAsset?.price_usd ?? 0),
       });
     }
 
