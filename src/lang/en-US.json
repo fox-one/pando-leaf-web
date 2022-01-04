@@ -1,5 +1,6 @@
 {
   "app-name": "Pando Leaf",
+  "all":"All",
   "auction.bid-now": "Place A Bid",
   "auction.collateral-to-receive": "Collateral you bid to receive",
   "auction.debt-to-pay-for": "Debt you bid to pay for",
@@ -172,6 +173,7 @@
   "form.risk-level": "it’s {level}-risk now.",
   "form.set-max": "Set Max",
   "form.withdraw-ratio": "Withdraw Ratio",
+  "history.filter-title":"Select a history type",
   "market.overview": "Market Overview",
   "market.total-asset-symbol": "Total {symbol}",
   "market.total-collateralization": "Total Collateralization",

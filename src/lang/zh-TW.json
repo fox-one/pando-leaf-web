@@ -1,5 +1,6 @@
 {
   "app-name": "Pando Leaf",
+  "all":"全部",
   "auction.bid-now": "競標",
   "auction.collateral-to-receive": "您出價接受的抵押品",
   "auction.debt-to-pay-for": "你出價償還的債務",
@@ -175,6 +176,7 @@
   "form.risk-level": "處於{level}風險.",
   "form.set-max": "設為最大",
   "form.withdraw-ratio": "取回比例",
+  "history.filter-title":"選擇類型",
   "market.overview": "市場總覽",
   "market.total-asset-symbol": "全部 {symbol}",
   "market.total-collateralization": "總抵押率",

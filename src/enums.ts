@@ -29,8 +29,8 @@ export enum VatAction {
   VatWithdraw = "VatWithdraw", // 提取
   VatPayback = "VatPayback", // 还款
   VatGenerate = "VatGenerate", // 铸币
-  FlipKick = "FlipKick",
-  FlipBid = "FlipBid",
+  FlipKick = "FlipKick", // 系统清算金库
+  FlipBid = "FlipBid", // 清算余额返还
 }
 
 export enum FlipAction {

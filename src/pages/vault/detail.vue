@@ -21,11 +21,13 @@
 
       <div class="my-3 mx-n4 greyscale_1" style="height: 8px; opacity: 0.05" />
 
-      <div class="mt-5 mb-2 greyscale_1--text title">
+      <v-layout justify-space-between class="mt-5 mb-2 greyscale_1--text title">
         {{ $t("common.history") }}
-      </div>
 
-      <vault-history class="end-blank" :id="vaultId" />
+        <vault-history-filter :filter.sync="filter" />
+      </v-layout>
+
+      <vault-history class="end-blank" :id="vaultId" :filter="filter" />
     </div>
 
     <div v-show="index === 1">
@@ -58,9 +60,11 @@ import EmptyVaultPlaceHolder from "@/components/vault/EmptyVaultPlaceHolder.vue"
 import VaultDetailFields from "@/components/vault/VaultDetailFields.vue";
 import VaultDetailInfos from "@/components/vault/VaultDetailInfos.vue";
 import VaultHistory from "@/components/vault/VaultHistory.vue";
+import VaultHistoryFilter from "@/components/vault/VaultHistoryFilter.vue";
 import VaultActions from "@/components/vault/VaultActions.vue";
 import MarketItem from "@/components/market/MarketItem.vue";
 import mixins from "@/mixins";
+import { VatAction } from "~/enums";
 
 @Component({
   components: {
@@ -70,12 +74,15 @@ import mixins from "@/mixins";
     VaultDetailFields,
     VaultDetailInfos,
     VaultHistory,
+    VaultHistoryFilter,
     VaultActions,
     MarketItem,
   },
 })
 class VaultDetailPage extends Mixins(mixins.page) {
   index = 0;
+
+  filter: VatAction | "all" = "all";
 
   get title() {
     return this.$t("common.vault-detail") as string;

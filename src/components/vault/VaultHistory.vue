@@ -6,7 +6,7 @@
     @load="requestVaultEvents"
   >
     <vault-history-item
-      v-for="(item, index) in events"
+      v-for="(item, index) in filteredHistory"
       :key="index"
       :event="item"
     />
@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { VatAction } from "~/enums";
 import VaultHistoryItem from "./VaultHistoryItem.vue";
 
 @Component({
@@ -24,6 +25,8 @@ import VaultHistoryItem from "./VaultHistoryItem.vue";
 })
 class VaultHistory extends Vue {
   @Prop() id!: string;
+
+  @Prop({ default: "all" }) filter!: VatAction | "all";
 
   cursor = "";
 
@@ -54,6 +57,13 @@ class VaultHistory extends Vue {
       this.error = true;
     }
     this.loading = false;
+  }
+
+  get filteredHistory() {
+    if (this.filter === "all") {
+      return this.events;
+    }
+    return this.events.filter((e) => e.action === this.filter);
   }
 }
 export default VaultHistory;
