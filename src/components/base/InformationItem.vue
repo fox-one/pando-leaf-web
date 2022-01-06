@@ -50,7 +50,7 @@ export default class extends Vue {
 
   @Prop({ default: null }) learnMore!: string;
 
-  @Prop({ default: 14 }) fontSize!: number;
+  @Prop({ default: 13 }) fontSize!: number;
 
   get meta() {
     let valueColor = "greyscale_1--text";

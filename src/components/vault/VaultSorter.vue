@@ -1,6 +1,6 @@
 <template>
-  <v-row align-center justify-center class="f-caption">
-    <v-col cols="6">
+  <v-row align-center justify-center no-gutters class="f-caption">
+    <v-col cols="6" class="pr-2">
       <div
         class="sort-button"
         :class="{ active: meta.sortByCreateTime }"
@@ -11,7 +11,7 @@
       </div>
     </v-col>
 
-    <v-col cols="6">
+    <v-col cols="6" class="pl-2">
       <div
         class="sort-button"
         :class="{ active: meta.sortByCollateralRatio }"

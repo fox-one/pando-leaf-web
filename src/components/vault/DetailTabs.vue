@@ -5,6 +5,7 @@
     mandatory
     fixed-tabs
     disableSliderLength
+    slider-size="2"
   >
     <v-tab
       v-for="(item, index) in tabs"
@@ -12,7 +13,7 @@
       :data-value="index"
       :ripple="false"
     >
-      <span>{{ item.text }}</span>
+      <span style="font-size: 16px">{{ item.text }}</span>
     </v-tab>
   </f-tabs>
 </template>

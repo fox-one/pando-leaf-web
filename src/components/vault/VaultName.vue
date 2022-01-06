@@ -55,7 +55,7 @@ class VaultName extends Vue {
       debtAssetLogo: debtAsset?.logo ?? "",
       debtAssetSymbol: debtAsset?.symbol ?? "",
       debtAmount: format({ n: debtAmount ?? 0 }),
-      color: this.$vuetify.theme.currentTheme[riskLevelMeta.color + "_bg"],
+      color: this.$vuetify.theme.currentTheme[riskLevelMeta.bg_color],
     };
   }
 }

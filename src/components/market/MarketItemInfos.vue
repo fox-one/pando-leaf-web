@@ -1,5 +1,5 @@
 <template>
-  <v-row no-gutters class="pb-2" @click="bindExpand = !bindExpand">
+  <v-row no-gutters class="pb-4" @click="bindExpand = !bindExpand">
     <market-infos-item
       class="mb-6 px-6"
       cols="12"
@@ -36,7 +36,7 @@
       </market-infos-item>
     </v-row>
 
-    <v-col class="d-flex justify-center mb-1" v-if="!disabled">
+    <v-col class="d-flex justify-center mb-n1" v-if="!disabled">
       <v-icon
         size="14"
         color="greyscale_4"

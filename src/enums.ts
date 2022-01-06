@@ -23,7 +23,7 @@ export enum RISK {
   NA = "n/a",
 }
 
-export const RISK_LEVEL_META = {
+export const RISK_LEVEL_META: Record<RISK, Utils.VaultRiskLevelMeta> = {
   [RISK.NA]: {
     color: "greyscale_1",
     bg_color: "greyscale_6",

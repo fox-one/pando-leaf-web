@@ -9,11 +9,9 @@
         class="my-3"
       />
 
-      <empty-vault-place-holder v-else />
+      <f-divider v-if="meta.hasCollateral" class="my-3" />
 
-      <f-divider class="my-3" />
-
-      <vault-detail-infos :id="vaultId" class="infos" />
+      <vault-detail-infos :id="vaultId" class="infos mt-3" />
 
       <div
         class="my-3 mx-n4 greyscale_1"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot v-if="!isLogged" name="action" :on="{ click: handleOpenAuth }">
-      <f-button color="primary" @click="handleOpenAuth">
+      <f-button color="primary" @click="handleOpenAuth" v-bind="$attrs">
         {{ $t("connect.wallet") }}
       </f-button>
     </slot>

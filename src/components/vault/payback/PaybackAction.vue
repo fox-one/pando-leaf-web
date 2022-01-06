@@ -1,15 +1,6 @@
 <template>
-  <f-action-bar
-    :elevation="2"
-    fixed
-    custom-content
-    class="flex-grow-1"
-    style="border-radius: 0 !important"
-  >
-    <base-connect-wallet-btn
-      class="text-center"
-      style="flex: 1 0 auto; width: 100%"
-    >
+  <base-bottom-action-bar>
+    <base-connect-wallet-btn class="pa-4" block>
       <f-button
         :disabled="disabled"
         :loading="loading"
@@ -20,7 +11,7 @@
         {{ $t("common.confirm") }}
       </f-button>
     </base-connect-wallet-btn>
-  </f-action-bar>
+  </base-bottom-action-bar>
 </template>
 
 <script lang="ts" scoped>
