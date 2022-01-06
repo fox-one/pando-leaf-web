@@ -258,7 +258,7 @@
   "validate.medium-risk-withdraw": "此取回的 {symbol} 數量將使金庫接近清算風險",
   "validate.minimum-debt": "金庫需要至少生成 {amount} {symbol}",
   "validate.pay-back-over": "您的償還金額不可超過系統設置的還款最大值",
-  "validate.remaining-dust-debt": "債務餘額不得低於 {amount} {symbol}，或者您可以選擇清償全部債務",
+  "validate.remaining-dust-debt": "債務餘額不得低於 {amount} {symbol}",
   "welcome.description": "Pando Leaf 是一個通過抵押數字資產生成穩定幣的去中心化產品。前往創建金庫開始你的旅程吧。",
   "welcome.what-is": "什麼是 Pando"
 }

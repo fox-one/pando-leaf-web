@@ -241,7 +241,7 @@
   "validate.medium-risk-withdraw": "The amount of {symbol} you are withdraw is putting your Vault at risk of liquidation.",
   "validate.minimum-debt": "A vault requires a minimum of {amount} {symbol} to be generated.",
   "validate.pay-back-over": "Your repayment cannot exceed the maximum amount set by the system",
-  "validate.remaining-dust-debt": "Remaining debt has to be no less than {amount} {symbol} or you can pay off all the debt",
+  "validate.remaining-dust-debt": "Remaining debt has to be no less than {amount} {symbol}",
   "welcome.description": "Pando Leaf is a decentralized product where you can generate stablecoins by collateralizing crypto assets. Add a vault to start your journey.",
   "welcome.what-is": "What's Pando"
 }

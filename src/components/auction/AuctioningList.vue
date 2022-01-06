@@ -1,10 +1,5 @@
 <template>
-  <base-list-wrapper
-    :data="dataset"
-    :error="error"
-    :loading="loading"
-    @load="requestLoadMore"
-  >
+  <base-list-wrapper :data="dataset" :error="error" :loading="loading">
     <auctions-list-item
       v-for="(item, index) in dataset"
       :key="index"
@@ -36,10 +31,14 @@ export default class AuctioningList extends Vue {
 
   error = false;
 
-  async requestLoadMore() {
+  mounted() {
+    this.requestFlips();
+  }
+
+  async requestFlips() {
     if (this.loading || !this.hasNext) return;
     try {
-      await this.$store.dispatch("auctions/loadMore");
+      await this.$store.dispatch("auctions/refresh");
     } catch (error) {
       this.$utils.helper.errorHandler(this, error);
       this.error = true;
