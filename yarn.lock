@@ -1068,6 +1068,15 @@
     bignumber.js "^9.0.1"
     dayjs "^1.10.4"
 
+"@foxone/utils@^0.2.21":
+  version "0.2.21"
+  resolved "https://registry.yarnpkg.com/@foxone/utils/-/utils-0.2.21.tgz#a36faafe0bbd0fa6128ca5748ec97b1f097be481"
+  integrity sha512-agU+aBOke6n3nJPTaIn1GJDOYqYP/ekL18w6PdZNrd9qkPipQpx15OHrSPntky++hcWQ1EgC72doJA//PCzm7A==
+  dependencies:
+    axios "^0.21.1"
+    bignumber.js "^9.0.1"
+    dayjs "^1.10.4"
+
 "@gar/promisify@^1.0.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"

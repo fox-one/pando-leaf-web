@@ -26,6 +26,7 @@ import AuctioningDoneList from "@/components/auction/AuctionDoneList.vue";
 })
 export default class AuctionsPage extends Mixins(mixins.page) {
   tabIndex = 0;
+
   get title() {
     return this.$t("tab.auctions") as string;
   }

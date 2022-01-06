@@ -17,6 +17,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import AuctionsListItemHeader from "./AuctionsListItemHeader.vue";
 import AuctionsListItemInfo from "./AuctionsListItemInfo.vue";
 import AuctionsListItemFooter from "./AuctionsListItemFooter.vue";
+import dayjs from "dayjs";
 
 @Component({
   components: {
@@ -27,6 +28,27 @@ import AuctionsListItemFooter from "./AuctionsListItemFooter.vue";
 })
 export default class AuctionsListItem extends Vue {
   @Prop() flip!: API.Flip;
+
+  timer: any = null;
+
+  mounted() {
+    let diffSeconds = dayjs(this.flip.tic).diff(dayjs(), "seconds");
+    if (
+      dayjs(this.flip.tic).unix() === 0 ||
+      dayjs(this.flip.tic).isAfter(dayjs(this.flip.end))
+    ) {
+      diffSeconds = dayjs(this.flip.end).diff(dayjs(), "seconds");
+    }
+    if (diffSeconds > 0) {
+      this.timer = setTimeout(() => {
+        this.$emit("refresh");
+      }, diffSeconds * 1000);
+    }
+  }
+
+  beforeDestroy() {
+    clearTimeout(this.timer);
+  }
 
   toDetail(flip: API.Flip) {
     this.$router.push(`/auction?id=${flip.id}`);

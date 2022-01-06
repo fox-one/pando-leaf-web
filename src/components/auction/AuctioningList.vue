@@ -10,6 +10,7 @@
       :key="index"
       :flip="item"
       class="mb-4 mx-4"
+      @refresh="requestFlips()"
     />
     <template #empty> <empty-auctions-place-holder /> </template>
   </base-list-wrapper>
