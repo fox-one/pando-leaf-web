@@ -1,7 +1,7 @@
 <template>
   <div>
     <auction-form-info-item
-      class="my-3"
+      class="my-6"
       v-for="item in infos"
       :key="item.label"
       :flip="flip"
@@ -105,16 +105,6 @@ export default class AuctionFormInfos extends Vue {
       {
         label: this.$t("auction.my-bid-price"),
         value: this.meta.inputBidPriceText,
-      },
-      {
-        label: this.$t("auction.price-difference"),
-        value: this.meta.priceDifferenceText,
-        valueColor:
-          this.meta.priceDifference > 0
-            ? "green"
-            : this.meta.priceDifference < 0
-            ? "red"
-            : "greyscale_1",
       },
     ];
   }

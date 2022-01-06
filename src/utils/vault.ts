@@ -1,31 +1,8 @@
-import { RISK } from "@/enums";
+import { RISK, RISK_LEVEL_META } from "@/enums";
 import { getNextPairPrice } from "./oracle";
 
-const RiskLevelMeta = {
-  [RISK.NA]: {
-    color: "greyscale_1",
-    bg_color: "greyscale_6",
-    value: RISK.NA,
-  },
-  [RISK.HIGH]: {
-    color: "risk_high",
-    bg_color: "risk_high_bg",
-    value: RISK.HIGH,
-  },
-  [RISK.MEDIUM]: {
-    color: "risk_mid",
-    bg_color: "risk_mid_bg",
-    value: RISK.MEDIUM,
-  },
-  [RISK.LOW]: {
-    color: "risk_low",
-    bg_color: "risk_low_bg",
-    value: RISK.LOW,
-  },
-};
-
 export function getRiskLevelMeta(current: number, min: number) {
-  if (min <= 0 || current <= 0) return RiskLevelMeta[RISK.NA];
+  if (min <= 0 || current <= 0) return RISK_LEVEL_META[RISK.NA];
 
   const risk = current / min;
 
@@ -35,13 +12,13 @@ export function getRiskLevelMeta(current: number, min: number) {
 // 根据抵押率计算风险
 export function getRiskLevelMetaByPercent(collateralRatio: number) {
   if (collateralRatio < 0) {
-    return RiskLevelMeta[RISK.NA];
+    return RISK_LEVEL_META[RISK.NA];
   } else if (collateralRatio <= 1.25) {
-    return RiskLevelMeta[RISK.HIGH];
+    return RISK_LEVEL_META[RISK.HIGH];
   } else if (collateralRatio <= 5 / 3) {
-    return RiskLevelMeta[RISK.MEDIUM];
+    return RISK_LEVEL_META[RISK.MEDIUM];
   } else {
-    return RiskLevelMeta[RISK.LOW];
+    return RISK_LEVEL_META[RISK.LOW];
   }
 }
 

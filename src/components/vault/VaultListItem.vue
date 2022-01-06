@@ -23,10 +23,9 @@
 
     <div
       v-if="meta.inHighRisk"
-      class="risk_high--text mt-4 mb-1 f-caption font-weight-semibold"
+      class="risk_high--text mt-4 mb-1 f-caption font-weight-medium"
     >
-      *This vault will be liquidated, please supply more collateral or repay
-      debts.
+      *{{ $t("vault.high-risk") }}
     </div>
 
     <vault-card-actions
@@ -107,7 +106,7 @@ export default VaultListItem;
   opacity: 0.2;
 }
 .actions__wrapper {
-  padding: 16px 32px;
+  padding: 16px 16px;
   width: 100%;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.03);
 }

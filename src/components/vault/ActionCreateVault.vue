@@ -8,9 +8,9 @@
   >
     <template #activator="{ on }">
       <slot name="activator" :on="on">
-        <f-button depressed fab color="primary" class="xx-small" v-on="on">
-          <v-icon size="16">$FIconAdd</v-icon>
-        </f-button>
+        <div v-on="on">
+          <v-icon size="24" color="primary">$FIconAdd</v-icon>
+        </div>
       </slot>
     </template>
 

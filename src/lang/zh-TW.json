@@ -246,6 +246,7 @@
   "tooltip.stability-fee": "以年化利率的形式體現的，對當前金庫貸款金額收取的費用",
   "tooltip.total-asset-in-market": "市場中抵押的 {symbol} 總量",
   "tooltip.vault-selector": "如果您僅打算鑄幣更多, 可以選擇在現有超額抵押的金庫中進行",
+  "vault.high-risk":"此金庫將被清算，請提供更多抵押物或償還債務。",
   "validate.amount-zero": "數量需要大於 0",
   "validate.below-liquidation-rate": "抵押物不足以覆蓋鑄幣金額",
   "validate.deposit-empty": "金庫需要存入資產作為抵押",

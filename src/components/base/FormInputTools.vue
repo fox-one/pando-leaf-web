@@ -38,7 +38,7 @@
           <v-messages color="error" :value="messages" class="text-right" />
         </template>
         <template v-else>
-          ≈<span class="greyscale_3--text fiat-amount"> {{ fiatAmount }} </span>
+          <span class="greyscale_3--text fiat-amount"> {{ fiatAmount }} </span>
         </template>
       </slot>
     </v-layout>

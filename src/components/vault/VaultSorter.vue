@@ -84,11 +84,14 @@ export default VaultSorter;
   justify-content: center;
   height: 32px;
   border-radius: 16px;
+  background-color: var(--v-greyscale_6-base);
   color: var(--v-greyscale_3-base);
 
   &.active {
-    background-color: var(--v-greyscale_6-base);
+    background-color: var(--v-greyscale_7-base);
     color: var(--v-greyscale_2-base);
+    border: 1.5px solid var(--v-greyscale_2-base);
+    border-radius: 53px;
   }
 }
 </style>

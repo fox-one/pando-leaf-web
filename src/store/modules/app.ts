@@ -11,7 +11,8 @@ const state = (): State.App => ({
     customContent: null,
   },
   settings: {
-    dark: mixin.isDarkTheme(),
+    // dark: mixin.isDarkTheme(),
+    dark: true,
   },
   bottomNav: {
     value: "",

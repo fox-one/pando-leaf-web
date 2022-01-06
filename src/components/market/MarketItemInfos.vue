@@ -1,7 +1,7 @@
 <template>
   <v-row no-gutters class="pb-2" @click="bindExpand = !bindExpand">
     <market-infos-item
-      class="mb-4 px-6"
+      class="mb-6 px-6"
       cols="12"
       v-for="(item, ix) in infos.slice(0, 5)"
       :key="ix"
@@ -21,7 +21,7 @@
       :class="bindExpand || disabled ? 'expanded' : 'collapse'"
     >
       <market-infos-item
-        class="mb-4 px-6"
+        class="pb-6 px-6"
         cols="12"
         v-for="(item, ix) in infos.slice(5, infos.length)"
         :key="ix"
@@ -36,7 +36,7 @@
       </market-infos-item>
     </v-row>
 
-    <v-col class="d-flex justify-center" v-if="!disabled">
+    <v-col class="d-flex justify-center mb-1" v-if="!disabled">
       <v-icon
         size="14"
         color="greyscale_4"
@@ -134,7 +134,7 @@ export default class MarketItemInfos extends Vue {
         }),
         value: this.meta.collateralAmount,
         valueUnit: this.meta.collateralSymbol,
-        valueClass: "font-weight-bold f-greyscale-1",
+        valueClass: "f-greyscale-1",
         hint: this.$t("tooltip.total-asset-in-market", {
           symbol: this.meta.collateralSymbol,
         }),
@@ -143,7 +143,7 @@ export default class MarketItemInfos extends Vue {
         title: this.$t("common.max-available"),
         value: this.meta.available,
         valueUnit: this.meta.debtSymbol,
-        valueClass: "font-weight-bold f-greyscale-1",
+        valueClass: "f-greyscale-1",
       },
       {
         title: this.$t("common.symbol-debt", {
@@ -227,7 +227,7 @@ export default class MarketItemInfos extends Vue {
   transform: rotateX(180deg);
 }
 .expand-transition {
-  transition: cubic-bezier(0.6, 0, 0.2, 1) 1s;
+  transition: cubic-bezier(0.6, 0, 0.2, 1) 0.5s;
 
   &.content {
     transition-property: height, opacity, margin-top;
@@ -242,6 +242,10 @@ export default class MarketItemInfos extends Vue {
   &.expanded {
     height: 96px;
     opacity: 1;
+  }
+
+  &.expand {
+    margin-top: 8px;
   }
 }
 </style>

@@ -184,6 +184,7 @@ export default class AuctionDetail extends Vue {
   border-top-right-radius: 8px;
 
   .text {
+    color: black;
     padding-top: 10px;
     padding-bottom: 10px;
   }

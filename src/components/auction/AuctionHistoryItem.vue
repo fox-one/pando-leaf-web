@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout column class="py-4">
-      <v-layout align-center justify-space-between class="mb-2 text-1">
+      <v-layout align-center justify-space-between class="mb-4 text-1">
         <span class="font-weight-bold">
           {{ meta.actionText
           }}<span v-if="meta.is_me" class="tag ml-1">You</span>
@@ -10,6 +10,7 @@
           {{ meta.time }}
         </span>
       </v-layout>
+
       <div class="f-caption greyscale_3--text">{{ meta.actionContent }}</div>
     </v-layout>
   </div>

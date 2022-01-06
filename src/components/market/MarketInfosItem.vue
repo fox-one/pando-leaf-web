@@ -40,15 +40,12 @@ export default class extends Vue {
   align-items: center;
   font-weight: 500;
   font-size: 13px;
-  line-height: 16px;
   color: var(--v-greyscale_3-base);
 }
 .market-item-value {
   display: flex;
-  font-family: "Inter";
   align-items: center;
   font-weight: 500;
   font-size: 13px;
-  line-height: 16px;
 }
 </style>

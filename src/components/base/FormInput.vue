@@ -7,6 +7,7 @@
     :selectable="false"
     :placeholder="meta.placeholder"
     :readonly="closed"
+    inputmode="decimal"
     hide-details
     fullfilled
     v-bind="$attrs"

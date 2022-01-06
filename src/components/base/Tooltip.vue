@@ -3,12 +3,11 @@
     <template #activator="{ on }">
       <v-icon
         size="16"
-        color="greyscale_1"
-        class="greyscale_5 rounded-circle"
         v-on="on"
+        color="greyscale_1"
+        class="greyscale_5 quote-icon rounded-circle"
+        >$FIconInfo4P</v-icon
       >
-        $FIconInformation3PFill
-      </v-icon>
     </template>
     <div>
       <div
@@ -37,13 +36,14 @@
     max-width="600"
   >
     <template #activator="{ on }">
-      <v-icon
-        size="14"
-        color="greyscale_5"
-        class="greyscale_1 rounded-circle quote-icon"
-        v-on="on"
-        >$FIconInformation3PFill</v-icon
-      >
+      <div v-on="on">
+        <v-icon
+          size="14"
+          color="greyscale_1"
+          class="greyscale_5 quote-icon rounded-circle"
+          >$FIconInfo4P</v-icon
+        >
+      </div>
     </template>
 
     <f-bottom-sheet-title>

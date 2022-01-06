@@ -1,10 +1,9 @@
 <template>
-  <v-layout class="full-width" justify-center>
+  <v-layout class="full-width" justify-space-around>
     <div
       v-for="item in actions"
       :key="item.value"
       class="action"
-      :style="`width: ${(1 / actions.length) * 100}%`"
       :class="[{ 'action--disabled': item.disabled }]"
       @click.stop="handleClick(item)"
     >

@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="0" class="ma-4 pa-0 rounded-lg greyscale_6">
+  <f-panel elevation="0" class="ma-4 pa-0 greyscale_6">
     <market-item-title :collateral="collateral" :show-button="showButton" />
 
     <market-item-infos
@@ -7,7 +7,7 @@
       :expand.sync="expand"
       :disabled="disabled"
     />
-  </v-card>
+  </f-panel>
 </template>
 
 <script lang="ts" scoped>

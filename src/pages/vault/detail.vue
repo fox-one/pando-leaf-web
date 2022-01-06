@@ -19,7 +19,10 @@
 
       <vault-detail-infos :id="vaultId" class="infos" />
 
-      <div class="my-3 mx-n4 greyscale_1" style="height: 8px; opacity: 0.05" />
+      <div
+        class="my-3 mx-n4 greyscale_1"
+        :style="`height: 8px; opacity: ${dividerOpacity}`"
+      />
 
       <v-layout justify-space-between class="mt-5 mb-2 greyscale_1--text title">
         {{ $t("common.history") }}
@@ -84,6 +87,10 @@ class VaultDetailPage extends Mixins(mixins.page) {
 
   filter: VatAction | "all" = "all";
 
+  get dividerOpacity() {
+    return this.$vuetify.theme.dark ? 0.2 : 0.05;
+  }
+
   get title() {
     return this.$t("common.vault-detail") as string;
   }
@@ -116,6 +123,9 @@ export default VaultDetailPage;
 <style lang="scss" scoped>
 .tabs__wrapper {
   box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 44px;
+  z-index: 14;
 }
 
 .actions__wrapper {

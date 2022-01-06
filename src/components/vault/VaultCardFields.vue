@@ -12,11 +12,6 @@
         <span class="mr-1" :style="[{ opacity: field.opacity }]">
           {{ field.title }}
         </span>
-        <base-tooltip
-          v-if="field.hint"
-          :hint="field.hint"
-          :learn-more="field.learnMore"
-        />
       </div>
 
       <div class="field__value mt-1" :style="[{ color: field.color }]">
@@ -145,6 +140,8 @@ export default VaultFields;
 
 <style lang="scss" scoped>
 .field {
+  font-weight: 500;
+
   &__title {
     font-size: 12px;
     line-height: 18px;
@@ -161,7 +158,7 @@ export default VaultFields;
   &--emphasize {
     .field__title,
     .field__value {
-      font-weight: bold;
+      font-weight: 600;
     }
   }
 }

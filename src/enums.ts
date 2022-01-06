@@ -23,6 +23,29 @@ export enum RISK {
   NA = "n/a",
 }
 
+export const RISK_LEVEL_META = {
+  [RISK.NA]: {
+    color: "greyscale_1",
+    bg_color: "greyscale_6",
+    value: RISK.NA,
+  },
+  [RISK.HIGH]: {
+    color: "risk_high",
+    bg_color: "risk_high_bg",
+    value: RISK.HIGH,
+  },
+  [RISK.MEDIUM]: {
+    color: "risk_mid",
+    bg_color: "risk_mid_bg",
+    value: RISK.MEDIUM,
+  },
+  [RISK.LOW]: {
+    color: "risk_low",
+    bg_color: "risk_low_bg",
+    value: RISK.LOW,
+  },
+};
+
 export enum VatAction {
   VatOpen = "VatOpen", // 创建金库
   VatDeposit = "VatDeposit", // 充值

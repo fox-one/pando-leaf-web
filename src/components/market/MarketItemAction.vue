@@ -5,7 +5,7 @@
       @click="generateNewVault"
       class="greyscale_1 greyscale_7--text xx-small"
     >
-      <v-icon size="16">$FIconAdd</v-icon>
+      <v-icon size="16">$FIconAdd4P</v-icon>
     </f-button>
   </div>
 </template>

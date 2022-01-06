@@ -15,7 +15,9 @@
         </div>
 
         <div align-center class="market-overview-value" :class="info.class">
-          <span v-if="info.fiat" class="market-overview-value-symbol"> $ </span>
+          <span v-if="info.fiat" class="market-overview-value-symbol">
+            US$
+          </span>
           {{ info.value }}
         </div>
       </v-col>
@@ -74,16 +76,14 @@ export default class MarketOverview extends Vue {
   font-weight: bold;
   font-size: 25px;
   line-height: 30px;
+  margin-top: 16px;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   letter-spacing: -0.02em;
 
   .market-overview-value-symbol {
     font-weight: bold;
     font-size: 16px;
-    line-height: 19px;
-    letter-spacing: 0.011em;
-    margin-top: -2px;
   }
 }
 .market-green {

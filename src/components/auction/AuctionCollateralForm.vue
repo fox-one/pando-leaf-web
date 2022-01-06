@@ -20,13 +20,13 @@
     </base-form-input>
 
     <auction-max-bid
-      class="my-3"
+      class="my-6"
       :flip="flip"
       :amount.sync="inputCollateralAmount"
     />
 
     <auction-form-infos
-      class="my-3"
+      class="my-6"
       :amount="inputCollateralAmount"
       :type="'collateral'"
       :flip="flip"

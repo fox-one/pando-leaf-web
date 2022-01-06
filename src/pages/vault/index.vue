@@ -23,6 +23,19 @@
       <vault-sorter :sort.sync="sortedBy" />
 
       <vault-list class="mt-1" :sort="sortedBy" />
+
+      <div class="mt-6 text-center">
+        <action-create-vault @itemclick="handleItemclick">
+          <template #activator="{ on }">
+            <slot name="activator" :on="on">
+              <f-button rounded depressed color="primary" v-on="on">
+                <v-icon size="16">$FIconAdd4P</v-icon>
+                <span class="text-2 ml-2">{{ $t("common.add-a-vault") }}</span>
+              </f-button>
+            </slot>
+          </template>
+        </action-create-vault>
+      </div>
     </v-layout>
   </v-container>
 </template>
