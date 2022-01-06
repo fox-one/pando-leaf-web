@@ -42,7 +42,7 @@ export default class AuctionsListItem extends Vue {
         value: `${this.flip.lot} ${this.meta.auctionSymbol}`,
       },
       {
-        label: this.$t("common.debt"),
+        label: this.$t("common.bid"),
         value: `${this.flip.bid} ${this.meta.debtSymbol}`,
       },
       {

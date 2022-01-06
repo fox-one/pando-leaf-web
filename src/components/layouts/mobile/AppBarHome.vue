@@ -2,8 +2,8 @@
   <f-app-bar
     :show="appbar.show"
     app
+    flat
     custom-content
-    class="appbar--no-shadow"
     :extension-height="appbar.extensionHeight"
     :color="appbar.color"
     :class="{ 'appbar--shadow': appbar.extension }"

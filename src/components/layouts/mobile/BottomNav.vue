@@ -5,7 +5,6 @@
     :items="items"
     app
     flat
-    height="calc(66px + env(safe-area-inset-bottom))"
     color="primary"
     @change="handleChange"
   >

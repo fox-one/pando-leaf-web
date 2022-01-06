@@ -56,6 +56,7 @@
   "common.available-to-generate": "Available to generate",
   "common.available-to-withdraw": "Available to withdraw",
   "common.balance": "Balance",
+  "common.bid":"Bid",
   "common.cancel": "Cancel",
   "common.checking-payment": "Checking...",
   "common.close": "Close",
