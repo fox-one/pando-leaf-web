@@ -19,16 +19,16 @@
     >
     </base-form-input>
 
-    <auction-max-bid class="my-3" :flip="flip" :amount.sync="inputDebtAmount" />
+    <auction-max-bid class="my-6" :flip="flip" :amount.sync="inputDebtAmount" />
 
     <auction-form-infos
-      class="my-3"
+      class="my-6"
       :amount="inputDebtAmount"
       :type="'debt'"
       :flip="flip"
     />
 
-    <div class="my-3 tip greyscale_3--text">
+    <div class="my-6 tip greyscale_3--text">
       {{ $t("auction.rule.stage-price-end") }}
     </div>
 

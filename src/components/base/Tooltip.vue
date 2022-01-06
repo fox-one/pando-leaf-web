@@ -36,7 +36,7 @@
     max-width="600"
   >
     <template #activator="{ on }">
-      <div v-on="on">
+      <div v-on="on" class="d-flex align-center">
         <v-icon
           size="14"
           color="greyscale_1"

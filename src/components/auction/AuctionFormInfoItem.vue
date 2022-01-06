@@ -1,9 +1,9 @@
 <template>
   <v-layout class="action-form-info-item" align-center>
-    <div class="greyscale_3--text">{{ label }}</div>
+    <div class="greyscale_3--text d-flex align-center">
+      <span class="mr-1">{{ label }}</span>
 
-    <div class="ml-1" v-if="hint">
-      <base-tooltip :hint="hint"></base-tooltip>
+      <base-tooltip v-if="hint" :hint="hint"></base-tooltip>
     </div>
 
     <v-spacer />
@@ -51,6 +51,5 @@ export default class AuctionFormInfoItem extends Vue {
 .action-form-info-item {
   font-weight: 500;
   font-size: 13px;
-  line-height: 16px;
 }
 </style>
