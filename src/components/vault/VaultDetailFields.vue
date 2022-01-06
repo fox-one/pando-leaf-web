@@ -6,7 +6,7 @@
       :key="index"
       class="field py-3"
     >
-      <div class="field__title greyscale_3--text">
+      <div class="field__title greyscale_3--text d-flex align-center">
         <span class="mr-1">
           {{ field.title }}
         </span>

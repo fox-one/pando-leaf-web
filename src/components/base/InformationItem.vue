@@ -2,13 +2,15 @@
   <div class="infomation-item" :style="[{ fontSize: `${fontSize}px` }]">
     <v-layout class="py-3" column>
       <v-layout align-center>
-        <div class="greyscale_3--text mr-1">{{ label }}</div>
+        <div class="greyscale_3--text d-flex align-center">
+          <span class="mr-1">{{ label }}</span>
 
-        <base-tooltip
-          v-if="hint"
-          :hint="hint"
-          :learn-more="learnMore"
-        ></base-tooltip>
+          <base-tooltip
+            v-if="hint"
+            :hint="hint"
+            :learn-more="learnMore"
+          ></base-tooltip>
+        </div>
 
         <v-spacer />
 
