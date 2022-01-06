@@ -5,6 +5,8 @@ declare namespace State {
     show: boolean;
     back: boolean;
     customContent?: null | any;
+    extension?: null | any;
+    extensionHeight?: number;
   }
 
   export interface SettingsState {

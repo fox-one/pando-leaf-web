@@ -4,19 +4,28 @@
     app
     flat
     center
-    class="appbar"
+    :class="{ 'appbar--shadow': appbar.extension }"
+    :extensionHeight="appbar.extensionHight"
     :title="appbar.title"
     :back="appbar.back"
     :color="appbar.color"
     @back="handleBack"
   >
+    <template v-slot:extension v-if="appbar.extension">
+      <Render :nodes="appbar.extension" />
+    </template>
   </f-app-bar>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
+import Render from "@/utils/render";
 
-@Component
+@Component({
+  components: {
+    Render,
+  },
+})
 class AppBarNav extends Vue {
   get appbar() {
     const state = this.$store.state;
@@ -28,6 +37,11 @@ class AppBarNav extends Vue {
       ...appbar,
       color,
     };
+  }
+
+  @Watch("appbar.color")
+  handleColorChange(value: string) {
+    this.$utils.mixin.setMixinTheme(value);
   }
 
   handleBack() {
@@ -43,7 +57,13 @@ export default AppBarNav;
 </script>
 
 <style lang="scss" scoped>
-.appbar {
-  z-index: 20;
+.appbar--shadow {
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.06) !important;
+}
+
+.theme--dark {
+  .appbar--shadow {
+    box-shadow: 0px 0px 24px rgba(255, 255, 255, 0.12) !important;
+  }
 }
 </style>

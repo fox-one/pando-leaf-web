@@ -6,6 +6,7 @@ import vault from "./vault";
 import collateral from "./collateral";
 import oracle from "./oracle";
 import auctions from "./auctions";
+import page from "./page";
 
 export default {
   account,
@@ -16,4 +17,5 @@ export default {
   collateral,
   oracle,
   auctions,
+  page,
 };

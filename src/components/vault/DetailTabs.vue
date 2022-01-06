@@ -1,11 +1,10 @@
 <template>
   <f-tabs
+    v-model="tabIndex"
     borderless
     mandatory
     fixed-tabs
-    :value="value"
     disableSliderLength
-    @change="handleChange"
   >
     <v-tab
       v-for="(item, index) in tabs"
@@ -19,11 +18,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
+import { Sync } from "vuex-pathify";
 
 @Component
 class DetailTabs extends Vue {
-  @Model("change") value!: number;
+  @Sync("page/detail@tabIndex") tabIndex!: number;
 
   get tabs() {
     return [
@@ -34,10 +34,6 @@ class DetailTabs extends Vue {
         text: this.$t("tab.market"),
       },
     ];
-  }
-
-  handleChange(value) {
-    this.$emit("change", value);
   }
 }
 export default DetailTabs;

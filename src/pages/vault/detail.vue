@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <v-layout class="tabs__wrapper" justify-center>
-      <detail-tabs v-model="index" />
-    </v-layout>
-
+  <v-container class="pa-0">
     <div v-show="index === 0" class="px-4">
       <vault-name :id="vaultId" class="mt-4" />
 
@@ -45,14 +41,16 @@
     <div class="actions__wrapper">
       <f-divider />
 
-      <vault-actions
-        :id="vaultId"
-        :has-collateral="meta.hasCollateral"
-        :has-debt="meta.hasDebt"
-        class="actions"
-      />
+      <v-container class="pa-0">
+        <vault-actions
+          :id="vaultId"
+          :has-collateral="meta.hasCollateral"
+          :has-debt="meta.hasDebt"
+          class="actions"
+        />
+      </v-container>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -68,6 +66,7 @@ import VaultActions from "@/components/vault/VaultActions.vue";
 import MarketItem from "@/components/market/MarketItem.vue";
 import mixins from "@/mixins";
 import { VatAction } from "~/enums";
+import { Sync } from "vuex-pathify";
 
 @Component({
   components: {
@@ -83,7 +82,7 @@ import { VatAction } from "~/enums";
   },
 })
 class VaultDetailPage extends Mixins(mixins.page) {
-  index = 0;
+  @Sync("page/detail@tabIndex") index!: number;
 
   filter: VatAction | "all" = "all";
 
@@ -96,8 +95,10 @@ class VaultDetailPage extends Mixins(mixins.page) {
   }
 
   get appbar() {
+    const h = this.$createElement;
     return {
       back: true,
+      extension: h(DetailTabs),
     };
   }
 
@@ -121,13 +122,6 @@ export default VaultDetailPage;
 </script>
 
 <style lang="scss" scoped>
-.tabs__wrapper {
-  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.06);
-  position: sticky;
-  top: 44px;
-  z-index: 14;
-}
-
 .actions__wrapper {
   position: fixed;
   left: 0;
