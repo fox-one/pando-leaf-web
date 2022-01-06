@@ -4,6 +4,7 @@
     app
     flat
     center
+    class="appbar"
     :title="appbar.title"
     :back="appbar.back"
     :color="appbar.color"
@@ -40,3 +41,9 @@ class AppBarNav extends Vue {
 }
 export default AppBarNav;
 </script>
+
+<style lang="scss" scoped>
+.appbar {
+  z-index: 20;
+}
+</style>
