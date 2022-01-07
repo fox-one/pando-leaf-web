@@ -37,14 +37,23 @@ export default class AuctioningList extends Vue {
 
   error = false;
 
+  intervalId: any = null;
+
   mounted() {
     this.requestFlips();
+    this.intervalId = setInterval(() => {
+      this.requestFlips(false);
+    }, 5000);
   }
 
-  async requestFlips() {
-    if (this.loading || !this.hasNext) return;
+  beforeDestroy() {
+    clearInterval(this.intervalId);
+  }
+
+  async requestFlips(withLoading = true) {
+    if (this.loading) return;
     try {
-      await this.$store.dispatch("auctions/refresh");
+      await this.$store.dispatch("auctions/refresh", { withLoading });
     } catch (error) {
       this.$utils.helper.errorHandler(this, error);
       this.error = true;

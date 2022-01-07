@@ -41,6 +41,11 @@ const mutations: MutationTree<State.Auctions> = {
     state.hasNext = pagination.has_next;
     state.flips = state.flips.concat(flips);
   },
+  RESET_RESULT(state, { pagination, flips }) {
+    state.cursor = pagination.next_cursor;
+    state.hasNext = pagination.has_next;
+    state.flips = flips;
+  },
   RESET(state) {
     state.hasNext = true;
     state.cursor = null;
@@ -60,16 +65,20 @@ const actions: ActionTree<State.Auctions, any> = {
     commit("SET_LOADING", false);
   },
 
-  async refresh({ state, commit }) {
+  async refresh({ state, commit }, { withLoading }) {
     if (state.loading) return;
-    commit("SET_LOADING", true);
-    commit("RESET");
+    if (withLoading) {
+      commit("SET_LOADING", true);
+      commit("RESET");
+    }
     const response = await this.$http.getFlips({
       limit: state.limit,
       cursor: null,
     });
-    commit("SET_RESULT", response);
-    commit("SET_LOADING", false);
+    commit("RESET_RESULT", response);
+    if (withLoading) {
+      commit("SET_LOADING", false);
+    }
   },
 
   async clear({ commit }) {
