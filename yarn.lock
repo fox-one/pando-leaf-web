@@ -981,20 +981,7 @@
   dependencies:
     "@foxone/fennec-base" "0.4.5-2"
 
-"@foxone/icons@3.0.1-45", "@foxone/icons@3.0.1-49", "@foxone/icons@^3.0.1-48":
-  version "3.0.1-49"
-  resolved "https://registry.yarnpkg.com/@foxone/icons/-/icons-3.0.1-49.tgz#bddc97bf1e822999bb841572a1ea247a0c56d50e"
-  integrity sha512-5BoTGLvQTgC8m4KR0j92ea0ye3UmteCVD0bIns3vWB25QBUeV7V+6AGkwu4vkteOzdBq67Vo+CxwAjawKQv7hg==
-  dependencies:
-    "@foxone/uikit" "3.0.1-49"
-    vue "^2.6.12"
-    vue-class-component "^7.2.3"
-    vue-property-decorator "^9.1.2"
-    vue-router "^3.2.0"
-    vuetify "^2.5.6"
-    vuex "^3.4.0"
-
-"@foxone/icons@^3.0.1-52":
+"@foxone/icons@3.0.1-45", "@foxone/icons@^3.0.1-52":
   version "3.0.1-52"
   resolved "https://registry.yarnpkg.com/@foxone/icons/-/icons-3.0.1-52.tgz#24b131b942197a241f7d0cca06adf1d142b3a70e"
   integrity sha512-Zwu4SJIHcqleOcJp8iH8upSht16L/e4gyBimp4+gZIYnL9po76UPmLmmmODmsaL9dI7Ah0Xe15lfsjTIenOSQQ==
@@ -1038,24 +1025,12 @@
     vuex "^3.6.2"
     vuex-persistedstate "^3.0.1"
 
-"@foxone/uikit@3.0.1-45", "@foxone/uikit@3.0.1-49", "@foxone/uikit@^3.0.1-27", "@foxone/uikit@^3.0.1-48":
-  version "3.0.1-49"
-  resolved "https://registry.yarnpkg.com/@foxone/uikit/-/uikit-3.0.1-49.tgz#bf2e614878ef6fff2dd4cb16674edba6afd7c583"
-  integrity sha512-3YF39KS8NtKKfkjtc3sqmBZZ5qiFEYglKWZripUTe2xQ4hQARjoxScvRvzoMsnjcz48Q3Y3NXp8EulAg2K+O9Q==
+"@foxone/uikit@3.0.1-45", "@foxone/uikit@^3.0.1-27", "@foxone/uikit@^3.0.1-54":
+  version "3.0.1-54"
+  resolved "https://registry.yarnpkg.com/@foxone/uikit/-/uikit-3.0.1-54.tgz#65688388f220a19eb048b0fe13959fa2b0eeb5a3"
+  integrity sha512-ptRkxfXffE+58VvQXIIFpuV6XfVGfVCqYDVP3xV68iIJpSjb+skDIJmh2v8Vj7k+tt/MMOa2aypceHW6++qiMQ==
   dependencies:
-    "@foxone/icons" "3.0.1-49"
     "@foxone/utils" "^0.2.6"
-    bignumber.js "^9.0.1"
-    qrcode "^1.4.4"
-    tinycolor2 "^1.4.2"
-    vue-class-component "^7.2.3"
-    vue-property-decorator "^9.1.2"
-
-"@foxone/uikit@^3.0.1-53":
-  version "3.0.1-53"
-  resolved "https://registry.yarnpkg.com/@foxone/uikit/-/uikit-3.0.1-53.tgz#c05c9baf279ac441cdf088210ffe63223e8fa7bf"
-  integrity sha512-xRRCMF5GfAdyTgPZcZxAl+T2UtD92nv8VMPUIFGANvM6ReDVpLw5N84gOQv5LkIgOXm9g6dsIkTm5pIf9pOi4A==
-  dependencies:
     qrcode "^1.5.0"
     tinycolor2 "^1.4.2"
 
@@ -8843,7 +8818,7 @@ q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
-qrcode@^1.4.4, qrcode@^1.5.0:
+qrcode@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.5.0.tgz#95abb8a91fdafd86f8190f2836abbfc500c72d1b"
   integrity sha512-9MgRpgVc+/+47dFvQeD6U2s0Z92EsKzcHogtum4QB+UNd025WOJSHvn/hjk9xmzj7Stj95CyUAs31mrjxliEsQ==
@@ -10857,7 +10832,7 @@ vuetify-loader@^1.7.3:
     file-loader "^6.2.0"
     loader-utils "^2.0.0"
 
-vuetify@2.5.8, vuetify@^2.5.14, vuetify@^2.5.6, vuetify@^2.5.8, vuetify@^2.6:
+vuetify@2.5.8, vuetify@^2.5.14, vuetify@^2.5.8, vuetify@^2.6:
   version "2.5.8"
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.5.8.tgz#a23e6a7e77b77de0744b53cf1e7c9d40efac0635"
   integrity sha512-paLmNhKTYFD41+14rIHnCo+P1jHbUzwBiMowxs5qXVq8RdRMqRmcy05Sfse1WUu90amPGK2fIFQq5rL2N8zqZg==
