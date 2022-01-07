@@ -9,6 +9,8 @@ const state = (): State.App => ({
     show: true,
     back: false,
     customContent: null,
+    extension: null,
+    extensionHeight: 48,
   },
   settings: {
     dark: mixin.isDarkTheme(),
