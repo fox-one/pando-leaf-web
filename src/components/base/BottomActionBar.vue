@@ -14,7 +14,7 @@ export default class extends Vue {}
 
 <style lang="scss" scoped>
 .bottom-action-bar {
-  z-index: 11;
+  z-index: 2;
   position: fixed;
   width: 100%;
   left: 0;

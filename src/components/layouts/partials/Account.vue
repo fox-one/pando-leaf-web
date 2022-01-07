@@ -21,9 +21,9 @@
       :logged="logged"
       :name="$t('app-name')"
       :version="VERSION"
-      @close="handleClose"
-      @connect="handleConnect"
-      @disconnect="handleDisconnect"
+      @close="handleClose()"
+      @connect="handleConnect()"
+      @disconnect="handleDisconnect()"
     >
       <template #actions>
         <account-actions />
