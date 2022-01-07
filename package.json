@@ -1,6 +1,6 @@
 {
   "name": "pando-leaf",
-  "version": "2.2.0-beta4",
+  "version": "2.2.0-beta5",
   "description": "Pando Leaf is a decentralized financial network built with the MTG technology, and its underlying financial algorithm is inspired by Maker and Synthetix. Pando takes multiple overcollateralized assets and grows multiple pando assets, furthermore, the grown pando assets, e.g. pUSD, can also be used as a collateral.",
   "license": "GPL 3.0",
   "author": "Fox.ONE",
