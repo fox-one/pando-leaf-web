@@ -126,7 +126,9 @@ export default class AuctionDetail extends Vue {
 
     const header = isStage2 ? "ROUND 2" : "ROUND 1";
 
-    const bidLabel = isStage1 ? this.$t("auction.current-bid") : "ROUND 1 Bid";
+    const bidLabel = isStage1
+      ? this.$t("auction.current-bid")
+      : "ROUND 1 " + this.$t("common.bid");
 
     let diffSeconds = dayjs(this.flip.tic).diff(dayjs(), "seconds");
     if (
