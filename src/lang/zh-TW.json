@@ -167,7 +167,7 @@
   "form.button.deposit-to-generate": "存入資產以生成",
   "form.deposit-amount": "存入數量",
   "form.generate-amount": "鑄幣數量",
-  "form.generate-ration": "抵押比例到達",
+  "form.generate-ration": "貸款/貸款限額",
   "form.market-debt-ceiling": "市場最多可出借",
   "form.max-available-to-generate": "最多可鑄幣",
   "form.mint-amount": "生成數量",

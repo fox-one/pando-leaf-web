@@ -1059,16 +1059,7 @@
     qrcode "^1.5.0"
     tinycolor2 "^1.4.2"
 
-"@foxone/utils@^0.2.12", "@foxone/utils@^0.2.19", "@foxone/utils@^0.2.6":
-  version "0.2.19"
-  resolved "https://registry.yarnpkg.com/@foxone/utils/-/utils-0.2.19.tgz#b542625596630f017266380b7c82114241f69bfc"
-  integrity sha512-e9XFo3z9wofvGGglkygI/1+r2RvTVKN0zgb6rllag7ZEokve3wDVTXqP3A5c9uSUubj6DJbzJUDywUgNe4Zivg==
-  dependencies:
-    axios "^0.21.1"
-    bignumber.js "^9.0.1"
-    dayjs "^1.10.4"
-
-"@foxone/utils@^0.2.21":
+"@foxone/utils@^0.2.12", "@foxone/utils@^0.2.21", "@foxone/utils@^0.2.6":
   version "0.2.21"
   resolved "https://registry.yarnpkg.com/@foxone/utils/-/utils-0.2.21.tgz#a36faafe0bbd0fa6128ca5748ec97b1f097be481"
   integrity sha512-agU+aBOke6n3nJPTaIn1GJDOYqYP/ekL18w6PdZNrd9qkPipQpx15OHrSPntky++hcWQ1EgC72doJA//PCzm7A==

@@ -150,7 +150,7 @@
   "form.button.deposit-to-generate": "Deposit to Generate",
   "form.deposit-amount": "Deposit amount",
   "form.generate-amount": "Generate amount",
-  "form.generate-ration": "Collateralization Ration reach",
+  "form.generate-ration": "Debt/ Debt Limit reach",
   "form.market-debt-ceiling": "Market Debt Ceiling",
   "form.max-available-to-generate": "Max available to Generate",
   "form.mint-amount": "Mint amount",
