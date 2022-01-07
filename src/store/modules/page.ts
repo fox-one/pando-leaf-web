@@ -1,10 +1,14 @@
 import { make } from "vuex-pathify";
 
 import type { MutationTree } from "vuex";
+import { SortBy } from "~/enums";
 
 const state = (): State.Page => ({
   detail: {
     tabIndex: 0,
+  },
+  home: {
+    sorter: SortBy.COLLATERAL_RATIO_ASC,
   },
 });
 

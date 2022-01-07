@@ -25,13 +25,13 @@
 </template>
 
 <script lang="ts">
-import { Component, PropSync, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
+import { Sync } from "vuex-pathify";
 import { SortBy } from "~/enums";
-import Sort from "../icons/Sort.vue";
 
 @Component
 class VaultSorter extends Vue {
-  @PropSync("sort") sortedBy!: SortBy;
+  @Sync("page/home@sorter") sortedBy!: SortBy;
 
   get meta() {
     return {

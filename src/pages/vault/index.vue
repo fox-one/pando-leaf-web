@@ -20,9 +20,9 @@
         <action-create-vault @itemclick="handleItemclick" />
       </div>
 
-      <vault-sorter :sort.sync="sortedBy" />
+      <vault-sorter />
 
-      <vault-list class="mt-1" :sort="sortedBy" />
+      <vault-list class="mt-1" />
 
       <div class="mt-6 text-center">
         <action-create-vault @itemclick="handleItemclick">
@@ -51,7 +51,6 @@ import ActionCreateVault from "@/components/vault/ActionCreateVault.vue";
 import mixins from "@/mixins";
 import { Get } from "vuex-pathify";
 import { LINKS } from "~/constants";
-import { SortBy } from "~/enums";
 
 @Component({
   components: {
@@ -67,8 +66,6 @@ class VaultPage extends Mixins(mixins.page) {
   @Get("auth/isLogged") isLogged!: boolean;
 
   @Get("vault/haveVault") haveVault!: boolean;
-
-  sortedBy: SortBy = SortBy.CREATE_TIME_ASC;
 
   get title() {
     return this.$t("tab.home") as string;

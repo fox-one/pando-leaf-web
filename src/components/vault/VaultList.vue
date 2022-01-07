@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import VaultListItem from "./VaultListItem.vue";
-import { Get } from "vuex-pathify";
+import { Get, Sync } from "vuex-pathify";
 
 import { getVaultRisk } from "@/utils/vault";
 import { SortBy } from "~/enums";
@@ -23,7 +23,7 @@ import dayjs from "dayjs";
 class VaultList extends Vue {
   @Get("vault/vaults") vaults!: API.Vault[];
 
-  @Prop({ default: SortBy.CREATE_TIME_ASC }) sort!: SortBy;
+  @Sync("page/home@sorter") sort!: SortBy;
 
   get sortedVaults() {
     const { isValid } = this.$utils.number;

@@ -3,5 +3,8 @@ declare namespace State {
     detail: {
       tabIndex: number;
     };
+    home: {
+      sorter: API.SortBy;
+    };
   }
 }

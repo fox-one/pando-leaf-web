@@ -3,6 +3,12 @@ import createPersistedState from "vuex-persistedstate";
 export default ({ store }) => {
   createPersistedState({
     key: "vuex",
-    paths: ["auth", "app.visited", "account", "asset.walletAssets"],
+    paths: [
+      "auth",
+      "app.visited",
+      "account",
+      "asset.walletAssets",
+      "page.home",
+    ],
   })(store);
 };
