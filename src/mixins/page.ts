@@ -2,6 +2,7 @@ import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
 
 import type { TranslateResult } from "vue-i18n";
+import dayjs from "dayjs";
 
 export interface Page extends Vue {
   title: string;
@@ -51,6 +52,7 @@ export default class PageView extends Vue {
     this.$i18n.locale = locale;
     this.$vuetify.lang.current = locale === "zh" ? "zhHans" : locale;
     this.$vuetify.lang.current = locale;
+    dayjs.locale(locale);
     document.title = this.title as string;
   }
 

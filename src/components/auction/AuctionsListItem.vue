@@ -42,7 +42,7 @@ export default class AuctionsListItem extends Vue {
     if (diffSeconds > 0) {
       this.timer = setTimeout(() => {
         this.$emit("refresh");
-      }, diffSeconds * 1000);
+      }, (diffSeconds + 3) * 1000);
     }
   }
 
