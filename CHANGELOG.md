@@ -2,6 +2,10 @@
 
 This is a brief Pando Leaf website project update records, sorted in reverse chronological order.
 
+## v2.2.2 -- 2022.01.24
+
+Update vault in high risk warning text.
+
 ## v2.2.1 -- 2022.01.07
 
 Add change log (this file), modified the default sorting of the vault list.
