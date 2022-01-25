@@ -111,6 +111,7 @@ class WelcomeModal extends Vue {
   handleNext(newVal) {
     this.visited = true;
     this.dialog = false;
+    this.$utils.app.checkTerms(this);
   }
 }
 export default WelcomeModal;

@@ -1,7 +1,5 @@
 <template>
   <div>
-    <welcome-modal />
-
     <f-paying-modal
       :show="paying.visible"
       :text="$t('common.checking-payment')"
@@ -13,6 +11,10 @@
     <risk-warning-modal />
 
     <pay-qr-code-modal />
+
+    <terms-modal />
+
+    <welcome-modal />
   </div>
 </template>
 
@@ -22,6 +24,7 @@ import WelcomeModal from "./WelcomeModal.vue";
 import AuthModal from "./AuthModal.vue";
 import RiskWarningModal from "./RiskWarningModal.vue";
 import PayQrCodeModal from "./PayQrCodeModal.vue";
+import TermsModal from "./TermsModal.vue";
 import { Sync } from "vuex-pathify";
 
 @Component({
@@ -30,6 +33,7 @@ import { Sync } from "vuex-pathify";
     AuthModal,
     RiskWarningModal,
     PayQrCodeModal,
+    TermsModal,
   },
 })
 class DefaultLayoutModals extends Vue {
@@ -41,6 +45,10 @@ class DefaultLayoutModals extends Vue {
     }
 
     this.paying = { visible: false, timer: null };
+  }
+
+  mounted() {
+    this.$utils.app.checkTerms(this);
   }
 }
 export default DefaultLayoutModals;

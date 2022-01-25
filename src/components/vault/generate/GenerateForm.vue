@@ -6,7 +6,7 @@
       :balance="meta.suggest"
       :rules="rules"
       :leftLabel="$t('common.suggest')"
-      :placeholder="$t('form.mint-amount')"
+      :placeholder="$t('form.generate-amount')"
     />
 
     <generate-action

@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 @Component({
   components: {},
 })
-export default class AuctionTimer extends Vue {
+export default class CountDownTimer extends Vue {
   @Prop() diffSeconds!: number;
 
   countDownTimer = 0;

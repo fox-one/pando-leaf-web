@@ -5,6 +5,8 @@ export default ({ store }) => {
     key: "vuex",
     paths: [
       "auth",
+      "app.termsAccepted",
+      "app.termsVersion",
       "app.visited",
       "account",
       "asset.walletAssets",

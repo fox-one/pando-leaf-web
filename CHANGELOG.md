@@ -2,6 +2,10 @@
 
 This is a brief Pando Leaf website project update records, sorted in reverse chronological order.
 
+## v2.3.0 -- 2022.01.25
+
+Add crowdin support.
+
 ## v2.2.2 -- 2022.01.24
 
 Update vault in high risk warning text.
