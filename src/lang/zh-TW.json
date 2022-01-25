@@ -183,6 +183,10 @@
   "tab.details": "詳情明細",
   "tab.home": "首頁",
   "tab.market": "市場",
+  "terms.hint": "Before using Leaf, please make sure you understand the working principle of Leaf and agree to the following terms:",
+  "terms.item1": "1. Pando Leaf does not guarantee the accuracy of real-time asset price due to force majeure factors such as network latency.",
+  "terms.item2": "2. All notifications of Pando Leaf (including price alerts and liquidation alerts) are for reference only. There's no guarantee that the messages will be pushed right in time for any suggested action.",
+  "terms.item3": "3. The MTG nodes have the right to intervene in the system when emergent and necessary, and make public announcement after it is done.",
   "title.open-a-new-vault": "新建金庫 {name}",
   "tooltip.collateralization-ratio": "抵押率 = （抵押資產數量 x 當前價格）/貸款數量 x 100%",
   "tooltip.details": "說明",
@@ -196,6 +200,7 @@
   "tooltip.stability-fee": "以年化利率的形式體現的，對當前金庫貸款金額收取的費用",
   "tooltip.total-asset-in-market": "市場中抵押的 {symbol} 總量",
   "tooltip.vault-selector": "如果您僅打算鑄幣更多, 可以選擇在現有超額抵押的金庫中進行",
+  "use.terms": "Use Terms",
   "validate.below-liquidation-rate": "抵押物不足以覆蓋鑄幣金額",
   "validate.high-risk": "此生成的 {symbol} 數量將使金庫處於清算風險中",
   "validate.high-risk-withdraw": "此取回的 {symbol} 數量將使金庫處於清算風險中",
@@ -207,11 +212,5 @@
   "validate.remaining-dust-debt": "債務餘額不得低於 {amount} {symbol}",
   "vault.high-risk": "此金庫存在較高的被清算的風險，請提供更多抵押物或償還債務。",
   "welcome.description": "Pando Leaf 是一個通過抵押數字資產生成穩定幣的去中心化產品。前往創建金庫開始你的旅程吧。",
-  "welcome.what-is": "什麼是 Pando",
-  "use.terms": "Use Terms",
-  "terms.hint": "Before using Leaf, please make sure you understand the working principle of Leaf and agree to the following terms:",
-  "terms.item1": "1. Pando Leaf does not guarantee the accuracy of real-time asset price due to force majeure factors such as network latency.",
-  "terms.item2": "2. All notifications of Pando Leaf (including price alerts and liquidation alerts) are for reference only. There's no guarantee that the messages will be pushed right in time for any suggested action.",
-  "terms.item3": "3. The MTG nodes have the right to intervene in the system when emergent and necessary, and make public announcement after it is done."
-
+  "welcome.what-is": "什麼是 Pando"
 }

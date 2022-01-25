@@ -183,6 +183,10 @@
   "tab.details": "Details",
   "tab.home": "Home",
   "tab.market": "Market",
+  "terms.hint": "Before using Leaf, please make sure you understand the working principle of Leaf and agree to the following terms:",
+  "terms.item1": "1. Pando Leaf does not guarantee the accuracy of real-time asset price due to force majeure factors such as network latency.",
+  "terms.item2": "2. All notifications of Pando Leaf (including price alerts and liquidation alerts) are for reference only. There's no guarantee that the messages will be pushed right in time for any suggested action.",
+  "terms.item3": "3. The MTG nodes have the right to intervene in the system when emergent and necessary, and make public announcement after it is done.",
   "title.open-a-new-vault": "Open a {name} Vault",
   "tooltip.collateralization-ratio": "CR = (Collateral amount x Current Price) / Generated debt amount x 100%",
   "tooltip.details": "Details",
@@ -196,6 +200,7 @@
   "tooltip.stability-fee": "A fee added to the outstanding debt of a Vault. Expressed in the form of annualized interest rate.",
   "tooltip.total-asset-in-market": "Total amount of {symbol} collateralized in the market.",
   "tooltip.vault-selector": "If you only intend to generate more tokens, you can choose to do it in an existing overcollateralized Vault",
+  "use.terms": "Use Terms",
   "validate.below-liquidation-rate": "Insufficient collaterals to generate the amount.",
   "validate.high-risk": "The amount of {symbol} you are generating will subject your Vault to liquidation.",
   "validate.high-risk-withdraw": "The amount of {symbol} you are withdraw will subject your Vault to liquidation.",
@@ -207,11 +212,5 @@
   "validate.remaining-dust-debt": "Remaining debt has to be no less than {amount} {symbol}",
   "vault.high-risk": "This vault has a high risk of being liquidated, please supply more collateral or repay debts.",
   "welcome.description": "Pando Leaf is a decentralized product where you can generate stablecoins by collateralizing crypto assets. Add a vault to start your journey.",
-  "welcome.what-is": "What's Pando",
-  "use.terms": "Use Terms",
-  "terms.hint": "Before using Leaf, please make sure you understand the working principle of Leaf and agree to the following terms:",
-  "terms.item1": "1. Pando Leaf does not guarantee the accuracy of real-time asset price due to force majeure factors such as network latency.",
-  "terms.item2": "2. All notifications of Pando Leaf (including price alerts and liquidation alerts) are for reference only. There's no guarantee that the messages will be pushed right in time for any suggested action.",
-  "terms.item3": "3. The MTG nodes have the right to intervene in the system when emergent and necessary, and make public announcement after it is done."
-
+  "welcome.what-is": "What's Pando"
 }
