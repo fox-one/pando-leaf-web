@@ -11,7 +11,7 @@ export async function requestAuthMixin(vm: Vue) {
 
   const host = window.location.origin;
   const redirectUrl = encodeURIComponent(host + "/#/auth/");
-  const path = `https://mixin-oauth.firesbox.com/?client_id=${CONFIG.MIXIN_CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ&response_type=code&redirect_url=${redirectUrl}`;
+  const path = `https://mixin-oauth.fox.one/?client_id=${CONFIG.MIXIN_CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ&response_type=code&redirect_url=${redirectUrl}`;
 
   localStorage.setItem("authPath", window.location.href);
   window.location.href = path;
