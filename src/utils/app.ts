@@ -1,3 +1,5 @@
+import { EVENTS, TERMS_VERSION } from "~/constants";
+
 export async function initApp(vm: Vue) {
   try {
     await loadMarket(vm);
@@ -54,4 +56,14 @@ export function setUpTask(vm: Vue) {
   intervalId = setInterval(() => {
     refresh(vm);
   }, 5000);
+}
+
+export function checkTerms(vm: Vue) {
+  const termsAccepted = vm.$store.state.app.termsAccepted;
+  const termsVersion = vm.$store.state.app.termsVersion;
+  const visited = vm.$store.state.app.visited;
+
+  if (visited && (!termsAccepted || termsVersion !== TERMS_VERSION)) {
+    vm.$root.$emit(EVENTS.OPEN_TERMS_MODAL);
+  }
 }

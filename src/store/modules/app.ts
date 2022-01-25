@@ -28,6 +28,8 @@ const state = (): State.App => ({
   },
   visited: false,
   initing: true,
+  termsAccepted: false,
+  termsVersion: "0.0.0",
 });
 
 const mutations: MutationTree<State.App> = {

@@ -3,6 +3,8 @@ import PandoSeed from "@foxone/pandoseed";
 
 export const VERSION = pkg.version;
 
+export const TERMS_VERSION = "0.0.1";
+
 export const isProduct = process.env.APP_ENV === "prod";
 
 export const GA = "UA-112996081-17";
@@ -24,7 +26,7 @@ export const CONFIG = isProduct
     }
   : {
       API_BASE: "https://pando-test-api.fox.one/api/",
-      WS_BASE: "wss://uniswap-dev.fox.one/ws?raw=1",
+      WS_BASE: "wss://",
       MIXIN_CLIENT_ID: "670e1faa-2975-48d9-a81f-cd0905ae847e",
     };
 
@@ -42,6 +44,7 @@ export const EVENTS = {
   PAY_QR_CODE: "PAY_QR_CODE",
   OPEN_AUTH: "OPEN_AUTH",
   OPEN_RISK_WARN: "OPEN_RISK_WARN",
+  OPEN_TERMS_MODAL: "OPEN_TERMS_MODAL",
 };
 
 export const LINKS = {

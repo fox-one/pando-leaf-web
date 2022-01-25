@@ -35,5 +35,7 @@ declare namespace State {
     visited: boolean;
     initing: boolean;
     fiat: FiatState;
+    termsAccepted: boolean;
+    termsVersion: string;
   }
 }
