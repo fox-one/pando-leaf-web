@@ -163,13 +163,7 @@
   "network.congestion.confirm": "Got it",
   "network.congestion.text": "Your transction is being processed. Due to network congestion, please allow for some time to receive your fund.",
   "network.congestion.title": "Just a moment...",
-  "notice.content.p1": "The current collateral ratio has reached ",
-  "notice.content.p2": "After this transaction is executed, collateral ratio will close to the liquidation rate, when the collateral ratio reaches the liquidation rate, the collateral will be liquidation shortly.",
-  "notice.content.p3": "YOU CAN'T UNDO THE TRANSACTION, PLEASE CONFIRM CAREFULLY BEFORE PAYING.",
-  "notice.current-rate": "Collateral ratio after transaction",
-  "notice.liquidation-rate": "Liquidation ratio, reaches this you will be liquidation",
   "notice.not-enough-balance": "The balance is not enough to pay all debts the maximum value has been filled",
-  "notice.title": "Liquidation Warning",
   "pay-modal.button": "I have paid",
   "pay-modal.title": "Pay With QRCode",
   "risk-level-high": "High",
@@ -211,7 +205,7 @@
   "validate.medium-risk-withdraw": "The amount of {symbol} you are withdraw is putting your Vault at risk of liquidation.",
   "validate.minimum-debt": "A vault requires a minimum of {amount} {symbol} to be generated.",
   "validate.remaining-dust-debt": "Remaining debt has to be no less than {amount} {symbol}",
-  "vault.high-risk": "This vault will be liquidated, please supply more collateral or repay debts.",
+  "vault.high-risk": "This vault has a high risk of being liquidated, please supply more collateral or repay debts.",
   "welcome.description": "Pando Leaf is a decentralized product where you can generate stablecoins by collateralizing crypto assets. Add a vault to start your journey.",
   "welcome.what-is": "What's Pando"
 }
