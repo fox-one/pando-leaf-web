@@ -18,7 +18,7 @@
           {{ $t("terms.item2") }}
         </p>
         <p>
-          {{ $t("terms.item2") }}
+          {{ $t("terms.item3") }}
         </p>
       </div>
 
