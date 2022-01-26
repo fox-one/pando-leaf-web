@@ -3,22 +3,22 @@
     <v-col cols="6" class="pr-2">
       <div
         class="sort-button"
-        :class="{ active: meta.sortByCreateTime }"
-        @click.stop="handleCreateTimeClick"
+        :class="{ active: meta.sortByCollateralRatio }"
+        @click.stop="handleCollateralRatioClick"
       >
-        {{ $t("common.create-time") }}
-        <v-icon size="12">{{ meta.iconCreateTime }}</v-icon>
+        {{ $t("common.collateral-ratio") }}
+        <v-icon size="12">{{ meta.iconCollateralRatio }}</v-icon>
       </div>
     </v-col>
 
     <v-col cols="6" class="pl-2">
       <div
         class="sort-button"
-        :class="{ active: meta.sortByCollateralRatio }"
-        @click.stop="handleCollateralRatioClick"
+        :class="{ active: meta.sortByCollateralValue }"
+        @click.stop="handleCollateralValueClick"
       >
-        {{ $t("common.collateral-ratio") }}
-        <v-icon size="12">{{ meta.iconCollateralRatio }}</v-icon>
+        {{ $t("common.collateral-value") }}
+        <v-icon size="12">{{ meta.iconCollateralValue }}</v-icon>
       </div>
     </v-col>
   </v-row>
@@ -35,18 +35,18 @@ class VaultSorter extends Vue {
 
   get meta() {
     return {
-      sortByCreateTime:
-        this.sortedBy === SortBy.CREATE_TIME_ASC ||
-        this.sortedBy === SortBy.CREATE_TIME_DESC,
+      sortByCollateralValue:
+        this.sortedBy === SortBy.COLLATERAL_VALUE_ASC ||
+        this.sortedBy === SortBy.COLLATERAL_VALUE_DESC,
 
       sortByCollateralRatio:
         this.sortedBy === SortBy.COLLATERAL_RATIO_ASC ||
         this.sortedBy === SortBy.COLLATERAL_RATIO_DESC,
 
-      iconCreateTime:
-        this.sortedBy === SortBy.CREATE_TIME_ASC
+      iconCollateralValue:
+        this.sortedBy === SortBy.COLLATERAL_VALUE_ASC
           ? "$iconSortAsc"
-          : this.sortedBy === SortBy.CREATE_TIME_DESC
+          : this.sortedBy === SortBy.COLLATERAL_VALUE_DESC
           ? "$iconSortDesc"
           : "$iconSort",
 
@@ -59,11 +59,11 @@ class VaultSorter extends Vue {
     };
   }
 
-  handleCreateTimeClick() {
-    if (this.sortedBy !== SortBy.CREATE_TIME_ASC) {
-      this.sortedBy = SortBy.CREATE_TIME_ASC;
+  handleCollateralValueClick() {
+    if (this.sortedBy !== SortBy.COLLATERAL_VALUE_ASC) {
+      this.sortedBy = SortBy.COLLATERAL_VALUE_ASC;
     } else {
-      this.sortedBy = SortBy.CREATE_TIME_DESC;
+      this.sortedBy = SortBy.COLLATERAL_VALUE_DESC;
     }
   }
 

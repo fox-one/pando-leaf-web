@@ -29,15 +29,19 @@ class VaultList extends Vue {
     const { isValid } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
 
-    if (this.sort === SortBy.CREATE_TIME_ASC) {
+    if (this.sort === SortBy.COLLATERAL_VALUE_ASC) {
       return this.vaults.sort((a, b) => {
-        return dayjs(a.created_at).isBefore(b.created_at) ? -1 : 1;
+        const aValue = getters.getVaultFields(a.id).collateralAmountUSD;
+        const bValue = getters.getVaultFields(b.id).collateralAmountUSD;
+        return aValue < bValue ? -1 : 1;
       });
     }
 
-    if (this.sort === SortBy.CREATE_TIME_DESC) {
+    if (this.sort === SortBy.COLLATERAL_VALUE_DESC) {
       return this.vaults.sort((a, b) => {
-        return dayjs(a.created_at).isAfter(b.created_at) ? -1 : 1;
+        const aValue = getters.getVaultFields(a.id).collateralAmountUSD;
+        const bValue = getters.getVaultFields(b.id).collateralAmountUSD;
+        return aValue > bValue ? -1 : 1;
       });
     }
 
