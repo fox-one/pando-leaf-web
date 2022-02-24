@@ -1082,10 +1082,10 @@
     js-base64 "~3.6.1"
     peeler-js "~0.4.2"
 
-"@foxone/pando-lots-vue@^0.0.1-alpha.32":
-  version "0.0.1-alpha.32"
-  resolved "https://registry.npmjs.org/@foxone/pando-lots-vue/-/pando-lots-vue-0.0.1-alpha.32.tgz#37ffc507c3dd44cbaf289249c334f86c81712799"
-  integrity sha512-Ns1L2lHMmBcXi5eZTSEQt25kdJMzzlNnhwIJIjnbTXEk790/ULBVApXNL92twZXJkyey0Qi+wXBBGminT8jNsQ==
+"@foxone/pando-lots-vue@^0.0.1-beta.1":
+  version "0.0.1-beta.1"
+  resolved "https://registry.npmjs.org/@foxone/pando-lots-vue/-/pando-lots-vue-0.0.1-beta.1.tgz#f6a50ea47d69c93e7ef5e46bfaabd97748c3bf00"
+  integrity sha512-YJVEx6hO0wku4XFxfj85hwRiuz6XbDhtxKRNVp7ElFtFzjJY01EPvGN3QvWnW/Uz4NUJDoe68YTJOIaQnghoCA==
   dependencies:
     "@foxone/fennec-dapp" "^0.5.4"
     "@foxone/mixin-sdk-jsbridge" "~0.5.1"
@@ -1139,15 +1139,12 @@
     vuex "^3.6.2"
     vuex-persistedstate "^3.0.1"
 
-"@foxone/uikit@3.0.1-45", "@foxone/uikit@^3.0.1-27", "@foxone/uikit@^3.1.2-1":
-  version "3.1.2-1"
-  resolved "https://registry.yarnpkg.com/@foxone/uikit/-/uikit-3.1.2-1.tgz#82c2f492c84e0834b017b1deb05d5781ba6b6ab3"
-  integrity sha512-PXxnd8fx2Dei8KKCfwJ9oOqzVXr20/ztVb2rG2pyZNGD0jWELQkd0WV/ijxyqYySlHQhSPtUlX9KTCVQkgohmA==
+"@foxone/uikit@3.0.1-45", "@foxone/uikit@3.0.1-58", "@foxone/uikit@^3.0.1-27", "@foxone/uikit@^3.0.1-58":
+  version "3.0.1-58"
+  resolved "https://registry.npmjs.org/@foxone/uikit/-/uikit-3.0.1-58.tgz#85bdb5a3c506770b4ea9c1a47359866f7375df96"
+  integrity sha512-2MyMP6h/lqgbEC1O+3gUItUUmFslTSXheRgim0VOdZopLg74jsmQ0+G9rDGU/YOLNBUjqh7ppe7thQhdKTZAyw==
   dependencies:
-    "@nuxt/types" "^2.15.8"
-    pako "^2.0.4"
     qrcode "^1.5.0"
-    reconnecting-websocket "^4.4.0"
     tinycolor2 "^1.4.2"
     vue-class-component "^7.2.3"
     vue-property-decorator "^9.1.2"
@@ -1518,7 +1515,7 @@
     rc9 "^1.2.0"
     std-env "^2.3.0"
 
-"@nuxt/types@^2.14.6", "@nuxt/types@^2.15.8":
+"@nuxt/types@^2.14.6":
   version "2.15.8"
   resolved "https://registry.yarnpkg.com/@nuxt/types/-/types-2.15.8.tgz#1249de448f68169fe17e9379ee7b5caa0eb336b0"
   integrity sha512-zBAG5Fy+SIaZIerOVF1vxy1zz16ZK07QSbsuQAjdtEFlvr+vKK+0AqCv8r8DBY5IVqdMIaw5FgNUz5py0xWdPg==
@@ -8230,11 +8227,6 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-pako@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/pako/-/pako-2.0.4.tgz#6cebc4bbb0b6c73b0d5b8d7e8476e2b2fbea576d"
-  integrity sha512-v8tweI900AUkZN6heMU/4Uy4cXRc2AYNRggVmTR+dEncawDJgCdLMximOVA2p4qO57WMynangsfGRb5WD6L1Bg==
-
 pako@~1.0.5:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
@@ -9475,11 +9467,6 @@ readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
-
-reconnecting-websocket@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/reconnecting-websocket/-/reconnecting-websocket-4.4.0.tgz#3b0e5b96ef119e78a03135865b8bb0af1b948783"
-  integrity sha512-D2E33ceRPga0NvTDhJmphEgJ7FUYF0v4lr1ki0csq06OdlxKfugGzN0dSkxM/NfqCxYELK4KcaTOUOjTV6Dcng==
 
 regenerate-unicode-properties@^9.0.0:
   version "9.0.0"
