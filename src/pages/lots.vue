@@ -1,9 +1,11 @@
 <template>
   <v-container class="pa-4">
     <pando-lots dev group-id="7000103413" theme-color="#88E108" />
+    <pando-lots dev group-id="7000104299" theme-color="#EE4596" />
     <br />
     <br />
     <br />
+    <pando-lots dev type="button" group-id="7000103413" theme-color="#88E108" />
     <pando-lots dev type="button" group-id="7000104299" theme-color="#EE4596" />
   </v-container>
 </template>
