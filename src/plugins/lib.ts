@@ -22,12 +22,12 @@ import "@foxone/uikit/build/index.min.css";
 import "@foxone/pando-ui/build/index.css";
 import "@foxone/pando-lots-vue/lib/index.css";
 
-// import type { value Plugin } from "@nuxt/types";
+import type { Plugin } from "@nuxt/types";
 
 dayjs.extend(relativeTime);
 dayjs.extend(duration);
 
-const plugin: any = ({ app }) => {
+const plugin: Plugin = ({ app }) => {
   Vue.use(UIKit);
   Vue.use(UIKit.Toast, app.vuetify, {
     top: false,
