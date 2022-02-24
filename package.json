@@ -35,7 +35,7 @@
     "@foxone/fennec-base": "^0.4.5-2",
     "@foxone/fennec-dapp": "^0.4.5-2",
     "@foxone/icons": "^3.0.1-54",
-    "@foxone/pando-lots-vue": "^0.0.1-beta.1",
+    "@foxone/pando-lots-vue": "^0.0.1-beta.2",
     "@foxone/pando-ui": "^0.0.2-9",
     "@foxone/pandoseed": "^0.9.13",
     "@foxone/uikit": "3.0.1-58",
