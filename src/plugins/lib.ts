@@ -3,6 +3,7 @@ import UIKit from "@foxone/uikit";
 
 import PandoUI from "@foxone/pando-ui";
 import PandoSeed from "@foxone/pandoseed";
+import PandoLots from "@foxone/pando-lots-vue";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -19,6 +20,7 @@ import "@/components";
 
 import "@foxone/uikit/build/index.min.css";
 import "@foxone/pando-ui/build/index.css";
+import "@foxone/pando-lots-vue/lib/index.css";
 
 import type { Plugin } from "@nuxt/types";
 
@@ -33,6 +35,7 @@ const plugin: Plugin = ({ app }) => {
   });
   Vue.use(UIKit.Dialog, app.vuetify, { flat: true });
   Vue.use(PandoUI, app.vuetify);
+  Vue.use(PandoLots);
   Vue.use(PandoSeed.plugin, app.vuetify);
   Vue.use(infiniteScroll);
   //   Vue.use(FinanceUI);
