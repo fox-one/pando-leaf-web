@@ -1067,15 +1067,10 @@
   dependencies:
     "@foxone/fennec-base" "0.5.4"
 
-"@foxone/icons@3.0.1-45", "@foxone/icons@^3.0.1-52":
-  version "3.0.1-52"
-  resolved "https://registry.yarnpkg.com/@foxone/icons/-/icons-3.0.1-52.tgz#24b131b942197a241f7d0cca06adf1d142b3a70e"
-  integrity sha512-Zwu4SJIHcqleOcJp8iH8upSht16L/e4gyBimp4+gZIYnL9po76UPmLmmmODmsaL9dI7Ah0Xe15lfsjTIenOSQQ==
-
-"@foxone/icons@3.0.1-53":
-  version "3.0.1-53"
-  resolved "https://registry.npmjs.org/@foxone/icons/-/icons-3.0.1-53.tgz#3df1c65b5791e7b1fe53831913d6663134758d56"
-  integrity sha512-/iqhdg1B8MeRjKXxfkqwn3U1s8db5mzSJGoQvMum1j+tybigqM7BsL6H1eB48HO9FFV9ZEdvJO8k5orVsH5loA==
+"@foxone/icons@3.0.1-45", "@foxone/icons@^3.0.1-54":
+  version "3.0.1-54"
+  resolved "https://registry.yarnpkg.com/@foxone/icons/-/icons-3.0.1-54.tgz#c01073d83281ad7a97674d09979f186d18453b47"
+  integrity sha512-hgSRyaIhtGn+GBIXOYvXfiEU3QXvDhl4Sx6cJ4l8g3tFgsjRB7fBe8VYuT3554YxpG5fm0oN6NMU3DtMhEZbSg==
 
 "@foxone/mixin-sdk-jsbridge@~0.5.1":
   version "0.5.1"
@@ -1144,20 +1139,23 @@
     vuex "^3.6.2"
     vuex-persistedstate "^3.0.1"
 
-"@foxone/uikit@3.0.1-45", "@foxone/uikit@^3.0.1-27", "@foxone/uikit@^3.0.1-54":
-  version "3.0.1-58"
-  resolved "https://registry.npmjs.org/@foxone/uikit/-/uikit-3.0.1-58.tgz#85bdb5a3c506770b4ea9c1a47359866f7375df96"
-  integrity sha512-2MyMP6h/lqgbEC1O+3gUItUUmFslTSXheRgim0VOdZopLg74jsmQ0+G9rDGU/YOLNBUjqh7ppe7thQhdKTZAyw==
+"@foxone/uikit@3.0.1-45", "@foxone/uikit@^3.0.1-27", "@foxone/uikit@^3.1.2-1":
+  version "3.1.2-1"
+  resolved "https://registry.yarnpkg.com/@foxone/uikit/-/uikit-3.1.2-1.tgz#82c2f492c84e0834b017b1deb05d5781ba6b6ab3"
+  integrity sha512-PXxnd8fx2Dei8KKCfwJ9oOqzVXr20/ztVb2rG2pyZNGD0jWELQkd0WV/ijxyqYySlHQhSPtUlX9KTCVQkgohmA==
   dependencies:
+    "@nuxt/types" "^2.15.8"
+    pako "^2.0.4"
     qrcode "^1.5.0"
+    reconnecting-websocket "^4.4.0"
     tinycolor2 "^1.4.2"
     vue-class-component "^7.2.3"
     vue-property-decorator "^9.1.2"
 
-"@foxone/utils@^0.2.12", "@foxone/utils@^0.2.21":
-  version "0.2.21"
-  resolved "https://registry.yarnpkg.com/@foxone/utils/-/utils-0.2.21.tgz#a36faafe0bbd0fa6128ca5748ec97b1f097be481"
-  integrity sha512-agU+aBOke6n3nJPTaIn1GJDOYqYP/ekL18w6PdZNrd9qkPipQpx15OHrSPntky++hcWQ1EgC72doJA//PCzm7A==
+"@foxone/utils@^0.2.12", "@foxone/utils@^0.2.22":
+  version "0.2.22"
+  resolved "https://registry.yarnpkg.com/@foxone/utils/-/utils-0.2.22.tgz#c9089aab73a87e35476f59c8e42341587eede5c1"
+  integrity sha512-JmW+v7VKyqXuemci7S5cUvAKWg+vKz9LTpKA1pr7Ja9HRZmhWvyJt723jXZqB77OcKPwGNxd0ET3LjdcFbOZiA==
   dependencies:
     axios "^0.21.1"
     bignumber.js "^9.0.1"
@@ -1520,7 +1518,7 @@
     rc9 "^1.2.0"
     std-env "^2.3.0"
 
-"@nuxt/types@^2.14.6":
+"@nuxt/types@^2.14.6", "@nuxt/types@^2.15.8":
   version "2.15.8"
   resolved "https://registry.yarnpkg.com/@nuxt/types/-/types-2.15.8.tgz#1249de448f68169fe17e9379ee7b5caa0eb336b0"
   integrity sha512-zBAG5Fy+SIaZIerOVF1vxy1zz16ZK07QSbsuQAjdtEFlvr+vKK+0AqCv8r8DBY5IVqdMIaw5FgNUz5py0xWdPg==
@@ -8232,6 +8230,11 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
+pako@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-2.0.4.tgz#6cebc4bbb0b6c73b0d5b8d7e8476e2b2fbea576d"
+  integrity sha512-v8tweI900AUkZN6heMU/4Uy4cXRc2AYNRggVmTR+dEncawDJgCdLMximOVA2p4qO57WMynangsfGRb5WD6L1Bg==
+
 pako@~1.0.5:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
@@ -9472,6 +9475,11 @@ readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
+
+reconnecting-websocket@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/reconnecting-websocket/-/reconnecting-websocket-4.4.0.tgz#3b0e5b96ef119e78a03135865b8bb0af1b948783"
+  integrity sha512-D2E33ceRPga0NvTDhJmphEgJ7FUYF0v4lr1ki0csq06OdlxKfugGzN0dSkxM/NfqCxYELK4KcaTOUOjTV6Dcng==
 
 regenerate-unicode-properties@^9.0.0:
   version "9.0.0"
