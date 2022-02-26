@@ -6,6 +6,8 @@
       theme-color="#88E108"
       @error="handleLotsErr"
     />
+    <br />
+    <br />
     <pando-lots
       dev
       group-id="7000104299"
@@ -22,6 +24,7 @@
       theme-color="#88E108"
       @error="handleLotsErr"
     />
+    <br />
     <pando-lots
       dev
       type="button"
