@@ -1082,10 +1082,10 @@
     js-base64 "~3.6.1"
     peeler-js "~0.4.2"
 
-"@foxone/pando-lots-vue@^0.0.1-beta.9":
-  version "0.0.1-beta.9"
-  resolved "https://registry.npmjs.org/@foxone/pando-lots-vue/-/pando-lots-vue-0.0.1-beta.9.tgz#fb8d02bbc357b275d7ecbac372068bb2edf03607"
-  integrity sha512-3NBhBgDuO7NqiMH3Wt0jk5ahjiaAC3VmIjdKBlT4odqkP0A4o4RtRrplDyxST5W3EqZFMYdPOBjlTECY9NtggA==
+"@foxone/pando-lots-vue@^0.0.1-beta.11":
+  version "0.0.1-beta.11"
+  resolved "https://registry.npmjs.org/@foxone/pando-lots-vue/-/pando-lots-vue-0.0.1-beta.11.tgz#14dc0e29556cf84aa1af1a3556438f531e1624c1"
+  integrity sha512-koZYkDTfkF/H14twhz6vyDh9M4NU33XIL2Ari8IJAjy7m/e28h+RM5zT+gIbo28QdLo4CFzgny4Qh2YVnj8Ejw==
   dependencies:
     "@foxone/fennec-dapp" "^0.5.4"
     "@foxone/mixin-sdk-jsbridge" "~0.5.1"
@@ -1093,8 +1093,9 @@
     axios "^0.26.0"
     classnames "~2.2.6"
     dayjs "~1.10.7"
-    js-base64 "^3.7.2"
-    peeler-js "^0.4.2"
+    js-base64 "~3.7.2"
+    peeler-js "~0.4.2"
+    photoswipe "~4.1.3"
     vue-content-loader "~0.2.3"
     xgplayer "~2.31.4"
     xgplayer-hls.js "~2.6.1"
@@ -6887,17 +6888,17 @@ jiti@^1.9.2:
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.12.9.tgz#2ce45b265cfc8dc91ebd70a5204807cf915291bc"
   integrity sha512-TdcJywkQtcwLxogc4rSMAi479G2eDPzfW0fLySks7TPhgZZ4s/tM6stnzayIh3gS/db3zExWJyUx4cNWrwAmoQ==
 
-js-base64@^3.7.2:
-  version "3.7.2"
-  resolved "https://registry.npmjs.org/js-base64/-/js-base64-3.7.2.tgz#816d11d81a8aff241603d19ce5761e13e41d7745"
-  integrity sha512-NnRs6dsyqUXejqk/yv2aiXlAvOs56sLkX6nUdeaNezI5LFFLlsZjOThmwnrcwh5ZZRwZlCMnVAY3CvhIhoVEKQ==
-
 js-base64@~3.6.1:
   version "3.6.2"
   resolved "https://registry.npmjs.org/js-base64/-/js-base64-3.6.2.tgz#f7585bc038e933a0a3fae9ab4b1cc2faa1374edd"
   integrity sha512-9xRCVqFwEuPH1SmwknrCRfGjcaUCt+boLjGZt5g/aAr98K8OtR9cI8K89U3cPT8xatgmzWQnJwgRQTd5tq2EOg==
   dependencies:
     mocha "^8.4.0"
+
+js-base64@~3.7.2:
+  version "3.7.2"
+  resolved "https://registry.npmjs.org/js-base64/-/js-base64-3.7.2.tgz#816d11d81a8aff241603d19ce5761e13e41d7745"
+  integrity sha512-NnRs6dsyqUXejqk/yv2aiXlAvOs56sLkX6nUdeaNezI5LFFLlsZjOThmwnrcwh5ZZRwZlCMnVAY3CvhIhoVEKQ==
 
 js-cookie@^3.0.0:
   version "3.0.1"
@@ -8401,7 +8402,7 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-peeler-js@^0.4.2, peeler-js@~0.4.2:
+peeler-js@~0.4.2:
   version "0.4.2"
   resolved "https://registry.npmjs.org/peeler-js/-/peeler-js-0.4.2.tgz#d97833283ec7948677b1ef6aabcb7f3f64ebfa94"
   integrity sha512-/uP6qhytnITt6XngB5iquyKWnV4xjtkJTEv8eWYdmA2O3hJ/CHx1NSmyDl1JRx+zjjnU4VcPMFOIuJcmXV5WqA==
@@ -8412,6 +8413,11 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
+
+photoswipe@~4.1.3:
+  version "4.1.3"
+  resolved "https://registry.npmjs.org/photoswipe/-/photoswipe-4.1.3.tgz#59f49494eeb9ddab5888d03392926a19bc197550"
+  integrity sha512-89Z43IRUyw7ycTolo+AaiDn3W1EEIfox54hERmm9bI12IB9cvRfHSHez3XhAyU8XW2EAFrC+2sKMhh7SJwn0bA==
 
 picocolors@^0.2.1:
   version "0.2.1"
