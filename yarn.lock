@@ -1082,10 +1082,10 @@
     js-base64 "~3.6.1"
     peeler-js "~0.4.2"
 
-"@foxone/pando-lots-vue@^0.0.1-beta.13":
-  version "0.0.1-beta.13"
-  resolved "https://registry.npmjs.org/@foxone/pando-lots-vue/-/pando-lots-vue-0.0.1-beta.13.tgz#91c30fcfd3c687c2ff7fce38f1f67c069101643a"
-  integrity sha512-JZXvYAh19sKpauRUPTeM0u4YsJ38mhmpCU3b33ubWFawZEpefVD7EguPDSAb3IB5rvN78NCNSJnQLJCqek/2kA==
+"@foxone/pando-lots-vue@^0.0.1-beta.14":
+  version "0.0.1-beta.14"
+  resolved "https://registry.npmjs.org/@foxone/pando-lots-vue/-/pando-lots-vue-0.0.1-beta.14.tgz#e6d1e07f0e0bb943158f07d48ee555c392897fd4"
+  integrity sha512-hOOknAODbRc7mj6j3UoLbw5MWdwPHKAS652HKs6z0DcGIrWd1B1XPXaVWJXgICDEcurhQJ9kJchl5KpanzAjhg==
   dependencies:
     "@foxone/fennec-dapp" "^0.5.4"
     "@foxone/mixin-sdk-jsbridge" "~0.5.1"
