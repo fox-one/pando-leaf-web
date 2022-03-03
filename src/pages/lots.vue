@@ -1,24 +1,20 @@
 <template>
   <v-container class="pa-4">
     <pando-lots
-      dev
       group-id="7000103413"
       theme-color="#88E108"
+      api-base="https://dev-courses-api.firesbox.com/v1"
+      ws-base="wss://dev-courses-ws.firesbox.com"
       @error="handleLotsErr"
     />
     <br />
     <br />
     <pando-lots
-      dev
+      type="button"
       group-id="7000104299"
       theme-color="#EE4596"
-      @error="handleLotsErr"
-    />
-    <br />
-    <br />
-    <pando-lots
-      group-id="7000103191"
-      theme-color="#9e9d24"
+      api-base="https://dev-courses-api.firesbox.com/v1"
+      ws-base="wss://dev-courses-ws.firesbox.com"
       @error="handleLotsErr"
     />
     <br />
@@ -26,24 +22,19 @@
     <pando-lots
       group-id="7000103488"
       theme-color="#00ceb7"
+      api-base="https://supergroup-api.mixin.fan/v1"
+      ws-base="wss://supergroup-api.mixin.fan"
       @error="handleLotsErr"
     />
-    <br />
+
     <br />
     <br />
     <pando-lots
-      dev
       type="button"
-      group-id="7000103413"
-      theme-color="#88E108"
-      @error="handleLotsErr"
-    />
-    <br />
-    <pando-lots
-      dev
-      type="button"
-      group-id="7000104299"
-      theme-color="#EE4596"
+      group-id="7000103191"
+      theme-color="#9e9d24"
+      api-base="https://courses-api.firesbox.com/v1"
+      ws-base="wss://courses-ws.firesbox.com"
       @error="handleLotsErr"
     />
   </v-container>
