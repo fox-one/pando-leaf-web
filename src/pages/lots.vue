@@ -23,6 +23,13 @@
     />
     <br />
     <br />
+    <pando-lots
+      group-id="7000103488"
+      theme-color="#00ceb7"
+      @error="handleLotsErr"
+    />
+    <br />
+    <br />
     <br />
     <pando-lots
       dev
