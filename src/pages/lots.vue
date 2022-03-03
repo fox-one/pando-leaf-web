@@ -23,7 +23,7 @@
       group-id="7000103488"
       theme-color="#00ceb7"
       api-base="https://supergroup-api.mixin.fan/v1"
-      ws-base="wss://supergroup-api.mixin.fan"
+      ws-base="wss://supergroup-ws.mixin.fan"
       @error="handleLotsErr"
     />
 
@@ -34,7 +34,7 @@
       group-id="7000103191"
       theme-color="#9e9d24"
       api-base="https://courses-api.firesbox.com/v1"
-      ws-base="wss://courses-ws.firesbox.com"
+      ws-base="wss://xuexi-courses-ws.firesbox.com"
       @error="handleLotsErr"
     />
   </v-container>
