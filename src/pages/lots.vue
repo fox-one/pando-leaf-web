@@ -33,7 +33,7 @@
       type="button"
       group-id="7000103191"
       theme-color="#9e9d24"
-      api-base="https://courses-api.firesbox.com/v1"
+      api-base="https://xuexi-courses-api.firesbox.com/v1"
       ws-base="wss://xuexi-courses-ws.firesbox.com"
       @error="handleLotsErr"
     />
