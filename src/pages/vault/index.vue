@@ -24,18 +24,7 @@
 
       <vault-list class="mt-1" />
 
-      <div class="mt-6 text-center">
-        <action-create-vault @itemclick="handleItemclick">
-          <template #activator="{ on }">
-            <slot name="activator" :on="on">
-              <f-button rounded depressed color="primary" v-on="on">
-                <v-icon size="16">$FIconAdd4P</v-icon>
-                <span class="text-2 ml-2">{{ $t("common.add-a-vault") }}</span>
-              </f-button>
-            </slot>
-          </template>
-        </action-create-vault>
-      </div>
+      <vault-hidden />
     </v-layout>
   </v-container>
 </template>
@@ -47,6 +36,7 @@ import EmptyVaultsPlaceHolder from "~/components/vault/EmptyVaultsPlaceHolder.vu
 import PositionOverview from "@/components/vault/PositionOverview.vue";
 import VaultList from "@/components/vault/VaultList.vue";
 import VaultSorter from "@/components/vault/VaultSorter.vue";
+import VaultHidden from "@/components/vault/VaultHidden.vue";
 import ActionCreateVault from "@/components/vault/ActionCreateVault.vue";
 import mixins from "@/mixins";
 import { Get } from "vuex-pathify";
@@ -54,6 +44,7 @@ import { LINKS } from "~/constants";
 
 @Component({
   components: {
+    VaultHidden,
     LoginPlaceHolder,
     EmptyVaultsPlaceHolder,
     PositionOverview,

@@ -160,7 +160,7 @@
   "me.no-vault-1": "你還沒有創建金庫",
   "me.symbol-locked": "{symbol} 已抵押",
   "me.total-collaterals": "總抵押額",
-  "me.vault-empty": "此金庫沒有任何抵押物",
+  "me.vault-empty": "金庫 {id} 沒有任何抵押物",
   "network.congestion.confirm": "我知道了",
   "network.congestion.text": "您的交易正在處理中，因當前轉賬擁堵，到賬可能有延遲，請稍作等待",
   "network.congestion.title": "到賬延遲提示",

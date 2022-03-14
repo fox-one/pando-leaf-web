@@ -7,8 +7,21 @@
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M13 4.5C13 3.94772 12.5523 3.5 12 3.5C11.4477 3.5 11 3.94772 11 4.5V11H4.5C3.94772 11 3.5 11.4477 3.5 12C3.5 12.5523 3.94772 13 4.5 13H11V19.5C11 20.0523 11.4477 20.5 12 20.5C12.5523 20.5 13 20.0523 13 19.5V13H19.5C20.0523 13 20.5 12.5523 20.5 12C20.5 11.4477 20.0523 11 19.5 11H13V4.5Z"
-      fill="currentColor"
+      d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12Z"
+      stroke="currentColor"
+      stroke-width="1.5"
+    />
+    <path
+      d="M9 12H15"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+    <path
+      d="M12 9L12 15"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
     />
   </svg>
 </template>

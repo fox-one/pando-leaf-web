@@ -41,7 +41,7 @@ class PositionOverview extends Vue {
 
   get meta() {
     const vaults = this.vaults;
-    const format = this.$utils.number.format;
+    const simplize = this.$utils.number.simplize;
 
     const total = vaults.reduce(
       (acc, vault) => {
@@ -59,8 +59,8 @@ class PositionOverview extends Vue {
     );
 
     return {
-      collaterals: format({ n: total.collaterals, dp: 2, fixed: true }),
-      debts: format({ n: total.debts, dp: 2, fixed: true }),
+      collaterals: simplize({ n: total.collaterals, dp: 2 }),
+      debts: simplize({ n: total.debts, dp: 2 }),
     };
   }
 }

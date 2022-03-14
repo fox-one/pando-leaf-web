@@ -6,7 +6,7 @@
       :class="[{ 'field--emphasize': field.emphasize }]"
       cols="6"
       md="4"
-      class="field"
+      class="field py-2"
     >
       <div class="field__title">
         <span class="mr-1" :style="[{ opacity: field.opacity }]">
@@ -14,7 +14,7 @@
         </span>
       </div>
 
-      <div class="field__value mt-1" :style="[{ color: field.color }]">
+      <div class="field__value mt-2" :style="[{ color: field.color }]">
         {{ field.value }}
       </div>
     </v-col>
@@ -78,31 +78,23 @@ class VaultFields extends Vue {
     if (vault?.ink) {
       items.push(
         {
+          title: this.$t("me.symbol-locked", {
+            symbol: collateralSymbol,
+          }),
+          value: `${format({ n: collateralAmount })} ${collateralSymbol}`,
+          emphasize: true,
+        },
+        {
           title: this.$t("common.outstanding-symbol-debt", {
             symbol: debtSymbol,
           }),
           value: `${format({ n: debtAmount })} ${debtSymbol}`,
           emphasize: true,
         },
-        {
-          title: this.$t("me.symbol-locked", {
-            symbol: collateralSymbol,
-          }),
-          value: `${format({ n: collateralAmount })} ${collateralSymbol}`,
-          emphasize: true,
-        }
       );
 
       //   if (debtAmount > 0) {
       items.push(
-        {
-          title: this.$t("common.collateral-ratio"),
-          value: ratioText,
-          color: this.$vuetify.theme.currentTheme[riskLevelMeta.color],
-          opacity: 0.4,
-          hint: this.$t("tooltip.collateralization-ratio"),
-          learnMore: LINKS["vault.liquidation-ratio"],
-        },
         {
           title: this.$t("common.current-symbol-price", {
             symbol: collateralSymbol,
@@ -111,11 +103,12 @@ class VaultFields extends Vue {
           value: `${format({ n: price })} ${debtSymbol}`,
         },
         {
-          title: this.$t("common.liquidation-price"), // debt * ratio / collateral
-          value: liquidationPriceText,
+          title: this.$t("common.collateral-ratio"),
+          value: ratioText,
+          color: this.$vuetify.theme.currentTheme[riskLevelMeta.color],
           opacity: 0.4,
-          hint: this.$t("tooltip.liquidation-price"),
-          learnMore: LINKS["vault.liquidation-price"],
+          hint: this.$t("tooltip.collateralization-ratio"),
+          learnMore: LINKS["vault.liquidation-ratio"],
         },
         {
           title: this.$t("common.next-price"),
@@ -127,7 +120,14 @@ class VaultFields extends Vue {
               })
             : undefined,
           learnMore: LINKS["vault.price-oracles"],
-        }
+        },
+        {
+          title: this.$t("common.liquidation-price"), // debt * ratio / collateral
+          value: liquidationPriceText,
+          opacity: 0.4,
+          hint: this.$t("tooltip.liquidation-price"),
+          learnMore: LINKS["vault.liquidation-price"],
+        },
       );
       //   }
     }
@@ -144,7 +144,7 @@ export default VaultFields;
 
   &__title {
     font-size: 12px;
-    line-height: 18px;
+    line-height: 15px;
     display: flex;
     align-items: center;
     color: var(--v-greyscale_1-base);
@@ -152,7 +152,7 @@ export default VaultFields;
 
   &__value {
     font-size: 14px;
-    line-height: 18px;
+    line-height: 17px;
   }
 
   &--emphasize {

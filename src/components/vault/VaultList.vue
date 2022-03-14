@@ -29,8 +29,13 @@ class VaultList extends Vue {
     const { isValid } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
 
+    const filteredVaults = this.vaults.filter((v) => {
+      const { collateralAmount, debtAmount } = getters.getVaultFields(v.id);
+      return collateralAmount !== 0 || debtAmount !== 0;
+    });
+
     if (this.sort === SortBy.COLLATERAL_VALUE_ASC) {
-      return this.vaults.sort((a, b) => {
+      return filteredVaults.sort((a, b) => {
         const aValue = getters.getVaultFields(a.id).collateralAmountUSD;
         const bValue = getters.getVaultFields(b.id).collateralAmountUSD;
         return aValue < bValue ? -1 : 1;
@@ -38,7 +43,7 @@ class VaultList extends Vue {
     }
 
     if (this.sort === SortBy.COLLATERAL_VALUE_DESC) {
-      return this.vaults.sort((a, b) => {
+      return filteredVaults.sort((a, b) => {
         const aValue = getters.getVaultFields(a.id).collateralAmountUSD;
         const bValue = getters.getVaultFields(b.id).collateralAmountUSD;
         return aValue > bValue ? -1 : 1;
@@ -46,7 +51,7 @@ class VaultList extends Vue {
     }
 
     if (this.sort === SortBy.COLLATERAL_RATIO_ASC) {
-      return this.vaults.sort((a, b) => {
+      return filteredVaults.sort((a, b) => {
         const collateralRatioA = getters.getVaultFields(a.id).ratio;
         const collateralRatioB = getters.getVaultFields(b.id).ratio;
 
@@ -57,7 +62,7 @@ class VaultList extends Vue {
     }
 
     if (this.sort === SortBy.COLLATERAL_RATIO_DESC) {
-      return this.vaults.sort((a, b) => {
+      return filteredVaults.sort((a, b) => {
         const collateralRatioA = getters.getVaultFields(a.id).ratio;
         const collateralRatioB = getters.getVaultFields(b.id).ratio;
 
@@ -67,7 +72,7 @@ class VaultList extends Vue {
       });
     }
 
-    return this.vaults.sort((a, b) => {
+    return filteredVaults.sort((a, b) => {
       const riskA = getVaultRisk(this, a);
       const riskB = getVaultRisk(this, b);
 

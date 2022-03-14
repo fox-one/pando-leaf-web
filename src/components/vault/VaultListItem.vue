@@ -1,10 +1,6 @@
 <template>
   <v-sheet class="rounded pa-6" :color="meta.bgColor" @click="handleToDetail">
-    <div class="name-text">
-      {{ meta.name }}
-    </div>
-
-    <v-row>
+    <v-row class="pt-3">
       <v-col cols="6" class="py-0" v-if="meta.hasCollateral">
         <f-mixin-asset-logo :size="32" :logo="meta.debtAssetLogo" />
       </v-col>
@@ -17,9 +13,9 @@
       </v-col>
     </v-row>
 
-    <vault-card-fields v-if="meta.hasCollateral" :id="id" />
+    <vault-card-fields v-if="meta.hasCollateral" class="pt-2" :id="id" />
 
-    <empty-vault-place-holder class="py-6 mt-3" v-else />
+    <empty-vault-place-holder class="pt-5 mt-3" v-else :id="id" />
 
     <div
       v-if="meta.inHighRisk"
@@ -29,7 +25,7 @@
     </div>
 
     <vault-card-actions
-      class="mt-4 rounded-pill actions__wrapper"
+      class="mt-6 rounded actions__wrapper"
       :class="meta.actionColor"
       :id="id"
       :has-collateral="meta.hasCollateral"
