@@ -52,6 +52,7 @@ declare namespace Getter {
     auctionSymbol: string;
     collateralPrice: string;
     collateralValue: string;
+    collateral2debt: string;
     debtAsset: API.Asset | undefined;
     debtSymbol: string;
     debtPrice: string;

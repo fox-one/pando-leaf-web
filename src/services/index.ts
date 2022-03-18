@@ -37,12 +37,23 @@ export default function (http: Http) {
       return http.get(`/transactions/${follow_id}`);
     },
 
+    // 获取拍卖列表 deprecated
     getFlips(
       params: API.PaginationParams
     ): Promise<API.PaginationResp<{ flips: API.Flip[] }>> {
       return http.get("/flips", { params });
     },
 
+    // 获取拍卖列表 带有 filter 的
+    queryFlips(
+      params: API.FlipParams
+    ): Promise<{ flips: API.Flip[]; total: number }> {
+      return http.get("/query-flips", {
+        params,
+      });
+    },
+
+    // 获取拍卖详情
     getFlip(id: string): Promise<API.Flip> {
       return http.get(`/flips/${id}`);
     },

@@ -1,12 +1,15 @@
 <template>
-  <v-container class="pa-0">
-    <v-layout justify-center class="mt-6 mb-4">
+  <v-container class="auctions-page pa-0">
+    <v-layout class="auctions-tab-bar">
       <auctions-tabs v-model="tabIndex" />
     </v-layout>
 
-    <auctioning-list v-if="tabIndex === 0"></auctioning-list>
+    <auctioning-list
+      class="flex-grow-1"
+      v-if="tabIndex === 0"
+    ></auctioning-list>
 
-    <auctioning-done-list v-else></auctioning-done-list>
+    <auctioning-done-list class="flex-grow-1" v-else></auctioning-done-list>
   </v-container>
 </template>
 
@@ -42,3 +45,22 @@ export default class AuctionsPage extends Mixins(mixins.page) {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.auctions-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.auctions-tab-bar {
+  width: 100%;
+  flex-grow: 0;
+  justify-content: center;
+  top: 44px;
+  z-index: 3;
+  background-color: var(--v-greyscale_7-base);
+  position: sticky;
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.06);
+}
+</style>

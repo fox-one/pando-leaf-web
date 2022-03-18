@@ -52,4 +52,17 @@ declare namespace API {
     COLLATERAL_VALUE_ASC = "COLLATERAL_VALUE_ASC",
     COLLATERAL_VALUE_DESC = "COLLATERAL_VALUE_DESC",
   }
+
+  export enum FlipPhase {
+    tend = "tend", // 第一阶段 first stage
+    dent = "dent", // 第二阶段 second stage
+    bid = "bid", // 第一 + 第二阶段, the ongoing auctions
+    deal = "deal", // 已结束 ended auctions
+  }
+
+  export enum FlipTag {
+    MyVault = "MyVault", // 是我的金库 is my vault
+    Participated = "Participated", // 曾出价过 participated in auction
+    Leading = "Leading", // 自己是最高出价 leading auction‘s highest bid
+  }
 }

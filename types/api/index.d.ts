@@ -149,6 +149,14 @@ declare namespace API {
     is_me: boolean;
   }
 
+  export interface FlipParams {
+    phase: API.FlipPhase;
+    offset: number;
+    limit: number; // limit max is 50, default is 10
+    my_bids?: 1;
+    my_vaults?: 1;
+  }
+
   export interface Oracle {
     asset_id: string;
     current: string;

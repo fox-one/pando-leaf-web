@@ -1,10 +1,19 @@
 declare namespace State {
   export interface Auctions {
-    flips: API.Flip[];
+    ongoing: {
+      flips: API.Flip[];
+      loading: boolean;
+      params: API.FlipParams;
+      total: number;
+    };
+    done: {
+      flips: API.Flip[];
+      loading: boolean;
+      params: API.FlipParams;
+      total: number;
+    };
     loading: boolean;
     limit: number;
-    cursor: string | null;
-    hasNext: boolean;
     events: API.FlipEvent[];
   }
 

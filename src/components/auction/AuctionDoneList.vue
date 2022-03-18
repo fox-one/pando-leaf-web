@@ -1,42 +1,79 @@
 <template>
-  <base-list-wrapper
+  <base-pagination-list
     :data="dataset"
     :error="error"
     :loading="loading"
-    @load="requestLoadMore"
+    :pages="pages"
+    :page.sync="page"
   >
     <auctions-list-item
       v-for="(item, index) in dataset"
       :key="index"
       :flip="item"
-      class="mb-4 mx-4"
     />
-  </base-list-wrapper>
+  </base-pagination-list>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import AuctionsListItem from "./AuctionsListItem.vue";
+import BasePaginationList from "@/components/base/PaginationList.vue";
 import { Get, Sync } from "vuex-pathify";
 
 @Component({
   components: {
     AuctionsListItem,
+    BasePaginationList,
   },
 })
 export default class AuctionsDoneList extends Vue {
-  @Sync("auctions/hasNext") hasNext!: boolean;
+  @Get("auctions/done@flips") dataset!: API.Flip[];
 
-  @Get("auctions/flipsDone") dataset!: API.Flip[];
+  @Get("auctions/done@total") total!: number;
 
-  @Sync("auctions/loading") loading!: boolean;
+  @Get("auctions/done@params.limit") limit!: number;
+
+  @Sync("auctions/done@params.offset") offset!: number;
+
+  @Sync("auctions/done@loading") loading!: boolean;
 
   error = false;
 
-  async requestLoadMore() {
-    if (this.loading || !this.hasNext) return;
+  page = 1;
+
+  get pages() {
+    return Math.ceil(this.total / this.limit);
+  }
+
+  @Watch("page")
+  onPageChanged(newVal) {
+    this.offset = (newVal - 1) * this.limit;
+    this.requestLoadMore();
+  }
+
+  mounted() {
+    this.resetData();
+  }
+
+  async resetData() {
+    if (this.loading) return;
+
     try {
-      await this.$store.dispatch("auctions/loadMore");
+      await this.$store.dispatch("auctions/refreshDone", {
+        withLoading: true,
+      });
+    } catch (error) {
+      this.$utils.helper.errorHandler(this, error);
+      this.error = true;
+      this.loading = false;
+    }
+  }
+
+  async requestLoadMore() {
+    if (this.loading) return;
+
+    try {
+      await this.$store.dispatch("auctions/loadMoreDone");
     } catch (error) {
       this.$utils.helper.errorHandler(this, error);
       this.error = true;

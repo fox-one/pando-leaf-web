@@ -34,38 +34,36 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
       debtFiatValue = 0,
       collateralFiatValue = 0;
 
-    if (!isDone) {
-      const debt2collateral = toPrecision({
-        n: +debtPrice / +collateralPrice,
-      });
+    const debt2collateral = toPrecision({
+      n: +debtPrice / +collateralPrice,
+    });
 
-      const collateral2debt = toPrecision({
-        n: 1 / +debt2collateral,
-      });
+    const collateral2debt = toPrecision({
+      n: 1 / +debt2collateral,
+    });
 
-      minBid = toPrecision({
-        n: +flip.bid * +(collateral?.beg ?? "1.03"),
-        dp: 8,
-        mode: 2,
-      });
+    minBid = toPrecision({
+      n: +flip.bid * +(collateral?.beg ?? "1.03"),
+      dp: 8,
+      mode: 2,
+    });
 
-      maxBid = isStage1
-        ? toPrecision({ n: flip.tab, dp: 8 })
-        : toPrecision({
-            n: +flip.lot / +(collateral?.beg ?? "1.03"),
-            dp: 8,
-          });
+    maxBid = isStage1
+      ? toPrecision({ n: flip.tab, dp: 8 })
+      : toPrecision({
+          n: +flip.lot / +(collateral?.beg ?? "1.03"),
+          dp: 8,
+        });
 
-      if (+minBid >= +maxBid) minBid = maxBid;
+    if (+minBid >= +maxBid) minBid = maxBid;
 
-      curPrice = isStage1
-        ? `1 ${debtSymbol} = ${debt2collateral} ${auctionSymbol}`
-        : `1 ${auctionSymbol} = ${collateral2debt} ${debtSymbol}`;
+    curPrice = isStage1
+      ? `1 ${debtSymbol} = ${debt2collateral} ${auctionSymbol}`
+      : `1 ${auctionSymbol} = ${collateral2debt} ${debtSymbol}`;
 
-      debtFiatValue = +debtPrice * +flip.tab;
+    debtFiatValue = +debtPrice * +flip.tab;
 
-      collateralFiatValue = +collateralPrice * +flip.lot;
-    }
+    collateralFiatValue = +collateralPrice * +flip.lot;
 
     return {
       flip,
@@ -74,6 +72,7 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
       auctionSymbol,
       collateralPrice,
       collateralValue,
+      collateral2debt,
       debtAsset,
       debtSymbol,
       debtPrice,

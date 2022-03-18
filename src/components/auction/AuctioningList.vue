@@ -1,9 +1,10 @@
 <template>
-  <base-list-wrapper
+  <base-pagination-list
     :data="dataset"
     :error="error"
     :loading="loading"
-    @load="loadMore"
+    :pages="pages"
+    :page.sync="page"
   >
     <auctions-list-item
       v-for="(item, index) in dataset"
@@ -13,36 +14,42 @@
       @refresh="requestFlips()"
     />
     <template #empty> <empty-auctions-place-holder /> </template>
-  </base-list-wrapper>
+  </base-pagination-list>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import AuctionsListItem from "./AuctionsListItem.vue";
 import EmptyAuctionsPlaceHolder from "./EmptyAuctionsPlaceHolder.vue";
+import BasePaginationList from "@/components/base/PaginationList.vue";
 import { Get, Sync } from "vuex-pathify";
 
 @Component({
   components: {
     AuctionsListItem,
     EmptyAuctionsPlaceHolder,
+    BasePaginationList,
   },
 })
 export default class AuctioningList extends Vue {
-  @Get("auctions/flipsAuctioning") dataset!: API.Flip[];
+  @Get("auctions/ongoing@flips") dataset!: API.Flip[];
 
-  @Sync("auctions/loading") loading!: boolean;
+  @Get("auctions/ongoing@total") total!: number;
 
-  @Sync("auctions/hasNext") hasNext!: boolean;
+  @Get("auctions/ongoing@params.limit") limit!: number;
+
+  @Sync("auctions/ongoing@params.offset") offset!: number;
+
+  @Sync("auctions/ongoing@loading") loading!: boolean;
 
   error = false;
 
   intervalId: any = null;
 
   mounted() {
-    this.requestFlips();
+    this.requestLoadMore();
     this.intervalId = setInterval(() => {
-      this.requestFlips(false);
+      this.requestLoadMore();
     }, 5000);
   }
 
@@ -50,27 +57,19 @@ export default class AuctioningList extends Vue {
     clearInterval(this.intervalId);
   }
 
-  async requestFlips(withLoading = true) {
-    if (this.loading) return;
-    try {
-      await this.$store.dispatch("auctions/refresh", { withLoading });
-    } catch (error) {
-      this.$utils.helper.errorHandler(this, error);
-      this.error = true;
-      this.loading = false;
-    }
+  get pages() {
+    return Math.ceil(this.total / this.limit);
   }
 
-  loadMore() {
-    if (this.dataset.length > 0 && this.dataset.length % 20 === 0) {
-      this.requestLoadMore();
-    }
+  get page() {
+    return Math.ceil(this.offset / this.limit);
   }
 
   async requestLoadMore() {
-    if (this.loading || !this.hasNext) return;
+    if (this.loading) return;
+
     try {
-      await this.$store.dispatch("auctions/loadMore");
+      await this.$store.dispatch("auctions/loadMoreOngoing");
     } catch (error) {
       this.$utils.helper.errorHandler(this, error);
       this.error = true;

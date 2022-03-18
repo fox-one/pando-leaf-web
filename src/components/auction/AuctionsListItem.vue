@@ -1,35 +1,47 @@
 <template>
-  <div @click="toDetail(flip)">
-    <f-panel elevation="0" class="pa-0 greyscale_6">
-      <auctions-list-item-header :flip="flip" />
+  <div>
+    <v-layout @click="toDetail(flip)" align-center class="pb-6">
+      <f-mixin-asset-logo :logo="meta.logo" :size="36" class="ml-4 mt-6 mr-3" />
 
-      <auctions-list-item-info :flip="flip" />
+      <div class="flex-grow-1 mt-6">
+        <div class="item-title">{{ flip.lot }} {{ meta.symbol }}</div>
+        <div class="item-content">
+          {{ meta.price }}
+        </div>
+      </div>
 
-      <f-divider class="mx-6 mt-2" />
+      <v-icon class="mt-6 mr-4" align-self-end size="16">
+        $FIconChevronRight
+      </v-icon>
+    </v-layout>
 
-      <auctions-list-item-footer :flip="flip" />
-    </f-panel>
+    <f-divider />
   </div>
 </template>
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
-import AuctionsListItemHeader from "./AuctionsListItemHeader.vue";
-import AuctionsListItemInfo from "./AuctionsListItemInfo.vue";
-import AuctionsListItemFooter from "./AuctionsListItemFooter.vue";
 import dayjs from "dayjs";
 
 @Component({
-  components: {
-    AuctionsListItemHeader,
-    AuctionsListItemInfo,
-    AuctionsListItemFooter,
-  },
+  components: {},
 })
 export default class AuctionsListItem extends Vue {
   @Prop() flip!: API.Flip;
 
   timer: any = null;
+
+  get meta() {
+    const getters = this.$store.getters as Getter.GettersTree;
+    const { auctionAsset, auctionSymbol, debtSymbol, collateral2debt } =
+      getters.getFlipFields(this.flip);
+    const price = `1 ${auctionSymbol} ≈ ${collateral2debt} ${debtSymbol}`;
+    return {
+      logo: auctionAsset?.logo,
+      symbol: auctionAsset?.symbol,
+      price,
+    };
+  }
 
   mounted() {
     let diffSeconds = dayjs(this.flip.tic).diff(dayjs(), "seconds");
@@ -55,3 +67,19 @@ export default class AuctionsListItem extends Vue {
   }
 }
 </script>
+<style lang="scss" scoped>
+.item-title {
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--v-greyscale_1-base);
+}
+
+.item-content {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--v-greyscale_3-base);
+}
+</style>

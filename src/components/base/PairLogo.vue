@@ -20,6 +20,7 @@ export default class PairLogo extends Vue {
 .z-index-2 {
   z-index: 2;
 }
+
 .round-white {
   width: 40px !important;
   height: 40px !important;

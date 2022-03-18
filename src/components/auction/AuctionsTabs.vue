@@ -1,14 +1,20 @@
 <template>
-  <f-segment-control :value="value" @change="handleChange" mandatory>
-    <f-button
+  <f-tabs
+    :value="value"
+    @change="handleChange"
+    fixed-tabs
+    disable-slider-length
+    :slider-size="2"
+  >
+    <v-tab
       v-for="(item, index) in tabs"
       :key="index"
       :data-value="index"
       :ripple="false"
     >
       <span>{{ item.text }}</span>
-    </f-button>
-  </f-segment-control>
+    </v-tab>
+  </f-tabs>
 </template>
 
 <script lang="ts">

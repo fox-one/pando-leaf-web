@@ -90,7 +90,7 @@ class VaultFields extends Vue {
           }),
           value: `${format({ n: debtAmount })} ${debtSymbol}`,
           emphasize: true,
-        },
+        }
       );
 
       //   if (debtAmount > 0) {
@@ -127,9 +127,8 @@ class VaultFields extends Vue {
           opacity: 0.4,
           hint: this.$t("tooltip.liquidation-price"),
           learnMore: LINKS["vault.liquidation-price"],
-        },
+        }
       );
-      //   }
     }
 
     return items;
