@@ -1,88 +1,125 @@
 <template>
   <v-layout column>
-    <!-- timer -->
-    <v-row no-gutters :class="meta.isStage2 ? 'justify-end' : ''">
-      <div class="auction-detail-header">
-        <div class="text">
-          {{ meta.header }}
+    <!-- title -->
+    <div class="auction-detail-header">
+      <div class="title">
+        {{ "Selling Off" }}
+      </div>
+
+      <div class="value">
+        {{ meta.vaultCollateralValueText }}
+        <span class="round-icon">
+          <v-icon size="16" @click="changeCollateral"
+            >$FIconExchange4PBold</v-icon
+          >
+        </span>
+      </div>
+
+      <div class="title">
+        {{ "For" }}
+      </div>
+
+      <div class="value">{{ flip.bid }} {{ meta.debtSymbol }}</div>
+    </div>
+
+    <!-- line -->
+    <div class="ma-0 mt-5 pa-0 line" :class="meta.isStage1 ? 'left' : 'right'">
+      <div cols="6" class="line active pa-0 ma-0"></div>
+    </div>
+
+    <v-row no-gutters>
+      <!-- left -->
+      <v-col cols="6">
+        <div
+          class="action-detail-label"
+          :class="meta.isStage1 ? 'highlight' : ''"
+        >
+          ROUND 1
         </div>
 
-        <count-down-timer :diff-seconds="meta.diffSeconds"></count-down-timer>
-      </div>
+        <div
+          class="action-detail-value"
+          :class="meta.isStage1 ? 'highlight' : ''"
+        >
+          <count-down-timer
+            v-if="meta.isStage1"
+            :diff-seconds="meta.diffSeconds"
+          ></count-down-timer>
+
+          <div v-else>Ended</div>
+        </div>
+
+        <div class="action-detail-label">
+          {{ $t("auction.vault-debt") }}
+        </div>
+
+        <div class="action-detail-value">
+          {{ `${meta.vaultDebtAmount} ${meta.debtSymbol}` }}
+        </div>
+
+        <div
+          class="action-detail-label"
+          :class="meta.isYourBid && meta.isStage1 ? 'highlight' : ''"
+        >
+          {{ meta.bidLabel }}
+          {{ meta.isYourBid && meta.isStage1 ? "(You)" : "" }}
+        </div>
+
+        <div class="action-detail-value mb-6">
+          {{ `${flip.bid} ${meta.debtSymbol}` }}
+        </div>
+      </v-col>
+
+      <!-- right -->
+      <v-col cols="6">
+        <div
+          class="action-detail-label"
+          :class="meta.isStage1 ? 'disabled' : meta.isStage2 ? 'highlight' : ''"
+        >
+          ROUND 2
+        </div>
+
+        <div
+          class="action-detail-value"
+          :class="meta.isStage1 ? 'disabled' : meta.isStage2 ? 'highlight' : ''"
+        >
+          <count-down-timer
+            v-if="meta.isStage1"
+            :diff-seconds="meta.diffSeconds"
+          ></count-down-timer>
+
+          <div v-else>-</div>
+        </div>
+
+        <div class="action-detail-label mt-2">
+          {{ $t("auction.vault-collateral") }}
+          <v-icon
+            size="12"
+            color="greyscale_7"
+            class="greyscale_2 rounded-circle exchange-icon"
+            @click="changeCollateral"
+          >
+            $FIconExchange4PBold
+          </v-icon>
+        </div>
+
+        <div class="action-detail-value">
+          {{ meta.vaultCollateralValueText }}
+        </div>
+
+        <div
+          class="action-detail-label"
+          :class="meta.isYourBid ? 'your-bid' : ''"
+          v-if="meta.isStage2"
+        >
+          {{ $t("auction.current-bid") }} {{ meta.isYourBid ? "(You)" : "" }}
+        </div>
+
+        <div class="action-detail-value" v-if="meta.isStage2">
+          {{ `${flip.lot} ${meta.auctionSymbol}` }}
+        </div>
+      </v-col>
     </v-row>
-
-    <f-panel
-      class="auction-detail-card pa-0"
-      :class="meta.isStage1 ? 'left' : meta.isStage2 ? 'right' : ''"
-    >
-      <v-row no-gutters>
-        <!-- left -->
-        <v-col
-          cols="6"
-          class="pl-6 py-6 left"
-          :class="meta.isStage1 ? 'active' : ''"
-        >
-          <f-mixin-asset-logo :size="32" :logo="meta.debtLogo" />
-
-          <div class="action-detail-label mt-2">
-            {{ $t("auction.vault-debt") }}
-          </div>
-
-          <div class="action-detail-value">
-            {{ `${meta.vaultDebtAmount} ${meta.debtSymbol}` }}
-          </div>
-
-          <div
-            class="action-detail-label"
-            :class="meta.isYourBid && meta.isStage1 ? 'your-bid' : ''"
-          >
-            {{ meta.bidLabel }}
-            {{ meta.isYourBid && meta.isStage1 ? "(You)" : "" }}
-          </div>
-
-          <div class="action-detail-value">
-            {{ `${flip.bid} ${meta.debtSymbol}` }}
-          </div>
-        </v-col>
-
-        <!-- right -->
-        <v-col
-          cols="6"
-          class="pl-6 py-6 right"
-          :class="meta.isStage2 ? 'active' : ''"
-        >
-          <f-mixin-asset-logo :size="32" :logo="meta.auctionLogo" />
-
-          <div class="action-detail-label mt-2">
-            {{ $t("auction.vault-collateral") }}
-            <v-icon
-              size="12"
-              color="greyscale_7"
-              class="greyscale_2 rounded-circle exchange-icon"
-              @click="changeCollateral"
-            >
-              $FIconExchange4PBold
-            </v-icon>
-          </div>
-
-          <div class="action-detail-value">
-            {{ meta.vaultCollateralValueText }}
-          </div>
-
-          <div
-            class="action-detail-label"
-            :class="meta.isYourBid ? 'your-bid' : ''"
-            v-if="meta.isStage2"
-          >
-            {{ $t("auction.current-bid") }} {{ meta.isYourBid ? "(You)" : "" }}
-          </div>
-
-          <div class="action-detail-value" v-if="meta.isStage2">
-            {{ `${flip.lot} ${meta.auctionSymbol}` }}
-          </div>
-        </v-col>
-      </v-row>
-    </f-panel>
   </v-layout>
 </template>
 
@@ -170,25 +207,54 @@ export default class AuctionDetail extends Vue {
 
 <style lang="scss" scoped>
 .auction-detail-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  flex: 0 0 50%;
-  max-width: 50%;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 15px;
-  padding-left: 10px;
-  padding-right: 10px;
-  background: #8fe613;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  font-weight: 700;
+  font-size: 20px;
+  margin-top: 8px;
 
-  .text {
-    color: black;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  .title {
+    color: var(--v-greyscale_3-base);
+    line-height: 20px;
+    margin-bottom: 12px;
+  }
+
+  .value {
+    display: inline-flex;
+    flex-direction: row;
+    color: var(--v-greyscale_1-base);
+    line-height: 24px;
+    margin-bottom: 12px;
+
+    .round-icon {
+      align-self: center;
+      text-align: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+      line-height: 20px;
+      margin-left: 6px;
+      background-color: var(--v-greyscale_6-base);
+    }
+  }
+}
+
+.line {
+  display: inline-flex;
+  flex-direction: row;
+  height: 3px;
+  background: var(--v-greyscale_6-base);
+
+  .active {
+    background: #89df0f;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .left {
+    justify-content: flex-start;
+  }
+
+  .right {
+    justify-content: flex-end;
   }
 }
 
@@ -220,11 +286,17 @@ export default class AuctionDetail extends Vue {
 .action-detail-label {
   display: flex;
   align-items: center;
+  font-weight: 600;
   font-size: 12px;
-  margin-top: 24px;
+  line-height: 15px;
+  margin-top: 16px;
 
-  &.your-bid {
-    color: rgba(143, 230, 19, 1);
+  &.highlight {
+    color: rgba(137, 223, 15, 1);
+  }
+
+  &.disabled {
+    color: var(--v-greyscale_4-base);
   }
 
   .exchange-icon {
@@ -234,8 +306,17 @@ export default class AuctionDetail extends Vue {
 }
 
 .action-detail-value {
-  font-size: 13px;
-  line-height: 16px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
   margin-top: 8px;
+
+  &.highlight {
+    color: rgba(137, 223, 15, 1);
+  }
+
+  &.disabled {
+    color: var(--v-greyscale_4-base);
+  }
 }
 </style>

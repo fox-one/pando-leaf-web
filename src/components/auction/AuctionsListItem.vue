@@ -10,9 +10,32 @@
         </div>
       </div>
 
-      <v-icon class="mt-6 mr-4" align-self-end size="16">
+      <!-- label buttons -->
+      <template v-if="meta.isStage1 || meta.isStage2">
+        <div v-if="meta.isYourBid" class="label-button check-my-bid">
+          Check My Bid
+        </div>
+
+        <div v-else-if="meta.leading" class="label-button leading">Leading</div>
+
+        <div v-else class="label-button bid-it">Bid it</div>
+      </template>
+
+      <v-icon v-else class="mt-6 mr-4" align-self-end size="16">
         $FIconChevronRight
       </v-icon>
+    </v-layout>
+
+    <v-layout v-if="meta.isStage1 || meta.isStage2" justify-space-between>
+      <!-- timer -->
+      <div class="round-tag">
+        <span>ROUND {{ meta.isStage1 ? "1" : "2" }}</span>
+
+        <count-down-timer :diffSeconds="meta.diffSeconds"></count-down-timer>
+      </div>
+
+      <!-- my vault tag -->
+      <div align-self-end class="top-arrow-tag">My Vault</div>
     </v-layout>
 
     <f-divider />
@@ -21,10 +44,13 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
+import CountDownTimer from "@/components/auction/CountDownTimer.vue";
 import dayjs from "dayjs";
 
 @Component({
-  components: {},
+  components: {
+    CountDownTimer,
+  },
 })
 export default class AuctionsListItem extends Vue {
   @Prop() flip!: API.Flip;
@@ -33,13 +59,25 @@ export default class AuctionsListItem extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { auctionAsset, auctionSymbol, debtSymbol, collateral2debt } =
-      getters.getFlipFields(this.flip);
+    const {
+      auctionAsset,
+      auctionSymbol,
+      debtSymbol,
+      collateral2debt,
+      isStage1,
+      isStage2,
+      isYourBid,
+      isMyVault,
+    } = getters.getFlipFields(this.flip);
     const price = `1 ${auctionSymbol} ≈ ${collateral2debt} ${debtSymbol}`;
     return {
       logo: auctionAsset?.logo,
       symbol: auctionAsset?.symbol,
       price,
+      isStage1,
+      isStage2,
+      isYourBid,
+      isMyVault,
     };
   }
 
@@ -81,5 +119,52 @@ export default class AuctionsListItem extends Vue {
   font-size: 12px;
   line-height: 15px;
   color: var(--v-greyscale_3-base);
+}
+
+.top-arrow-tag {
+  color: white;
+  background: #f58721;
+  border-radius: 28px;
+  padding: 6px 10px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.label-button {
+  height: 36px;
+  border-radius: 53px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-end;
+  padding: 10px 16px;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-right: 16px;
+  font-size: 14px;
+  line-height: 17px;
+
+  &.bid-it {
+    background: var(--v-greyscale_1-base);
+    color: var(--v-greyscale_7-base);
+  }
+
+  &.check-my-bid {
+    background: var(--v-greyscale_6-base);
+    color: var(--v-greyscale_1-base);
+  }
+
+  &.leading {
+    background: #cbf58d;
+    color: #000000;
+  }
+}
+
+.round-tag {
+  background: #cbf58d;
+  height: 23px;
+  padding: 4px 8px;
 }
 </style>

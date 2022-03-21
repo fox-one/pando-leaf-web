@@ -10,7 +10,7 @@
         class="collateral pa-4 no-border-radius greyscale_1--text"
       >
         <v-layout column>
-          <auction-detail v-if="!meta.isDone" :flip="flip" />
+          <auction-detail :flip="flip" />
 
           <auction-done-detail v-if="meta.isDone" :flip="flip" />
 
