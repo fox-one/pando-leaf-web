@@ -64,9 +64,9 @@ export default class AuctionFormInfos extends Vue {
     }
 
     if (this.type === "debt") {
-      inputBidPrice = +this.amount / +this.flip.lot;
+      inputBidPrice = +this.amount / +this.flip?.lot;
     } else if (this.type === "collateral") {
-      inputBidPrice = +this.flip.bid / +this.amount;
+      inputBidPrice = +this.flip?.bid / +this.amount;
     }
 
     if (inputBidPrice !== 0 && isValid(+this.amount) && +this.amount > 0) {

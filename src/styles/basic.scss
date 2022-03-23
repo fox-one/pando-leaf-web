@@ -40,3 +40,24 @@ a {
   line-height: 22px;
   letter-spacing: -0.014em;
 }
+
+.v-application .v-pagination .v-pagination__item {
+  color: var(--v-greyscale_3-base);
+  box-shadow: none;
+}
+
+.v-application .v-pagination .v-pagination__item--active {
+  background-color: var(--v-greyscale_6-base) !important;
+  color: var(--v-greyscale_1-base) !important;
+  box-shadow: none;
+}
+
+.v-application .v-pagination .v-pagination__navigation {
+  background-color: var(--v-greyscale_6-base) !important;
+  color: var(--v-greyscale_1-base) !important;
+  box-shadow: none;
+  .v-icon .v-icon__component {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}

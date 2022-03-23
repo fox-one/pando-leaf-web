@@ -7,27 +7,6 @@
     <f-panel class="greyscale_6 py-6 pl-0">
       <v-row no-gutters>
         <!-- left -->
-        <v-col cols="6" class="pl-6">
-          <f-mixin-asset-logo :size="32" :logo="meta.debtLogo" />
-
-          <div class="action-detail-label greyscale_1--text">
-            {{ $t("auction.vault-debt") }}
-          </div>
-
-          <div class="action-detail-value">
-            {{ `${meta.vaultDebtAmount} ${meta.debtSymbol}` }}
-          </div>
-
-          <div class="action-detail-label">
-            {{ $t("auction.final-debt-bid") }}
-          </div>
-
-          <div class="action-detail-value font-weight-medium">
-            {{ `${flip.bid} ${meta.debtSymbol}` }}
-          </div>
-        </v-col>
-
-        <!-- right -->
         <v-col cols="6" class="pl-4">
           <f-mixin-asset-logo :size="32" :logo="meta.auctionLogo" />
 
@@ -53,6 +32,27 @@
 
           <div class="action-detail-value font-weight-medium">
             {{ `${flip.lot} ${meta.auctionSymbol}` }}
+          </div>
+        </v-col>
+
+        <!-- right -->
+        <v-col cols="6" class="pl-6">
+          <f-mixin-asset-logo :size="32" :logo="meta.debtLogo" />
+
+          <div class="action-detail-label greyscale_1--text">
+            {{ $t("auction.vault-debt") }}
+          </div>
+
+          <div class="action-detail-value">
+            {{ `${meta.vaultDebtAmount} ${meta.debtSymbol}` }}
+          </div>
+
+          <div class="action-detail-label">
+            {{ $t("auction.final-debt-bid") }}
+          </div>
+
+          <div class="action-detail-value font-weight-medium">
+            {{ `${flip.bid} ${meta.debtSymbol}` }}
           </div>
         </v-col>
       </v-row>
@@ -114,6 +114,7 @@ export default class AuctionDoneDetail extends Vue {
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
+  line-height: 15px;
   color: var(--v-greyscale_3-base);
   margin-top: 24px;
   &.greyscale_1--text {
@@ -125,11 +126,12 @@ export default class AuctionDoneDetail extends Vue {
   margin-left: 3px;
   padding: 1px;
 }
+
 .action-detail-value {
   font-style: normal;
   font-weight: 600;
-  font-size: 13px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 17px;
   color: var(--v-greyscale_1-base);
   margin-top: 8px;
 }

@@ -1,16 +1,18 @@
 <template>
   <f-panel elevation="none" class="pa-4 no-border-radius greyscale_1--text">
     <v-layout column>
-      <auction-detail :flip="flip" />
-
-      <f-divider class="my-4" />
+      <auction-detail v-if="!meta.isDone" :flip="flip" />
 
       <auction-done-detail v-if="meta.isDone" :flip="flip" />
 
       <div v-else>
-        <auction-debt-form v-if="meta.isStage1" />
+        <f-divider size="8" opacity="0.05" class="mx-n4 mb-6" />
 
-        <auction-collateral-form v-else />
+        <auction-debt-form v-if="meta.isStage1" :flip="flip" />
+
+        <auction-collateral-form v-else :flip="flip" />
+
+        <f-divider size="8" opacity="0.05" class="mx-n4 mt-6 mb-4" />
       </div>
     </v-layout>
   </f-panel>

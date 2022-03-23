@@ -22,7 +22,7 @@ export default class AuctionBidWarning extends Vue {
     );
 
     const warning = this.$t("auction.reduction-agreement", {
-      price: `${this.flip.tab} ${debtSymbol}`,
+      price: `${this.flip?.tab} ${debtSymbol}`,
       amount: `${this.bindAmount ? this.bindAmount : "-"}`,
       collateral: auctionSymbol,
     });

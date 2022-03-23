@@ -59,7 +59,7 @@ export default class AuctionsDoneList extends Vue {
     if (this.loading) return;
 
     try {
-      await this.$store.dispatch("auctions/refreshDone", {
+      await this.$store.dispatch("auctions/resetDone", {
         withLoading: true,
       });
     } catch (error) {
@@ -73,7 +73,7 @@ export default class AuctionsDoneList extends Vue {
     if (this.loading) return;
 
     try {
-      await this.$store.dispatch("auctions/loadMoreDone");
+      await this.$store.dispatch("auctions/refreshDone");
     } catch (error) {
       this.$utils.helper.errorHandler(this, error);
       this.error = true;

@@ -1,9 +1,5 @@
 <template>
   <v-form ref="form">
-    <div class="text-3 greyscale_1--text my-6">
-      {{ $t("auction.collateral-to-receive") }}
-    </div>
-
     <base-form-input
       :amount.sync="inputCollateralAmount"
       type="number"

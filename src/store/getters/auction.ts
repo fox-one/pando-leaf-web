@@ -6,24 +6,25 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
     const getCollateralById: State.GetCollateralById =
       getters["collateral/getCollateralById"];
     const getAssetById: State.GetAssetById = getters["asset/getAssetById"];
-    const vault = getters["vault/getVaultById"](flip.vault_id);
+
+    const vault = getters["vault/getVaultById"](flip?.vault_id ?? "");
     const isMyVault = Boolean(vault);
 
-    const isYourBid = flip.guy === getters["account/userId"];
+    const isYourBid = flip?.guy === getters["account/userId"];
     const flipKickEvent = getters["auctions/flipKickEvent"];
     const vaultCollateralAmount = flipKickEvent?.lot;
-    const vaultDebtAmount = flip.tab;
+    const vaultDebtAmount = flip?.tab;
 
     const collateral = getCollateralById(flip?.collateral_id ?? "");
     const auctionAsset = getAssetById(collateral?.gem ?? "");
     const debtAsset = getAssetById(collateral?.dai ?? "");
-    const isDone = flip.action === FlipAction.FlipDeal;
-    const isStage1 = Number(flip.bid) < Number(flip.tab) && !isDone;
-    const isStage2 = Number(flip.bid) >= Number(flip.tab) && !isDone;
+    const isDone = flip?.action === FlipAction.FlipDeal;
+    const isStage1 = Number(flip?.bid) < Number(flip?.tab) && !isDone;
+    const isStage2 = Number(flip?.bid) >= Number(flip?.tab) && !isDone;
     const collateralPrice = auctionAsset?.price ?? "";
     const debtPrice = debtAsset?.price ?? "";
     const collateralValue = toPrecision({
-      n: (Number(collateralPrice) * Number(flip.lot)) / Number(debtPrice),
+      n: (Number(collateralPrice) * Number(flip?.lot)) / Number(debtPrice),
     });
     const auctionSymbol = auctionAsset?.symbol ?? "";
     const debtSymbol = debtAsset?.symbol ?? "";
@@ -43,15 +44,15 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
     });
 
     minBid = toPrecision({
-      n: +flip.bid * +(collateral?.beg ?? "1.03"),
+      n: +flip?.bid * +(collateral?.beg ?? "1.03"),
       dp: 8,
       mode: 2,
     });
 
     maxBid = isStage1
-      ? toPrecision({ n: flip.tab, dp: 8 })
+      ? toPrecision({ n: flip?.tab, dp: 8 })
       : toPrecision({
-          n: +flip.lot / +(collateral?.beg ?? "1.03"),
+          n: +flip?.lot / +(collateral?.beg ?? "1.03"),
           dp: 8,
         });
 
@@ -61,9 +62,9 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
       ? `1 ${debtSymbol} = ${debt2collateral} ${auctionSymbol}`
       : `1 ${auctionSymbol} = ${collateral2debt} ${debtSymbol}`;
 
-    debtFiatValue = +debtPrice * +flip.tab;
+    debtFiatValue = +debtPrice * +flip?.tab;
 
-    collateralFiatValue = +collateralPrice * +flip.lot;
+    collateralFiatValue = +collateralPrice * +flip?.lot;
 
     return {
       flip,

@@ -31,14 +31,14 @@
       <!-- left -->
       <v-col cols="6">
         <div
-          class="action-detail-label"
-          :class="meta.isStage1 ? 'highlight' : ''"
+          class="action-detail-content label-text"
+          :class="meta.isStage1 ? 'highlight' : meta.isStage2 ? 'disabled' : ''"
         >
           ROUND 1
         </div>
 
         <div
-          class="action-detail-value"
+          class="action-detail-content value-text"
           :class="meta.isStage1 ? 'highlight' : ''"
         >
           <count-down-timer
@@ -49,23 +49,29 @@
           <div v-else>Ended</div>
         </div>
 
-        <div class="action-detail-label">
+        <div
+          class="action-detail-content label-text"
+          :class="meta.isStage2 ? 'disabled' : ''"
+        >
           {{ $t("auction.vault-debt") }}
         </div>
 
-        <div class="action-detail-value">
+        <div
+          class="action-detail-content value-text"
+          :class="meta.isYourBid ? 'highlight' : ''"
+        >
           {{ `${meta.vaultDebtAmount} ${meta.debtSymbol}` }}
         </div>
 
         <div
-          class="action-detail-label"
-          :class="meta.isYourBid && meta.isStage1 ? 'highlight' : ''"
+          class="action-detail-content label-text"
+          :class="meta.isStage2 ? 'disabled' : ''"
         >
           {{ meta.bidLabel }}
           {{ meta.isYourBid && meta.isStage1 ? "(You)" : "" }}
         </div>
 
-        <div class="action-detail-value mb-6">
+        <div class="action-detail-content value-text mb-6">
           {{ `${flip.bid} ${meta.debtSymbol}` }}
         </div>
       </v-col>
@@ -73,25 +79,25 @@
       <!-- right -->
       <v-col cols="6">
         <div
-          class="action-detail-label"
+          class="action-detail-content label-text"
           :class="meta.isStage1 ? 'disabled' : meta.isStage2 ? 'highlight' : ''"
         >
           ROUND 2
         </div>
 
         <div
-          class="action-detail-value"
+          class="action-detail-content value-text"
           :class="meta.isStage1 ? 'disabled' : meta.isStage2 ? 'highlight' : ''"
         >
           <count-down-timer
-            v-if="meta.isStage1"
+            v-if="meta.isStage2"
             :diff-seconds="meta.diffSeconds"
           ></count-down-timer>
 
           <div v-else>-</div>
         </div>
 
-        <div class="action-detail-label mt-2">
+        <div class="action-detail-content label-text">
           {{ $t("auction.vault-collateral") }}
           <v-icon
             size="12"
@@ -103,20 +109,23 @@
           </v-icon>
         </div>
 
-        <div class="action-detail-value">
+        <div class="action-detail-content value-text">
           {{ meta.vaultCollateralValueText }}
         </div>
 
         <div
-          class="action-detail-label"
+          class="action-detail-content label-text"
           :class="meta.isYourBid ? 'your-bid' : ''"
-          v-if="meta.isStage2"
         >
           {{ $t("auction.current-bid") }} {{ meta.isYourBid ? "(You)" : "" }}
         </div>
 
-        <div class="action-detail-value" v-if="meta.isStage2">
-          {{ `${flip.lot} ${meta.auctionSymbol}` }}
+        <div class="action-detail-content value-text">
+          <span v-if="meta.isStage2">{{
+            `${flip.lot} ${meta.auctionSymbol}`
+          }}</span>
+
+          <span v-else>-</span>
         </div>
       </v-col>
     </v-row>
@@ -283,40 +292,35 @@ export default class AuctionDetail extends Vue {
   }
 }
 
-.action-detail-label {
+.action-detail-content {
   display: flex;
   align-items: center;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 15px;
-  margin-top: 16px;
+  font-weight: 500;
+
+  &.label-text {
+    font-size: 12px;
+    line-height: 15px;
+    margin-top: 16px;
+  }
+
+  &.value-text {
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 8px;
+  }
 
   &.highlight {
     color: rgba(137, 223, 15, 1);
+    font-weight: 600;
   }
 
   &.disabled {
-    color: var(--v-greyscale_4-base);
+    color: var(--v-greyscale_3-base);
   }
 
   .exchange-icon {
     margin-left: 3px;
     padding: 1px;
-  }
-}
-
-.action-detail-value {
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 17px;
-  margin-top: 8px;
-
-  &.highlight {
-    color: rgba(137, 223, 15, 1);
-  }
-
-  &.disabled {
-    color: var(--v-greyscale_4-base);
   }
 }
 </style>

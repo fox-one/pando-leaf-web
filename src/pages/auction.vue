@@ -5,22 +5,7 @@
     </div>
 
     <v-layout v-else column>
-      <f-panel
-        elevation="none"
-        class="collateral pa-4 no-border-radius greyscale_1--text"
-      >
-        <v-layout column>
-          <auction-detail :flip="flip" />
-
-          <auction-done-detail v-if="meta.isDone" :flip="flip" />
-
-          <v-layout v-else column>
-            <auction-debt-form v-if="meta.isStage1" :flip="flip" />
-
-            <auction-collateral-form v-else-if="meta.isStage2" :flip="flip" />
-          </v-layout>
-        </v-layout>
-      </f-panel>
+      <auction-form :flip="flip" />
 
       <f-divider v-if="!meta.isDone" class="mb-2"></f-divider>
 
@@ -37,8 +22,7 @@ import mixins from "@/mixins";
 import AuctionDetail from "@/components/auction/AuctionDetail.vue";
 import AuctionDoneDetail from "@/components/auction/AuctionDoneDetail.vue";
 import AuctionEventHistory from "@/components/auction/AuctionEventHistory.vue";
-import AuctionDebtForm from "@/components/auction/AuctionDebtForm.vue";
-import AuctionCollateralForm from "@/components/auction/AuctionCollateralForm.vue";
+import AuctionForm from "@/components/auction/AuctionForm.vue";
 import { FlipAction } from "~/enums";
 
 @Component({
@@ -46,8 +30,7 @@ import { FlipAction } from "~/enums";
     AuctionDetail,
     AuctionDoneDetail,
     AuctionEventHistory,
-    AuctionDebtForm,
-    AuctionCollateralForm,
+    AuctionForm,
   },
 })
 export default class AuctionPage extends Mixins(mixins.page) {

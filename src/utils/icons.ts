@@ -9,6 +9,7 @@ const ficons = [
   "FIconChevronDown",
   "FIconRingsBrand",
   "FIconCheck",
+  "FIconChevronLeft",
   "FIconChevronRight",
   "FIconArrowRight",
   "FIconSupplyFill",
@@ -30,6 +31,7 @@ const ficons = [
   "FIconExchange4PBold",
   "FIconAdd4P",
   "FIconAdd3PFill",
+  "FIconArrowRight4P",
 ].reduce((m, k) => ({ ...m, [k]: { component: FIcons[k] } }), {});
 
 const icons = [

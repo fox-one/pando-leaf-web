@@ -112,7 +112,7 @@ const mutations: MutationTree<State.Auctions> = {
 };
 
 const actions: ActionTree<State.Auctions, any> = {
-  async loadMoreOngoing({ state, commit }) {
+  async refreshOngoing({ state, commit }) {
     if (state.ongoing.loading) return;
     commit("SET_ONGOING_LOADING", true);
     const response = await this.$http.queryFlips(state.ongoing.params);
@@ -120,7 +120,7 @@ const actions: ActionTree<State.Auctions, any> = {
     commit("SET_ONGOING_LOADING", false);
   },
 
-  async loadMoreDone({ state, commit }, { withLoading = true }) {
+  async refreshDone({ state, commit }, { withLoading = true }) {
     if (state.done.loading) return;
     if (withLoading) {
       commit("SET_DONE_LOADING", true);
@@ -132,7 +132,7 @@ const actions: ActionTree<State.Auctions, any> = {
     }
   },
 
-  async refreshOngoing({ state, commit }, { withLoading = true }) {
+  async resetOngoing({ state, commit }, { withLoading = true }) {
     if (state.ongoing.loading) return;
     if (withLoading) {
       commit("RESET_ONGOING_RESULT", true);
@@ -144,7 +144,7 @@ const actions: ActionTree<State.Auctions, any> = {
     }
   },
 
-  async refreshDone({ state, commit }) {
+  async resetDone({ state, commit }) {
     if (state.done.loading) return;
     commit("SET_DONE_LOADING", true);
 

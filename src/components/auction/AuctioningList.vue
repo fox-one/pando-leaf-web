@@ -47,7 +47,7 @@ export default class AuctioningList extends Vue {
   intervalId: any = null;
 
   mounted() {
-    this.requestLoadMore();
+    this.requestLoadMore(true);
     this.intervalId = setInterval(() => {
       this.requestLoadMore();
     }, 5000);
@@ -65,11 +65,13 @@ export default class AuctioningList extends Vue {
     return Math.ceil(this.offset / this.limit);
   }
 
-  async requestLoadMore() {
+  async requestLoadMore(withLoading = false) {
     if (this.loading) return;
 
     try {
-      await this.$store.dispatch("auctions/loadMoreOngoing");
+      await this.$store.dispatch("auctions/refreshOngoing", {
+        withLoading,
+      });
     } catch (error) {
       this.$utils.helper.errorHandler(this, error);
       this.error = true;

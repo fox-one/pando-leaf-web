@@ -30,7 +30,13 @@
 
     <div class="bottom-bar">
       <div class="pagination-wrapper">
-        <v-pagination v-if="pages !== 0" v-model="bindPage" :length="pages" />
+        <v-pagination
+          v-if="pages !== 0"
+          v-model="bindPage"
+          :length="pages"
+          next-icon="$FIconChevronRight"
+          prev-icon="$FIconChevronLeft"
+        />
       </div>
     </div>
   </div>
@@ -74,7 +80,7 @@ export default class PaginationList extends Vue {
   flex-direction: column;
   flex: 1 0 auto;
   position: relative;
-  margin-bottom: 22px;
+  margin-bottom: 64.5px;
 }
 
 .bottom-bar {
@@ -83,16 +89,15 @@ export default class PaginationList extends Vue {
   left: 0;
   bottom: calc(66px + env(safe-area-inset-bottom));
   width: 100%;
-  padding: 10px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 2px;
   background-color: var(--v-greyscale_7-base);
   border-top: 1px solid #e0e0e0;
+
   .pagination-wrapper {
     display: flex;
     justify-content: center;
-    width: calc(100vw - 32px);
-    max-width: calc(100vw - 32px);
+    width: calc(100vw - 4px);
+    max-width: calc(100vw - 4px);
   }
 }
 </style>
