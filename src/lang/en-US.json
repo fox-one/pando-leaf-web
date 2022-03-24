@@ -191,6 +191,7 @@
   "title.open-a-new-vault": "Open a {name} Vault",
   "tooltip.collateralization-ratio": "CR = (Collateral amount x Current Price) / Generated debt amount x 100%",
   "tooltip.details": "Details",
+  "tooltip.liquidation":"When collateral ratio is below {ratio}, the vault will be liquidated immediately.",
   "tooltip.liquidation-price": "The price at which a Vault becomes vulnerable to liquidation. You can lower the liquidation price by adding more collaterals or repaying your loan to the Vault.",
   "tooltip.minimum-ratio": "Minimum required collateralization level of a Vault before it is subject to liquidation.",
   "tooltip.my-vault-hint-1": "Vaults are where you can deposit collateral to generate stablecoin and destroy the stablecoin when repaying the generated stablecoin balance.",

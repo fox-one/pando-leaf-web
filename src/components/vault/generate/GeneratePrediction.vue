@@ -88,22 +88,22 @@ export default class extends Vue {
     const { isValidOracle } = this.$utils.oracle;
     const { isValid } = this.$utils.number;
     return [
-      {
-        label: this.$t("common.collateralization-ratio"), // deposit * price / mint
-        value: this.meta.ratioText,
-        valueColor: this.meta.risk.color,
-        hint: this.$t("tooltip.collateralization-ratio"),
-        learnMore: LINKS["vault.liquidation"],
-        changedValue: this.meta.changedRatioText,
-        changedValueColor: this.meta.changedRisk.color,
-        showChange: isValid(+this.amount),
-      },
-      {
-        label: this.$t("common.minimum-ratio"),
-        value: this.meta.minimumRatio,
-        hint: this.$t("tooltip.minimum-ratio"),
-        learnMore: LINKS["vault.liquidation-ratio"],
-      },
+      // {
+      //   label: this.$t("common.collateralization-ratio"), // deposit * price / mint
+      //   value: this.meta.ratioText,
+      //   valueColor: this.meta.risk.color,
+      //   hint: this.$t("tooltip.collateralization-ratio"),
+      //   learnMore: LINKS["vault.liquidation"],
+      //   changedValue: this.meta.changedRatioText,
+      //   changedValueColor: this.meta.changedRisk.color,
+      //   showChange: isValid(+this.amount),
+      // },
+      // {
+      //   label: this.$t("common.minimum-ratio"),
+      //   value: this.meta.minimumRatio,
+      //   hint: this.$t("tooltip.minimum-ratio"),
+      //   learnMore: LINKS["vault.liquidation-ratio"],
+      // },
       {
         label: this.$t("common.liquidation-price"), // mint * mat / deposit
         value: this.meta.liquidationPriceText,

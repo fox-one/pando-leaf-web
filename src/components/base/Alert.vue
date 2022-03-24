@@ -1,5 +1,5 @@
 <template>
-  <div v-show="alert" class="pa-4 caption f-alert" :style="styles">
+  <div v-show="alert" class="pa-4 f-alert" :style="styles">
     <slot />
     <v-icon
       v-if="close"
@@ -51,6 +51,8 @@ export default Alert;
   position: relative;
   background-color: rgba(244, 76, 76, 0.1);
   border-radius: 8px;
+  font-size: 14px;
+  line-height: 17px;
 
   &__close {
     position: absolute;

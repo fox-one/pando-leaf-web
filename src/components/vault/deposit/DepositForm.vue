@@ -7,6 +7,14 @@
       :placeholder="$t('form.deposit-amount')"
     />
 
+    <collateral-ratio-slider
+      :vault="vault"
+      :ratio="meta.changedRatio"
+      :risk="meta.changedRisk"
+    />
+
+    <f-divider class="mt-5" />
+
     <deposit-action
       :vault="vault"
       :amount="bindAmount"
@@ -20,6 +28,7 @@
 import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
+import CollateralRatioSlider from "@/components/vault/CollateralRatioSlider.vue";
 import DepositAction from "./DepositAction.vue";
 
 @Component({
@@ -27,6 +36,7 @@ import DepositAction from "./DepositAction.vue";
     BaseFormInput,
     BaseRiskSlider,
     DepositAction,
+    CollateralRatioSlider,
   },
 })
 export default class extends Vue {
@@ -45,10 +55,27 @@ export default class extends Vue {
       liquidationPrice,
       collateral,
       collateralSymbol,
+      debtAmount,
+      collateralAmount,
       ratio,
     } = getters.getVaultFields(this.vault?.id ?? "");
+
+    const { minimumRatio, collateralPrice } = getters.getMarketFields(
+      this.vault?.collateral_id
+    );
+
     const walletAsset = getters["asset/getWalletAssetById"](
       collateralAsset?.id ?? ""
+    );
+
+    const diffAmount = +this.bindAmount;
+    const changedRatio =
+      debtAmount &&
+      ((collateralAmount + diffAmount) * collateralPrice) / debtAmount;
+
+    const changedRisk = this.$utils.collateral.getRiskLevelMeta(
+      changedRatio,
+      minimumRatio
     );
 
     return {
@@ -57,6 +84,8 @@ export default class extends Vue {
       collateralSymbol,
       ratio,
       ratioText: toPercent({ n: ratio }),
+      changedRisk,
+      changedRatio,
       liquidationPrice,
       liquidationPriceText: format({ n: liquidationPrice }),
       currentDepositPrice: format({ n: collateral?.price || "0" }),

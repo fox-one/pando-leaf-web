@@ -37,6 +37,14 @@
 
     <f-divider class="mt-5" />
 
+    <collateral-ratio-slider
+      :vault="vault"
+      :ratio="meta.changedRatio"
+      :risk="meta.changedRisk"
+    />
+
+    <f-divider class="mt-5" />
+
     <withdraw-action
       :vault="vault"
       :amount="bindAmount"
@@ -50,6 +58,7 @@
 import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import WithdrawAction from "./WithdrawAction.vue";
+import CollateralRatioSlider from "./../CollateralRatioSlider.vue";
 import { toPercent } from "@foxone/utils/number";
 import BigNumber from "bignumber.js";
 import { RISK } from "~/enums";
@@ -58,6 +67,7 @@ import { RISK } from "~/enums";
   components: {
     BaseRiskSlider,
     WithdrawAction,
+    CollateralRatioSlider,
   },
 })
 export default class extends Vue {
@@ -70,6 +80,7 @@ export default class extends Vue {
   showTip = false;
 
   get meta() {
+    const { isValid } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
 
     const {
@@ -82,11 +93,28 @@ export default class extends Vue {
       price,
     } = getters.getVaultFields(this.vault?.id ?? "");
 
+    const { minimumRatio, minimumRatioText, collateralPrice } =
+      getters.getMarketFields(this.vault?.collateral_id);
+
     const progress = (100 * +this.bindAmount) / avaliableWithdraw;
     const progressText = toPercent({ n: progress / 100 });
 
     const ratio = ((collateralAmount - +this.bindAmount) * price) / debtAmount;
     const risk = this.$utils.vault.getRiskLevelMeta(ratio, liquidationRatio);
+
+    const diffAmount = +this.bindAmount;
+    const changedRatio =
+      debtAmount &&
+      ((collateralAmount - diffAmount) * collateralPrice) / debtAmount;
+    let changedRatioText = toPercent({ n: changedRatio, dp: 1 });
+    if (!isValid(changedRatio) || changedRatio === 0) {
+      changedRatioText = "N/A";
+    }
+    const changedRisk = this.$utils.collateral.getRiskLevelMeta(
+      changedRatio,
+      minimumRatio
+    );
+
     return {
       risk,
       liquidationRatio,
@@ -97,6 +125,8 @@ export default class extends Vue {
       avaliableWithdraw,
       progress,
       progressText,
+      changedRatio,
+      changedRisk,
     };
   }
 
@@ -155,6 +185,9 @@ export default class extends Vue {
       if (true !== rule(this.bindAmount)) {
         return { disabled: true };
       }
+    }
+    if (this.meta.changedRisk.value === RISK.HIGH) {
+      return { disabled: true };
     }
     return { disabled: false };
   }

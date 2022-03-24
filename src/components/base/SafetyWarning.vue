@@ -18,6 +18,7 @@ export default SafetyWarning;
   font-size: 18px;
   line-height: 22px;
 }
+
 .content {
   font-weight: normal;
   margin-top: 16px;

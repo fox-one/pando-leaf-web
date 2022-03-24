@@ -141,15 +141,15 @@ export default VaultFields;
 
   &__title {
     font-weight: 500;
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 17px;
   }
 
   &__value {
     align-items: center;
     font-weight: 500;
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 17px;
     color: var(--v-greyscale_1-base);
   }
 }

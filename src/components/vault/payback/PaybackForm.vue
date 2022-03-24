@@ -21,6 +21,14 @@
 
     <f-divider class="mt-3" />
 
+    <collateral-ratio-slider
+      :vault="vault"
+      :ratio="meta.changedRatio"
+      :risk="meta.changedRisk"
+    />
+
+    <f-divider class="mt-5" />
+
     <payback-action
       :vault="vault"
       :amount="bindAmount"
@@ -34,6 +42,7 @@
 import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import PaybackFormInput from "./PaybackFormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
+import CollateralRatioSlider from "./../CollateralRatioSlider.vue";
 import PaybackAction from "./PaybackAction.vue";
 import PaybackHelper from "./PaybackHelper.vue";
 import BigNumber from "bignumber.js";
@@ -45,6 +54,7 @@ import { toPercent } from "@foxone/utils/number";
     BaseRiskSlider,
     PaybackAction,
     PaybackHelper,
+    CollateralRatioSlider,
   },
 })
 export default class PaybackForm extends Vue {
@@ -68,6 +78,7 @@ export default class PaybackForm extends Vue {
       debtAsset,
       debtAmount,
       debtSymbol,
+      collateralAmount,
     } = getters.getVaultFields(this.vault?.id ?? "");
     const walletAsset = getters["asset/getWalletAssetById"](
       debtAsset?.id ?? ""
@@ -84,6 +95,21 @@ export default class PaybackForm extends Vue {
     const dustAmount = Number(collateral?.dust);
 
     const leftDebt = debtAmount - +this.bindAmount;
+
+    const { minimumRatio, collateralPrice } = getters.getMarketFields(
+      this.vault?.collateral_id
+    );
+
+    const diffAmount = +this.bindAmount;
+    let changedRatio =
+      debtAmount - diffAmount &&
+      (collateralAmount * collateralPrice) / (debtAmount - diffAmount);
+    const changedRisk = this.$utils.collateral.getRiskLevelMeta(
+      changedRatio,
+      minimumRatio
+    );
+
+    if (changedRatio < 0) changedRatio = 0;
 
     return {
       balance: walletAsset?.balance,
@@ -103,6 +129,8 @@ export default class PaybackForm extends Vue {
       maxAvailable,
       leftDebt,
       dustAmount,
+      changedRatio,
+      changedRisk,
       dust: collateral?.dust,
     };
   }

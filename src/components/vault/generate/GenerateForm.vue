@@ -9,6 +9,14 @@
       :placeholder="$t('form.generate-amount')"
     />
 
+    <collateral-ratio-slider
+      :vault="vault"
+      :ratio="meta.changedRatio"
+      :risk="meta.changedRisk"
+    />
+
+    <f-divider class="mt-5" />
+
     <generate-action
       :vault="vault"
       :amount="bindDebtAmount"
@@ -22,6 +30,7 @@
 import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
+import CollateralRatioSlider from "./../CollateralRatioSlider.vue";
 import GenerateAction from "./GenerateAction.vue";
 import BigNumber from "bignumber.js";
 import { toPercent, toPrecision } from "@foxone/utils/number";
@@ -32,6 +41,7 @@ import { RISK } from "~/enums";
     BaseFormInput,
     BaseRiskSlider,
     GenerateAction,
+    CollateralRatioSlider,
   },
 })
 export default class GenerateForm extends Vue {
@@ -43,7 +53,7 @@ export default class GenerateForm extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { format } = this.$utils.number;
+    const { format, isValid } = this.$utils.number;
 
     const {
       liquidationPrice,
@@ -78,14 +88,14 @@ export default class GenerateForm extends Vue {
       mode: BigNumber.ROUND_DOWN,
     });
 
-    const progress =
-      ((debtAmount + inputAmount) / (debtAmount + avaliableDebt)) * 100;
-
-    const newRatio =
+    const changedRatio =
       debtAmount + inputAmount &&
-      (collateralAmount * price) / (debtAmount + inputAmount);
-
-    const risk = this.$utils.vault.getRiskLevelMeta(newRatio, liquidationRatio);
+      (collateralAmount * marketFields.collateralPrice) /
+        (debtAmount + inputAmount);
+    const changedRisk = this.$utils.collateral.getRiskLevelMeta(
+      changedRatio,
+      marketFields.minimumRatio
+    );
     return {
       debtAsset,
       debtAmount,
@@ -99,9 +109,8 @@ export default class GenerateForm extends Vue {
       maxAvailable,
       maxAvailableText,
       suggest,
-      progress,
-      newRatio,
-      risk,
+      changedRatio,
+      changedRisk,
       dustAmount,
       dust: collateral?.dust,
     };
@@ -137,8 +146,8 @@ export default class GenerateForm extends Vue {
   get rules() {
     return this.validateRules.concat([
       (v: string) => {
-        if (this.meta.risk.value === RISK.HIGH) {
-          if (this.meta.newRatio < this.meta.liquidationRatio) {
+        if (this.meta.changedRisk.value === RISK.HIGH) {
+          if (this.meta.changedRatio < this.meta.liquidationRatio) {
             return this.$t("validate.below-liquidation-rate");
           }
 
@@ -149,7 +158,7 @@ export default class GenerateForm extends Vue {
         return true;
       },
       (v: string) =>
-        this.meta.risk.value !== RISK.MEDIUM ||
+        this.meta.changedRisk.value !== RISK.MEDIUM ||
         this.$t("validate.medium-risk", {
           symbol: this.meta.debtSymbol,
         }),
