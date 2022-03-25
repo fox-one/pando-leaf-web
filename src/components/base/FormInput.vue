@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, PropSync, Ref } from "vue-property-decorator";
+import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
 import FormInputTools from "./FormInputTools.vue";
 
 @Component({

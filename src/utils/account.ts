@@ -1,21 +1,6 @@
-import { APP_TOKEN, CONFIG, EVENTS, NODE_ENV } from "@/constants";
+import { EVENTS } from "@/constants";
 
 const scope = "['PROFILE:READ', 'ASSETS:READ']";
-
-export async function requestAuthMixin(vm: Vue) {
-  if (NODE_ENV === "development" && APP_TOKEN) {
-    await updateProfile(vm, { token: APP_TOKEN, scope, channel: "mixin" });
-
-    return;
-  }
-
-  const host = window.location.origin;
-  const redirectUrl = encodeURIComponent(host + "/#/auth/");
-  const path = `https://mixin-oauth.fox.one/?client_id=${CONFIG.MIXIN_CLIENT_ID}&scope=PROFILE:READ+ASSETS:READ&response_type=code&redirect_url=${redirectUrl}`;
-
-  localStorage.setItem("authPath", window.location.href);
-  window.location.href = path;
-}
 
 let logining = false;
 
@@ -23,7 +8,6 @@ export async function authMixin(vm: Vue, code: string) {
   if (logining) return;
   logining = true;
   const res = await vm.$http.auth(code);
-  const redirect = localStorage.getItem("authPath") || "/";
 
   await updateProfile(vm, {
     token: res.token,
@@ -33,7 +17,6 @@ export async function authMixin(vm: Vue, code: string) {
 
   await vm.$store.dispatch("account/loadProfile");
   logining = false;
-  document.location.replace(redirect);
 }
 
 export async function authFennec(vm: Vue) {
