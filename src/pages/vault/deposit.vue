@@ -13,9 +13,11 @@
         :amount="amount"
       />
 
-      <f-divider class="my-4" />
+      <f-divider class="mt-4 mx-4" />
 
-      <base-safety-warning class="px-4 pt-2" />
+      <base-safety-warning />
+
+      <f-divider class="mx-4" />
 
       <div style="height: 200px"></div>
     </div>

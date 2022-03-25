@@ -87,16 +87,6 @@ export default class extends Vue {
   get infos() {
     const { isValidOracle } = this.$utils.oracle;
     return [
-      // {
-      //   label: this.$t("common.collateralization-ratio"), // deposit * price / mint
-      //   value: this.meta.ratioText,
-      //   valueColor: this.meta.risk.color,
-      //   hint: this.$t("tooltip.collateralization-ratio"),
-      //   learnMore: LINKS["vault.liquidation"],
-      //   changedValue: this.meta.changedRatioText,
-      //   changedValueColor: this.meta.changedRisk.color,
-      //   showChange: this.meta.ratio !== this.meta.changedRatio,
-      // },
       {
         label: this.$t("common.current-symbol-price", {
           symbol: `${this.meta.collateralSymbol}/${this.meta.debtSymbol}`,

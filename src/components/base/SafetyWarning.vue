@@ -1,29 +1,76 @@
 <template>
-  <div>
-    <div class="title">{{ $t("safety-warning") }}</div>
-    <div class="content">{{ $t("safety-warning-content") }}</div>
-  </div>
+  <f-bottom-sheet
+    v-model="sheet"
+    :hide-close-icon="true"
+    overlay-opacity="0.9"
+    wapper-in-desktop="dialog"
+    nudge-top="-10"
+    max-width="600"
+  >
+    <template #activator="{ on }">
+      <div
+        v-on="on"
+        class="py-6 px-4 d-flex justify-space-between"
+        align-center
+      >
+        <div class="safety-warning">{{ meta.title }}</div>
+
+        <v-icon size="16" color="greyscale_1">$FIconChevronRight</v-icon>
+      </div>
+    </template>
+
+    <f-bottom-sheet-title> {{ meta.title }} </f-bottom-sheet-title>
+
+    <div :class="!isDesktop ? 'pb-8' : ''">
+      <div class="ma-4 tooltip-content greyscale_3--text">
+        {{ meta.hint }}
+      </div>
+
+      <div class="my-8 text-center">
+        <f-button
+          rounded
+          depressed
+          color="primary"
+          height="56px"
+          class="px-8"
+          @click="sheet = false"
+        >
+          {{ $t("common.close") }}
+        </f-button>
+      </div>
+    </div>
+  </f-bottom-sheet>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import BaseTooltip from "./Tooltip.vue";
 
-@Component
-class SafetyWarning extends Vue {}
+@Component({
+  components: {
+    BaseTooltip,
+  },
+})
+class SafetyWarning extends Vue {
+  sheet = false;
+
+  get isDesktop() {
+    return this.$vuetify.breakpoint.mdAndUp;
+  }
+
+  get meta() {
+    return {
+      title: this.$t("safety-warning"),
+      hint: this.$t("safety-warning-content"),
+    };
+  }
+}
 export default SafetyWarning;
 </script>
 <style lang="scss" scoped>
-.title {
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-}
-
-.content {
-  font-weight: normal;
-  margin-top: 16px;
-  font-size: 12px;
-  line-height: 15px;
-  color: var(--v-greyscale_3-base);
+.safety-warning {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
 }
 </style>

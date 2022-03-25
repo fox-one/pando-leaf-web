@@ -46,9 +46,7 @@
       </div>
     </template>
 
-    <f-bottom-sheet-title>
-      {{ $t("tooltip.details") }}
-    </f-bottom-sheet-title>
+    <f-bottom-sheet-title> {{ meta.title }} </f-bottom-sheet-title>
 
     <div class="pb-8">
       <div
@@ -90,6 +88,7 @@
 </template>
 
 <script lang="ts">
+import type { TranslateResult } from "vue-i18n";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
@@ -98,9 +97,17 @@ export default class Tooltip extends Vue {
 
   @Prop({ default: null }) learnMore!: string;
 
+  @Prop({ default: null }) title!: TranslateResult | string | null;
+
   tooltip = false;
 
   sheet = false;
+
+  get meta() {
+    return {
+      title: this.title ?? this.$t("tooltip.details"),
+    };
+  }
 
   get isDesktop() {
     return this.$vuetify.breakpoint.mdAndUp;

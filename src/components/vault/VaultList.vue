@@ -13,7 +13,6 @@ import { Get, Sync } from "vuex-pathify";
 
 import { getVaultRisk } from "@/utils/vault";
 import { SortBy } from "~/enums";
-import dayjs from "dayjs";
 
 @Component({
   components: {

@@ -151,7 +151,7 @@ export default class PaybackForm extends Vue {
         this.$t("validate.insufficient-balance", {
           symbol: this.meta.debtSymbol,
         }),
-      (v: string) =>
+      () =>
         this.meta.leftDebt >= this.meta.dustAmount ||
         this.meta.leftDebt <= 0 ||
         this.$t("validate.remaining-dust-debt", {

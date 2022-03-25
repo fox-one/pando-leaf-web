@@ -80,7 +80,6 @@ export default class extends Vue {
   showTip = false;
 
   get meta() {
-    const { isValid } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
 
     const {
@@ -93,8 +92,9 @@ export default class extends Vue {
       price,
     } = getters.getVaultFields(this.vault?.id ?? "");
 
-    const { minimumRatio, minimumRatioText, collateralPrice } =
-      getters.getMarketFields(this.vault?.collateral_id);
+    const { minimumRatio, collateralPrice } = getters.getMarketFields(
+      this.vault?.collateral_id
+    );
 
     const progress = (100 * +this.bindAmount) / avaliableWithdraw;
     const progressText = toPercent({ n: progress / 100 });
@@ -106,10 +106,7 @@ export default class extends Vue {
     const changedRatio =
       debtAmount &&
       ((collateralAmount - diffAmount) * collateralPrice) / debtAmount;
-    let changedRatioText = toPercent({ n: changedRatio, dp: 1 });
-    if (!isValid(changedRatio) || changedRatio === 0) {
-      changedRatioText = "N/A";
-    }
+
     const changedRisk = this.$utils.collateral.getRiskLevelMeta(
       changedRatio,
       minimumRatio
@@ -136,7 +133,7 @@ export default class extends Vue {
       (v: string) => +v > 0 || this.$t("common.amount-invalid"),
       (v: string) =>
         +v <= this.meta.avaliableWithdraw || this.$t("common.amount-invalid"),
-      (v: string) => {
+      () => {
         if (this.meta.ratio < this.meta.liquidationRatio) {
           return this.$t("validate.below-liquidation-rate");
         }
@@ -147,7 +144,7 @@ export default class extends Vue {
 
   get rules() {
     return this.validateRules.concat([
-      (v: string) => {
+      () => {
         if (this.meta.risk.value === RISK.HIGH) {
           return this.$t("validate.high-risk-withdraw", {
             symbol: this.meta.collateralSymbol,
@@ -155,7 +152,7 @@ export default class extends Vue {
         }
         return true;
       },
-      (v: string) =>
+      () =>
         this.meta.risk.value !== RISK.MEDIUM ||
         this.$t("validate.medium-risk-withdraw", {
           symbol: this.meta.collateralSymbol,

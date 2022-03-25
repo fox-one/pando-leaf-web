@@ -53,7 +53,7 @@ export default class GenerateForm extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { format, isValid } = this.$utils.number;
+    const { format } = this.$utils.number;
 
     const {
       liquidationPrice,
@@ -145,7 +145,7 @@ export default class GenerateForm extends Vue {
 
   get rules() {
     return this.validateRules.concat([
-      (v: string) => {
+      () => {
         if (this.meta.changedRisk.value === RISK.HIGH) {
           if (this.meta.changedRatio < this.meta.liquidationRatio) {
             return this.$t("validate.below-liquidation-rate");
@@ -157,7 +157,7 @@ export default class GenerateForm extends Vue {
         }
         return true;
       },
-      (v: string) =>
+      () =>
         this.meta.changedRisk.value !== RISK.MEDIUM ||
         this.$t("validate.medium-risk", {
           symbol: this.meta.debtSymbol,

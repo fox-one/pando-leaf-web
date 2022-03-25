@@ -85,39 +85,6 @@ export default class extends Vue {
   get infos() {
     const { isValidOracle } = this.$utils.oracle;
     return [
-      // {
-      //   label: this.$t("common.collateralization-ratio"), // deposit * price / mint
-      //   value: this.meta.ratioText,
-      //   valueColor: this.meta.risk.color,
-      //   hint: this.$t("tooltip.collateralization-ratio"),
-      //   learnMore: LINKS["vault.liquidation"],
-      //   changedValue: this.meta.changedRatioText,
-      //   changedValueColor: this.meta.changedRisk.color,
-      //   showChange: this.meta.ratio !== this.meta.changedRatio,
-      // },
-      {
-        label: this.$t("common.outstanding-symbol-debt", {
-          symbol: this.meta.debtSymbol,
-        }), // line- debt
-        value: this.meta.debtAmount,
-        valueUnit: this.meta.debtSymbol,
-      },
-      // {
-      //   label: this.$t("common.minimum-ratio"),
-      //   value: this.meta.minimumRatio,
-      //   hint: this.$t("tooltip.minimum-ratio"),
-      //   learnMore: LINKS["vault.liquidation-ratio"],
-      // },
-      {
-        label: this.$t("common.liquidation-price"), // mint * mat / deposit
-        value: this.meta.liquidationPriceText,
-        valueUnit: `${this.meta.debtSymbol}`,
-        hint: this.$t("tooltip.liquidation-price"),
-        learnMore: LINKS["vault.liquidation"],
-        changedValue: this.meta.changedPriceText,
-        showChange:
-          this.meta.liquidationPriceText !== this.meta.changedPriceText,
-      },
       {
         label: this.$t("common.current-symbol-price", {
           symbol: `${this.meta.collateralSymbol}/${this.meta.debtSymbol}`,
@@ -132,6 +99,23 @@ export default class extends Vue {
         learnMore: LINKS["vault.price-oracles"],
         showChange: isValidOracle(this.meta.nextPrice),
         changedValue: this.meta.nextPrice?.price,
+      },
+      {
+        label: this.$t("common.liquidation-price"), // mint * mat / deposit
+        value: this.meta.liquidationPriceText,
+        valueUnit: `${this.meta.debtSymbol}`,
+        hint: this.$t("tooltip.liquidation-price"),
+        learnMore: LINKS["vault.liquidation"],
+        changedValue: this.meta.changedPriceText,
+        showChange:
+          this.meta.liquidationPriceText !== this.meta.changedPriceText,
+      },
+      {
+        label: this.$t("common.outstanding-symbol-debt", {
+          symbol: this.meta.debtSymbol,
+        }), // line- debt
+        value: this.meta.debtAmount,
+        valueUnit: this.meta.debtSymbol,
       },
       {
         label: this.$t("common.stability-fee"),

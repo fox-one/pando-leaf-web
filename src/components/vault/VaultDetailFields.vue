@@ -55,7 +55,6 @@ class VaultFields extends Vue {
       vault,
       collateral,
       collateralSymbol,
-      collateralAmount,
       debtSymbol,
       debtAmount,
       ratio,

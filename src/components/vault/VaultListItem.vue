@@ -55,14 +55,8 @@ class VaultListItem extends Vue {
   @Prop() id!: string;
 
   get meta() {
-    const {
-      vault,
-      collateral,
-      collateralAsset,
-      debtAsset,
-      debtAmount,
-      riskLevelMeta,
-    } = getVaultFields(this, this.id);
+    const { vault, collateralAsset, debtAsset, debtAmount, riskLevelMeta } =
+      getVaultFields(this, this.id);
 
     const bgColor = riskLevelMeta.bg_color;
     const isDark = this.$vuetify.theme.dark;
