@@ -1,5 +1,5 @@
 import { toPrecision } from "@foxone/utils/number";
-import { FlipAction } from "~/enums";
+import { FlipAction, FlipTag } from "~/enums";
 
 export function getFlipFields(_: any, getters: Getter.GettersTree) {
   return (flip: API.Flip) => {
@@ -21,6 +21,8 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
     const isDone = flip?.action === FlipAction.FlipDeal;
     const isStage1 = Number(flip?.bid) < Number(flip?.tab) && !isDone;
     const isStage2 = Number(flip?.bid) >= Number(flip?.tab) && !isDone;
+    const leading = flip?.tags?.includes(FlipTag.Leading);
+    const participated = flip?.tags?.includes(FlipTag.Participated);
     const collateralPrice = auctionAsset?.price ?? "";
     const debtPrice = debtAsset?.price ?? "";
     const collateralValue = toPrecision({
@@ -80,6 +82,8 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
       isDone,
       isStage1,
       isStage2,
+      participated,
+      leading,
       minBid,
       maxBid,
       curPrice,

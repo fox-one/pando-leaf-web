@@ -138,6 +138,7 @@ declare namespace API {
     id: string;
     vault_id: string;
     collateral_id: string;
+    tags: FlipTag[];
   }
 
   export interface FlipEvent {

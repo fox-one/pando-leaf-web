@@ -1,11 +1,5 @@
 <template>
-  <div class="text-center d-flex">
-    <span class="count-down-timer">{{ hour }}</span>
-    :
-    <span class="count-down-timer">{{ minute }}</span>
-    :
-    <span class="count-down-timer">{{ second }}</span>
-  </div>
+  <div class="text-center d-flex">{{ hour }}:{{ minute }}:{{ second }}</div>
 </template>
 
 <script lang="ts" scoped>
@@ -83,10 +77,6 @@ export default class CountDownTimer extends Vue {
 
 <style lang="scss" scoped>
 .count-down-timer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #89df0f;
-  border-radius: 2px;
+  color: #9fc665;
 }
 </style>

@@ -59,6 +59,8 @@ declare namespace Getter {
     isDone: boolean;
     isStage1: boolean;
     isStage2: boolean;
+    leading: boolean;
+    participated: boolean;
     minBid: string;
     maxBid: string;
     curPrice: string;

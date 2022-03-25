@@ -11,7 +11,7 @@
       :key="index"
       :flip="item"
       class="mb-4 mx-4"
-      @refresh="requestFlips()"
+      @refresh="requestLoadMore()"
     />
     <template #empty> <empty-auctions-place-holder /> </template>
   </base-pagination-list>

@@ -69,5 +69,8 @@ export function makeIconValues() {
     iconExclamationMark: {
       component: "icon-exclamation-mark",
     },
+    iconAuctionTriangle: {
+      component: "icon-auction-triangle",
+    },
   };
 }

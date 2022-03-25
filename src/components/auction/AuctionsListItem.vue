@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout @click="toDetail(flip)" align-center class="pb-6">
+    <v-layout @click="toDetail(flip)">
       <f-mixin-asset-logo :logo="meta.logo" :size="36" class="ml-4 mt-6 mr-3" />
 
       <div class="flex-grow-1 mt-6">
@@ -8,48 +8,64 @@
         <div class="item-content">
           {{ meta.price }}
         </div>
+
+        <v-layout v-if="meta.isStage1 || meta.isStage2">
+          <!-- timer -->
+          <div class="round-tag mt-3">
+            <span class="greyscale_1--text"
+              >ROUND {{ meta.isStage1 ? "1" : "2" }}</span
+            >
+            <count-down-timer
+              class="ml-3"
+              :diffSeconds="meta.diffSeconds"
+            ></count-down-timer>
+          </div>
+        </v-layout>
       </div>
 
       <!-- label buttons -->
       <template v-if="meta.isStage1 || meta.isStage2">
-        <div v-if="meta.isYourBid" class="label-button check-my-bid">
-          Check My Bid
+        <div v-if="meta.leading">
+          <span class="label-button leading"> Leading</span>
+
+          <my-vault-tag v-if="meta.isMyVault" class="mt-2" />
         </div>
 
-        <div v-else-if="meta.leading" class="label-button leading">Leading</div>
+        <div v-else-if="meta.participated">
+          <span class="label-button check-my-bid"> Check My Bid </span>
+          <my-vault-tag v-if="meta.isMyVault" class="mt-2" />
+        </div>
 
-        <div v-else class="label-button bid-it">Bid it</div>
+        <div v-else>
+          <span class="label-button bid-it"> Bid it</span>
+
+          <my-vault-tag v-if="meta.isMyVault" class="mt-2" />
+        </div>
       </template>
 
-      <v-icon v-else class="mt-6 mr-4" align-self-end size="16">
-        $FIconChevronRight
-      </v-icon>
+      <template v-else>
+        <my-vault-tag class="mt-5" :triangle="false" />
+
+        <v-icon class="mt-9 mr-4" align-self-end size="16">
+          $FIconChevronRight
+        </v-icon>
+      </template>
     </v-layout>
 
-    <v-layout v-if="meta.isStage1 || meta.isStage2" justify-space-between>
-      <!-- timer -->
-      <div class="round-tag">
-        <span>ROUND {{ meta.isStage1 ? "1" : "2" }}</span>
-
-        <count-down-timer :diffSeconds="meta.diffSeconds"></count-down-timer>
-      </div>
-
-      <!-- my vault tag -->
-      <div align-self-end class="top-arrow-tag">My Vault</div>
-    </v-layout>
-
-    <f-divider />
+    <f-divider class="mt-6" />
   </div>
 </template>
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
 import CountDownTimer from "@/components/auction/CountDownTimer.vue";
+import MyVaultTag from "@/components/auction/MyVaultTag.vue";
 import dayjs from "dayjs";
 
 @Component({
   components: {
     CountDownTimer,
+    MyVaultTag,
   },
 })
 export default class AuctionsListItem extends Vue {
@@ -66,18 +82,29 @@ export default class AuctionsListItem extends Vue {
       collateral2debt,
       isStage1,
       isStage2,
-      isYourBid,
       isMyVault,
+      leading,
+      participated,
     } = getters.getFlipFields(this.flip);
     const price = `1 ${auctionSymbol} ≈ ${collateral2debt} ${debtSymbol}`;
+    let diffSeconds = dayjs(this.flip.tic).diff(dayjs(), "seconds");
+    if (
+      dayjs(this.flip.tic).unix() === 0 ||
+      dayjs(this.flip.tic).isAfter(dayjs(this.flip.end))
+    ) {
+      diffSeconds = dayjs(this.flip.end).diff(dayjs(), "seconds");
+    }
+
     return {
       logo: auctionAsset?.logo,
       symbol: auctionAsset?.symbol,
       price,
+      leading,
+      participated,
       isStage1,
       isStage2,
-      isYourBid,
       isMyVault,
+      diffSeconds,
     };
   }
 
@@ -121,16 +148,6 @@ export default class AuctionsListItem extends Vue {
   color: var(--v-greyscale_3-base);
 }
 
-.top-arrow-tag {
-  color: white;
-  background: #f58721;
-  border-radius: 28px;
-  padding: 6px 10px;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 15px;
-}
-
 .label-button {
   height: 36px;
   border-radius: 53px;
@@ -142,7 +159,6 @@ export default class AuctionsListItem extends Vue {
   padding: 10px 16px;
   font-weight: 600;
   margin-top: 24px;
-  margin-right: 16px;
   font-size: 14px;
   line-height: 17px;
 
@@ -163,7 +179,23 @@ export default class AuctionsListItem extends Vue {
 }
 
 .round-tag {
-  background: #cbf58d;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    105deg,
+    #cbf58d 0%,
+    #cbf58d 50%,
+    #ffffff 50%,
+    #ffffff 52%,
+    #effbdd 52%,
+    #effbdd 100%
+  );
+  border-radius: 8px;
+  color: #9fc665;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
   height: 23px;
   padding: 4px 8px;
 }
