@@ -4,11 +4,12 @@
       Please input deposit amount
     </div>
 
-    <base-form-input
+    <step-one-form-input
       :amount.sync="bindDepositAmount"
-      :asset="meta.collateralAsset"
+      :asset="asset"
       :rules="rulesDeposit"
       :placeholder="$t('form.deposit-amount')"
+      @select="handleCollateralSelect"
     />
 
     <step-one-action
@@ -22,23 +23,22 @@
 </template>
 
 <script lang="ts" scoped>
-import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
+import { Vue, Component, PropSync, Ref } from "vue-property-decorator";
 import StepOneAction from "./StepOneAction.vue";
-import BaseFormInput from "@/components/base/FormInput.vue";
+import StepOneFormInput from "./StepOneFormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import { RISK } from "~/enums";
 import BigNumber from "bignumber.js";
-import { toPrecision } from "@foxone/utils/number";
 
 @Component({
   components: {
-    BaseFormInput,
+    StepOneFormInput,
     BaseRiskSlider,
     StepOneAction,
   },
 })
 export default class StepOneForm extends Vue {
-  @Prop() collateral!: API.Collateral;
+  @PropSync("collateral") bindCollateral!: API.Collateral;
 
   @PropSync("depositAmount") bindDepositAmount!: string;
 
@@ -46,9 +46,14 @@ export default class StepOneForm extends Vue {
 
   @Ref("form") form!: any;
 
+  get asset() {
+    const getters = this.$store.getters as Getter.GettersTree;
+    return getters["asset/getAssetById"](this.bindCollateral?.gem);
+  }
+
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { format } = this.$utils.number;
+    const { format, toPrecision } = this.$utils.number;
 
     const depositNum = Number(this.bindDepositAmount);
     const mintNum = Number(this.bindDebtAmount);
@@ -58,8 +63,8 @@ export default class StepOneForm extends Vue {
       liquidationPrice,
       liquidationPriceText,
       maxAvailable,
-    } = getters.openVaultPrediction(depositNum, mintNum, this.collateral);
-    const marketFields = getters.getMarketFields(this.collateral?.id);
+    } = getters.openVaultPrediction(depositNum, mintNum, this.bindCollateral);
+    const marketFields = getters.getMarketFields(this.bindCollateral?.id);
 
     const progress = (mintNum / maxAvailable) * 100;
 
@@ -73,7 +78,7 @@ export default class StepOneForm extends Vue {
       collateralizationRatio,
       liquidationPrice,
       liquidationPriceText,
-      currentDepositPrice: format({ n: this.collateral?.price || "0" }),
+      currentDepositPrice: format({ n: this.bindCollateral?.price || "0" }),
       suggest,
       progress,
     };
@@ -84,6 +89,10 @@ export default class StepOneForm extends Vue {
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });
+  }
+
+  handleCollateralSelect(collateral: API.Collateral) {
+    this.bindCollateral = collateral;
   }
 
   get rulesDeposit() {
@@ -98,7 +107,7 @@ export default class StepOneForm extends Vue {
       (v: string) => !!v || this.$t("common.amount-required"),
       (v: string) => +v > 0 || this.$t("common.amount-invalid"),
       (v: string) => {
-        const max = this.$utils.collateral?.maxAvailable(this.collateral);
+        const max = this.$utils.collateral?.maxAvailable(this.bindCollateral);
         return (
           +v <= max ||
           this.$t("validate.max-debt", {
@@ -108,9 +117,9 @@ export default class StepOneForm extends Vue {
         );
       },
       (v: string) =>
-        +v >= Number(this.collateral?.dust) ||
+        +v >= Number(this.bindCollateral?.dust) ||
         this.$t("validate.minimum-debt", {
-          amount: this.collateral?.dust,
+          amount: this.bindCollateral?.dust,
           symbol: this.meta.debtSymbol,
         }),
       (v: string) => {
@@ -118,13 +127,13 @@ export default class StepOneForm extends Vue {
           +v && (+this.bindDepositAmount * +this.meta.currentDepositPrice) / +v;
         const risk = this.$utils.vault.getRiskLevelMeta(
           ratio,
-          +this.collateral?.mat
+          +this.bindCollateral?.mat
         );
         switch (risk.value) {
           case RISK.HIGH:
             if (
               Number(this.meta.collateralizationRatio) <
-              Number(this.collateral?.mat)
+              Number(this.bindCollateral?.mat)
             ) {
               return this.$t("validate.below-liquidation-rate");
             }
@@ -163,7 +172,7 @@ export default class StepOneForm extends Vue {
     }
     if (this.bindDepositAmount !== "" && this.bindDebtAmount !== "") {
       const ma = Number(this.bindDebtAmount || "0");
-      const max = this.$utils.collateral?.maxAvailable(this.collateral);
+      const max = this.$utils.collateral?.maxAvailable(this.bindCollateral);
       if (ma > max) {
         // mint 大于最大值
         return {
@@ -175,13 +184,13 @@ export default class StepOneForm extends Vue {
           }),
         };
       }
-      if (ma < Number(this.collateral?.dust)) {
+      if (ma < Number(this.bindCollateral?.dust)) {
         // mint 小于最小值
         return {
           disabled: true,
           type: "error",
           tip: this.$t("validate.minimum-debt", {
-            amount: this.collateral?.dust,
+            amount: this.bindCollateral?.dust,
             symbol: this.meta.debtSymbol,
           }),
         };
@@ -194,13 +203,13 @@ export default class StepOneForm extends Vue {
 
       const risk = this.$utils.vault.getRiskLevelMeta(
         ratio,
-        +this.collateral?.mat
+        +this.bindCollateral?.mat
       );
       switch (risk.value) {
         case RISK.HIGH:
           if (
             Number(this.meta.collateralizationRatio) <
-            Number(this.collateral?.mat)
+            Number(this.bindCollateral?.mat)
           ) {
             // 抵押率低于清算线
             return {

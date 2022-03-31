@@ -3,7 +3,7 @@
     <market-infos-item
       class="mb-6 px-6"
       cols="12"
-      v-for="(item, ix) in infos.slice(0, 5)"
+      v-for="(item, ix) in infos.slice(0, expandCount)"
       :key="ix"
       :label-class="item.labelClass"
       :value-class="item.valueClass"
@@ -19,11 +19,17 @@
       no-gutters
       class="expand-transition content"
       :class="bindExpand || disabled ? 'expanded' : 'collapse'"
+      :style="{
+        height:
+          bindExpand || disabled
+            ? (infos.length - expandCount) * 40 - 24 + 'px'
+            : '0px',
+      }"
     >
       <market-infos-item
         class="pb-6 px-6"
         cols="12"
-        v-for="(item, ix) in infos.slice(5, infos.length)"
+        v-for="(item, ix) in infos.slice(expandCount, infos.length)"
         :key="ix"
         :label-class="item.labelClass"
         :value-class="item.valueClass"
@@ -72,6 +78,10 @@ export default class MarketItemInfos extends Vue {
 
   @Prop({ default: false }) disabled!: boolean;
 
+  @Prop({ default: 5 }) expandCount!: number;
+
+  @Prop({ default: false }) newVaultSorted!: boolean;
+
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
     const {
@@ -119,70 +129,89 @@ export default class MarketItemInfos extends Vue {
   }
 
   get infos() {
+    const minimumRatioItem = {
+      title: this.$t("common.min-collateral-ratio"),
+      value: this.meta.minimumRatioText,
+    };
+    const stabilityFeeItem = {
+      title: this.$t("common.stability-fee"),
+      value: this.meta.stabilityFee,
+    };
+    const collateralAmountItem = {
+      title: this.$t("market.total-asset-symbol", {
+        symbol: this.meta.collateralSymbol,
+      }),
+      value: this.meta.collateralAmount,
+      valueUnit: this.meta.collateralSymbol,
+      valueClass: "f-greyscale-1",
+      hint: this.$t("tooltip.total-asset-in-market", {
+        symbol: this.meta.collateralSymbol,
+      }),
+    };
+    const maxAvailableItem = {
+      title: this.$t("common.max-available"),
+      value: this.meta.available,
+      valueUnit: this.meta.debtSymbol,
+      valueClass: "f-greyscale-1",
+    };
+    const debtItem = {
+      title: this.$t("common.symbol-debt", {
+        symbol: this.meta.debtSymbol,
+      }),
+      value: this.meta.debtAmount,
+      valueUnit: this.meta.debtSymbol,
+      valueClass: "f-greyscale-1",
+    };
+    const collateralRatioItem = {
+      title: this.$t("common.collateral-ratio"),
+      value: this.meta.rate,
+      valueClass: `font-weight-bold ${this.meta.riskLevel.color}--text`,
+      hint: this.$t("tooltip.collateralization-ratio"),
+      learnMore: LINKS["vault.liquidation-ratio"],
+    };
+    const priceItem = {
+      title: this.$t("common.price"),
+      value: this.meta.price,
+      valueUnit: this.meta.debtSymbol,
+      valueClass: "f-greyscale-1",
+    };
+    const nextPriceItem = {
+      title: this.$t("common.next-price"),
+      value: this.meta.isValidOracle
+        ? this.$utils.number.toPrecision({
+            n: this.meta.nextPrice?.price ?? "0",
+          })
+        : "-",
+      valueUnit: this.meta.debtSymbol,
+      hint: this.meta.isValidOracle
+        ? this.$t("tooltip.next-price", {
+            time: this.countDownText,
+          })
+        : false,
+      learnMore: LINKS["vault.price-oracles"],
+      valueClass: "f-greyscale-1",
+    };
+    if (this.newVaultSorted) {
+      return [
+        minimumRatioItem,
+        stabilityFeeItem,
+        priceItem,
+        nextPriceItem,
+        collateralAmountItem,
+        maxAvailableItem,
+        debtItem,
+        collateralRatioItem,
+      ];
+    }
     const infoList = [
-      {
-        title: this.$t("common.min-collateral-ratio"),
-        value: this.meta.minimumRatioText,
-      },
-      {
-        title: this.$t("common.stability-fee"),
-        value: this.meta.stabilityFee,
-      },
-      {
-        title: this.$t("market.total-asset-symbol", {
-          symbol: this.meta.collateralSymbol,
-        }),
-        value: this.meta.collateralAmount,
-        valueUnit: this.meta.collateralSymbol,
-        valueClass: "f-greyscale-1",
-        hint: this.$t("tooltip.total-asset-in-market", {
-          symbol: this.meta.collateralSymbol,
-        }),
-      },
-      {
-        title: this.$t("common.max-available"),
-        value: this.meta.available,
-        valueUnit: this.meta.debtSymbol,
-        valueClass: "f-greyscale-1",
-      },
-      {
-        title: this.$t("common.symbol-debt", {
-          symbol: this.meta.debtSymbol,
-        }),
-        value: this.meta.debtAmount,
-        valueUnit: this.meta.debtSymbol,
-        valueClass: "f-greyscale-1",
-      },
-
-      {
-        title: this.$t("common.collateral-ratio"),
-        value: this.meta.rate,
-        valueClass: `font-weight-bold ${this.meta.riskLevel.color}--text`,
-        hint: this.$t("tooltip.collateralization-ratio"),
-        learnMore: LINKS["vault.liquidation-ratio"],
-      },
-      {
-        title: this.$t("common.price"),
-        value: this.meta.price,
-        valueUnit: this.meta.debtSymbol,
-        valueClass: "f-greyscale-1",
-      },
-      {
-        title: this.$t("common.next-price"),
-        value: this.meta.isValidOracle
-          ? this.$utils.number.toPrecision({
-              n: this.meta.nextPrice?.price ?? "0",
-            })
-          : "-",
-        valueUnit: this.meta.debtSymbol,
-        hint: this.meta.isValidOracle
-          ? this.$t("tooltip.next-price", {
-              time: this.countDownText,
-            })
-          : false,
-        learnMore: LINKS["vault.price-oracles"],
-        valueClass: "f-greyscale-1",
-      },
+      minimumRatioItem,
+      stabilityFeeItem,
+      collateralAmountItem,
+      maxAvailableItem,
+      debtItem,
+      collateralRatioItem,
+      priceItem,
+      nextPriceItem,
     ];
     return infoList;
   }
@@ -234,13 +263,11 @@ export default class MarketItemInfos extends Vue {
   }
 
   &.collapse {
-    height: 0px;
     opacity: 0;
     margin-top: -16px;
   }
 
   &.expanded {
-    height: 96px;
     opacity: 1;
   }
 

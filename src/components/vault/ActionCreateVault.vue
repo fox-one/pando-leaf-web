@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, PropSync, Vue } from "vue-property-decorator";
 import CollateralListItem from "./CollateralListItem.vue";
 import { Get } from "vuex-pathify";
 
@@ -59,7 +59,7 @@ import { Get } from "vuex-pathify";
 class ActionCreateVault extends Vue {
   @Get("collateral/collaterals") collaterals!: API.Collateral[];
 
-  dialog = false;
+  @PropSync("show", { default: false }) dialog!: boolean;
 
   filter = "";
 

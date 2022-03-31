@@ -10,7 +10,29 @@
       <f-loading :loading="loading"></f-loading>
     </div>
 
-    <div v-else-if="currentStep === 2">
+    <div v-else-if="currentStep === 1">
+      <step-one-form
+        :collateral.sync="collateral"
+        :deposit-amount.sync="depositAmount"
+        :debt-amount.sync="debtAmount"
+      />
+
+      <step-one-infomations
+        class="pa-4 mt-n4"
+        :collateral="collateral"
+        :deposit-amount="depositAmount"
+      />
+
+      <f-divider class="mx-4" />
+
+      <base-safety-warning />
+
+      <f-divider class="mx-4" />
+
+      <div style="height: 200px"></div>
+    </div>
+
+    <div v-else>
       <open-form
         :collateral="collateral"
         :deposit-amount.sync="depositAmount"
@@ -27,28 +49,6 @@
       <f-divider class="" />
 
       <risk-warnings />
-
-      <div style="height: 200px"></div>
-    </div>
-
-    <div v-else>
-      <step-one-form
-        :collateral="collateral"
-        :deposit-amount.sync="depositAmount"
-        :debt-amount.sync="debtAmount"
-      />
-
-      <step-one-infomations
-        class="pa-4 mt-n4"
-        :collateral="collateral"
-        :deposit-amount="depositAmount"
-      />
-
-      <f-divider class="mt-4 mx-4" />
-
-      <base-safety-warning />
-
-      <f-divider class="mx-4" />
 
       <div style="height: 200px"></div>
     </div>

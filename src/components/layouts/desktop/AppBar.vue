@@ -9,7 +9,7 @@
   >
     <v-container class="d-flex align-center">
       <div class="account"></div>
-      <products-link />
+      <pando-products :current-id="'leaf'" z-index="111" />
       <v-spacer />
 
       <top-nav />
@@ -19,12 +19,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import ProductsLink from "../partials/ProductsLink.vue";
+
 import TopNav from "./TopNav.vue";
 
 @Component({
   components: {
-    ProductsLink,
     TopNav,
   },
 })

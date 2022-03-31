@@ -1,7 +1,7 @@
 <template>
   <v-list-item class="collateral">
-    <v-layout column class="mx-0 pa-6 greyscale_6 rounded">
-      <v-layout justify-space-between>
+    <v-layout column class="mx-0 greyscale_6 rounded">
+      <v-layout justify-space-between class="ma-6">
         <v-layout align-center>
           <base-pair-logo :base="meta.gemLogo" :quote="meta.daiLogo" />
           <span class="subtitle-1 font-weight-bold ml-2">
@@ -14,32 +14,33 @@
         </v-btn>
       </v-layout>
 
-      <v-layout justify-space-between class="f-caption mt-6 mb-4">
-        <div class="greyscale_3--text">
-          {{ $t("common.min-collateral-ratio") }}
-        </div>
-        <div>{{ meta.mat }}</div>
-      </v-layout>
-
-      <v-layout justify-space-between class="f-caption">
-        <div class="greyscale_3--text">
-          {{ $t("common.stability-fee") }}
-        </div>
-        <div>{{ meta.duty }}</div>
-      </v-layout>
+      <market-item-infos
+        :collateral="collateral"
+        :expand.sync="expand"
+        :disabled="false"
+        :newVaultSorted="true"
+        expand-count="3"
+      />
     </v-layout>
   </v-list-item>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import MarketItemInfos from "@/components/market/MarketItemInfos.vue";
 import { Get } from "vuex-pathify";
 
-@Component
+@Component({
+  components: {
+    MarketItemInfos,
+  },
+})
 class ActionCreateListItem extends Vue {
   @Prop() collateral!: API.Collateral;
 
   @Get("asset/getAssetById") getAssetById!: State.GetAssetById;
+
+  expand = false;
 
   get meta() {
     const toPercent = this.$utils.number.toPercent;
