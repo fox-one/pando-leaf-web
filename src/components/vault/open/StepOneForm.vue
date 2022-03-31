@@ -11,22 +11,7 @@
       :placeholder="$t('form.deposit-amount')"
     />
 
-    <div class="text-3 mt-8 mb-4 greyscale_1--text">
-      {{ $t("common.generate") }}
-    </div>
-
-    <base-form-input
-      :amount.sync="bindDebtAmount"
-      :asset="meta.debtAsset"
-      :balance="meta.suggest"
-      :rules="rulesDebt"
-      :leftLabel="$t('common.suggest')"
-      :placeholder="$t('form.mint-amount')"
-    />
-
-    <!-- <base-risk-slider class="mt-6" :progress="meta.progress" /> -->
-
-    <open-vault-action
+    <step-one-action
       :collateral="collateral"
       :deposit="bindDepositAmount"
       :mint="bindDebtAmount"
@@ -38,8 +23,7 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
-import OpenAppBar from "./OpenAppBar.vue";
-import OpenVaultAction from "./OpenVaultAction.vue";
+import StepOneAction from "./StepOneAction.vue";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import { RISK } from "~/enums";
@@ -48,13 +32,12 @@ import { toPrecision } from "@foxone/utils/number";
 
 @Component({
   components: {
-    OpenAppBar,
-    OpenVaultAction,
     BaseFormInput,
     BaseRiskSlider,
+    StepOneAction,
   },
 })
-export default class OpenForm extends Vue {
+export default class StepOneForm extends Vue {
   @Prop() collateral!: API.Collateral;
 
   @PropSync("depositAmount") bindDepositAmount!: string;

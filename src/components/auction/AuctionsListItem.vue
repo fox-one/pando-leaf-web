@@ -26,18 +26,20 @@
       <!-- label buttons -->
       <template v-if="meta.isStage1 || meta.isStage2">
         <div v-if="meta.leading">
-          <span class="label-button leading"> Leading</span>
+          <span class="label-button leading"> {{ $t("auction.leading") }}</span>
 
           <my-vault-tag v-if="meta.isMyVault" class="mt-2" />
         </div>
 
         <div v-else-if="meta.participated">
-          <span class="label-button check-my-bid"> Check My Bid </span>
+          <span class="label-button check-my-bid">
+            {{ $t("auction.check-my-bid") }}
+          </span>
           <my-vault-tag v-if="meta.isMyVault" class="mt-2" />
         </div>
 
         <div v-else>
-          <span class="label-button bid-it"> Bid it</span>
+          <span class="label-button bid-it"> {{ $t("auction.bid-it") }}</span>
 
           <my-vault-tag v-if="meta.isMyVault" class="mt-2" />
         </div>

@@ -8,10 +8,7 @@
           class="greyscale_1--text pr-5"
           @click.stop="on.click"
         >
-          <h4 class="mx-1">
-            {{ appbar.customTitle }}
-          </h4>
-          <v-icon size="16" color="primary"> $FIconChevronDown4P </v-icon>
+          <base-step-indicator :current="step" :total="2"></base-step-indicator>
         </v-layout>
       </template>
     </action-create-vault>
@@ -21,14 +18,18 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ActionCreateVault from "../ActionCreateVault.vue";
+import BaseStepIndicator from "@/components/base/StepIndicator.vue";
 
 @Component({
   components: {
     ActionCreateVault,
+    BaseStepIndicator,
   },
 })
 export default class extends Vue {
   @Prop() appbar;
+
+  @Prop() step!: number;
 
   handleBack() {
     this.$router.back();

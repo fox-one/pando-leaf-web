@@ -1,12 +1,16 @@
 <template>
   <v-container class="pa-0">
-    <open-app-bar :appbar="appbar" @change="handleCollateralChange" />
+    <open-app-bar
+      :appbar="appbar"
+      :step="currentStep"
+      @change="handleCollateralChange"
+    />
 
     <div class="py-2" v-if="loading && collateral">
       <f-loading :loading="loading"></f-loading>
     </div>
 
-    <div v-else>
+    <div v-else-if="currentStep === 2">
       <open-form
         :collateral="collateral"
         :deposit-amount.sync="depositAmount"
@@ -26,6 +30,28 @@
 
       <div style="height: 200px"></div>
     </div>
+
+    <div v-else>
+      <step-one-form
+        :collateral="collateral"
+        :deposit-amount.sync="depositAmount"
+        :debt-amount.sync="debtAmount"
+      />
+
+      <step-one-infomations
+        class="pa-4 mt-n4"
+        :collateral="collateral"
+        :deposit-amount="depositAmount"
+      />
+
+      <f-divider class="mt-4 mx-4" />
+
+      <base-safety-warning />
+
+      <f-divider class="mx-4" />
+
+      <div style="height: 200px"></div>
+    </div>
   </v-container>
 </template>
 
@@ -34,6 +60,9 @@ import { Component, Mixins, Watch } from "vue-property-decorator";
 import mixins from "@/mixins";
 import OpenAppBar from "@/components/vault/open/OpenAppBar.vue";
 import OpenForm from "@/components/vault/open/OpenForm.vue";
+import StepOneForm from "@/components/vault/open/StepOneForm.vue";
+import StepOneInfomations from "@/components/vault/open/StepOneInfomations.vue";
+import StepOneAction from "@/components/vault/open/StepOneAction.vue";
 import RiskWarnings from "@/components/vault/open/RiskWarnings.vue";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import OpenVaultPrediction from "@/components/vault/open/OpenVaultPrediction.vue";
@@ -46,6 +75,9 @@ import { Get } from "vuex-pathify";
     RiskWarnings,
     BaseFormInput,
     OpenVaultPrediction,
+    StepOneForm,
+    StepOneInfomations,
+    StepOneAction,
   },
 })
 export default class GenerateVault extends Mixins(mixins.page) {
@@ -58,6 +90,8 @@ export default class GenerateVault extends Mixins(mixins.page) {
   depositAmount = "";
 
   debtAmount = "";
+
+  currentStep = 1;
 
   riskInfo = {
     continue: {},
