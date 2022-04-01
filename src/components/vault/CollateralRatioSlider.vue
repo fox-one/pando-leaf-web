@@ -28,7 +28,7 @@ import { LINKS } from "~/constants";
   },
 })
 export default class CollateralRatioSlider extends Vue {
-  @Prop() vault!: API.Vault;
+  @Prop() collateralId!: string;
 
   @Prop() ratio!: number;
 
@@ -38,12 +38,8 @@ export default class CollateralRatioSlider extends Vue {
     const { toPercent, isValid } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
 
-    const { liquidationRatio, price } = getters.getVaultFields(
-      this.vault?.id ?? ""
-    );
-
     const { minimumRatio, minimumRatioText } = getters.getMarketFields(
-      this.vault?.collateral_id
+      this.collateralId
     );
 
     let ratioText = toPercent({ n: this.ratio, dp: 1 });
@@ -68,8 +64,6 @@ export default class CollateralRatioSlider extends Vue {
     return {
       minimumRatio,
       minimumRatioText,
-      liquidationRatio,
-      price,
       ratioText,
       color,
       progress,

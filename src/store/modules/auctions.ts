@@ -57,6 +57,7 @@ const getters: GetterTree<State.Auctions, unknown> = {
 
 const mutations: MutationTree<State.Auctions> = {
   ...make.mutations(state),
+
   SET_ONGOING_LOADING(state, loading) {
     state.ongoing.loading = loading;
   },

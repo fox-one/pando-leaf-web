@@ -72,5 +72,11 @@ export function makeIconValues() {
     iconAuctionTriangle: {
       component: "icon-auction-triangle",
     },
+    iconBids: {
+      component: "icon-bids",
+    },
+    iconBidFill: {
+      component: "icon-bid-fill",
+    },
   };
 }

@@ -1,18 +1,7 @@
 <template>
   <v-form ref="form" class="ma-0 pa-4" autocomplete="off">
     <div class="text-3 mb-4 text-center greyscale_1--text">
-      Please input deposit amount
-    </div>
-
-    <base-form-input
-      :amount.sync="bindDepositAmount"
-      :asset="meta.collateralAsset"
-      :rules="rulesDeposit"
-      :placeholder="$t('form.deposit-amount')"
-    />
-
-    <div class="text-3 mt-8 mb-4 greyscale_1--text">
-      {{ $t("common.generate") }}
+      Please Input generate amount
     </div>
 
     <base-form-input
@@ -24,13 +13,18 @@
       :placeholder="$t('form.mint-amount')"
     />
 
-    <!-- <base-risk-slider class="mt-6" :progress="meta.progress" /> -->
+    <collateral-ratio-slider
+      :collateral-id="meta.collateralId"
+      :ratio="meta.changedRatio"
+      :risk="meta.changedRisk"
+    />
 
     <open-vault-action
       :collateral="collateral"
       :deposit="bindDepositAmount"
       :mint="bindDebtAmount"
       :disabled="validate.disabled"
+      @back="handleBackStep"
       @success="handleSuccess"
     />
   </v-form>
@@ -41,7 +35,7 @@ import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import OpenAppBar from "./OpenAppBar.vue";
 import OpenVaultAction from "./OpenVaultAction.vue";
 import BaseFormInput from "@/components/base/FormInput.vue";
-import BaseRiskSlider from "@/components/base/RiskSlider.vue";
+import CollateralRatioSlider from "./../CollateralRatioSlider.vue";
 import { RISK } from "~/enums";
 import BigNumber from "bignumber.js";
 import { toPrecision } from "@foxone/utils/number";
@@ -51,7 +45,7 @@ import { toPrecision } from "@foxone/utils/number";
     OpenAppBar,
     OpenVaultAction,
     BaseFormInput,
-    BaseRiskSlider,
+    CollateralRatioSlider,
   },
 })
 export default class OpenForm extends Vue {
@@ -78,7 +72,15 @@ export default class OpenForm extends Vue {
     } = getters.openVaultPrediction(depositNum, mintNum, this.collateral);
     const marketFields = getters.getMarketFields(this.collateral?.id);
 
-    const progress = (mintNum / maxAvailable) * 100;
+    const changedRatio =
+      +this.bindDebtAmount &&
+      (+this.bindDepositAmount * marketFields.collateralPrice) /
+        +this.bindDebtAmount;
+
+    const changedRisk = this.$utils.collateral.getRiskLevelMeta(
+      changedRatio,
+      marketFields.minimumRatio
+    );
 
     const suggest = toPrecision({
       n: maxAvailable * 0.6,
@@ -87,13 +89,19 @@ export default class OpenForm extends Vue {
     });
     return {
       ...marketFields,
+      collateralId: this.collateral?.id ?? "",
       collateralizationRatio,
       liquidationPrice,
       liquidationPriceText,
       currentDepositPrice: format({ n: this.collateral?.price || "0" }),
       suggest,
-      progress,
+      changedRatio,
+      changedRisk,
     };
+  }
+
+  handleBackStep() {
+    this.$emit("back");
   }
 
   handleSuccess() {

@@ -2,12 +2,16 @@
   <base-connect-wallet-btn class="mt-8 mb-4 text-center">
     <f-button
       class="px-8"
-      color="primary"
+      :color="meta.leading ? 'leading' : 'primary'"
       :loading="loading"
       :disabled="meta.confirmDisabled"
       @click="confirm"
     >
-      {{ $t("auction.bid-now") }}
+      <v-icon v-if="!meta.leading" size="16">$iconBidFill</v-icon>
+
+      {{
+        meta.leading ? $t("auction.leading-the-auction") : $t("auction.bid-now")
+      }}
     </f-button>
   </base-connect-wallet-btn>
 </template>
@@ -33,9 +37,8 @@ export default class AuctionDebtAction extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { isStage1, debtAsset, minBid, maxBid } = getters.getFlipFields(
-      this.flip
-    );
+    const { isStage1, debtAsset, minBid, maxBid, leading } =
+      getters.getFlipFields(this.flip);
 
     let confirmDisabled = true;
     if (isStage1) {
@@ -50,6 +53,7 @@ export default class AuctionDebtAction extends Vue {
       debtLogo: debtAsset?.logo,
       debtAsset,
       confirmDisabled,
+      leading,
     };
   }
 

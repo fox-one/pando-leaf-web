@@ -1,32 +1,45 @@
 <template>
-  <base-pagination-list
-    :data="dataset"
-    :error="error"
-    :loading="loading"
-    :pages="pages"
-    :page.sync="page"
-  >
-    <auctions-list-item
-      v-for="(item, index) in dataset"
-      :key="index"
-      :flip="item"
-      class="mb-4 mx-4"
-      @refresh="requestLoadMore()"
-    />
-    <template #empty> <empty-auctions-place-holder /> </template>
-  </base-pagination-list>
+  <div>
+    <v-layout class="mt-4 ml-4">
+      <auction-filters v-model="filters" />
+
+      <my-bids />
+    </v-layout>
+
+    <base-pagination-list
+      :data="dataset"
+      :error="error"
+      :loading="loading"
+      :pages="pages"
+      :page.sync="page"
+    >
+      <auctions-list-item
+        v-for="(item, index) in dataset"
+        :key="index"
+        :flip="item"
+        class="mb-4 mx-4"
+        @refresh="requestLoadMore()"
+      />
+      <template #empty> <empty-auctions-place-holder /> </template>
+    </base-pagination-list>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import AuctionFilters from "./AuctionFilters.vue";
 import AuctionsListItem from "./AuctionsListItem.vue";
+import MyBids from "./MyBids.vue";
 import EmptyAuctionsPlaceHolder from "./EmptyAuctionsPlaceHolder.vue";
 import BasePaginationList from "@/components/base/PaginationList.vue";
 import { Get, Sync } from "vuex-pathify";
+import { FlipPhase } from "~/enums";
 
 @Component({
   components: {
+    AuctionFilters,
     AuctionsListItem,
+    MyBids,
     EmptyAuctionsPlaceHolder,
     BasePaginationList,
   },
@@ -45,6 +58,8 @@ export default class AuctioningList extends Vue {
   error = false;
 
   intervalId: any = null;
+
+  filters = `${FlipPhase.tend},${FlipPhase.dent}`;
 
   mounted() {
     this.requestLoadMore(true);

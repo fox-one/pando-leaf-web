@@ -27,21 +27,25 @@ export const RISK_LEVEL_META: Record<RISK, Utils.VaultRiskLevelMeta> = {
   [RISK.NA]: {
     color: "greyscale_1",
     bg_color: "greyscale_6",
+    subtitle: "greyscale_3",
     value: RISK.NA,
   },
   [RISK.HIGH]: {
     color: "risk_high",
     bg_color: "risk_high_bg",
+    subtitle: "risk_high_subtitle",
     value: RISK.HIGH,
   },
   [RISK.MEDIUM]: {
     color: "risk_mid",
     bg_color: "risk_mid_bg",
+    subtitle: "risk_mid_subtitle",
     value: RISK.MEDIUM,
   },
   [RISK.LOW]: {
     color: "risk_low",
     bg_color: "risk_low_bg",
+    subtitle: "risk_low_subtitle",
     value: RISK.LOW,
   },
 };

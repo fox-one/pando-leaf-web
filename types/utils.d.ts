@@ -14,6 +14,7 @@ declare namespace Utils {
   export interface VaultRiskLevelMeta {
     color: string;
     bg_color: string;
+    subtitle: string;
     value: RISK;
   }
 }

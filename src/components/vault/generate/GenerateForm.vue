@@ -10,7 +10,7 @@
     />
 
     <collateral-ratio-slider
-      :vault="vault"
+      :collateral-id="meta.collateralId"
       :ratio="meta.changedRatio"
       :risk="meta.changedRisk"
     />
@@ -97,6 +97,7 @@ export default class GenerateForm extends Vue {
       marketFields.minimumRatio
     );
     return {
+      collateralId: this.vault?.collateral_id ?? "",
       debtAsset,
       debtAmount,
       debtSymbol,

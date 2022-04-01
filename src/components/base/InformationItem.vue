@@ -50,7 +50,7 @@ export default class extends Vue {
 
   @Prop({ default: null }) learnMore!: string;
 
-  @Prop({ default: 13 }) fontSize!: number;
+  @Prop({ default: 14 }) fontSize!: number;
 
   get meta() {
     let valueColor = "greyscale_1--text";
@@ -72,6 +72,5 @@ export default class extends Vue {
 .infomation-item {
   font-style: normal;
   font-weight: 500;
-  letter-spacing: -0.006em;
 }
 </style>

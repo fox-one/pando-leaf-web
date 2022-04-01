@@ -22,7 +22,7 @@
     <f-divider class="mt-3" />
 
     <collateral-ratio-slider
-      :vault="vault"
+      :collateral-id="meta.collateralId"
       :ratio="meta.changedRatio"
       :risk="meta.changedRisk"
     />
@@ -112,6 +112,7 @@ export default class PaybackForm extends Vue {
     if (changedRatio < 0) changedRatio = 0;
 
     return {
+      collateralId: collateral?.id ?? "",
       balance: walletAsset?.balance,
       ratio,
       debtAsset,

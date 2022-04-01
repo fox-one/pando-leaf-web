@@ -9,7 +9,7 @@
       class="field py-2"
     >
       <div class="field__title">
-        <span class="mr-1" :style="[{ opacity: field.opacity }]">
+        <span class="mr-1" :style="[{ color: field.titleColor }]">
           {{ field.title }}
         </span>
       </div>
@@ -34,6 +34,7 @@ interface VaultField {
   value: string;
   hint?: TranslateResult;
   emphasize?: boolean;
+  titleColor?: VuetifyThemeItem;
   color?: VuetifyThemeItem;
   opacity?: number;
   learnMore?: string;
@@ -99,20 +100,19 @@ class VaultFields extends Vue {
           title: this.$t("common.current-symbol-price", {
             symbol: collateralSymbol,
           }),
-          opacity: 0.4,
           value: `${format({ n: price })} ${debtSymbol}`,
+          titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
         },
         {
           title: this.$t("common.collateral-ratio"),
           value: ratioText,
           color: this.$vuetify.theme.currentTheme[riskLevelMeta.color],
-          opacity: 0.4,
           hint: this.$t("tooltip.collateralization-ratio"),
           learnMore: LINKS["vault.liquidation-ratio"],
+          titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
         },
         {
           title: this.$t("common.next-price"),
-          opacity: 0.4,
           value: `${nextPriceText} ${debtSymbol}`,
           hint: isValidPrice
             ? this.$t("tooltip.next-price", {
@@ -120,13 +120,14 @@ class VaultFields extends Vue {
               })
             : undefined,
           learnMore: LINKS["vault.price-oracles"],
+          titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
         },
         {
           title: this.$t("common.liquidation-price"), // debt * ratio / collateral
           value: liquidationPriceText,
-          opacity: 0.4,
           hint: this.$t("tooltip.liquidation-price"),
           learnMore: LINKS["vault.liquidation-price"],
+          titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
         }
       );
     }

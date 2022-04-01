@@ -1,15 +1,21 @@
 <template>
   <base-bottom-action-bar>
     <base-connect-wallet-btn class="pa-4" block>
-      <f-button
-        :disabled="disabled"
-        :loading="loading"
-        color="primary"
-        @click="confirm"
-        style="width: 100%"
-      >
-        {{ $t("form.button.deposit-to-generate") }}
-      </f-button>
+      <v-layout>
+        <f-button fab elevation="0" class="greyscale_6" @click="handleBack">
+          <v-icon style="transform: rotateY(180deg)">$FIconArrowRight4P</v-icon>
+        </f-button>
+
+        <f-button
+          :disabled="disabled"
+          :loading="loading"
+          color="primary"
+          @click="confirm"
+          style="flex: 1 0 auto; margin-left: 16px"
+        >
+          {{ $t("form.button.deposit-to-generate") }}
+        </f-button>
+      </v-layout>
     </base-connect-wallet-btn>
   </base-bottom-action-bar>
 </template>
@@ -38,6 +44,10 @@ export default class OpenVaultAction extends Vue {
 
   mounted() {
     this.follow_id = this.$utils.helper.uuidV4();
+  }
+
+  handleBack() {
+    this.$emit("back");
   }
 
   async confirm() {

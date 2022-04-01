@@ -2,12 +2,16 @@
   <base-connect-wallet-btn class="mt-8 mb-4 text-center">
     <f-button
       :disabled="meta.confirmDisabled"
-      color="primary"
+      :color="meta.leading ? 'leading' : 'primary'"
       :loading="loading"
       @click="confirm"
       class="px-8"
     >
-      {{ $t("auction.bid-now") }}
+      <v-icon v-if="!meta.leading" size="16">$iconBidFill</v-icon>
+
+      {{
+        meta.leading ? $t("auction.leading-the-auction") : $t("auction.bid-now")
+      }}
     </f-button>
   </base-connect-wallet-btn>
 </template>

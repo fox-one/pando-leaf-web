@@ -32,6 +32,10 @@ const ficons = [
   "FIconAdd4P",
   "FIconAdd3PFill",
   "FIconArrowRight4P",
+  "FIconFilter",
+  "FIconBid",
+  "FIconDoneAFill",
+  "FIconRadioOff",
 ].reduce((m, k) => ({ ...m, [k]: { component: FIcons[k] } }), {});
 
 const icons = [

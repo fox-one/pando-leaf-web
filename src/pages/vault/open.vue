@@ -15,6 +15,7 @@
         :collateral.sync="collateral"
         :deposit-amount.sync="depositAmount"
         :debt-amount.sync="debtAmount"
+        @next="handleNext"
       />
 
       <step-one-infomations
@@ -37,6 +38,7 @@
         :collateral="collateral"
         :deposit-amount.sync="depositAmount"
         :debt-amount.sync="debtAmount"
+        @back="currentStep = 1"
       />
 
       <open-vault-prediction
@@ -45,10 +47,6 @@
         :deposit-amount="depositAmount"
         :debt-amount="debtAmount"
       />
-
-      <f-divider class="" />
-
-      <risk-warnings />
 
       <div style="height: 200px"></div>
     </div>
@@ -120,6 +118,10 @@ export default class GenerateVault extends Mixins(mixins.page) {
 
   get queryId() {
     return this.$route.query["id"];
+  }
+
+  handleNext() {
+    this.currentStep = 2;
   }
 
   handleCollateralChange(item: API.Collateral) {

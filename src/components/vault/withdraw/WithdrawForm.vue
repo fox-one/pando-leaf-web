@@ -38,7 +38,7 @@
     <f-divider class="mt-5" />
 
     <collateral-ratio-slider
-      :vault="vault"
+      :collateral-id="meta.collateralId"
       :ratio="meta.changedRatio"
       :risk="meta.changedRisk"
     />
@@ -113,6 +113,7 @@ export default class extends Vue {
     );
 
     return {
+      collateralId: this.vault?.collateral_id ?? "",
       risk,
       liquidationRatio,
       ratio,
