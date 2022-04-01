@@ -113,12 +113,16 @@ const mutations: MutationTree<State.Auctions> = {
 };
 
 const actions: ActionTree<State.Auctions, any> = {
-  async refreshOngoing({ state, commit }) {
+  async refreshOngoing({ state, commit }, { withLoading }) {
     if (state.ongoing.loading) return;
-    commit("SET_ONGOING_LOADING", true);
+    if (withLoading) {
+      commit("SET_ONGOING_LOADING", true);
+    }
     const response = await this.$http.queryFlips(state.ongoing.params);
     commit("SET_ONGOING_RESULT", response);
-    commit("SET_ONGOING_LOADING", false);
+    if (withLoading) {
+      commit("SET_ONGOING_LOADING", false);
+    }
   },
 
   async refreshDone({ state, commit }, { withLoading = true }) {
