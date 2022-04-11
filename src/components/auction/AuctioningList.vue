@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout class="mt-4 ml-4">
-      <auction-filters v-model="filters" />
+      <auction-filters v-model="filters" @change="handleFilterChanged" />
 
       <my-bids />
     </v-layout>
@@ -78,6 +78,10 @@ export default class AuctioningList extends Vue {
 
   get page() {
     return Math.ceil(this.offset / this.limit);
+  }
+
+  handleFilterChanged() {
+    this.requestLoadMore(true);
   }
 
   async requestLoadMore(withLoading = false) {

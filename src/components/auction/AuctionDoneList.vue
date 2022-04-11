@@ -48,6 +48,7 @@ export default class AuctionsDoneList extends Vue {
   @Watch("page")
   onPageChanged(newVal) {
     this.offset = (newVal - 1) * this.limit;
+    console.log("bindPage:", newVal);
     this.requestLoadMore();
   }
 
@@ -69,12 +70,12 @@ export default class AuctionsDoneList extends Vue {
     }
   }
 
-  async requestLoadMore() {
+  async requestLoadMore(withLoading = true) {
     if (this.loading) return;
-
     try {
-      await this.$store.dispatch("auctions/refreshDone");
+      await this.$store.dispatch("auctions/refreshDone", { withLoading });
     } catch (error) {
+      console.log(error);
       this.$utils.helper.errorHandler(this, error);
       this.error = true;
       this.loading = false;

@@ -36,7 +36,6 @@
           v-for="item in filtedCollaterals"
           :key="item.id"
           :collateral="item"
-          @click.native="handleAddVault(item)"
           @add="handleAddVault(item)"
         />
       </div>

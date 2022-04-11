@@ -46,7 +46,11 @@
       </template>
 
       <template v-else>
-        <my-vault-tag style="margin-top: 30.5px" :triangle="false" />
+        <my-vault-tag
+          v-if="meta.isMyVault"
+          style="margin-top: 30.5px"
+          :triangle="false"
+        />
 
         <v-icon class="mt-9 mr-4" align-self-end size="16">
           $FIconChevronRight

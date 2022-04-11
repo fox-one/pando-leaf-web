@@ -167,7 +167,7 @@
   "me.no-vault-1": "You don't have a vault yet.",
   "me.symbol-locked": "{symbol} Locked",
   "me.total-collaterals": "Your total collaterals",
-  "me.vault-empty": "This vault don’t have any collateral",
+  "me.vault-empty": "Vault {id} don’t have any collateral",
   "my-bids":"My Bids",
   "network.congestion.confirm": "Got it",
   "network.congestion.text": "Your transction is being processed. Due to network congestion, please allow for some time to receive your fund.",

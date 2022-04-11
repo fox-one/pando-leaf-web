@@ -252,17 +252,17 @@ export default class AuctionDetail extends Vue {
   height: 3px;
   background: var(--v-greyscale_6-base);
 
-  .active {
+  &.active {
     background: #89df0f;
     flex: 0 0 50%;
     max-width: 50%;
   }
 
-  .left {
+  &.left {
     justify-content: flex-start;
   }
 
-  .right {
+  &.right {
     justify-content: flex-end;
   }
 }

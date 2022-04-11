@@ -184,7 +184,7 @@ export default class extends Vue {
         return { disabled: true };
       }
     }
-    if (this.meta.changedRisk.value === RISK.HIGH) {
+    if (this.meta.changedRatio <= this.meta.liquidationRatio) {
       return { disabled: true };
     }
     return { disabled: false };

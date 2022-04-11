@@ -127,6 +127,7 @@ const actions: ActionTree<State.Auctions, any> = {
 
   async refreshDone({ state, commit }, { withLoading = true }) {
     if (state.done.loading) return;
+    console.log("withLoading", withLoading);
     if (withLoading) {
       commit("SET_DONE_LOADING", true);
     }

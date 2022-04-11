@@ -3,27 +3,25 @@
     v-model="show"
     :persistent="false"
     :adaptive="true"
-    :wapper-in-desktop="'menu'"
+    :wapper-in-desktop="'dialog'"
     :title="meta.title"
   >
     <template #activator="{ on }">
-      <div v-on="on" class="py-8 vault-hidden-text greyscale_3--text">
+      <div
+        v-on="on"
+        v-if="meta.hidden > 0"
+        class="my-8 vault-hidden-text greyscale_3--text"
+      >
         {{ meta.title }}
         <v-icon size="12" color="primary"> $FIconChevronRight</v-icon>
       </div>
     </template>
 
-    <v-row class="mx-0 pb-16">
-      <v-col
-        v-for="vault in hiddenVaults"
-        :key="vault.id"
-        cols="12"
-        class="pa-4 mb-n4"
-        md="6"
-      >
+    <v-list class="mx-0 pb-16 dialog-content overflow-auto">
+      <div v-for="vault in hiddenVaults" :key="vault.id" class="pa-4 mb-n4">
         <vault-list-item :id="vault.id" />
-      </v-col>
-    </v-row>
+      </div>
+    </v-list>
   </f-bottom-sheet>
 </template>
 
@@ -52,9 +50,10 @@ export default class VaultHidden extends Vue {
   }
 
   get meta() {
-    const hidden = this.hiddenVaults.length;
+    const hidden = this.hiddenVaults?.length;
     return {
       title: `${hidden} Vault Hidden`,
+      hidden,
     };
   }
 }
@@ -69,5 +68,10 @@ export default class VaultHidden extends Vue {
 
   justify-content: center;
   text-align: center;
+}
+
+.dialog-content {
+  max-height: calc(90vh - 88px);
+  height: calc(90vh - 88px);
 }
 </style>
