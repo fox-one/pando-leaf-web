@@ -63,7 +63,15 @@ class VaultHistory extends Vue {
     if (this.filter === "all") {
       return this.events;
     }
-    return this.events.filter((e) => e.action === this.filter);
+    return this.events.filter((e) => {
+      if (
+        this.filter === VatAction.VatDeposit ||
+        this.filter === VatAction.VatGenerate
+      ) {
+        return e.action === this.filter || e.action === VatAction.VatOpen;
+      }
+      return e.action === this.filter;
+    });
   }
 }
 export default VaultHistory;
