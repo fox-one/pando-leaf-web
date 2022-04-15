@@ -4,7 +4,7 @@
       v-if="triangle"
       class="icon-triagnle"
     ></icon-auction-triangle>
-    <span class="top-arrow-tag"> My Vault</span>
+    <span class="top-arrow-tag"> {{ $t("common.my-vault") }}</span>
   </div>
 </template>
 

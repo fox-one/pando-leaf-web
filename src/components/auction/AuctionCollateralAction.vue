@@ -6,9 +6,13 @@
       :loading="loading"
       @click="confirm"
       class="px-8"
+      :style="
+        meta.leading
+          ? `background:${leadingColor} !important; color: #000000;`
+          : ''
+      "
     >
       <v-icon v-if="!meta.leading" size="16">$iconBidFill</v-icon>
-
       {{
         meta.leading ? $t("auction.leading-the-auction") : $t("auction.bid-now")
       }}
@@ -35,9 +39,15 @@ export default class AuctionCollateralAction extends Vue {
 
   follow_id = "";
 
+  get leadingColor() {
+    return this.$vuetify.theme.currentTheme.leading;
+  }
+
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { debtAsset, isStage2, maxBid } = getters.getFlipFields(this.flip);
+    const { debtAsset, isStage2, maxBid, leading } = getters.getFlipFields(
+      this.flip
+    );
 
     let confirmDisabled = true;
     if (isStage2) {
@@ -50,6 +60,7 @@ export default class AuctionCollateralAction extends Vue {
       isStage2,
       maxBid,
       confirmDisabled,
+      leading,
     };
   }
 

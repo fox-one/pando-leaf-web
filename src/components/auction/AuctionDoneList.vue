@@ -48,7 +48,6 @@ export default class AuctionsDoneList extends Vue {
   @Watch("page")
   onPageChanged(newVal) {
     this.offset = (newVal - 1) * this.limit;
-    console.log("bindPage:", newVal);
     this.requestLoadMore();
   }
 

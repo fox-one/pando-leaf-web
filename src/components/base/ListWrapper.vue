@@ -60,6 +60,7 @@ class ListWapper extends Vue {
   }
 
   loadData() {
+    if (this.disabled) return;
     this.$emit("load");
   }
 }

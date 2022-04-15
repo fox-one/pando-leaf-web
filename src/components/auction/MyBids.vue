@@ -1,21 +1,22 @@
 <template>
   <f-bottom-sheet
     v-model="dialog"
-    :title="$t('my-bids')"
+    :title="$t('auction.my-bids')"
     wapper-in-desktop="dialog"
   >
     <template #activator="{ on }">
       <div v-on="on" class="my-bids-activator ml-4">
         <v-icon size="16">$iconBids</v-icon>
-        <span class="ml-1">My Bids</span>
+        <span class="ml-1">{{ $t("auction.my-bids") }}</span>
       </div>
     </template>
 
-    <div class="px-4 pb-6">
+    <div class="px-4 pb-6 dialog-content overflow-auto">
       <base-list-wrapper
         :data="dataset"
         :error="error"
         :loading="loading"
+        :ended="!hasNext"
         @load="requestLoadMore"
       >
         <auctions-list-item
@@ -35,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model } from "vue-property-decorator";
+import { Component, Vue, Model, Watch } from "vue-property-decorator";
 import { FlipPhase } from "~/enums";
 import AuctionsListItem from "./AuctionsListItem.vue";
 import EmptyAuctionsPlaceHolder from "./EmptyAuctionsPlaceHolder.vue";
@@ -54,13 +55,30 @@ export default class MyBids extends Vue {
 
   hasNext = true;
 
-  mounted() {
-    this.requestLoadMore();
+  intervalId: any = null;
+
+  @Watch("dialog")
+  onDialogShowing(show: boolean) {
+    console.log("show", show);
+    if (show) {
+      this.requestLoadMore();
+      console.log("request");
+      if (this.intervalId === null) {
+        console.log("intervalRequest");
+        this.intervalId = setInterval(() => {
+          this.requestLoadMore();
+        }, 15000);
+      }
+    } else {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
   }
 
   requestLoadMore() {
     if (this.loading) return;
     this.loading = true;
+
     this.$http
       .queryFlips({
         limit: 20,
@@ -96,5 +114,10 @@ export default class MyBids extends Vue {
 
   background: var(--v-greyscale_6-base);
   border-radius: 53px;
+}
+
+.dialog-content {
+  max-height: calc(90vh - 88px);
+  height: calc(90vh - 88px);
 }
 </style>

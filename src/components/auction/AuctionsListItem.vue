@@ -3,25 +3,27 @@
     <v-layout @click="toDetail(flip)">
       <f-mixin-asset-logo :logo="meta.logo" :size="36" class="ml-4 mt-6 mr-3" />
 
-      <div class="flex-grow-1 mt-6">
+      <v-layout class="flex-grow-1 mt-6" column justify-center>
         <div class="item-title">{{ flip.lot }} {{ meta.symbol }}</div>
-        <div class="item-content">
-          {{ meta.price }}
-        </div>
 
-        <v-layout v-if="meta.isStage1 || meta.isStage2">
+        <div v-if="meta.isStage1 || meta.isStage2">
+          <div class="item-content">
+            {{ meta.price }}
+          </div>
+
           <!-- timer -->
           <div class="round-tag mt-3">
-            <span class="greyscale_1--text"
-              >ROUND {{ meta.isStage1 ? "1" : "2" }}</span
-            >
+            <span class="greyscale_1--text text-uppercase">
+              {{ meta.isStage1 ? $t("round-1") : $t("round-2") }}
+            </span>
+
             <count-down-timer
               class="ml-3"
               :diffSeconds="meta.diffSeconds"
             ></count-down-timer>
           </div>
-        </v-layout>
-      </div>
+        </div>
+      </v-layout>
 
       <!-- label buttons -->
       <template v-if="meta.isStage1 || meta.isStage2">
@@ -80,19 +82,19 @@ export default class AuctionsListItem extends Vue {
   timer: any = null;
 
   get meta() {
+    const { toFiat } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
     const {
       auctionAsset,
-      auctionSymbol,
-      debtSymbol,
-      collateral2debt,
+      collateralFiatValue,
       isStage1,
       isStage2,
+      isDone,
       isMyVault,
       leading,
       participated,
     } = getters.getFlipFields(this.flip);
-    const price = `1 ${auctionSymbol} ≈ ${collateral2debt} ${debtSymbol}`;
+    const price = `≈ ${toFiat(this, { n: collateralFiatValue })}`;
     let diffSeconds = dayjs(this.flip.tic).diff(dayjs(), "seconds");
     if (
       dayjs(this.flip.tic).unix() === 0 ||
@@ -109,6 +111,7 @@ export default class AuctionsListItem extends Vue {
       participated,
       isStage1,
       isStage2,
+      isDone,
       isMyVault,
       diffSeconds,
     };
@@ -140,7 +143,6 @@ export default class AuctionsListItem extends Vue {
 </script>
 <style lang="scss" scoped>
 .item-title {
-  margin-bottom: 8px;
   font-weight: 600;
   font-size: 14px;
   line-height: 17px;
@@ -151,6 +153,7 @@ export default class AuctionsListItem extends Vue {
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
+  margin-top: 8px;
   color: var(--v-greyscale_3-base);
 }
 

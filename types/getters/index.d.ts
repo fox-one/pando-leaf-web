@@ -112,6 +112,7 @@ declare namespace Getter {
     "auctions/flipsDone": API.Flip[];
     "auctions/flipsAuctioning": API.Flip[];
     "auctions/flipKickEvent": API.FlipEvent | undefined;
+    "auctions/yourLastBidEvent": API.FlipEvent | undefined;
 
     "auth/isLogged": boolean;
     "auth/canReadAsset": boolean;

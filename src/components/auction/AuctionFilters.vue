@@ -7,7 +7,7 @@
     <template #activator="{ on }">
       <v-layout v-on="on" class="filter-activator">
         <v-icon size="20">$FIconFilter</v-icon>
-        <span class="ml-1">Filter</span>
+        <span class="ml-1">{{ $t("filter") }}</span>
       </v-layout>
     </template>
 
@@ -51,15 +51,15 @@ export default class AuctionFilters extends Vue {
   get items() {
     const round1 = {
       value: FlipPhase.tend,
-      text: "Round 1",
+      text: this.$t("round-1"),
     };
     const round2 = {
       value: FlipPhase.dent,
-      text: "Round 2",
+      text: this.$t("round-2"),
     };
     const myVault = {
       value: "my-vault",
-      text: "My Vault",
+      text: this.$t("common.my-vault"),
     };
     return [round1, round2, myVault];
   }

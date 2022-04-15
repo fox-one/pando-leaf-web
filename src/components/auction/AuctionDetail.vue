@@ -3,20 +3,20 @@
     <!-- title -->
     <div class="auction-detail-header">
       <div class="title">
-        {{ "Selling Off" }}
+        {{ $t("auction.selling-off") }}
       </div>
 
       <div class="value">
         {{ meta.vaultCollateralValueText }}
         <span class="round-icon">
-          <v-icon size="16" @click="changeCollateral"
-            >$FIconExchange4PBold</v-icon
-          >
+          <v-icon size="16" @click="changeCollateral">
+            $FIconExchange4PBold
+          </v-icon>
         </span>
       </div>
 
       <div class="title">
-        {{ "For" }}
+        {{ $t("auction.for") }}
       </div>
 
       <div class="value">{{ flip.bid }} {{ meta.debtSymbol }}</div>
@@ -31,10 +31,10 @@
       <!-- left -->
       <v-col cols="6">
         <div
-          class="action-detail-content label-text"
+          class="action-detail-content label-text text-uppercase"
           :class="meta.isStage1 ? 'highlight' : meta.isStage2 ? 'disabled' : ''"
         >
-          ROUND 1
+          {{ $t("round-1") }}
         </div>
 
         <div
@@ -46,43 +46,45 @@
             :diff-seconds="meta.diffSeconds"
           ></count-down-timer>
 
-          <div v-else>Ended</div>
+          <div v-else>{{ $t("ended") }}</div>
         </div>
 
         <div
           class="action-detail-content label-text"
           :class="meta.isStage2 ? 'disabled' : ''"
         >
-          {{ $t("auction.vault-debt") }}
+          {{ $t("auction.highest-bid", { symbol: meta.debtSymbol }) }}
         </div>
 
         <div
           class="action-detail-content value-text"
-          :class="meta.isYourBid ? 'highlight' : ''"
+          :class="
+            meta.isStage2 ? 'disabled' : meta.isYourBid ? 'highlight' : ''
+          "
         >
-          {{ `${meta.vaultDebtAmount} ${meta.debtSymbol}` }}
+          {{
+            meta.isYourBid
+              ? $t("auction.my-bid")
+              : `${meta.vaultDebtAmount} ${meta.debtSymbol}`
+          }}
         </div>
 
-        <div
-          class="action-detail-content label-text"
-          :class="meta.isStage2 ? 'disabled' : ''"
-        >
-          {{ meta.bidLabel }}
-          {{ meta.isYourBid && meta.isStage1 ? "(You)" : "" }}
+        <div class="action-detail-content label-text">
+          {{ $t("auction.my-bid") }}
         </div>
 
         <div class="action-detail-content value-text mb-6">
-          {{ `${flip.bid} ${meta.debtSymbol}` }}
+          {{ meta.isStage1 && meta.participated ? meta.yourBid : "-" }}
         </div>
       </v-col>
 
       <!-- right -->
       <v-col cols="6">
         <div
-          class="action-detail-content label-text"
+          class="action-detail-content label-text text-uppercase"
           :class="meta.isStage1 ? 'disabled' : meta.isStage2 ? 'highlight' : ''"
         >
-          ROUND 2
+          {{ $t("round-2") }}
         </div>
 
         <div
@@ -98,32 +100,30 @@
         </div>
 
         <div class="action-detail-content label-text">
-          {{ $t("auction.vault-collateral") }}
-          <v-icon
-            size="12"
-            color="greyscale_7"
-            class="greyscale_2 rounded-circle exchange-icon"
-            @click="changeCollateral"
-          >
-            $FIconExchange4PBold
-          </v-icon>
-        </div>
-
-        <div class="action-detail-content value-text">
-          {{ meta.vaultCollateralValueText }}
+          {{ $t("auction.lowest-bid", { symbol: meta.auctionSymbol }) }}
         </div>
 
         <div
-          class="action-detail-content label-text"
-          :class="meta.isYourBid ? 'your-bid' : ''"
+          class="action-detail-content value-text"
+          :class="
+            meta.isStage1 ? 'disabled' : meta.isYourBid ? 'highlight' : ''
+          "
         >
-          {{ $t("auction.current-bid") }} {{ meta.isYourBid ? "(You)" : "" }}
+          <span v-if="meta.isStage1">-</span>
+
+          <span v-else>
+            {{ meta.isYourBid ? $t("auction.my-bid") : flip.lot }}
+          </span>
+        </div>
+
+        <div class="action-detail-content label-text">
+          {{ $t("auction.my-bid") }}
         </div>
 
         <div class="action-detail-content value-text">
-          <span v-if="meta.isStage2">{{
-            `${flip.lot} ${meta.auctionSymbol}`
-          }}</span>
+          <span v-if="meta.isStage2 && meta.participated">
+            {{ meta.yourBid }}
+          </span>
 
           <span v-else>-</span>
         </div>
@@ -161,7 +161,10 @@ export default class AuctionDetail extends Vue {
       vaultDebtAmount,
       vaultCollateralAmount,
       isYourBid,
+      participated,
     } = getters.getFlipFields(this.flip);
+
+    const yourLastBidEvent = getters["auctions/yourLastBidEvent"];
 
     const networkAuctionAsset = getters["asset/getNetworkAssetById"](
       auctionAsset?.id ?? ""
@@ -170,11 +173,11 @@ export default class AuctionDetail extends Vue {
     const debtLogo = debtAsset?.logo;
     const auctionLogo = auctionAsset?.logo;
 
-    const header = isStage2 ? "ROUND 2" : "ROUND 1";
+    const header = isStage2 ? this.$t("round-2") : this.$t("round-1");
 
     const bidLabel = isStage1
       ? this.$t("auction.current-bid")
-      : "ROUND 1 " + this.$t("common.bid");
+      : `${this.$t("round-1")} ${this.$t("common.bid")}`;
 
     let diffSeconds = dayjs(this.flip.tic).diff(dayjs(), "seconds");
     if (
@@ -189,6 +192,10 @@ export default class AuctionDetail extends Vue {
         n: +vaultCollateralAmount * +(networkAuctionAsset?.price_usd ?? 0),
       });
     }
+
+    const yourBid = isStage1
+      ? `${yourLastBidEvent?.bid} ${debtSymbol}`
+      : `${yourLastBidEvent?.lot} ${auctionSymbol}`;
 
     return {
       isDone,
@@ -205,6 +212,8 @@ export default class AuctionDetail extends Vue {
       bidLabel,
       diffSeconds,
       isYourBid,
+      participated,
+      yourBid,
     };
   }
 

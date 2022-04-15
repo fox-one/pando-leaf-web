@@ -50,6 +50,10 @@ const getters: GetterTree<State.Auctions, unknown> = {
     return getters.allFlips?.length > 0;
   },
 
+  yourLastBidEvent(state) {
+    return state.events?.find((e) => e.is_me);
+  },
+
   flipKickEvent(state) {
     return state.events?.find((v) => v.action === FlipAction.FlipKick);
   },
@@ -127,7 +131,6 @@ const actions: ActionTree<State.Auctions, any> = {
 
   async refreshDone({ state, commit }, { withLoading = true }) {
     if (state.done.loading) return;
-    console.log("withLoading", withLoading);
     if (withLoading) {
       commit("SET_DONE_LOADING", true);
     }

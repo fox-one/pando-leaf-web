@@ -6,6 +6,11 @@
       :loading="loading"
       :disabled="meta.confirmDisabled"
       @click="confirm"
+      :style="
+        meta.leading
+          ? `background:${leadingColor} !important; color: #000000;`
+          : ''
+      "
     >
       <v-icon v-if="!meta.leading" size="16">$iconBidFill</v-icon>
 
@@ -35,6 +40,10 @@ export default class AuctionDebtAction extends Vue {
 
   loading = false;
 
+  get leadingColor() {
+    return this.$vuetify.theme.currentTheme.leading;
+  }
+
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
     const { isStage1, debtAsset, minBid, maxBid, leading } =
@@ -43,7 +52,7 @@ export default class AuctionDebtAction extends Vue {
     let confirmDisabled = true;
     if (isStage1) {
       const meetDebt = +this.amount >= +minBid && +this.amount <= +maxBid;
-      confirmDisabled = !this.amount || !meetDebt;
+      confirmDisabled = !this.amount || !meetDebt || leading;
     }
 
     return {
