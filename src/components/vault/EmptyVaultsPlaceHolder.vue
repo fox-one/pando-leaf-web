@@ -19,16 +19,20 @@
         </slot>
       </template>
     </action-create-vault>
+
+    <vault-hidden />
   </v-layout>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import ActionCreateVault from "./ActionCreateVault.vue";
+import VaultHidden from "./VaultHidden.vue";
 
 @Component({
   components: {
     ActionCreateVault,
+    VaultHidden,
   },
 })
 class EmptyPlaceHolder extends Vue {

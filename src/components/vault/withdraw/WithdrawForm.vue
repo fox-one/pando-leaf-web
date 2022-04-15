@@ -184,7 +184,10 @@ export default class extends Vue {
         return { disabled: true };
       }
     }
-    if (this.meta.changedRatio <= this.meta.liquidationRatio) {
+    if (
+      this.meta.changedRatio !== 0 &&
+      this.meta.changedRatio <= this.meta.liquidationRatio
+    ) {
       return { disabled: true };
     }
     return { disabled: false };

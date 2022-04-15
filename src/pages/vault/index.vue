@@ -1,11 +1,11 @@
 <template>
   <v-container
     class="pa-4"
-    :class="[{ 'fill-height': !isLogged || !haveVault }]"
+    :class="[{ 'fill-height': !isLogged || vaultsEmpty }]"
   >
     <login-place-holder v-if="!isLogged" />
 
-    <empty-vaults-place-holder v-else-if="!haveVault" />
+    <empty-vaults-place-holder v-else-if="vaultsEmpty" />
 
     <v-layout column v-else>
       <position-overview class="mb-4" />
@@ -56,7 +56,7 @@ import { LINKS } from "~/constants";
 class VaultPage extends Mixins(mixins.page) {
   @Get("auth/isLogged") isLogged!: boolean;
 
-  @Get("vault/haveVault") haveVault!: boolean;
+  @Get("vault/vaultsEmpty") vaultsEmpty!: boolean;
 
   get title() {
     return this.$t("tab.home") as string;

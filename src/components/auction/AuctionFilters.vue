@@ -64,6 +64,10 @@ export default class AuctionFilters extends Vue {
     return [round1, round2, myVault];
   }
 
+  get hasMyVault() {
+    return this.types.includes("my-vault");
+  }
+
   @Watch("dialog")
   handleDialogChange() {
     this.types = this.value.split(",");
@@ -84,9 +88,9 @@ export default class AuctionFilters extends Vue {
   }
 
   handleSelect(item) {
-    if (this.isActive(item)) {
+    if (this.isActive(item) && this.types.length > 1) {
       this.types = this.types.filter((x) => x !== item.value);
-    } else {
+    } else if (!this.types.includes(item.value)) {
       this.types = [...this.types, item.value];
     }
   }

@@ -103,6 +103,9 @@ declare namespace Getter {
     "asset/getWalletAssetById": State.GetWalletAssetById;
     "asset/getNetworkAssetById": State.GetNetworkAssetById;
 
+    "vault/haveVault": boolean;
+    "vault/vaultsEmpty": boolean;
+
     "collateral/getCollateralById": State.GetCollateralById;
     "collateral/getOverview": State.MarketOverview;
 

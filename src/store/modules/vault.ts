@@ -14,6 +14,14 @@ const getters: GetterTree<State.Vault, unknown> = {
   haveVault(state) {
     return state.vaults && state.vaults?.length > 0;
   },
+
+  vaultsEmpty(state) {
+    return (
+      state.vaults &&
+      (state.vaults?.length === 0 ||
+        state.vaults?.map((v) => +v.ink).reduce((a, b) => a + b, 0) === 0)
+    );
+  },
 };
 
 const mutations = make.mutations(state);
