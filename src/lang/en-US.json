@@ -152,6 +152,7 @@
   "ended": "Ended",
   "filter":"Filter",
   "form.button.deposit-to-generate": "Deposit to Generate",
+  "form.collateral-deposit":"Collateral Deposit",
   "form.deposit-amount": "Deposit amount",
   "form.generate-amount": "Generate amount",
   "form.generate-ration": "Debt/ Debt Limit reach",
@@ -163,6 +164,8 @@
   "form.withdraw-amount": "Withdraw amount",
   "form.withdraw-ratio": "Withdraw Ratio",
   "form.next-step":"Next Step",
+  "form.please-input-deposit-amount":"Please input deposit amount",
+  "form.please-input-generate-amount":"Please input generate amount",
   "history.filter-title": "Select a history type",
   "market.total-asset-symbol": "Total {symbol}",
   "market.total-collateralization": "Total Collateralization",
@@ -227,8 +230,11 @@
   "validate.medium-risk": "The amount of {symbol} you are generating is putting your Vault at risk of liquidation.",
   "validate.medium-risk-withdraw": "The amount of {symbol} you are withdraw is putting your Vault at risk of liquidation.",
   "validate.minimum-debt": "A vault requires a minimum of {amount} {symbol} to be generated.",
+  "validate.minimum-collateral": "A vault requires at least {amount} {symbol} of the corresponding collateral.",
   "validate.remaining-dust-debt": "Remaining debt has to be no less than {amount} {symbol}",
   "vault.high-risk": "This vault has a high risk of being liquidated, please supply more collateral or repay debts.",
+  "vaults-hidden":"{count} Vaults Hidden",
+  "vault-hidden":"{count} Vault Hidden",
   "welcome.description": "Pando Leaf is a decentralized product where you can generate stablecoins by collateralizing crypto assets. Add a vault to start your journey.",
   "welcome.what-is": "What's Pando"
 }

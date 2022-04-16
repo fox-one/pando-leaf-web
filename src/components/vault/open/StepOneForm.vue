@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" class="ma-0 pa-4" autocomplete="off">
     <div class="text-3 mb-4 text-center greyscale_1--text">
-      Please input deposit amount
+      {{ $t("form.please-input-deposit-amount") }}
     </div>
 
     <step-one-form-input
@@ -79,27 +79,29 @@ export default class StepOneForm extends Vue {
     this.bindCollateral = collateral;
   }
 
+  // 表单校验
   get rulesDeposit() {
     return [
       (v: string) => !!v || this.$t("common.amount-required"),
       (v: string) => +v > 0 || this.$t("common.amount-invalid"),
+      (v: string) =>
+        (+v * +this.bindCollateral?.price) / this.meta.minimumRatio >=
+          Number(this.bindCollateral?.dust) ||
+        this.$t("validate.minimum-collateral", {
+          amount: this.bindCollateral?.dust,
+          symbol: this.meta.debtSymbol,
+        }),
     ];
   }
 
-  // 表单校验
+  // 按钮是否可用
   get validate() {
-    if (this.bindDepositAmount === "") {
-      return {
-        disabled: true,
-        type: "info",
-        tip: null,
-      };
+    for (const rule of this.rulesDeposit) {
+      if (true !== rule(this.bindDepositAmount)) {
+        return { disabled: true };
+      }
     }
-    return {
-      disabled: false,
-      type: "info",
-      tip: null,
-    };
+    return { disabled: false };
   }
 }
 </script>

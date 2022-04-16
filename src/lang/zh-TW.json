@@ -147,6 +147,7 @@
   "ended": "已结束",
   "filter":"筛选",
   "form.button.deposit-to-generate": "存入資產以生成",
+  "form.collateral-deposit":"存入抵押物数量",
   "form.deposit-amount": "存入數量",
   "form.generate-amount": "鑄幣數量",
   "form.generate-ration": "貸款/貸款限額",

@@ -66,28 +66,13 @@ export default class OpenVaultPrediction extends Vue {
     const { isValidOracle } = this.$utils.oracle;
     return [
       {
-        label: this.$t("common.collateralization-ratio"), // deposit * price / mint
-        value: this.meta.collateralizationRatioText,
-        valueColor: this.meta.risk.color,
-        hint: this.$t("tooltip.collateralization-ratio"),
-        learnMore: LINKS["vault.liquidation"],
-      },
-      {
-        label: this.$t("common.minimum-ratio"),
-        value: this.meta.minimumRatio,
-        hint: this.$t("tooltip.minimum-ratio"),
-        learnMore: LINKS["vault.liquidation-ratio"],
-      },
-      {
-        label: this.$t("common.liquidation-price"), // mint * mat / deposit
-        value: this.meta.liquidationPriceText,
-        valueUnit: `${this.meta.debtSymbol}`,
-        hint: this.$t("tooltip.liquidation-price"),
-        learnMore: LINKS["vault.liquidation"],
+        label: this.$t("form.collateral-deposit"),
+        value: this.depositAmount,
+        valueUnit: `${this.meta.collateralSymbol}`,
       },
       {
         label: this.$t("common.current-symbol-price", {
-          symbol: `${this.meta.collateralSymbol}/${this.meta.debtSymbol}`,
+          symbol: `${this.meta.collateralSymbol}`,
         }),
         value: this.meta.currentPrice,
         valueUnit: `${this.meta.debtSymbol}`,
@@ -99,6 +84,13 @@ export default class OpenVaultPrediction extends Vue {
         learnMore: LINKS["vault.price-oracles"],
         showChange: isValidOracle(this.meta.nextPrice),
         changedValue: this.meta.nextPrice?.price,
+      },
+      {
+        label: this.$t("common.liquidation-price"), // mint * mat / deposit
+        value: this.meta.liquidationPriceText,
+        valueUnit: `${this.meta.debtSymbol}`,
+        hint: this.$t("tooltip.liquidation-price"),
+        learnMore: LINKS["vault.liquidation"],
       },
       {
         label: this.$t("form.market-debt-ceiling"), // line- debt

@@ -51,8 +51,12 @@ export default class VaultHidden extends Vue {
 
   get meta() {
     const hidden = this.hiddenVaults?.length;
+    const title =
+      hidden === 1
+        ? this.$t("vault-hidden", { count: hidden })
+        : this.$t("vaults-hidden", { count: hidden });
     return {
-      title: `${hidden} Vault Hidden`,
+      title,
       hidden,
     };
   }

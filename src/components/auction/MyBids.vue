@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model, Watch } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import { FlipPhase } from "~/enums";
 import AuctionsListItem from "./AuctionsListItem.vue";
 import EmptyAuctionsPlaceHolder from "./EmptyAuctionsPlaceHolder.vue";

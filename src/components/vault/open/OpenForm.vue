@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" class="ma-0 pa-4" autocomplete="off">
     <div class="text-3 mb-4 text-center greyscale_1--text">
-      Please Input generate amount
+      {{ $t("form.please-input-generate-amount") }}
     </div>
 
     <base-form-input
@@ -14,10 +14,13 @@
     />
 
     <collateral-ratio-slider
+      class="mt-3"
       :collateral-id="meta.collateralId"
       :ratio="meta.changedRatio"
       :risk="meta.changedRisk"
     />
+
+    <f-divider class="mt-4 mb-n1" />
 
     <open-vault-action
       :collateral="collateral"
@@ -109,13 +112,6 @@ export default class OpenForm extends Vue {
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",
     });
-  }
-
-  get rulesDeposit() {
-    return [
-      (v: string) => !!v || this.$t("common.amount-required"),
-      (v: string) => +v > 0 || this.$t("common.amount-invalid"),
-    ];
   }
 
   get rulesDebt() {
@@ -224,7 +220,7 @@ export default class OpenForm extends Vue {
       switch (risk.value) {
         case RISK.HIGH:
           if (
-            Number(this.meta.collateralizationRatio) <
+            Number(this.meta.collateralizationRatio) <=
             Number(this.collateral?.mat)
           ) {
             // 抵押率低于清算线

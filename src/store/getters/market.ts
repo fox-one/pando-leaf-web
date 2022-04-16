@@ -79,6 +79,14 @@ export function getMarketFields(_: any, getters: Getter.GettersTree) {
 
 export function openVaultPrediction(_: any, getters: Getter.GettersTree) {
   return (deposit: number, mint: number, collateral: API.Collateral | null) => {
+    const getAssetById: State.GetAssetById = getters["asset/getAssetById"];
+
+    const collateralAsset = getAssetById(collateral?.gem ?? "");
+    const debtAsset = getAssetById(collateral?.dai ?? "");
+
+    const collateralAssetPrice = Number(collateralAsset?.price ?? "0");
+    const debtAssetPrice = Number(debtAsset?.price ?? "0");
+
     // 抵押率
     const collateralizationRatio = (deposit * Number(collateral?.price)) / mint;
     let collateralizationRatioText = toPercent({
@@ -90,7 +98,9 @@ export function openVaultPrediction(_: any, getters: Getter.GettersTree) {
     }
 
     // 清算价格计算
-    const liquidationPrice = (mint * Number(collateral?.mat || "0")) / deposit;
+    // 金库的当前价格计算方式（金库的清算价格）
+    const liquidationPrice =
+      (mint * Number(collateral?.mat || "1.5")) / deposit;
     let liquidationPriceText = format({ n: liquidationPrice });
     if (!isValid(liquidationPrice) || liquidationPrice === 0) {
       liquidationPriceText = `-`;

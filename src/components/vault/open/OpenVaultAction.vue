@@ -10,7 +10,7 @@
           :disabled="disabled"
           :loading="loading"
           color="primary"
-          @click="confirm"
+          @click="handleConfirm"
           style="flex: 1 0 auto; margin-left: 16px"
         >
           {{ $t("form.button.deposit-to-generate") }}
@@ -23,6 +23,7 @@
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Get } from "vuex-pathify";
+import { EVENTS } from "~/constants";
 
 @Component({
   components: {},
@@ -48,6 +49,46 @@ export default class OpenVaultAction extends Vue {
 
   handleBack() {
     this.$emit("back");
+  }
+
+  get meta() {
+    const getters = this.$store.getters as Getter.GettersTree;
+
+    const depositNum = Number(this.deposit);
+    const mintNum = Number(this.mint);
+
+    const { collateralizationRatio } = getters.openVaultPrediction(
+      depositNum,
+      mintNum,
+      this.collateral
+    );
+
+    const ratio = collateralizationRatio;
+
+    const timer = Math.round(
+      +(this.collateral?.mat ?? 0) * 100 - ratio * 100 + 60
+    );
+    const isHighRisk = (ratio - +(this.collateral?.mat ?? 0)) * 100 < 61;
+    return {
+      ratio,
+      timer,
+      isHighRisk,
+    };
+  }
+
+  handleConfirm() {
+    if (this.meta.isHighRisk) {
+      this.$root.$emit(EVENTS.OPEN_RISK_WARN, {
+        risk: this.meta.ratio,
+        timer: this.meta.timer,
+        action: {
+          text: this.$t("common.continue"),
+          callback: () => this.confirm(),
+        },
+      });
+    } else {
+      this.confirm();
+    }
   }
 
   async confirm() {

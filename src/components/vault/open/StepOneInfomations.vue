@@ -17,11 +17,8 @@ export default class StepOneInfomations extends Vue {
   get meta() {
     const { format, toPercent } = this.$utils.number;
     const getters = this.$store.getters as Getter.GettersTree;
-    const { maxToGenerateText, stabilityFeeText } = getters.openVaultPrediction(
-      +this.depositAmount,
-      0,
-      this.collateral
-    );
+    const { maxToGenerateText, stabilityFeeText, liquidationPriceText } =
+      getters.openVaultPrediction(+this.depositAmount, 0, this.collateral);
 
     const {
       debtSymbol,
@@ -41,6 +38,7 @@ export default class StepOneInfomations extends Vue {
     return {
       minimumRatioText,
       maxToGenerateText,
+      liquidationPriceText,
       nextPrice,
       nextPriceTime,
       currentPrice: format({ n: this.collateral?.price }),
@@ -56,7 +54,7 @@ export default class StepOneInfomations extends Vue {
     return [
       {
         label: this.$t("common.current-symbol-price", {
-          symbol: `${this.meta.collateralSymbol}/${this.meta.debtSymbol}`,
+          symbol: `${this.meta.collateralSymbol}`,
         }),
         value: this.meta.currentPrice,
         valueUnit: `${this.meta.debtSymbol}`,
@@ -68,6 +66,13 @@ export default class StepOneInfomations extends Vue {
         learnMore: LINKS["vault.price-oracles"],
         showChange: isValidOracle(this.meta.nextPrice),
         changedValue: this.meta.nextPrice?.price,
+      },
+      {
+        label: this.$t("common.liquidation-price"), // mint * mat / deposit
+        value: this.meta.liquidationPriceText,
+        valueUnit: `${this.meta.debtSymbol}`,
+        hint: this.$t("tooltip.liquidation-price"),
+        learnMore: LINKS["vault.liquidation"],
       },
       {
         label: this.$t("common.minimum-ratio"),
