@@ -4,6 +4,12 @@
 
     <f-divider />
 
+    <div class="text-3 ml-4 mt-8">{{ $t("chart") }}</div>
+
+    <market-chart-panel class="ma-4" />
+
+    <f-divider />
+
     <div class="text-3 ml-4 mt-8">{{ $t("all-markets") }}</div>
 
     <market-item
@@ -21,12 +27,14 @@ import { Component, Mixins } from "vue-property-decorator";
 import mixins from "@/mixins";
 import MarketOverview from "@/components/market/MarketOverview.vue";
 import MarketItem from "@/components/market/MarketItem.vue";
+import MarketChartPanel from "@/components/charts/MarketChartPanel.vue";
 import { Sync } from "vuex-pathify";
 
 @Component({
   components: {
     MarketOverview,
     MarketItem,
+    MarketChartPanel,
   },
 })
 class VaultPage extends Mixins(mixins.page) {

@@ -45,7 +45,7 @@ export default class extends Vue {
 .appbar--no-shadow {
   position: sticky;
   top: 0px;
-  z-index: 10;
+  z-index: 2;
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) !important;
 }
 </style>

@@ -34,3 +34,19 @@ export function oracleNext(gem: API.Oracle, dai: API.Oracle) {
     };
   }
 }
+
+export function getWeekStart() {
+  return dayjs().subtract(1, "week").unix();
+}
+
+export function getMonthStart() {
+  return dayjs().subtract(1, "month").unix();
+}
+
+export function getYearStart() {
+  return dayjs().subtract(181, "days").unix();
+}
+
+export function getToday() {
+  return dayjs().unix();
+}

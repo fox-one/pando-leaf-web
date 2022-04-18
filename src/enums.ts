@@ -91,3 +91,26 @@ export enum FlipTag {
   Participated = "Participated", // 曾出价过 participated in auction
   Leading = "Leading", // 自己是最高出价 leading auction‘s highest bid
 }
+
+type Meta<T extends string> = Record<
+  T,
+  {
+    text: string;
+  }
+>;
+
+const DurationMeta: Meta<API.Duration> = {
+  week: { text: "chart.duration.w" },
+  month: { text: "chart.duration.m" },
+  year: { text: "chart.duration.y" },
+};
+
+export const DurationHour: Record<API.Duration, string> = {
+  week: "168h",
+  month: "720h",
+  year: "4320h",
+};
+
+export function getDurationMeta(t: API.Duration) {
+  return DurationMeta[t];
+}

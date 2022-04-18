@@ -37,6 +37,10 @@ export default function ({ store }) {
       themes: {
         light: {
           primary: "#000000",
+          secondary: "#89DF0F",
+          third: "#F7FDEF",
+          forth: "#E3F5C8",
+          fifth: "#E3F5C8",
           success: "#2CC94E",
           warning: "#F58721",
           error: "#F44C4C",
@@ -54,6 +58,10 @@ export default function ({ store }) {
         },
         dark: {
           primary: "#ffffff",
+          secondary: "#89DF0F",
+          third: "#334519",
+          forth: "#485F27",
+          fifth: "#485F27",
           success: "#56D471",
           warning: "#FF9D3E",
           error: "#F67070",

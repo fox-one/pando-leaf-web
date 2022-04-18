@@ -4,6 +4,7 @@ import type { GetterTree, ActionTree } from "vuex";
 // name collateral
 const state = (): State.Collateral => ({
   collaterals: [],
+  fiats: [],
 });
 
 const getters: GetterTree<State.Collateral, unknown> = {
@@ -44,6 +45,11 @@ const actions: ActionTree<State.Vault, any> = {
   async loadCollaterals({ commit }) {
     const response = await this.$http.listCollaterals();
     commit("SET_COLLATERALS", response.collaterals);
+  },
+
+  async loadFiats({ commit }, { token }) {
+    const resp = await this.$http.getFiats({ token });
+    commit("SET_FIATS", resp);
   },
 };
 

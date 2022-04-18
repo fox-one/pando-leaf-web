@@ -1,6 +1,7 @@
 declare namespace State {
   export interface Collateral {
     collaterals: API.Collateral[];
+    fiats: API.Fiat[];
   }
 
   export interface MarketOverview {

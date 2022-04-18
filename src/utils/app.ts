@@ -27,6 +27,9 @@ export async function loadMarket(vm: Vue) {
     vm.$store.dispatch("asset/loadNetworkAssets"),
     vm.$store.dispatch("oracle/loadOracles"),
     vm.$store.dispatch("collateral/loadCollaterals"),
+    vm.$store.dispatch("collateral/loadFiats", {
+      token: vm.$config.FIAT_TOKEN,
+    }),
   ]);
 }
 

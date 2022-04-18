@@ -1,6 +1,7 @@
 import Vue from "vue";
-import { TransactionStatus } from "@/enums";
+import { DurationHour, TransactionStatus } from "@/enums";
 import { v4 as uuid } from "uuid";
+import parse from "parse-duration";
 
 export function errorHandler(vm: Vue, error: any) {
   const fallback = "未知错误";
@@ -56,4 +57,34 @@ export function showNetworkCongestion(vm: Vue) {
     confirm: { text: vm.$t("network.congestion.confirm") as string },
     cancel: { show: false },
   });
+}
+
+export function getDurationData(
+  data,
+  duration,
+  fn,
+  size: number | undefined = undefined
+) {
+  const end = fn(data[data.length - 1]);
+  const formatDuration = DurationHour[duration];
+  let start = end - (parse(formatDuration, "s") || 0);
+  if (!start) {
+    start = fn(data[0]);
+  }
+
+  return data
+    .filter((x) => fn(x) >= start)
+    .filter((x, index, array) => {
+      if (!size) {
+        return true;
+      }
+
+      const interval = Math.floor(array.length / size);
+
+      if (interval === 0) {
+        return true;
+      }
+
+      return (array.length - 1 - index) % interval === 0;
+    });
 }

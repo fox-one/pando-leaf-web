@@ -28,10 +28,11 @@
       </div>
     </div>
 
-    <div class="bottom-bar">
+    <div class="bottom-bar" v-if="pages !== 0">
+      <f-divider class="mx-n4" />
+
       <div class="pagination-wrapper">
         <v-pagination
-          v-if="pages !== 0"
           v-model="bindPage"
           :length="pages"
           next-icon="$FIconChevronRight"
@@ -84,14 +85,15 @@ export default class PaginationList extends Vue {
 }
 
 .bottom-bar {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   position: fixed;
   left: 0;
   bottom: calc(66px + env(safe-area-inset-bottom));
   width: 100%;
   padding: 2px;
+  padding-top: 0px;
   background-color: var(--v-greyscale_7-base);
-  border-top: 1px solid #e0e0e0;
 
   .pagination-wrapper {
     display: flex;

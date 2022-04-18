@@ -11,7 +11,7 @@
       </div>
     </template>
 
-    <div class="px-4 pb-6 dialog-content overflow-auto">
+    <div class="pb-6 dialog-content overflow-auto">
       <base-list-wrapper
         :data="dataset"
         :error="error"
@@ -24,7 +24,7 @@
           :key="index"
           :flip="item"
           class="mb-4 mx-4"
-          @refresh="requestLoadMore()"
+          @refresh="refresh(index)"
         />
 
         <template #empty>
@@ -59,20 +59,43 @@ export default class MyBids extends Vue {
 
   @Watch("dialog")
   onDialogShowing(show: boolean) {
-    console.log("show", show);
     if (show) {
-      this.requestLoadMore();
-      console.log("request");
+      this.refresh(0);
       if (this.intervalId === null) {
-        console.log("intervalRequest");
         this.intervalId = setInterval(() => {
-          this.requestLoadMore();
+          this.refresh(0);
         }, 15000);
       }
     } else {
       clearInterval(this.intervalId);
       this.intervalId = null;
+      this.dataset = [];
+      this.hasNext = true;
     }
+  }
+
+  refresh(index: number) {
+    if (this.loading) return;
+    this.loading = true;
+
+    this.$http
+      .queryFlips({
+        limit: this.dataset.length === 0 ? 20 : this.dataset.length,
+        offset: index,
+        phase: FlipPhase.bid,
+        my_bids: 1,
+      })
+      .then(({ flips, total }) => {
+        for (let i = 0; i < flips.length; i++) {
+          this.dataset[index + i] = flips[i];
+        }
+        this.hasNext = this.dataset.length < total;
+        this.loading = false;
+      })
+      .catch(() => {
+        this.error = true;
+        this.loading = false;
+      });
   }
 
   requestLoadMore() {

@@ -61,11 +61,6 @@ declare namespace API {
     type: string;
   }
 
-  export interface ChartData {
-    v: number;
-    ts: number;
-  }
-
   export interface Collateral {
     id: string;
     created_at: string;

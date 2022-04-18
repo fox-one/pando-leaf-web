@@ -70,6 +70,21 @@ export default function (http: Http) {
       return http.post("/actions", { data: payload });
     },
 
+    // /api/stats?from=xxx&to=xxx
+    getStats(
+      payload: API.StatsPayload
+    ): Promise<{ stats: API.StatsResponse[] }> {
+      return http.get("/stats", { params: payload });
+    },
+
+    // /api/stats/collateral_id?from=xxx&to=xxx
+    getCollateralStats(
+      collateral_id: string,
+      payload: API.StatsPayload
+    ): Promise<{ stats: API.StatsResponse[] }> {
+      return http.get(`/stats/${collateral_id}`, { params: payload });
+    },
+
     getPublic() {
       return http.get("/hc");
     },
@@ -88,6 +103,12 @@ export default function (http: Http) {
 
     getNetworkAsset(id: string): Promise<API.MixinAsset> {
       return http.get(`${MIXIN_HOST}/network/assets/${id}`);
+    },
+
+    getFiats(opts: { token: string }): Promise<{ assets: API.Fiat[] }> {
+      return http.get(`${MIXIN_HOST}/external/fiats`, {
+        token: opts.token,
+      } as any);
     },
 
     async getMe(): Promise<API.Profile> {

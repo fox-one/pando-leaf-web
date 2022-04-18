@@ -74,7 +74,6 @@ export default class AuctionsDoneList extends Vue {
     try {
       await this.$store.dispatch("auctions/refreshDone", { withLoading });
     } catch (error) {
-      console.log(error);
       this.$utils.helper.errorHandler(this, error);
       this.error = true;
       this.loading = false;
