@@ -89,6 +89,7 @@ export default class MyBids extends Vue {
         for (let i = 0; i < flips.length; i++) {
           this.dataset[index + i] = flips[i];
         }
+        this.dataset = this.dataset.slice(0, flips.length);
         this.hasNext = this.dataset.length < total;
         this.loading = false;
       })

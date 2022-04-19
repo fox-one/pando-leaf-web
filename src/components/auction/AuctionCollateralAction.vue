@@ -52,7 +52,7 @@ export default class AuctionCollateralAction extends Vue {
     let confirmDisabled = true;
     if (isStage2) {
       const meetCollateral = +this.amount <= +maxBid;
-      confirmDisabled = !this.amount || !meetCollateral;
+      confirmDisabled = !this.amount || !meetCollateral || leading;
     }
 
     return {

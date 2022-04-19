@@ -8,7 +8,7 @@ const state = (): State.Auctions => ({
     flips: [],
     params: {
       phase: FlipPhase.bid,
-      limit: 20,
+      limit: 8,
       offset: 0,
     },
     total: 0,
@@ -18,7 +18,7 @@ const state = (): State.Auctions => ({
     flips: [],
     params: {
       phase: FlipPhase.deal,
-      limit: 20,
+      limit: 8,
       offset: 0,
     },
     total: 0,
@@ -103,13 +103,13 @@ const mutations: MutationTree<State.Auctions> = {
     state.ongoing.flips = [];
     state.ongoing.params = {
       phase: FlipPhase.bid,
-      limit: 20,
+      limit: 8,
       offset: 0,
     };
     state.done.flips = [];
     state.done.params = {
       phase: FlipPhase.deal,
-      limit: 20,
+      limit: 8,
       offset: 0,
     };
     state.events = [];

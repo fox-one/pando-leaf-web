@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import AuctionFilters from "./AuctionFilters.vue";
 import AuctionsListItem from "./AuctionsListItem.vue";
 import MyBids from "./MyBids.vue";
@@ -45,11 +45,11 @@ import { FlipPhase } from "~/enums";
   },
 })
 export default class AuctioningList extends Vue {
-  @Get("auctions/ongoing@flips") dataset!: API.Flip[];
-
   @Get("auctions/ongoing@total") total!: number;
 
   @Get("auctions/ongoing@params.limit") limit!: number;
+
+  @Sync("auctions/ongoing@flips") dataset!: API.Flip[];
 
   @Sync("auctions/ongoing@params.offset") offset!: number;
 
@@ -76,11 +76,25 @@ export default class AuctioningList extends Vue {
     return Math.ceil(this.total / this.limit);
   }
 
+  @Watch("pages")
+  onPagesChange(newVal) {
+    if (this.page > newVal) {
+      this.page = 1;
+    }
+  }
+
   get page() {
     return Math.ceil(this.offset / this.limit);
   }
 
+  set page(newVal) {
+    if (newVal - 1 * this.limit > this.total) return;
+    this.offset = (newVal - 1) * this.limit;
+    this.requestLoadMore();
+  }
+
   handleFilterChanged() {
+    this.dataset = [];
     this.requestLoadMore(true);
   }
 
