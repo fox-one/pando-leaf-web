@@ -30,6 +30,7 @@ const state = (): State.App => ({
   initing: true,
   termsAccepted: false,
   termsVersion: "0.0.0",
+  safetyWarningShown: false,
 });
 
 const mutations: MutationTree<State.App> = {

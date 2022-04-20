@@ -8,6 +8,7 @@ export default ({ store }) => {
       "app.termsAccepted",
       "app.termsVersion",
       "app.visited",
+      "app/safetyWarningShown",
       "account",
       "asset.walletAssets",
       "page.home",

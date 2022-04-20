@@ -34,6 +34,7 @@ declare namespace State {
     paying: PayState;
     visited: boolean;
     initing: boolean;
+    safetyWarningShown: boolean;
     fiat: FiatState;
     termsAccepted: boolean;
     termsVersion: string;

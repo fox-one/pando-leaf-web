@@ -44,6 +44,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Sync } from "vuex-pathify";
 import BaseTooltip from "./Tooltip.vue";
 
 @Component({
@@ -52,10 +53,19 @@ import BaseTooltip from "./Tooltip.vue";
   },
 })
 class SafetyWarning extends Vue {
+  @Sync("app/safetyWarningShown") safetyWarningShown!: boolean;
+
   sheet = false;
 
   get isDesktop() {
     return this.$vuetify.breakpoint.mdAndUp;
+  }
+
+  mounted() {
+    if (!this.safetyWarningShown) {
+      this.sheet = true;
+      this.safetyWarningShown = true;
+    }
   }
 
   get meta() {
