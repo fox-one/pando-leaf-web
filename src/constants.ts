@@ -30,6 +30,8 @@ export const CONFIG = isProduct
       MIXIN_CLIENT_ID: "670e1faa-2975-48d9-a81f-cd0905ae847e",
     };
 
+export const PAGINATION_LIMIT = 8;
+
 export const DEFAULT_ASSET_ID = "c94ac88f-4671-3976-b60a-09064f1811e8";
 
 export const BTC_ASSET_ID = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";

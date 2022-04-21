@@ -2,13 +2,14 @@ import { make } from "vuex-pathify";
 
 import type { MutationTree, GetterTree, ActionTree } from "vuex";
 import { FlipAction, FlipPhase } from "~/enums";
+import { PAGINATION_LIMIT } from "~/constants";
 
 const state = (): State.Auctions => ({
   ongoing: {
     flips: [],
     params: {
       phase: FlipPhase.bid,
-      limit: 8,
+      limit: PAGINATION_LIMIT,
       offset: 0,
     },
     total: 0,
@@ -18,7 +19,7 @@ const state = (): State.Auctions => ({
     flips: [],
     params: {
       phase: FlipPhase.deal,
-      limit: 8,
+      limit: PAGINATION_LIMIT,
       offset: 0,
     },
     total: 0,
@@ -103,13 +104,13 @@ const mutations: MutationTree<State.Auctions> = {
     state.ongoing.flips = [];
     state.ongoing.params = {
       phase: FlipPhase.bid,
-      limit: 8,
+      limit: PAGINATION_LIMIT,
       offset: 0,
     };
     state.done.flips = [];
     state.done.params = {
       phase: FlipPhase.deal,
-      limit: 8,
+      limit: PAGINATION_LIMIT,
       offset: 0,
     };
     state.events = [];

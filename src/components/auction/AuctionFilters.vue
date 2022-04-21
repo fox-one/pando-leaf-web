@@ -33,6 +33,7 @@
 
 <script lang="ts">
 import { Component, Vue, Model, Watch } from "vue-property-decorator";
+import { PAGINATION_LIMIT } from "~/constants";
 import { FlipPhase } from "~/enums";
 import AuctionFilterItem from "./AuctionFilterItem.vue";
 
@@ -99,7 +100,7 @@ export default class AuctionFilters extends Vue {
     this.dialog = false;
     const params: API.FlipParams = {
       offset: 0,
-      limit: 20,
+      limit: PAGINATION_LIMIT,
       phase: FlipPhase.tend,
     };
     if (this.types.includes("my-vault")) {
