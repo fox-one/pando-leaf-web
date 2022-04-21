@@ -64,7 +64,7 @@ export default class MyBids extends Vue {
       if (this.intervalId === null) {
         this.intervalId = setInterval(() => {
           this.refresh(0);
-        }, 15000);
+        }, 6000);
       }
     } else {
       clearInterval(this.intervalId);

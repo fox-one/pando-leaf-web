@@ -65,7 +65,7 @@ export default class AuctioningList extends Vue {
     this.requestLoadMore(true);
     this.intervalId = setInterval(() => {
       this.requestLoadMore();
-    }, 5000);
+    }, 6000);
   }
 
   beforeDestroy() {
