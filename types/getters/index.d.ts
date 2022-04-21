@@ -61,6 +61,7 @@ declare namespace Getter {
     isStage2: boolean;
     leading: boolean;
     participated: boolean;
+    isMyVault: boolean;
     minBid: string;
     maxBid: string;
     curPrice: string;
@@ -68,8 +69,6 @@ declare namespace Getter {
     collateralFiatValue: number;
     vaultCollateralAmount: string;
     vaultDebtAmount: string;
-    isYourBid: boolean;
-    isMyVault: boolean;
   }
 
   export interface PredictionFields {

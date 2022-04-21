@@ -10,7 +10,6 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
     const vault = getters["vault/getVaultById"](flip?.vault_id ?? "");
     const isMyVault = Boolean(vault);
 
-    const isYourBid = flip?.guy === getters["account/userId"];
     const flipKickEvent = getters["auctions/flipKickEvent"];
     const vaultCollateralAmount = flipKickEvent?.lot;
     const vaultDebtAmount = flip?.tab;
@@ -91,7 +90,6 @@ export function getFlipFields(_: any, getters: Getter.GettersTree) {
       collateralFiatValue,
       vaultCollateralAmount,
       vaultDebtAmount,
-      isYourBid,
       isMyVault,
     };
   };

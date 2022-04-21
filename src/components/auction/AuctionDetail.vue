@@ -32,14 +32,20 @@
       <v-col cols="6">
         <div
           class="action-detail-content label-text text-uppercase"
-          :class="meta.isStage1 ? 'highlight' : meta.isStage2 ? 'disabled' : ''"
+          :class="
+            meta.isStage1
+              ? 'highlight'
+              : meta.isStage2
+              ? 'greyscale_3--text'
+              : ''
+          "
         >
           {{ $t("round-1") }}
         </div>
 
         <div
           class="action-detail-content value-text"
-          :class="meta.isStage1 ? 'highlight' : ''"
+          :class="meta.isStage1 ? 'highlight' : 'greyscale_1--text'"
         >
           <count-down-timer
             v-if="meta.isStage1"
@@ -49,31 +55,32 @@
           <div v-else>{{ $t("ended") }}</div>
         </div>
 
-        <div
-          class="action-detail-content label-text"
-          :class="meta.isStage2 ? 'disabled' : ''"
-        >
+        <div class="action-detail-content label-text greyscale_3--text">
           {{ $t("auction.highest-bid", { symbol: meta.debtSymbol }) }}
         </div>
 
         <div
           class="action-detail-content value-text"
           :class="
-            meta.isStage2 ? 'disabled' : meta.isYourBid ? 'highlight' : ''
+            meta.isStage2
+              ? 'greyscale_3--text'
+              : meta.leading
+              ? 'highlight'
+              : 'greyscale_1--text'
           "
         >
           {{
-            meta.isYourBid
+            meta.isStage1 && meta.leading
               ? $t("auction.my-bid")
-              : `${meta.vaultDebtAmount} ${meta.debtSymbol}`
+              : `${flip.bid} ${meta.debtSymbol}`
           }}
         </div>
 
-        <div class="action-detail-content label-text">
+        <div class="action-detail-content label-text greyscale_3--text">
           {{ $t("auction.my-bid") }}
         </div>
 
-        <div class="action-detail-content value-text mb-6">
+        <div class="action-detail-content value-text mb-6 greyscale_1--text">
           {{ meta.isStage1 && meta.participated ? meta.yourBid : "-" }}
         </div>
       </v-col>
@@ -82,14 +89,14 @@
       <v-col cols="6">
         <div
           class="action-detail-content label-text text-uppercase"
-          :class="meta.isStage1 ? 'disabled' : meta.isStage2 ? 'highlight' : ''"
+          :class="meta.isStage1 ? 'greyscale_4--text' : 'highlight'"
         >
           {{ $t("round-2") }}
         </div>
 
         <div
           class="action-detail-content value-text"
-          :class="meta.isStage1 ? 'disabled' : meta.isStage2 ? 'highlight' : ''"
+          :class="meta.isStage1 ? 'greyscale_4--text' : 'highlight'"
         >
           <count-down-timer
             v-if="meta.isStage2"
@@ -99,28 +106,45 @@
           <div v-else>-</div>
         </div>
 
-        <div class="action-detail-content label-text">
+        <div
+          class="action-detail-content label-text"
+          :class="meta.isStage1 ? 'greyscale_4--text' : 'greyscale_3--text'"
+        >
           {{ $t("auction.lowest-bid", { symbol: meta.auctionSymbol }) }}
         </div>
 
         <div
           class="action-detail-content value-text"
           :class="
-            meta.isStage1 ? 'disabled' : meta.isYourBid ? 'highlight' : ''
+            meta.isStage1
+              ? 'greyscale_4--text'
+              : meta.leading
+              ? 'highlight'
+              : 'greyscale_1--text'
           "
         >
           <span v-if="meta.isStage1">-</span>
 
           <span v-else>
-            {{ meta.isYourBid ? $t("auction.my-bid") : flip.lot }}
+            {{
+              meta.leading
+                ? $t("auction.my-bid")
+                : `${flip.lot} ${meta.auctionSymbol}`
+            }}
           </span>
         </div>
 
-        <div class="action-detail-content label-text">
+        <div
+          class="action-detail-content label-text"
+          :class="meta.isStage1 ? 'greyscale_4--text' : 'greyscale_3--text'"
+        >
           {{ $t("auction.my-bid") }}
         </div>
 
-        <div class="action-detail-content value-text">
+        <div
+          class="action-detail-content value-text"
+          :class="meta.isStage1 ? 'greyscale_4--text' : 'greyscale_1--text'"
+        >
           <span v-if="meta.isStage2 && meta.participated">
             {{ meta.yourBid }}
           </span>
@@ -160,7 +184,7 @@ export default class AuctionDetail extends Vue {
       auctionAsset,
       vaultDebtAmount,
       vaultCollateralAmount,
-      isYourBid,
+      leading,
       participated,
     } = getters.getFlipFields(this.flip);
 
@@ -211,7 +235,7 @@ export default class AuctionDetail extends Vue {
       isStage2,
       bidLabel,
       diffSeconds,
-      isYourBid,
+      leading,
       participated,
       yourBid,
     };
@@ -321,10 +345,6 @@ export default class AuctionDetail extends Vue {
   &.highlight {
     color: rgba(137, 223, 15, 1);
     font-weight: 600;
-  }
-
-  &.disabled {
-    color: var(--v-greyscale_3-base);
   }
 
   .exchange-icon {
