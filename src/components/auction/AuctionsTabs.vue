@@ -1,11 +1,5 @@
 <template>
-  <f-tabs
-    :value="value"
-    @change="handleChange"
-    fixed-tabs
-    disable-slider-length
-    :slider-size="2"
-  >
+  <f-tabs v-model="tabIndex" fixed-tabs disable-slider-length :slider-size="2">
     <v-tab
       v-for="(item, index) in tabs"
       :key="index"
@@ -19,10 +13,11 @@
 
 <script lang="ts">
 import { Component, Vue, Model } from "vue-property-decorator";
+import { Sync } from "vuex-pathify";
 
 @Component
 export default class AuctionsTabs extends Vue {
-  @Model("change") value!: number;
+  @Sync("page/auction@tabIndex") tabIndex!: number;
 
   get tabs() {
     return [
@@ -33,10 +28,6 @@ export default class AuctionsTabs extends Vue {
         text: this.$t("auction.done"),
       },
     ];
-  }
-
-  handleChange(value) {
-    this.$emit("change", value);
   }
 }
 </script>

@@ -7,6 +7,9 @@ const state = (): State.Page => ({
   detail: {
     tabIndex: 0,
   },
+  auction: {
+    tabIndex: 0,
+  },
   home: {
     sorter: SortBy.COLLATERAL_RATIO_ASC,
   },

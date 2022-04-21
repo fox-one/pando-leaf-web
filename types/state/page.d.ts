@@ -3,6 +3,9 @@ declare namespace State {
     detail: {
       tabIndex: number;
     };
+    auction: {
+      tabIndex: number;
+    };
     home: {
       sorter: API.SortBy;
     };

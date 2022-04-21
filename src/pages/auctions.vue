@@ -1,9 +1,5 @@
 <template>
   <v-container class="auctions-page pa-0">
-    <v-layout class="auctions-tab-bar">
-      <auctions-tabs v-model="tabIndex" />
-    </v-layout>
-
     <auctioning-list
       class="flex-grow-1"
       v-if="tabIndex === 0"
@@ -19,6 +15,7 @@ import mixins from "@/mixins";
 import AuctionsTabs from "@/components/auction/AuctionsTabs.vue";
 import AuctioningList from "@/components/auction/AuctioningList.vue";
 import AuctioningDoneList from "@/components/auction/AuctionDoneList.vue";
+import { Sync } from "vuex-pathify";
 
 @Component({
   components: {
@@ -28,15 +25,17 @@ import AuctioningDoneList from "@/components/auction/AuctionDoneList.vue";
   },
 })
 export default class AuctionsPage extends Mixins(mixins.page) {
-  tabIndex = 0;
+  @Sync("page/auction@tabIndex") tabIndex!: number;
 
   get title() {
     return this.$t("tab.auctions") as string;
   }
 
   get appbar() {
+    const h = this.$createElement;
     return {
       style: "home" as const,
+      extension: h(AuctionsTabs),
     };
   }
 
