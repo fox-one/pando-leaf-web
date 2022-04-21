@@ -90,7 +90,8 @@ export default class AuctioningList extends Vue {
   set page(newVal) {
     if ((newVal - 1) * this.limit > this.total) return;
     this.offset = (newVal - 1) * this.limit;
-    this.requestLoadMore();
+    this.dataset = [];
+    this.requestLoadMore(true);
   }
 
   handleFilterChanged() {
