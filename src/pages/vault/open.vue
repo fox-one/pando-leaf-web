@@ -39,6 +39,7 @@
         :deposit-amount.sync="depositAmount"
         :debt-amount.sync="debtAmount"
         @back="handleBackStep"
+        @success="handleSuccess"
       />
 
       <open-vault-prediction
@@ -127,6 +128,11 @@ export default class GenerateVault extends Mixins(mixins.page) {
   handleBackStep() {
     this.currentStep = 1;
     this.debtAmount = "";
+  }
+
+  handleSuccess() {
+    this.currentStep = 1;
+    this.depositAmount = "";
   }
 
   handleCollateralChange(item: API.Collateral) {

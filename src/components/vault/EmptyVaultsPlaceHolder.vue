@@ -1,7 +1,9 @@
 <template>
   <v-layout column align-center justify-center>
     <v-icon class="mb-8" size="110">$iconNoVault</v-icon>
-    <div class="greyscale_1--text body-2 mb-8">{{ $t("me.no-vault-1") }}</div>
+    <div class="greyscale_3--text font-weight-medium body-2 mb-8">
+      {{ $t("me.no-vault-1") }}
+    </div>
 
     <action-create-vault @itemclick="handleItemclick">
       <template #activator="{ on }">
@@ -13,7 +15,7 @@
             :min-width="220"
             v-on="on"
           >
-            <v-icon size="16">$FIconAdd</v-icon>
+            <v-icon size="16">$FIconAdd4PBold</v-icon>
             <span>{{ $t("common.add-a-vault") }}</span>
           </f-button>
         </slot>

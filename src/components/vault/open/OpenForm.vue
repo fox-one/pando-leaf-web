@@ -108,6 +108,7 @@ export default class OpenForm extends Vue {
   }
 
   handleSuccess() {
+    this.$emit("success");
     this.form.reset();
     this.$uikit.toast.success({
       message: this.$t("common.action-success") + "",

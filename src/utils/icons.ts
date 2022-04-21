@@ -30,6 +30,7 @@ const ficons = [
   "FIconInfo4P",
   "FIconExchange4PBold",
   "FIconAdd4P",
+  "FIconAdd4PBold",
   "FIconAdd3PFill",
   "FIconArrowRight4P",
   "FIconFilter",

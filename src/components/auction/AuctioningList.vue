@@ -84,11 +84,11 @@ export default class AuctioningList extends Vue {
   }
 
   get page() {
-    return Math.ceil(this.offset / this.limit);
+    return Math.ceil(this.offset / this.limit) + 1;
   }
 
   set page(newVal) {
-    if (newVal - 1 * this.limit > this.total) return;
+    if ((newVal - 1) * this.limit > this.total) return;
     this.offset = (newVal - 1) * this.limit;
     this.requestLoadMore();
   }

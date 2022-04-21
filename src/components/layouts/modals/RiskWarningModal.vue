@@ -128,7 +128,7 @@ export default RiskWarning;
 }
 
 .theme--dark .warning-content {
-  background-color: rgba($color: #f29a60, $alpha: 0.3);
+  background-color: rgba($color: #4a2222, $alpha: 0.3);
 }
 
 .risk {
