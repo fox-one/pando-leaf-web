@@ -1,5 +1,5 @@
 <template>
-  <div class="empty f-body-2">
+  <div class="empty">
     {{ $t("auction.empty") }}
   </div>
 </template>
@@ -18,5 +18,8 @@ export default class extends Vue {}
   background-position-y: calc(100% - 52px);
   padding-top: 32.5vh;
   text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--v-greyscale_3-base);
 }
 </style>

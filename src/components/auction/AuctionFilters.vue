@@ -133,7 +133,7 @@ export default class AuctionFilters extends Vue {
 }
 
 .filter-activator {
-  display: flex;
+  display: inline-flex;
   flex: 0 1 auto;
   flex-direction: row;
   justify-content: center;

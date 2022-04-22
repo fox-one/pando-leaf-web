@@ -1,6 +1,7 @@
 <template>
   <div align-center justify-center column>
     <base-information-item
+      class="py-3"
       :label="info.label"
       :value="info.value"
       :hint="info.hint"
@@ -42,8 +43,10 @@ export default class CollateralRatioSlider extends Vue {
       this.collateralId
     );
 
+    let disabled = false;
     let ratioText = toPercent({ n: this.ratio, dp: 1 });
     if (!isValid(this.ratio) || this.ratio === 0) {
+      disabled = true;
       ratioText = "-";
     }
 
@@ -65,6 +68,7 @@ export default class CollateralRatioSlider extends Vue {
       minimumRatio,
       minimumRatioText,
       ratioText,
+      disabled,
       color,
       progress,
     };

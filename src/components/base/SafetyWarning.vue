@@ -15,7 +15,7 @@
       >
         <div class="safety-warning">{{ meta.title }}</div>
 
-        <v-icon size="16" color="greyscale_1">$FIconChevronRight</v-icon>
+        <v-icon size="16" color="greyscale_1">$FIconChevronRight4P</v-icon>
       </div>
     </template>
 

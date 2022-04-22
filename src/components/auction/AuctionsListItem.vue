@@ -54,8 +54,8 @@
           :triangle="false"
         />
 
-        <v-icon class="mt-9 mr-4" align-self-end size="16">
-          $FIconChevronRight
+        <v-icon class="mt-9 mr-4" color="greyscale_3" align-self-end size="16">
+          $FIconChevronRight4P
         </v-icon>
       </template>
     </v-layout>

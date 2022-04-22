@@ -36,6 +36,18 @@ export function makeIconValues() {
     iconGenerate: {
       component: "icon-generate",
     },
+    iconDepositOld: {
+      component: "icon-deposit-old",
+    },
+    iconWithdrawOld: {
+      component: "icon-withdraw-old",
+    },
+    iconPaybackOld: {
+      component: "icon-payback-old",
+    },
+    iconGenerateOld: {
+      component: "icon-generate-old",
+    },
     iconAuctionDetail: {
       component: "icon-auction-detail",
     },

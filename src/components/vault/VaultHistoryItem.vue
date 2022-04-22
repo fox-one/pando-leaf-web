@@ -132,7 +132,7 @@ export default VaultHistoryItem;
 }
 
 .event-title {
-  font-weight: bold;
+  font-weight: 500;
   font-size: 14px;
 }
 </style>

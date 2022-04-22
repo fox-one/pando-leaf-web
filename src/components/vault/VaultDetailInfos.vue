@@ -3,7 +3,6 @@
     <infomation-item
       v-for="item in infos.slice(0, 2)"
       :key="item.title"
-      :font-size="13"
       :label="item.title"
       :hint="item.hint"
       :learn-more="item.learnMore"
@@ -15,7 +14,6 @@
     <infomation-item
       v-for="item in infos.slice(2, 3)"
       :key="item.title"
-      :font-size="13"
       :label="item.title"
       :hint="item.hint"
       :learn-more="item.learnMore"

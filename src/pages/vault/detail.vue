@@ -44,6 +44,7 @@
           :id="vaultId"
           :has-collateral="meta.hasCollateral"
           :has-debt="meta.hasDebt"
+          old-icons
           class="actions"
         />
       </v-container>

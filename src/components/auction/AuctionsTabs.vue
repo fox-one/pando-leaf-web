@@ -6,7 +6,7 @@
       :data-value="index"
       :ripple="false"
     >
-      <span>{{ item.text }}</span>
+      <span class="tab-text">{{ item.text }}</span>
     </v-tab>
   </f-tabs>
 </template>
@@ -31,3 +31,9 @@ export default class AuctionsTabs extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.tab-text {
+  font-size: 16px !important;
+}
+</style>

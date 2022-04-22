@@ -2,7 +2,7 @@
   <div>
     <v-layout column class="py-4">
       <v-layout align-center justify-space-between class="mb-4 text-1">
-        <span class="font-weight-bold">
+        <span class="font-weight-medium">
           {{ meta.actionText
           }}<span v-if="meta.is_me" class="tag ml-1">You</span>
         </span>
