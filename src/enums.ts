@@ -20,7 +20,7 @@ export enum RISK {
   HIGH = "high",
   MEDIUM = "medium",
   LOW = "low",
-  NA = "n/a",
+  NA = "-",
 }
 
 export const RISK_LEVEL_META: Record<RISK, Utils.VaultRiskLevelMeta> = {

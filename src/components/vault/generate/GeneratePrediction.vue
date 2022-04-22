@@ -41,14 +41,14 @@ export default class extends Vue {
       ((debtAmount + diffAmount) * liquidationRatio) / collateralAmount;
     let changedPriceText = format({ n: changedPrice });
     if (!isValid(changedPrice) || changedPrice === 0) {
-      changedPriceText = "N/A";
+      changedPriceText = "-";
     }
     const changedRatio =
       debtAmount + diffAmount &&
       (collateralAmount * collateralPrice) / (debtAmount + diffAmount);
     let changedRatioText = toPercent({ n: changedRatio, dp: 1 });
     if (!isValid(changedRatio) || changedRatio === 0) {
-      changedRatioText = "N/A";
+      changedRatioText = "-";
     }
     const changedRisk = this.$utils.collateral.getRiskLevelMeta(
       changedRatio,

@@ -5,6 +5,7 @@
     overlay-opacity="0.9"
     max-width="800"
     desktop-wapper="dialog"
+    :show-close-icon="true"
   >
     <template #activator="{ on }">
       <slot name="activator" :on="on">
@@ -13,24 +14,25 @@
         </div>
       </slot>
     </template>
-
     <f-bottom-sheet-title>
-      <div class="title text-center">
-        {{ $t("common.add-a-vault") }}
-      </div>
+      {{ $t("common.add-a-vault") }}
     </f-bottom-sheet-title>
 
-    <f-bottom-sheet-subtitle class="pb-0">
-      <div class="px-1 text-center">
-        <div class="f-caption px-2 mb-6 text--disabled">
-          {{ $t("tooltip.vault-selector") }}
-        </div>
-
-        <base-search v-model="filter" />
-      </div>
-    </f-bottom-sheet-subtitle>
-
     <v-list class="dialog-content overflow-auto">
+      <f-bottom-sheet-subtitle class="pb-4">
+        <div class="text-center">
+          <div class="f-caption mb-6 greyscale_3--text">
+            {{ $t("tooltip.vault-selector") }}
+          </div>
+
+          <f-search-input
+            v-model="filter"
+            :place-holder="$t('common.search')"
+            class="search-margin"
+          />
+        </div>
+      </f-bottom-sheet-subtitle>
+
       <div v-if="filtedCollaterals.length > 0">
         <collateral-list-item
           v-for="item in filtedCollaterals"
@@ -48,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Component, PropSync, Vue } from "vue-property-decorator";
+import { Component, PropSync, Vue, Watch } from "vue-property-decorator";
 import CollateralListItem from "./CollateralListItem.vue";
 import { Get } from "vuex-pathify";
 
@@ -58,7 +60,9 @@ import { Get } from "vuex-pathify";
 class ActionCreateVault extends Vue {
   @Get("collateral/collaterals") collaterals!: API.Collateral[];
 
-  @PropSync("show", { default: false }) dialog!: boolean;
+  @PropSync("show") bindDialog!: boolean;
+
+  dialog = false;
 
   filter = "";
 
@@ -66,6 +70,15 @@ class ActionCreateVault extends Vue {
     return this.collaterals?.filter((item) =>
       item.name?.toLowerCase().includes(this.filter?.toLowerCase())
     );
+  }
+
+  @Watch("dialog")
+  onBindDialogChange(val: boolean) {
+    this.bindDialog = val;
+  }
+
+  close() {
+    this.dialog = !this.dialog;
   }
 
   handleAddVault(item: API.Collateral) {
@@ -82,7 +95,17 @@ export default ActionCreateVault;
 }
 
 .dialog-content {
-  max-height: 500px;
-  height: calc(90vh - 220px);
+  max-height: calc(100vh - 156px);
+  height: calc(100vh - 156px);
+}
+
+.search-margin {
+  ::v-deep {
+    .v-input__control {
+      .v-input__slot {
+        margin-bottom: 0px;
+      }
+    }
+  }
 }
 </style>

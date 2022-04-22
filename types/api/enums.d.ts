@@ -21,7 +21,7 @@ declare namespace API {
     HIGH = "high",
     MEDIUM = "medium",
     LOW = "low",
-    NA = "n/a",
+    NA = "-",
   }
 
   export enum VatAction {

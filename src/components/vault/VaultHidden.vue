@@ -17,8 +17,8 @@
       </div>
     </template>
 
-    <v-list class="mx-0 pb-16 dialog-content overflow-auto">
-      <div v-for="vault in hiddenVaults" :key="vault.id" class="pa-4 mb-n4">
+    <v-list class="mx-0 pa-0 pb-16 dialog-content overflow-auto">
+      <div v-for="vault in hiddenVaults" :key="vault.id" class="pa-4 pt-0">
         <vault-list-item :id="vault.id" />
       </div>
     </v-list>

@@ -41,7 +41,7 @@ export function getVaultFields(_: any, getters: Getter.GettersTree) {
       dp: 1,
     });
     if (!isValid(ratio) || ratio === 0) {
-      ratioText = "N/A";
+      ratioText = "-";
     }
 
     // 风险等级
@@ -51,7 +51,7 @@ export function getVaultFields(_: any, getters: Getter.GettersTree) {
     const liquidationPrice = (debtAmount * minimumRatio) / collateralAmount;
     let liquidationPriceText = format({ n: liquidationPrice });
     if (!isValid(liquidationPrice) || liquidationPrice === 0) {
-      liquidationPriceText = `N/A`;
+      liquidationPriceText = "-";
     }
 
     //清算罚金费率

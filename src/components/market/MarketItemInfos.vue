@@ -27,10 +27,13 @@
       }"
     >
       <market-infos-item
-        class="pb-6 px-6"
-        cols="12"
+        class="pb-6 px-6 opacity-transition"
         v-for="(item, ix) in infos.slice(expandCount, infos.length)"
         :key="ix"
+        :class="`${bindExpand || disabled ? 'expanded' : 'collapse'} item-${
+          bindExpand ? ix + 2 : infos.length - expandCount - ix - 1
+        }`"
+        cols="12"
         :label-class="item.labelClass"
         :value-class="item.valueClass"
         :title="item.title"
@@ -44,7 +47,7 @@
 
     <v-col class="d-flex justify-center mb-n1" v-if="!disabled">
       <v-icon
-        size="14"
+        size="16"
         color="greyscale_4"
         class="expand-transition"
         :class="bindExpand ? 'expand' : ''"
@@ -256,23 +259,38 @@ export default class MarketItemInfos extends Vue {
   transform: rotateX(180deg);
 }
 .expand-transition {
-  transition: cubic-bezier(0.6, 0, 0.2, 1) 0.5s;
+  transition: cubic-bezier(0.65, 0, 0.2, 1) 0.6s;
 
   &.content {
-    transition-property: height, opacity, margin-top;
+    transition-property: height, margin-top;
   }
 
   &.collapse {
-    opacity: 0;
     margin-top: -16px;
-  }
-
-  &.expanded {
-    opacity: 1;
+    transition-delay: 0.2s;
   }
 
   &.expand {
     margin-top: 8px;
+  }
+}
+
+.opacity-transition {
+  transition: linear 0.3s;
+  transition-property: opacity;
+
+  @for $i from 0 through 9 {
+    &.item-#{$i} {
+      transition-delay: 0.08s * $i;
+    }
+  }
+
+  &.collapse {
+    opacity: 0;
+  }
+
+  &.expanded {
+    opacity: 1;
   }
 }
 </style>

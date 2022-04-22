@@ -16,7 +16,7 @@ const getters: GetterTree<State.Collateral, unknown> = {
       return {
         supply: "-",
         collaterals: "-",
-        collaterilazation: "N/A",
+        collaterilazation: "-",
       };
     }
     let col = 0;

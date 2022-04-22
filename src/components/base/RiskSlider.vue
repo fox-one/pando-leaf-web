@@ -47,8 +47,8 @@ export default class extends Vue {
   .progress-dot {
     position: absolute;
     z-index: 3;
-    background-color: white;
-    color: white;
+    background-color: var(--v-greyscale_7-base);
+    color: var(--v-greyscale_7-base);
     top: 0px;
     height: 4px;
     width: 4px;

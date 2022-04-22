@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" class="ma-0 pa-4" autocomplete="off">
-    <div class="text-3 mb-4 text-center greyscale_1--text">
+    <div class="text-3 mb-6 text-center greyscale_1--text">
       {{ $t("form.please-input-deposit-amount") }}
     </div>
 

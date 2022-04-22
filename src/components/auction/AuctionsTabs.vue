@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Model } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { Sync } from "vuex-pathify";
 
 @Component

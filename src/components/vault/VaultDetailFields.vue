@@ -68,7 +68,7 @@ class VaultFields extends Vue {
       collateral?.id ?? ""
     );
 
-    const ratioText = debtAmount ? toPercent({ n: ratio }) : "N/A";
+    const ratioText = debtAmount ? toPercent({ n: ratio }) : "-";
     const isValidPrice =
       price !== nextPrice?.price && this.$utils.oracle.isValidOracle(nextPrice);
     const nextPriceText = isValidPrice

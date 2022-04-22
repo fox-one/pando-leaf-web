@@ -2,7 +2,7 @@
   <f-tooltip v-if="isDesktop" v-model="tooltip" top>
     <template #activator="{ on }">
       <v-icon
-        size="16"
+        size="12"
         v-on="on"
         color="greyscale_1"
         class="greyscale_5 quote-icon rounded-circle"
@@ -38,7 +38,7 @@
     <template #activator="{ on }">
       <div v-on="on" class="d-flex align-center">
         <v-icon
-          size="14"
+          size="12"
           color="greyscale_1"
           class="greyscale_5 quote-icon rounded-circle"
           >$FIconInfo4P</v-icon

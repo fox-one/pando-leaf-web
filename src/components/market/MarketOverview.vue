@@ -84,6 +84,7 @@ export default class MarketOverview extends Vue {
   .market-overview-value-symbol {
     font-weight: bold;
     font-size: 16px;
+    margin-right: 4px;
   }
 }
 .market-green {

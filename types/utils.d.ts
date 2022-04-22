@@ -8,7 +8,7 @@ declare namespace Utils {
     HIGH = "high",
     MEDIUM = "medium",
     LOW = "low",
-    NA = "n/a",
+    NA = "-",
   }
 
   export interface VaultRiskLevelMeta {

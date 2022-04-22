@@ -44,7 +44,7 @@ export default class CollateralRatioSlider extends Vue {
 
     let ratioText = toPercent({ n: this.ratio, dp: 1 });
     if (!isValid(this.ratio) || this.ratio === 0) {
-      ratioText = "N/A";
+      ratioText = "-";
     }
 
     // calculate progress

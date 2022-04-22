@@ -2,7 +2,7 @@
   <v-layout align-center class="pa-6">
     <base-pair-logo :base="meta.collateralLogo" :quote="meta.debtLogo" />
 
-    <span class="ml-3"> {{ meta.name }}</span>
+    <span class="ml-3 font-weight-semibold"> {{ meta.name }}</span>
 
     <v-spacer />
 
