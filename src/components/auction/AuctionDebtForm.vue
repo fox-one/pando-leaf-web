@@ -9,7 +9,7 @@
       :selectable="false"
       hide-details
       fullfilled
-      :placeholder="$t('auction.debt-amount-placeholder')"
+      :placeholder="0"
       :fillable="false"
       :rules="rules"
     >

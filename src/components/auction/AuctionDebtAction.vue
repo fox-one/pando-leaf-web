@@ -6,17 +6,16 @@
       :loading="loading"
       :disabled="meta.confirmDisabled"
       @click="confirm"
-      :style="
-        meta.leading
-          ? `background:${leadingColor} !important; color: #000000;`
-          : ''
-      "
+      :style="meta.leading ? `background:${leadingColor} !important;` : ''"
     >
       <v-icon v-if="!meta.leading" size="16">$iconBidFill</v-icon>
-
-      {{
-        meta.leading ? $t("auction.leading-the-auction") : $t("auction.bid-now")
-      }}
+      <span :style="meta.leading ? `color: #000000;` : ''">
+        {{
+          meta.leading
+            ? $t("auction.leading-the-auction")
+            : $t("auction.bid-now")
+        }}</span
+      >
     </f-button>
   </base-connect-wallet-btn>
 </template>

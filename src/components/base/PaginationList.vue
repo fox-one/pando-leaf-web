@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="bottom-bar" v-if="pages !== 0">
+    <div class="bottom-bar" v-if="pages > 1">
       <f-divider class="mx-n4" />
 
       <div class="pagination-wrapper">

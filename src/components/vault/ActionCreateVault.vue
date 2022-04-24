@@ -18,8 +18,8 @@
       {{ $t("common.add-a-vault") }}
     </f-bottom-sheet-title>
 
-    <v-list class="dialog-content overflow-auto">
-      <f-bottom-sheet-subtitle class="pb-4">
+    <v-list class="dialog-content overflow-auto pt-0">
+      <f-bottom-sheet-subtitle class="pb-4 pt-0">
         <div class="text-center">
           <div class="f-caption mb-6 greyscale_3--text">
             {{ $t("tooltip.vault-selector") }}

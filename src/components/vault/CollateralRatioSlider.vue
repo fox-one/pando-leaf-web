@@ -14,6 +14,7 @@
       :progress="meta.progress"
       :color="meta.color"
       :min-ratio="meta.minimumRatio"
+      :disabled="meta.disabled"
     />
   </div>
 </template>
@@ -61,6 +62,7 @@ export default class CollateralRatioSlider extends Vue {
     }
     let color = this.risk?.color;
     if (this.ratio === 0) {
+      disabled = true;
       color = "risk_low";
     }
 

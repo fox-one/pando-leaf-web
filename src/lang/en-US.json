@@ -23,7 +23,6 @@
   "auction.history.kick.content": "Starting price is {debtamount} {debtsymbol} for {colamount} {colsymbol}",
   "auction.history.kick.title": "Auction Begin",
   "auction.leading":"Leading",
-  "auction.check-my-bid":"Check My Bid",
   "auction.bid-it":"Bid it",
   "auction.highest-bid":"Highest {symbol} Bid",
   "auction.lowest-bid":"Lowest {symbol} Bid",

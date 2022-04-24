@@ -9,7 +9,7 @@
       :selectable="false"
       hide-details
       fullfilled
-      :placeholder="$t('auction.collateral-amount-placeholder')"
+      :placeholder="0"
       :fillable="false"
       :rules="[meetCollateral]"
     >
