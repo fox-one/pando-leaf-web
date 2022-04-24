@@ -28,15 +28,23 @@
       </div>
     </div>
 
-    <div class="bottom-bar" v-if="pages > 1">
+    <div
+      class="bottom-bar"
+      :style="
+        isDesktop
+          ? 'bottom: 0px;'
+          : 'bottom: calc(66px + env(safe-area-inset-bottom));'
+      "
+      v-if="pages > 1"
+    >
       <f-divider class="mx-n4" />
 
       <div class="pagination-wrapper">
         <v-pagination
           v-model="bindPage"
           :length="pages"
-          next-icon="$FIconChevronRight"
-          prev-icon="$FIconChevronLeft"
+          next-icon="$FIconChevronRight4P"
+          prev-icon="$FIconChevronLeft4P"
         />
       </div>
     </div>
@@ -66,6 +74,10 @@ export default class PaginationList extends Vue {
 
   get disabled() {
     return this.loading || this.ended || this.error;
+  }
+
+  get isDesktop() {
+    return this.$vuetify.breakpoint.mdAndUp;
   }
 
   get empty() {

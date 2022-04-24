@@ -23,6 +23,7 @@ const ficons = [
   "FIconConnect3PFill",
   "FIconChevronDown4P",
   "FIconChevronRight4P",
+  "FIconChevronLeft4P",
   "FIconLink4P",
   "FIconDocumentFill",
   "FIconCommentFill",

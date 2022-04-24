@@ -1,7 +1,12 @@
 <template>
   <div>
     <v-layout @click="toDetail(flip)">
-      <f-mixin-asset-logo :logo="meta.logo" :size="36" class="ml-4 mt-6 mr-3" />
+      <f-mixin-asset-logo
+        :logo="meta.logo"
+        :size="36"
+        class="mt-6 mr-3"
+        :class="meta.isDone ? 'ml-4' : ''"
+      />
 
       <v-layout class="flex-grow-1 mt-6" column justify-center>
         <div class="item-title">{{ flip.lot }} {{ meta.symbol }}</div>
@@ -14,7 +19,7 @@
           <!-- timer -->
           <div class="round-tag mt-3">
             <span class="greyscale_1--text text-uppercase">
-              {{ meta.isStage1 ? $t("round-1") : $t("round-2") }}
+              {{ meta.isStage1 ? "ROUND 1" : "ROUND 2" }}
             </span>
 
             <count-down-timer
@@ -193,12 +198,12 @@ export default class AuctionsListItem extends Vue {
   align-items: center;
   background: linear-gradient(
     105deg,
-    #cbf58d 0%,
-    #cbf58d 50%,
-    #ffffff 50%,
-    #ffffff 52%,
-    #effbdd 52%,
-    #effbdd 100%
+    var(--v-timer_tag_left_bg-base) 0%,
+    var(--v-timer_tag_left_bg-base) 50%,
+    var(--v-greyscale_7-base) 50%,
+    var(--v-greyscale_7-base) 52%,
+    var(--v-timer_tag_right_bg-base) 52%,
+    var(--v-timer_tag_right_bg-base) 100%
   );
   border-radius: 8px;
   color: #9fc665;

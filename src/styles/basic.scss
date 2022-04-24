@@ -39,8 +39,9 @@ a {
 }
 
 .v-application .v-pagination .v-pagination__item {
-  color: var(--v-greyscale_3-base);
+  color: var(--v-greyscale_3-base) !important;
   box-shadow: none;
+  font-weight: 500;
 }
 
 .v-application .v-pagination .v-pagination__item--active {
@@ -49,10 +50,20 @@ a {
   box-shadow: none;
 }
 
+.v-application .v-pagination .v-pagination__more {
+  align-items: center;
+  padding-bottom: 0.6rem;
+}
+
 .v-application .v-pagination .v-pagination__navigation {
-  background-color: var(--v-greyscale_6-base) !important;
+  background-color: var(--v-greyscale_7-base) !important;
   color: var(--v-greyscale_1-base) !important;
   box-shadow: none;
+
+  &.v-pagination__navigation--disabled {
+    opacity: 1;
+  }
+
   .v-icon .v-icon__component {
     width: 16px !important;
     height: 16px !important;

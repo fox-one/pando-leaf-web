@@ -9,7 +9,7 @@
       :selectable="false"
       hide-details
       fullfilled
-      :placeholder="0"
+      placeholder="0"
       :fillable="false"
       :rules="[meetCollateral]"
     >

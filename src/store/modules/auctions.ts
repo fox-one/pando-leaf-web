@@ -51,8 +51,36 @@ const getters: GetterTree<State.Auctions, unknown> = {
     return getters.allFlips?.length > 0;
   },
 
-  yourLastBidEvent(state) {
-    return state.events?.find((e) => e.is_me);
+  // stage 1 bid event
+  yourLastDebtBidEvent(state, getters) {
+    return (flip: API.Flip) => {
+      return state.events?.find((e) => {
+        const vaultLot = getters.flipKickEvent?.lot;
+
+        return (
+          e.is_me && // only my events
+          e.action === FlipAction.FlipBid && // only bid events
+          (+e.bid < +flip?.tab ||
+            (+e.bid === +flip?.tab && +e.lot === +vaultLot)) // stage 1 bid event
+        );
+      });
+    };
+  },
+
+  // stage 2 bid event
+  yourLastCollateralBidEvent(state, getters) {
+    return (flip: API.Flip) => {
+      return state.events?.find((e) => {
+        const vaultLot = getters.flipKickEvent?.lot;
+
+        return (
+          e.is_me && // only my events
+          e.action === FlipAction.FlipBid && // only bid events
+          +e.bid === +flip?.tab &&
+          +e.lot <= +vaultLot // stage 2 bid event
+        );
+      });
+    };
   },
 
   flipKickEvent(state) {

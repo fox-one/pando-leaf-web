@@ -1,18 +1,18 @@
 <template>
   <f-panel elevation="none" class="pa-4 no-border-radius greyscale_1--text">
     <v-layout column>
-      <auction-detail :flip="flip" />
+      <auction-detail v-if="!meta.isDone" :flip="flip" />
 
       <auction-done-detail v-if="meta.isDone" :flip="flip" />
 
       <div v-else>
-        <f-divider size="8" opacity="0.05" class="mx-n4 mb-6" />
+        <f-divider size="8" :opacity="meta.opacity" class="mx-n4 mb-6" />
 
         <auction-debt-form v-if="meta.isStage1" :flip="flip" />
 
         <auction-collateral-form v-else :flip="flip" />
 
-        <f-divider size="8" opacity="0.05" class="mx-n4 mt-6 mb-4" />
+        <f-divider size="8" :opacity="meta.opacity" class="mx-n4 mt-6 mb-4" />
       </div>
     </v-layout>
   </f-panel>
@@ -44,6 +44,7 @@ export default class AuctionPage extends Vue {
       isDone,
       isStage1,
       isStage2,
+      opacity: this.$store.state.app.settings.dark ? 0.1 : 0.05,
     };
   }
 }

@@ -1,5 +1,7 @@
 <template>
   <v-container class="auctions-page pa-0">
+    <auctions-tabs v-if="isDesktop" class="flex-grow-0" />
+
     <auctioning-list
       class="flex-grow-1"
       v-if="tabIndex === 0"
@@ -29,6 +31,10 @@ export default class AuctionsPage extends Mixins(mixins.page) {
 
   get title() {
     return this.$t("tab.auctions") as string;
+  }
+
+  get isDesktop() {
+    return this.$vuetify.breakpoint.mdAndUp;
   }
 
   get appbar() {

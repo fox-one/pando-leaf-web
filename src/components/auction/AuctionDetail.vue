@@ -81,7 +81,7 @@
         </div>
 
         <div class="action-detail-content value-text mb-6 greyscale_1--text">
-          {{ meta.isStage1 && meta.participated ? meta.yourBid : "-" }}
+          {{ meta.yourLastDebtBid }}
         </div>
       </v-col>
 
@@ -145,11 +145,7 @@
           class="action-detail-content value-text"
           :class="meta.isStage1 ? 'greyscale_4--text' : 'greyscale_1--text'"
         >
-          <span v-if="meta.isStage2 && meta.participated">
-            {{ meta.yourBid }}
-          </span>
-
-          <span v-else>-</span>
+          {{ meta.yourLastCollateralBid }}
         </div>
       </v-col>
     </v-row>
@@ -188,7 +184,12 @@ export default class AuctionDetail extends Vue {
       participated,
     } = getters.getFlipFields(this.flip);
 
-    const yourLastBidEvent = getters["auctions/yourLastBidEvent"];
+    const yourLastDebtBidEvent = getters["auctions/yourLastDebtBidEvent"](
+      this.flip
+    );
+    const yourLastCollateralBidEvent = getters[
+      "auctions/yourLastCollateralBidEvent"
+    ](this.flip);
 
     const networkAuctionAsset = getters["asset/getNetworkAssetById"](
       auctionAsset?.id ?? ""
@@ -217,9 +218,12 @@ export default class AuctionDetail extends Vue {
       });
     }
 
-    const yourBid = isStage1
-      ? `${yourLastBidEvent?.bid} ${debtSymbol}`
-      : `${yourLastBidEvent?.lot} ${auctionSymbol}`;
+    const yourLastDebtBid = yourLastDebtBidEvent?.bid
+      ? `${yourLastDebtBidEvent?.bid} ${debtSymbol}`
+      : "-";
+    const yourLastCollateralBid = yourLastCollateralBidEvent?.lot
+      ? `${yourLastCollateralBidEvent?.bid} ${auctionSymbol}`
+      : "-";
 
     return {
       isDone,
@@ -237,7 +241,8 @@ export default class AuctionDetail extends Vue {
       diffSeconds,
       leading,
       participated,
-      yourBid,
+      yourLastDebtBid,
+      yourLastCollateralBid,
     };
   }
 
