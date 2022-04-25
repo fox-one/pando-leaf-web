@@ -267,13 +267,15 @@ export default class AuctionDetail extends Vue {
   .value {
     display: inline-flex;
     flex-direction: row;
+    align-items: center;
     color: var(--v-greyscale_1-base);
     line-height: 24px;
     margin-bottom: 12px;
 
     .round-icon {
-      align-self: center;
-      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 20px;
       height: 20px;
       border-radius: 20px;
