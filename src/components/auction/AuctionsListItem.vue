@@ -40,7 +40,7 @@
 
         <div v-else-if="meta.participated">
           <span class="label-button check-my-bid">
-            {{ $t("auction.check-my-bid") }}
+            {{ $t("auction.my-bid") }}
           </span>
           <my-vault-tag v-if="meta.isMyVault" class="mt-2" />
         </div>

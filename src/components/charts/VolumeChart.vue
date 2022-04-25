@@ -34,6 +34,11 @@ class VolumeChart extends Vue {
     this.bindCurrent = current;
   }
 
+  @Watch("type")
+  handleTypeChange() {
+    this.handlePointChange();
+  }
+
   get chartData() {
     if (this.type === "supply") {
       return this.data.map((x) => [dayjs(x.date).unix() * 1000, x.dai_value]);

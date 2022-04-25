@@ -222,7 +222,7 @@ export default class AuctionDetail extends Vue {
       ? `${yourLastDebtBidEvent?.bid} ${debtSymbol}`
       : "-";
     const yourLastCollateralBid = yourLastCollateralBidEvent?.lot
-      ? `${yourLastCollateralBidEvent?.bid} ${auctionSymbol}`
+      ? `${yourLastCollateralBidEvent?.lot} ${auctionSymbol}`
       : "-";
 
     return {
