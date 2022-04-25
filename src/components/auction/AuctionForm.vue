@@ -1,7 +1,7 @@
 <template>
   <f-panel elevation="none" class="pa-4 no-border-radius greyscale_1--text">
     <v-layout column>
-      <auction-detail :flip="flip" />
+      <auction-detail v-if="!meta.isDone" :flip="flip" />
 
       <auction-done-detail v-if="meta.isDone" :flip="flip" />
 
