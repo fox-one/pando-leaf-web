@@ -18,7 +18,7 @@
 
           <!-- timer -->
           <div class="round-tag mt-3">
-            <span class="greyscale_1--text text-uppercase">
+            <span class="timer_tag_left_text--text text-uppercase">
               {{ meta.isStage1 ? "ROUND 1" : "ROUND 2" }}
             </span>
 

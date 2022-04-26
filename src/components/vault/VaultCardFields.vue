@@ -79,16 +79,12 @@ class VaultFields extends Vue {
     if (vault?.ink) {
       items.push(
         {
-          title: this.$t("me.symbol-locked", {
-            symbol: collateralSymbol,
-          }),
+          title: this.$t("common.locked"),
           value: `${format({ n: collateralAmount })} ${collateralSymbol}`,
           emphasize: true,
         },
         {
-          title: this.$t("common.outstanding-symbol-debt", {
-            symbol: debtSymbol,
-          }),
+          title: this.$t("common.outstanding-debt"),
           value: `${format({ n: debtAmount })} ${debtSymbol}`,
           emphasize: true,
         }

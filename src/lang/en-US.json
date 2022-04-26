@@ -92,6 +92,7 @@
   "common.no-data": "No Data",
   "common.no-result": "No Result",
   "common.ongoing": "Ongoing",
+  "common.locked": "Locked",
   "common.outstanding-debt": "Outstanding Debt",
   "common.outstanding-symbol-debt": "Outstanding {symbol} Debt",
   "common.payback": "Payback",

@@ -14,7 +14,6 @@
     />
 
     <collateral-ratio-slider
-      class="mt-3"
       :collateral-id="meta.collateralId"
       :ratio="meta.changedRatio"
       :risk="meta.changedRisk"

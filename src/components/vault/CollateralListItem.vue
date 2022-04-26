@@ -4,14 +4,17 @@
       <v-layout justify-space-between class="ma-6">
         <v-layout align-center>
           <base-pair-logo :base="meta.gemLogo" :quote="meta.daiLogo" />
-          <span class="subtitle-1 font-weight-bold ml-2">
-            {{ collateral.name }}
-          </span>
+
+          <span class="ml-3 font-weight-semibold"> {{ meta.name }}</span>
         </v-layout>
 
-        <v-btn depressed small fab color="primary">
-          <v-icon @click="$emit('add')" color="greyscale_7"> $FIconAdd </v-icon>
-        </v-btn>
+        <f-button
+          fab
+          @click="$emit('add')"
+          class="greyscale_1 greyscale_7--text xx-small"
+        >
+          <v-icon color="greyscale_7" size="16">$FIconAdd4P</v-icon>
+        </f-button>
       </v-layout>
 
       <market-item-infos
@@ -64,6 +67,13 @@ export default ActionCreateListItem;
 </script>
 
 <style lang="scss" scoped>
+.xx-small {
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
 .collateral {
   margin-top: 18px;
 

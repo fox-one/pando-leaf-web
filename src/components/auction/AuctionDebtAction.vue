@@ -8,14 +8,14 @@
       @click="confirm"
       :style="meta.leading ? `background:${leadingColor} !important;` : ''"
     >
-      <v-icon v-if="!meta.leading" size="16">$iconBidFill</v-icon>
+      <v-icon v-if="!meta.leading" class="mr-1" size="16">$iconBidFill</v-icon>
       <span :style="meta.leading ? `color: #000000;` : ''">
         {{
           meta.leading
             ? $t("auction.leading-the-auction")
             : $t("auction.bid-now")
-        }}</span
-      >
+        }}
+      </span>
     </f-button>
   </base-connect-wallet-btn>
 </template>

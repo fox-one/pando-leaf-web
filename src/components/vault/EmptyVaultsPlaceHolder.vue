@@ -15,7 +15,8 @@
             :min-width="220"
             v-on="on"
           >
-            <v-icon size="16">$FIconAdd4PBold</v-icon>
+            <v-icon class="mr-1" size="16">$FIconAdd4PBold</v-icon>
+
             <span>{{ $t("common.add-a-vault") }}</span>
           </f-button>
         </slot>

@@ -7,7 +7,7 @@
         @click.stop="handleCollateralRatioClick"
       >
         {{ $t("common.collateral-ratio") }}
-        <v-icon v-if="meta.sortByCollateralRatio" size="12">
+        <v-icon v-if="meta.sortByCollateralRatio" class="ml-1" size="12">
           {{ meta.iconCollateralRatio }}
         </v-icon>
       </div>
@@ -20,7 +20,7 @@
         @click.stop="handleCollateralValueClick"
       >
         {{ $t("common.collateral-value") }}
-        <v-icon v-if="meta.sortByCollateralValue" size="12">
+        <v-icon v-if="meta.sortByCollateralValue" class="ml-1" size="12">
           {{ meta.iconCollateralValue }}
         </v-icon>
       </div>
@@ -88,6 +88,7 @@ export default VaultSorter;
   justify-content: center;
   height: 32px;
   border-radius: 16px;
+  font-weight: 500;
   box-sizing: border-box;
   border: 1px solid var(--v-greyscale_6-base);
   color: var(--v-greyscale_3-base);
