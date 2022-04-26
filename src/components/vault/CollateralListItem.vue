@@ -5,7 +5,7 @@
         <v-layout align-center>
           <base-pair-logo :base="meta.gemLogo" :quote="meta.daiLogo" />
 
-          <span class="ml-3 font-weight-semibold"> {{ meta.name }}</span>
+          <span class="ml-3 font-weight-semibold"> {{ collateral.name }}</span>
         </v-layout>
 
         <f-button
