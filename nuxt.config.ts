@@ -101,6 +101,10 @@ const config: NuxtConfig = {
   build: {
     transpile: ["vuetify"],
   },
+
+  publicRuntimeConfig: {
+    GA: process.env.GA || "",
+  },
   env: {
     TOKEN: process.env.TOKEN || "",
     SCOPE: process.env.SCOPE || "",

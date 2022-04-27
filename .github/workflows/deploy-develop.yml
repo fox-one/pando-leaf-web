@@ -28,7 +28,11 @@ jobs:
 
       - run: yarn --frozen-lockfile --non-interactive
 
-      - run: APP_ENV=${{ env.APP_ENV }} yarn build
+      - name: Build
+        env:
+          GA: ${{ secrets.GA }}
+          APP_ENV: ${{ env.APP_ENV }}
+        run: yarn build
 
       # upload to aws
       - uses: aws-actions/configure-aws-credentials@v1
