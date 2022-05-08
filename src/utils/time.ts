@@ -44,7 +44,7 @@ export function getMonthStart() {
 }
 
 export function getYearStart() {
-  return dayjs().subtract(181, "days").unix();
+  return dayjs().subtract(365, "days").unix();
 }
 
 export function getToday() {

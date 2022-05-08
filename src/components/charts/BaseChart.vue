@@ -64,7 +64,7 @@ export function getBaseOption(vm, data, colors): EChartsOption {
         },
       },
     },
-    yAxis: { show: false, scale: true },
+    yAxis: { show: false, scale: false },
   };
 }
 

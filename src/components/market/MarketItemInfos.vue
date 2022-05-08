@@ -45,7 +45,7 @@
       </market-infos-item>
     </v-row>
 
-    <v-col class="d-flex justify-center mb-n1" v-if="!disabled">
+    <v-col class="d-flex justify-center mb-n1" cols="12" v-if="!disabled">
       <v-icon
         size="16"
         color="greyscale_4"

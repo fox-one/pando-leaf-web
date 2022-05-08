@@ -13,7 +13,7 @@
       <div class="progress-dot medium-low"></div>
     </v-flex>
 
-    <div class="py-2">
+    <div class="py-2 relative">
       <span class="label liquidate-high">{{ meta.liquidationPercent }}</span>
       <span class="label high-medium">{{ meta.highRiskPercent }}</span>
       <span class="label medium-low">{{ meta.mediumRiskPercent }}</span>
@@ -78,26 +78,27 @@ export default class extends Vue {
     }
   }
 }
+.relative {
+  position: relative;
 
-.label {
-  position: absolute;
-  z-index: 3;
-  font-size: 12px;
-  line-height: 15px;
-  color: var(--v-greyscale_4-base);
+  .label {
+    position: absolute;
+    z-index: 3;
+    font-size: 12px;
+    line-height: 15px;
+    color: var(--v-greyscale_4-base);
 
-  &.liquidate-high {
-    left: 16px;
-  }
+    &.liquidate-high {
+      left: 0px;
+    }
 
-  &.high-medium {
-    left: calc(3 / 13 * 100%);
-    transform: translateX(25%);
-  }
+    &.high-medium {
+      left: calc(3 / 13 * 100%);
+    }
 
-  &.medium-low {
-    left: calc(8 / 13 * 100%);
-    transform: translateX(-6%);
+    &.medium-low {
+      left: calc(8 / 13 * 100%);
+    }
   }
 }
 </style>

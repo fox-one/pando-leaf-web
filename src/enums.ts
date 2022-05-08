@@ -108,7 +108,7 @@ const DurationMeta: Meta<API.Duration> = {
 export const DurationHour: Record<API.Duration, string> = {
   week: "168h",
   month: "720h",
-  year: "4320h",
+  year: "8760h",
 };
 
 export function getDurationMeta(t: API.Duration) {
