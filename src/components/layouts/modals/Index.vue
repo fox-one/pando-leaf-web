@@ -16,7 +16,7 @@
 
     <welcome-modal />
 
-    <pando-announce-modal app="wave" :dev="dev" />
+    <pando-announce-modal app="leaf" :dev="dev" />
   </div>
 </template>
 
