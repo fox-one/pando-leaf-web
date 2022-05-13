@@ -15,6 +15,8 @@
     <terms-modal />
 
     <welcome-modal />
+
+    <pando-announce-modal app="wave" :dev="dev" />
   </div>
 </template>
 
@@ -26,6 +28,7 @@ import RiskWarningModal from "./RiskWarningModal.vue";
 import PayQrCodeModal from "./PayQrCodeModal.vue";
 import TermsModal from "./TermsModal.vue";
 import { Sync } from "vuex-pathify";
+import { isProduct } from "@/constants";
 
 @Component({
   components: {
@@ -38,6 +41,8 @@ import { Sync } from "vuex-pathify";
 })
 class DefaultLayoutModals extends Vue {
   @Sync("app/paying") paying!: State.PayState;
+
+  dev = !isProduct;
 
   handlePayingCancel() {
     if (this.paying.timer) {
