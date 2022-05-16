@@ -1,10 +1,11 @@
 <template>
   <f-bottom-sheet v-model="dialog" :title="$t('chart')">
     <template #activator="{ on }">
-      <div v-if="showSwitcher" class="type-field type-field--switch" v-on="on">
+      <div v-on="on" v-if="showSwitcher" class="type-field type-field--switch">
         <span class="mr-2 f-body-2">{{ display }}</span>
         <v-icon v-if="showSwitcher" size="16"> $FIconChevronDown4P </v-icon>
       </div>
+
       <div v-else class="type-field">
         <span class="mr-2 f-body-2">{{ display }}</span>
       </div>
