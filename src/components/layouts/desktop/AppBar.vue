@@ -7,24 +7,33 @@
     :height="64"
     class="desktop-appbar"
   >
-    <v-container class="d-flex align-center">
-      <div class="account"></div>
-      <pando-products :current-id="'leaf'" z-index="111" />
-      <v-spacer />
+    <v-container class="d-flex">
+      <v-row cols="4" class="align-center">
+        <v-col class="account">
+          <account />
+        </v-col>
 
-      <top-nav />
+        <v-col cols="4" class="text-center">
+          <pando-products :current-id="'leaf'" z-index="111" />
+        </v-col>
+
+        <v-col cols="4">
+          <top-nav class="d-flex justify-end" />
+        </v-col>
+      </v-row>
     </v-container>
   </f-app-bar>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-
+import Account from "../partials/Account.vue";
 import TopNav from "./TopNav.vue";
 
 @Component({
   components: {
     TopNav,
+    Account,
   },
 })
 class AppBar extends Vue {

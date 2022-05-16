@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="pa-0">
     <market-overview />
 
     <f-divider />
@@ -19,7 +19,7 @@
     />
 
     <div style="height: 70px"></div>
-  </div>
+  </v-container>
 </template>
 
 <script lang="ts">

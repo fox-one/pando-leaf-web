@@ -4,7 +4,7 @@
     :adaptive="true"
     overlay-opacity="0.9"
     max-width="800"
-    desktop-wapper="dialog"
+    :wapper-in-desktop="'dialog'"
     :show-close-icon="true"
   >
     <template #activator="{ on }">
@@ -14,11 +14,12 @@
         </div>
       </slot>
     </template>
+
     <f-bottom-sheet-title>
       {{ $t("common.add-a-vault") }}
     </f-bottom-sheet-title>
 
-    <v-list class="dialog-content overflow-auto pt-0">
+    <v-list class="dialog-content overflow-auto py-0">
       <f-bottom-sheet-subtitle class="pb-4 pt-0">
         <div class="text-center">
           <div class="f-caption mb-6 greyscale_3--text">
