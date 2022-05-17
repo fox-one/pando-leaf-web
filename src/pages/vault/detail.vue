@@ -1,5 +1,6 @@
 <template>
   <v-container class="pa-0">
+    <detail-tabs v-if="desktop" />
     <div v-show="index === 0" class="px-4">
       <vault-name :id="vaultId" class="mt-4" />
 
@@ -134,7 +135,6 @@ export default VaultDetailPage;
     background: var(--v-greyscale_7-base);
     height: calc(110px + env(safe-area-inset-bottom));
     align-items: flex-start;
-    max-width: 800px;
     border-radius: 0px;
     padding: 16px;
   }

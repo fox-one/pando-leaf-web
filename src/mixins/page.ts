@@ -47,6 +47,10 @@ export default class PageView extends Vue {
     return "";
   }
 
+  get desktop() {
+    return this.$vuetify.breakpoint.mdAndUp;
+  }
+
   setLang() {
     const locale = this.$utils.helper.getLocale();
     this.$i18n.locale = locale;
