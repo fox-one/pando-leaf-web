@@ -101,7 +101,7 @@ export default class AuctionFilters extends Vue {
     const params: API.FlipParams = {
       offset: 0,
       limit: PAGINATION_LIMIT,
-      phase: FlipPhase.tend,
+      phase: FlipPhase.bid,
     };
     if (this.types.includes("my-vault")) {
       params.my_vaults = 1;
