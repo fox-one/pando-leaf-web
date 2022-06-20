@@ -1,14 +1,14 @@
 <template>
   <v-sheet class="rounded pa-6" :color="meta.bgColor" @click="handleToDetail">
     <v-row class="pt-3">
-      <v-col cols="6" class="py-0" v-if="meta.hasCollateral">
-        <f-mixin-asset-logo :size="32" :logo="meta.collateralAssetLogo" />
-      </v-col>
       <v-col
-        :cols="meta.hasCollateral ? 6 : 12"
         class="py-0"
+        :cols="meta.hasCollateral ? 6 : 12"
         :class="meta.hasCollateral ? '' : 'text-center'"
       >
+        <f-mixin-asset-logo :size="32" :logo="meta.collateralAssetLogo" />
+      </v-col>
+      <v-col cols="6" v-if="meta.hasCollateral" class="py-0">
         <f-mixin-asset-logo :size="32" :logo="meta.debtAssetLogo" />
       </v-col>
     </v-row>

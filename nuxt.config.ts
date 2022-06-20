@@ -99,7 +99,7 @@ const config: NuxtConfig = {
     optionsPath: "./vuetify.options.ts",
   },
   build: {
-    transpile: ["vuetify"],
+    transpile: ["vuetify", "@foxone/uikit"],
   },
   env: {
     GA: process.env.GA || "",

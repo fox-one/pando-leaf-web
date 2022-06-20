@@ -2,6 +2,10 @@
 
 This is a brief Pando Leaf website project update records, sorted in reverse chronological order.
 
+## v2.4.3 -- 2022.06.13
+
+Fix vault hidden's list ui issue.
+
 ## v2.4.2 -- 2022.05.17
 
 Fix some ui issues on PC browsers and tablets.
