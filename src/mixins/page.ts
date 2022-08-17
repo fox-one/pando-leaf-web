@@ -73,6 +73,14 @@ export default class PageView extends Vue {
     };
   }
 
+  get desc() {
+    return this.$t("description");
+  }
+
+  get shortDesc() {
+    return this.$t("short-description");
+  }
+
   get bottomNav() {
     return "";
   }
