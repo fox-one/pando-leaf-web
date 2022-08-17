@@ -4,7 +4,7 @@ import i18n from "./src/i18n";
 const config: NuxtConfig = {
   ssr: false,
   router: {
-    mode: "hash",
+    mode: "history",
     middleware: "route",
   },
   srcDir: "./src",
@@ -46,6 +46,10 @@ const config: NuxtConfig = {
         href: "/favicon-16x16.png",
       },
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+      },
       {
         rel: "stylesheet",
         href: "https://static.fox.one/font/inter/style.css",
@@ -91,12 +95,30 @@ const config: NuxtConfig = {
         seo: false,
       },
     ],
+    "@nuxtjs/sitemap",
   ],
   vuetify: {
     customVariables: ["~/styles/_variables.scss"],
     defaultAssets: false,
     treeShake: true,
     optionsPath: "./vuetify.options.ts",
+  },
+  sitemap: {
+    path: "/sitemap.xml",
+    hostname:
+      process.env.APP_ENV === "prod"
+        ? "https://leaf.pando.im/"
+        : "https://test.pando.im/",
+    exclude: [],
+    routes: [],
+    cacheTime: 1000 * 60 * 60 * 24,
+    etag: {
+      weak: false,
+    },
+    gzip: true,
+    trailingSlash: false,
+    defaults: {},
+    pathGzip: "/sitemap.xml",
   },
   build: {
     transpile: ["vuetify", "@foxone/uikit"],

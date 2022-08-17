@@ -6,7 +6,10 @@ import dayjs from "dayjs";
 
 export interface Page extends Vue {
   title: string;
-
+  htmlTitle?: string;
+  shortDesc?: string;
+  desc?: string;
+  canonicalLink?: string;
   setLang: () => void;
   setPageConfig: () => void;
 }
@@ -14,16 +17,43 @@ export interface Page extends Vue {
 @Component({
   head() {
     const vm = this as Page;
+    const i18nHead = this.$nuxtI18nHead({ addSeoAttributes: true });
     return {
-      title: vm.title,
+      title: `${vm.htmlTitle || vm.title} - ${vm.shortDesc}`,
       meta: [
         {
           hid: "theme-color",
           name: "theme-color",
-          content: vm.$store.state.app.settings.dark ? "#000000" : "#FFFFFF",
+          content: vm.$store.state.app.dark ? "#000000" : "#FFFFFF",
         },
+        {
+          hid: "description",
+          name: "description",
+          content: vm.desc,
+        },
+        {
+          hid: "og:title",
+          name: "og:title",
+          title: vm.htmlTitle || vm.title,
+        },
+        {
+          hid: "og:description",
+          name: "og:description",
+          content: vm.desc,
+        },
+        {
+          hid: "twitter:title",
+          name: "twitter:title",
+          title: vm.htmlTitle || vm.title,
+        },
+        {
+          hid: "twitter:description",
+          name: "twitter:description",
+          content: vm.desc,
+        },
+        ...i18nHead.meta,
       ],
-    };
+    } as any;
   },
   beforeRouteEnter(_to, _from, next) {
     next((vm: any) => {
@@ -49,6 +79,10 @@ export default class PageView extends Vue {
 
   get desktop() {
     return this.$vuetify.breakpoint.mdAndUp;
+  }
+
+  get canonicalLink() {
+    return `${window.location.origin}${window.location.pathname}${window.location.search}`;
   }
 
   setLang() {
