@@ -143,11 +143,13 @@ export default class GenerateVault extends Mixins(mixins.page) {
   onCollateralChange(newVal, oldVal) {
     if (newVal) this.loading = false;
     if (newVal?.id === oldVal?.id || newVal.id === this.queryId) return;
-    this.$router.replace({
-      query: {
-        id: newVal.id,
-      },
-    });
+    this.$router.replace(
+      this.localePath({
+        query: {
+          id: newVal.id,
+        },
+      })
+    );
   }
 
   intervalid = 0;
@@ -156,7 +158,7 @@ export default class GenerateVault extends Mixins(mixins.page) {
       this.$uikit.toast.error({
         message: "Collateral ID not found.",
       });
-      this.$router.replace("/");
+      this.$router.replace(this.localePath("/"));
     }
     this.collateral = this.getCollateral(this.queryId);
   }

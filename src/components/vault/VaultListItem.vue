@@ -80,7 +80,9 @@ class VaultListItem extends Vue {
   }
 
   handleToDetail() {
-    this.$router.push({ name: "vault-detail", query: { id: this.id } });
+    this.$router.push(
+      this.localePath({ name: "vault-detail", query: { id: this.id } })
+    );
   }
 }
 export default VaultListItem;

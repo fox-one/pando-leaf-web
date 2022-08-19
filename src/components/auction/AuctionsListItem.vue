@@ -142,7 +142,7 @@ export default class AuctionsListItem extends Vue {
   }
 
   toDetail(flip: API.Flip) {
-    this.$router.push(`/auction?id=${flip.id}`);
+    this.$router.push(this.localePath(`/auction?id=${flip.id}`));
   }
 }
 </script>

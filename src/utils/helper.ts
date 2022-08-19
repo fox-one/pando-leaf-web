@@ -20,7 +20,7 @@ export function handleTxResult(vm: Vue, tx: API.Transaction) {
     vm.$uikit.toast.success({
       message: vm.$t("common.action-success") as string,
     });
-    vm.$router.replace("/");
+    vm.$router.replace(vm.localePath("/"));
     return;
   }
 

@@ -20,7 +20,7 @@ export default class MarketItemAction extends Vue {
   @Prop() collateral!: API.Collateral;
 
   generateNewVault() {
-    this.$router.push(`/vault/open?id=${this.collateral.id}`);
+    this.$router.push(this.localePath(`/vault/open?id=${this.collateral.id}`));
   }
 }
 </script>

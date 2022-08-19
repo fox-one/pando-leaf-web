@@ -50,7 +50,7 @@ class DefaultLayoutBottomNav extends Vue {
     const nav = this.items.find((x) => x.value === value);
 
     if (nav) {
-      this.$router.replace({ name: nav.path });
+      this.$router.replace(this.localePath({ name: nav.path }));
     }
   }
 }

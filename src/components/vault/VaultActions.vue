@@ -74,7 +74,9 @@ class VaultActions extends Vue {
   }
 
   handleClick(item) {
-    this.$router.push({ name: item.href, query: { id: this.id } });
+    this.$router.push(
+      this.localePath({ name: item.href, query: { id: this.id } })
+    );
   }
 }
 export default VaultActions;

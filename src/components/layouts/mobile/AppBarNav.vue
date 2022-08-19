@@ -47,7 +47,7 @@ class AppBarNav extends Vue {
   handleBack() {
     if (window.history.length <= 2) {
       this.$router.options;
-      this.$router.replace({ name: "index" });
+      this.$router.replace(this.localePath({ name: "index" }));
     } else {
       this.$router.back();
     }

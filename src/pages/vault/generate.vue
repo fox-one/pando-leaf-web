@@ -64,7 +64,7 @@ class VaultGeneratePage extends Mixins(mixins.page) {
       this.$uikit.toast.error({
         message: "Vault ID not found.",
       });
-      this.$router.replace("/");
+      this.$router.replace(this.localePath("/"));
     }
     this.refresh();
   }

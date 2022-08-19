@@ -69,7 +69,7 @@ class AppBar extends Vue {
     if (!nav || this.$route.name === nav.path) {
       return;
     }
-    this.$router.push({ name: nav.path });
+    this.$router.push(this.localePath({ name: nav.path }));
   }
 }
 export default AppBar;

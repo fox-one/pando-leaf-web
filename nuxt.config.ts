@@ -84,15 +84,22 @@ const config: NuxtConfig = {
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
     [
-      "nuxt-i18n",
+      "@nuxtjs/i18n",
       {
         vueI18n: i18n,
-        locales: ["en", "zh"],
+        locales: [
+          { code: "en", iso: "en-US" },
+          { code: "zh", iso: "zh-TW" },
+          { code: "es", iso: "es-ES" },
+          { code: "de", iso: "de-DE" },
+          { code: "fr", iso: "fr-FR" },
+          { code: "ja", iso: "ja-JP" },
+          { code: "ko", iso: "ko-KR" },
+        ],
         defaultLocale: "en",
-        strategy: "no_prefix",
+        strategy: "prefix_except_default",
         detectBrowserLanguage: false,
         parsePages: false,
-        seo: false,
       },
     ],
     "@nuxtjs/sitemap",
@@ -108,7 +115,7 @@ const config: NuxtConfig = {
     hostname:
       process.env.APP_ENV === "prod"
         ? "https://leaf.pando.im/"
-        : "https://test.pando.im/",
+        : "https://leaf.aspens.rocks/",
     exclude: [],
     routes: [],
     cacheTime: 1000 * 60 * 60 * 24,

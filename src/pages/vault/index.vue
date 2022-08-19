@@ -86,8 +86,14 @@ class VaultPage extends Mixins(mixins.page) {
     ];
   }
 
+  mounted() {
+    this.setLang();
+  }
+
   handleItemclick(item: API.Collateral) {
-    this.$router.push({ name: "vault-open", query: { id: item.id } });
+    this.$router.push(
+      this.localePath({ name: "vault-open", query: { id: item.id } })
+    );
   }
 }
 export default VaultPage;

@@ -29,7 +29,7 @@ class AccountActions extends Vue {
   }
 
   handleContact() {
-    this.$router.push({ name: "contacts" });
+    this.$router.push(this.localePath({ name: "contacts" }));
   }
 }
 export default AccountActions;

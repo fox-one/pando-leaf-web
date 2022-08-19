@@ -40,7 +40,9 @@ import VaultHidden from "./VaultHidden.vue";
 })
 class EmptyPlaceHolder extends Vue {
   handleItemclick(item: API.Collateral) {
-    this.$router.push({ name: "vault-open", query: { id: item.id } });
+    this.$router.push(
+      this.localePath({ name: "vault-open", query: { id: item.id } })
+    );
   }
 }
 export default EmptyPlaceHolder;

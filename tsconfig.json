@@ -19,7 +19,7 @@
     },
     "types": [
       "webpack-env",
-      "nuxt-i18n",
+      "@nuxtjs/i18n",
       "@types/node",
       "@nuxt/types",
       "vuetify"

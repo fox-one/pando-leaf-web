@@ -57,7 +57,7 @@ export interface Page extends Vue {
   },
   beforeRouteEnter(_to, _from, next) {
     next((vm: any) => {
-      vm.setLang();
+      // vm.setLang();
       vm.setPageConfig();
     });
   },
