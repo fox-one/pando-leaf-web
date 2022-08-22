@@ -4,7 +4,7 @@ const auth: Middleware = function ({ route, redirect }) {
   const current = route.name;
 
   if (!current || current === "index") {
-    redirect({ name: "vault" });
+    redirect({ name: "market" });
     return;
   }
 };

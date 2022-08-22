@@ -1,4 +1,4 @@
 <script lang="ts">
-import vault from "./vault/index.vue";
-export default vault;
+import market from "./market/index.vue";
+export default market;
 </script>

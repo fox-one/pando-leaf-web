@@ -28,6 +28,12 @@ const config: NuxtConfig = {
     ],
     link: [
       {
+        rel: "icon",
+        type: "image/png",
+        sizes: "180x180",
+        href: "/pando-icon.png",
+      },
+      {
         rel: "apple-touch-icon",
         type: "image/png",
         sizes: "180x180",

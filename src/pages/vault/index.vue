@@ -52,6 +52,9 @@ import { LINKS } from "~/constants";
     VaultSorter,
     ActionCreateVault,
   },
+  head: {
+    link: [{ type: "canonical", rel: "https://leaf.pando.im/vault" }],
+  },
 })
 class VaultPage extends Mixins(mixins.page) {
   @Get("auth/isLogged") isLogged!: boolean;
