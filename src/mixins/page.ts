@@ -64,7 +64,7 @@ export interface Page extends Vue {
 })
 export default class PageView extends Vue {
   get title(): TranslateResult {
-    return "";
+    return "Leaf";
   }
 
   get appbar(): Partial<State.AppBarState> {

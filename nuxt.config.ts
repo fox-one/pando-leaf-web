@@ -135,6 +135,9 @@ const config: NuxtConfig = {
   },
   build: {
     transpile: ["vuetify", "@foxone/uikit"],
+    analyze: {
+      analyzerMode: "static",
+    },
   },
   env: {
     GA: process.env.GA || "",
