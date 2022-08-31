@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <article>
     <f-bottom-sheet
       v-if="!desktop"
       v-model="dialog"
@@ -19,13 +19,14 @@
             class="mx-6"
           ></v-img>
         </div>
-        <div class="welcome-title">
+        <h2 class="welcome-title">
           {{ $t("welcome.what-is") }}
           <v-icon size="68" class="mx-1">$iconLeaf</v-icon>
-        </div>
-        <div class="greyscale_3--text mt-8">
+          <span style="display: none">Leaf</span>
+        </h2>
+        <p class="greyscale_3--text mt-8">
           {{ $t("welcome.description") }}
-        </div>
+        </p>
         <f-button
           class="my-8 greyscale_1 greyscale_7--text"
           @click="handleNext"
@@ -47,6 +48,7 @@
             <div class="welcome-title">
               {{ $t("welcome.what-is") }}
               <v-icon size="68" class="mx-1">$iconLeaf</v-icon>
+              <span style="display: none">Leaf</span>
             </div>
 
             <div class="greyscale_3--text mt-8">
@@ -60,7 +62,7 @@
         </v-layout>
       </f-panel>
     </v-dialog>
-  </div>
+  </article>
 </template>
 
 <script lang="ts">

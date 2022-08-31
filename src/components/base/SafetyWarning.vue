@@ -13,7 +13,7 @@
         class="py-6 px-4 d-flex justify-space-between"
         align-center
       >
-        <div class="safety-warning">{{ meta.title }}</div>
+        <h2 class="safety-warning">{{ meta.title }}</h2>
 
         <v-icon size="16" color="greyscale_1">$FIconChevronRight4P</v-icon>
       </div>
@@ -22,9 +22,9 @@
     <f-bottom-sheet-title> {{ meta.title }} </f-bottom-sheet-title>
 
     <div :class="!isDesktop ? 'pb-8' : ''">
-      <div class="ma-4 tooltip-content greyscale_3--text">
+      <p class="ma-4 tooltip-content greyscale_3--text">
         {{ meta.hint }}
-      </div>
+      </p>
 
       <div class="my-8 text-center">
         <f-button

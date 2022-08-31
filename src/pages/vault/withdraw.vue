@@ -48,7 +48,7 @@ class VaultWithdrawPage extends Mixins(mixins.page) {
   }
 
   get title() {
-    return this.$t("common.withdraw");
+    return `${this.$t("common.withdraw")}`;
   }
 
   get meta() {

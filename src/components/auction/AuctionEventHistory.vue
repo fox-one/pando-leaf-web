@@ -4,9 +4,9 @@
     v-if="events && events.length !== 0"
     class="pa-4 pb-0 no-border-radius"
   >
-    <div v-if="events && events.length !== 0" class="text-2 mb-2">
+    <h2 v-if="events && events.length !== 0" class="text-2 mb-2">
       {{ $t("auction.history") }}
-    </div>
+    </h2>
 
     <template v-for="(event, index) in events">
       <f-divider :key="`${index}_divider`" v-if="index !== 0" />

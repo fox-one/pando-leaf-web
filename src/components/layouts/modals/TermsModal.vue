@@ -5,10 +5,10 @@
     :title="$t('use.terms')"
     wapper-in-desktop="dialog"
   >
-    <div class="pa-6">
-      <div class="terms-title">
+    <section class="pa-6">
+      <h2 class="terms-title">
         {{ $t("terms.hint") }}
-      </div>
+      </h2>
 
       <div class="terms-items">
         <p>
@@ -27,7 +27,7 @@
           {{ $t("accept") }}
         </f-button>
       </div>
-    </div>
+    </section>
   </f-bottom-sheet>
 </template>
 

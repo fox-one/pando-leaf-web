@@ -62,7 +62,7 @@ class VaultPage extends Mixins(mixins.page) {
   @Get("vault/vaultsEmpty") vaultsEmpty!: boolean;
 
   get title() {
-    return this.$t("tab.home") as string;
+    return `${this.$t("app-name")}`;
   }
 
   get appbar() {

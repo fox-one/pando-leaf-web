@@ -4,13 +4,13 @@
 
     <f-divider />
 
-    <div class="text-3 ml-4 mt-8">{{ $t("chart") }}</div>
+    <h2 class="text-3 ml-4 mt-8">{{ $t("chart") }}</h2>
 
     <market-chart-panel class="ma-4" />
 
     <f-divider />
 
-    <div class="text-3 ml-4 mt-8">{{ $t("all-markets") }}</div>
+    <h2 class="text-3 ml-4 mt-8">{{ $t("all-markets") }}</h2>
 
     <market-item
       v-for="market in collaterals"
@@ -41,7 +41,7 @@ class VaultPage extends Mixins(mixins.page) {
   @Sync("collateral/collaterals") collaterals!: API.Collateral[];
 
   get title() {
-    return this.$t("tab.market") as string;
+    return `${this.$t("app-name")}`;
   }
 
   get appbar() {

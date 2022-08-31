@@ -10,9 +10,9 @@
         md="4"
         lg="3"
       >
-        <div class="market-overview-title greyscale_3--text">
+        <h2 class="market-overview-title greyscale_3--text">
           {{ info.title }}
-        </div>
+        </h2>
 
         <div align-center class="market-overview-value" :class="info.class">
           <span v-if="info.fiat" class="market-overview-value-symbol">

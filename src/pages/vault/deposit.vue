@@ -36,6 +36,7 @@ import { Call, Get } from "vuex-pathify";
     DepositForm,
     DepositPrediction,
   },
+  head: {},
 })
 class VaultDepositPage extends Mixins(mixins.page) {
   @Get("vault/getVaultById") getVault;
@@ -54,7 +55,7 @@ class VaultDepositPage extends Mixins(mixins.page) {
   }
 
   get title() {
-    return this.$t("common.deposit");
+    return `${this.$t("common.deposit")}`;
   }
 
   get meta() {

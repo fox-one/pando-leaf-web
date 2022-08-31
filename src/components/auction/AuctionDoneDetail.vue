@@ -1,8 +1,8 @@
 <template>
   <v-layout column>
-    <div class="text-3 greyscale_1--text mb-4">
+    <h2 class="text-3 greyscale_1--text mb-4">
       {{ $t("auction.done-title") }}
-    </div>
+    </h2>
 
     <f-panel class="greyscale_6 py-6 pl-0">
       <v-row no-gutters>

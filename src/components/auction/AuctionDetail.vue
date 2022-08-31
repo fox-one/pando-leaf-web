@@ -1,7 +1,7 @@
 <template>
   <v-layout column>
     <!-- title -->
-    <div class="auction-detail-header">
+    <h2 class="auction-detail-header">
       <div class="title">
         {{ $t("auction.selling-off") }}
       </div>
@@ -20,7 +20,7 @@
       </div>
 
       <div class="value">{{ flip.bid }} {{ meta.debtSymbol }}</div>
-    </div>
+    </h2>
 
     <!-- line -->
     <div class="ma-0 mt-5 pa-0 line" :class="meta.isStage1 ? 'left' : 'right'">

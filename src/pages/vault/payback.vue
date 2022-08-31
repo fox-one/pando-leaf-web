@@ -45,7 +45,7 @@ class VaultPaybackPage extends Mixins(mixins.page) {
   }
 
   get title() {
-    return this.$t("common.payback");
+    return `${this.$t("common.payback")}`;
   }
 
   get meta() {

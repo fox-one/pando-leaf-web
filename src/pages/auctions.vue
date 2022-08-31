@@ -30,7 +30,7 @@ export default class AuctionsPage extends Mixins(mixins.page) {
   @Sync("page/auction@tabIndex") tabIndex!: number;
 
   get title() {
-    return this.$t("tab.auctions") as string;
+    return `${this.$t("app-name")}`;
   }
 
   get isDesktop() {

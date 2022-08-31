@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0">
     <detail-tabs v-if="desktop" />
-    <div v-show="index === 0" class="px-4">
+    <article v-show="index === 0" class="px-4">
       <vault-name :id="vaultId" class="mt-4" />
 
       <vault-detail-fields
@@ -26,7 +26,7 @@
       </v-layout>
 
       <vault-history class="end-blank" :id="vaultId" :filter="filter" />
-    </div>
+    </article>
 
     <div v-show="index === 1">
       <market-item
@@ -91,7 +91,7 @@ class VaultDetailPage extends Mixins(mixins.page) {
   }
 
   get title() {
-    return this.$t("common.vault-detail") as string;
+    return `${this.$t("common.vault-detail")}`;
   }
 
   get appbar() {

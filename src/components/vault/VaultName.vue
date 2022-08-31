@@ -1,28 +1,28 @@
 <template>
   <div class="vault-name" :style="[{ background: meta.color }]">
-    <div class="name-text">
+    <h2 class="name-text">
       {{ meta.name }}
-    </div>
+    </h2>
 
     <v-row no-gutters class="pb-6">
       <v-col cols="6" class="vault-content">
         <f-mixin-asset-logo :size="32" :logo="meta.debtAssetLogo" />
 
-        <div class="content-text">
+        <p class="content-text">
           {{ meta.debtAmount }} {{ meta.debtAssetSymbol }}
-        </div>
+        </p>
 
-        <div class="label-text mt-2">{{ $t("common.debt") }}</div>
+        <p class="label-text mt-2">{{ $t("common.debt") }}</p>
       </v-col>
 
       <v-col cols="6" class="vault-content">
         <f-mixin-asset-logo :size="32" :logo="meta.collateralAssetLogo" />
 
-        <div class="content-text">
+        <p class="content-text">
           {{ meta.collateralAmount }} {{ meta.collateralAssetSymbol }}
-        </div>
+        </p>
 
-        <div class="label-text mt-2">{{ $t("common.collateral") }}</div>
+        <p class="label-text mt-2">{{ $t("common.collateral") }}</p>
       </v-col>
     </v-row>
   </div>

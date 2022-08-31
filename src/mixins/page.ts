@@ -53,6 +53,7 @@ export interface Page extends Vue {
         },
         ...i18nHead.meta,
       ],
+      link: i18nHead.link,
     } as any;
   },
   beforeRouteEnter(_to, _from, next) {
