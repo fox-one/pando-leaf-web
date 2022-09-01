@@ -34,6 +34,14 @@ jobs:
           APP_ENV: ${{ env.APP_ENV }}
         run: yarn build
 
+      - run: |
+          ROBOT_CONTENT=$(cat << EOF
+          User-agent: *
+          Disallow: /
+          EOF
+          )
+          echo "$ROBOT_CONTENT" > dist/robots.txt
+
       # upload to aws
       - uses: aws-actions/configure-aws-credentials@v1
         with:
