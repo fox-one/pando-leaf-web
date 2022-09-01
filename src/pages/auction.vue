@@ -49,6 +49,10 @@ export default class AuctionPage extends Mixins(mixins.page) {
     return this.$route.query["id"] as string;
   }
 
+  get desc() {
+    return this.meta.isDone ? "" : "";
+  }
+
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
     const flipFields = getters.getFlipFields(this.flip);

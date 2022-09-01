@@ -3,6 +3,10 @@
     class="pa-4"
     :class="[{ 'fill-height': !isLogged || vaultsEmpty }]"
   >
+    <h1 style="display: none">
+      {{ $t("seo.h1") }}
+    </h1>
+
     <login-place-holder v-if="!isLogged" />
 
     <empty-vaults-place-holder v-else-if="vaultsEmpty" />

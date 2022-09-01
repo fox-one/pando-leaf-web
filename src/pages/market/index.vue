@@ -1,5 +1,9 @@
 <template>
   <v-container class="pa-0">
+    <h1 style="display: none">
+      {{ $t("seo.h1") }}
+    </h1>
+
     <market-overview />
 
     <f-divider />

@@ -12,7 +12,7 @@
           {{ meta.debtAmount }} {{ meta.debtAssetSymbol }}
         </p>
 
-        <p class="label-text mt-2">{{ $t("common.debt") }}</p>
+        <p class="label-text mt-2 mb-0">{{ $t("common.debt") }}</p>
       </v-col>
 
       <v-col cols="6" class="vault-content">
@@ -22,7 +22,7 @@
           {{ meta.collateralAmount }} {{ meta.collateralAssetSymbol }}
         </p>
 
-        <p class="label-text mt-2">{{ $t("common.collateral") }}</p>
+        <p class="label-text mt-2 mb-0">{{ $t("common.collateral") }}</p>
       </v-col>
     </v-row>
   </div>
@@ -85,6 +85,7 @@ export default VaultName;
   font-weight: 600;
   font-size: 14px;
   line-height: 17px;
+  margin-bottom: 0px;
   color: var(--v-greyscale_1-base);
 }
 .label-text {

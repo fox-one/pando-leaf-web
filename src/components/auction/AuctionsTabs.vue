@@ -6,7 +6,7 @@
       :data-value="index"
       :ripple="false"
     >
-      <span class="tab-text">{{ item.text }}</span>
+      <h3 class="tab-text">{{ item.text }}</h3>
     </v-tab>
   </f-tabs>
 </template>

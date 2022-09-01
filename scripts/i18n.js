@@ -79,8 +79,8 @@ function flatProperty(obj, perfix) {
 }
 
 mergeFile("../src/lang/en-US.json", "../src/lang/zh-TW.json", argv.f);
-// mergeFile("../src/lang/en-US.json", "../src/lang/ja-JP.json");
-// mergeFile("../src/lang/en-US.json", "../src/lang/de-DE.json");
-// mergeFile("../src/lang/en-US.json", "../src/lang/es-ES.json");
-// mergeFile("../src/lang/en-US.json", "../src/lang/fr-FR.json");
-// mergeFile("../src/lang/en-US.json", "../src/lang/ko-KR.json");
+mergeFile("../src/lang/en-US.json", "../src/lang/ja-JP.json");
+mergeFile("../src/lang/en-US.json", "../src/lang/de-DE.json");
+mergeFile("../src/lang/en-US.json", "../src/lang/es-ES.json");
+mergeFile("../src/lang/en-US.json", "../src/lang/fr-FR.json");
+mergeFile("../src/lang/en-US.json", "../src/lang/ko-KR.json");

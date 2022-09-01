@@ -1,5 +1,9 @@
 <template>
   <v-container class="auctions-page pa-0">
+    <h1 style="display: none">
+      {{ $t("seo.h1") }}
+    </h1>
+
     <auctions-tabs v-if="isDesktop" class="flex-grow-0" />
 
     <auctioning-list

@@ -1,5 +1,5 @@
 <template>
-  <div v-show="alert" class="pa-4 f-alert" :style="styles">
+  <article v-show="alert" class="pa-4 f-alert" :style="styles">
     <slot />
     <v-icon
       v-if="close"
@@ -10,7 +10,7 @@
     >
       {{ icon }}
     </v-icon>
-  </div>
+  </article>
 </template>
 
 <script lang="ts">

@@ -7,9 +7,9 @@
       class="field py-3"
     >
       <div class="field__title greyscale_3--text d-flex align-center">
-        <span class="mr-1">
+        <h4 class="mr-1">
           {{ field.title }}
-        </span>
+        </h4>
 
         <base-tooltip
           v-if="field.hint"
@@ -20,9 +20,9 @@
 
       <v-spacer />
 
-      <div class="field__value" :style="[{ color: field.color }]">
+      <p class="field__value" :style="[{ color: field.color }]">
         {{ field.value }}
-      </div>
+      </p>
     </v-row>
   </div>
 </template>
@@ -149,6 +149,7 @@ export default VaultFields;
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
+    margin-bottom: 0px;
     color: var(--v-greyscale_1-base);
   }
 }

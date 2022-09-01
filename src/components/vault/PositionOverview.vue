@@ -2,9 +2,9 @@
   <v-sheet dark class="overview rounded">
     <v-row no-gutters class="py-4">
       <v-col cols="6">
-        <div class="label-text f-caption mb-4 greyscale_3--text">
+        <h3 class="label-text f-caption mb-4 greyscale_3--text">
           {{ $t("common.total-debt") }}
-        </div>
+        </h3>
 
         <div class="total-text mb-2">
           <span class="symbol">US$</span>
@@ -13,9 +13,9 @@
       </v-col>
 
       <v-col cols="6">
-        <div class="label-text f-caption mb-4 greyscale_3--text">
+        <h3 class="label-text f-caption mb-4 greyscale_3--text">
           {{ $t("me.total-collaterals") }}
-        </div>
+        </h3>
 
         <div class="total-text mb-2">
           <span class="symbol">US$</span>
