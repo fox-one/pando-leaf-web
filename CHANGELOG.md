@@ -2,6 +2,10 @@
 
 This is a brief Pando Leaf website project update records, sorted in reverse chronological order.
 
+## v2.5.0 -- 2022.09.02
+
+Update for seo optimize.
+
 ## v2.4.4 -- 2022.07.18
 
 Update GA tag.
