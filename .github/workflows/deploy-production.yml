@@ -1,8 +1,7 @@
 name: Build and deploy to production.
 
 env:
-  OSS_ENDPOINT: oss-cn-beijing.aliyuncs.com
-  AWS_REGION: us-east-1
+  AWS_REGION: us-east-2
   APP_ENV: prod
 
 on:
