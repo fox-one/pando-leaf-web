@@ -1,5 +1,6 @@
 <template>
   <v-app class="leaf-app">
+    <pando-banner app="leaf" :dev="dev" />
     <app-bar-home v-if="isHome" />
     <app-bar-nav v-else />
 
@@ -20,6 +21,7 @@ import AppBarNav from "./AppBarNav.vue";
 import BottomNav from "./BottomNav.vue";
 import Modals from "../modals/Index.vue";
 import { Get } from "vuex-pathify";
+import { isProduct } from "@/constants";
 
 @Component({
   name: "mobile-layout",
@@ -32,6 +34,8 @@ import { Get } from "vuex-pathify";
 })
 class DefaultLayout extends Vue {
   @Get("app/appbar") appbar!: State.AppBarState;
+
+  dev = !isProduct;
 
   get isHome() {
     return this.appbar.style === "home";

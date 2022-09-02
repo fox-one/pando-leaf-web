@@ -20,6 +20,8 @@
       :balance="meta.balance"
       :logged="logged"
       :name="$t('app-name')"
+      :user-name="meta.name"
+      :user-avatar="meta.avatar"
       :version="VERSION"
       @close="handleClose()"
       @connect="handleConnect()"

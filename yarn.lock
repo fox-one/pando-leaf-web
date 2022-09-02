@@ -1055,6 +1055,11 @@
   resolved "https://registry.yarnpkg.com/@foxone/icons/-/icons-3.1.3-1.tgz#b56fe6330f9edb0dde646920fd3e04b1597ea8f1"
   integrity sha512-tvbe7BowhiYsTAM72Q05sFOaNgivTDu31fJ6FN0GiX2g54SlPl+z/JWnDzDLJA+9c++Fvcm/8Df8qPNCPFx0EA==
 
+"@foxone/icons@^3.1.4":
+  version "3.1.4"
+  resolved "https://registry.npmjs.org/@foxone/icons/-/icons-3.1.4.tgz#4af810bec265cbcbbc7d8de5f266a8f0b167315c"
+  integrity sha512-RbHOHB2e2ZoCTxhaikk7wbp7nWsDkKlVY7lHf9qSjt49GD2A0eYMqqTNDvZTcVQVqQr54WoK6nqTtDavlup31A==
+
 "@foxone/mixin-sdk-jsbridge@~0.5.1":
   version "0.5.1"
   resolved "https://registry.npmjs.org/@foxone/mixin-sdk-jsbridge/-/mixin-sdk-jsbridge-0.5.1.tgz#4928773c5f4d15d4ce786553c915c0a06d62b656"
@@ -1084,10 +1089,12 @@
     xgplayer-hls.js "~2.6.1"
     xgplayer-mp4 "~1.2.4"
 
-"@foxone/pando-ui@^0.0.2-16":
-  version "0.0.2-16"
-  resolved "https://registry.npmjs.org/@foxone/pando-ui/-/pando-ui-0.0.2-16.tgz#c89c6eb65e92a2c99a5f7eb07c6b2bfae403e8c6"
-  integrity sha512-GQe3i9smjwiRqvCGjfA6J+y3XMv/I4B6k5QBCMQNka+4Fy3n4h+jcUCYez4aFOHkvCTvml00KJ98pWa88eVB4w==
+"@foxone/pando-ui@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.npmjs.org/@foxone/pando-ui/-/pando-ui-0.0.7.tgz#1c726418acac367aa9a1e534b779c61a0b978e28"
+  integrity sha512-EhoKYCb6EvsmvAGvH8xci57W2x2ubXpAJr47e2ts0NIyveXPVNFPkpfu/gisohwybJoytdRlfw+vS0TlWb5NXw==
+  dependencies:
+    "@multiavatar/multiavatar" "^1.0.7"
 
 "@foxone/pandoseed@^0.9.13":
   version "0.9.13"
@@ -1233,6 +1240,11 @@
   dependencies:
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
+
+"@multiavatar/multiavatar@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/@multiavatar/multiavatar/-/multiavatar-1.0.7.tgz#bc2b855bab728a51ee9cee2412ee9f76282b7c78"
+  integrity sha512-Yg9Uw57bmlErsWL0CSv4d6D4ZqVBE00OZmYr9MRgygoXZdboNtsEI6FbBRw1AY8l88Sm1ARcyojtlm2uwUn0Zg==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
