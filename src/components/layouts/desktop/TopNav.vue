@@ -43,7 +43,7 @@ class TopNav extends Vue {
   }
 
   handleChange(nav) {
-    if (!nav || this.$route.name === nav.path) {
+    if (!nav || this.$route.name?.includes(nav.path)) {
       return;
     }
     this.$router.push(this.localePath({ name: nav.path }));
