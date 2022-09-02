@@ -44,33 +44,6 @@ class AppBar extends Vue {
       show: appbar.show,
     };
   }
-
-  get navItems() {
-    return [
-      {
-        text: this.$t("tab.home"),
-        path: "home",
-        value: "home",
-      },
-      {
-        text: this.$t("tab.market"),
-        path: "market",
-        value: "market",
-      },
-      {
-        text: this.$t("tab.auctions"),
-        path: "auctions",
-        value: "auctions",
-      },
-    ];
-  }
-
-  handleChange(nav) {
-    if (!nav || this.$route.name === nav.path) {
-      return;
-    }
-    this.$router.push(this.localePath({ name: nav.path }));
-  }
 }
 export default AppBar;
 </script>

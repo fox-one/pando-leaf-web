@@ -18,7 +18,7 @@ import { Component, Vue } from "vue-property-decorator";
 class TopNav extends Vue {
   get navItems() {
     const current = this.$route.name as string;
-    const isActive = (name: string) => name === current;
+    const isActive = (name: string) => current.includes(name);
 
     return [
       {
