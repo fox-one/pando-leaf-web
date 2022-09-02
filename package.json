@@ -1,6 +1,6 @@
 {
   "name": "pando-leaf",
-  "version": "2.4.4",
+  "version": "2.5.1",
   "description": "Pando Leaf is a decentralized financial network built with the MTG technology, and its underlying financial algorithm is inspired by Maker and Synthetix. Pando takes multiple overcollateralized assets and grows multiple pando assets, furthermore, the grown pando assets, e.g. pUSD, can also be used as a collateral.",
   "license": "GPL 3.0",
   "author": "Fox.ONE",
@@ -17,7 +17,7 @@
     "dev:prod": "APP_ENV=prod nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "analyze":"nuxt build --analyze",
+    "analyze": "nuxt build --analyze",
     "generate": "nuxt generate",
     "i18n": "node ./scripts/i18n.js",
     "crowdin:upload": "crowdin upload -T $CROWDIN_PERSONAL_TOKEN"
