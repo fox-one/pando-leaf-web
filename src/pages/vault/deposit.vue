@@ -33,8 +33,8 @@ import { Call, Get } from "vuex-pathify";
 
 @Component({
   components: {
-    DepositForm,
     DepositPrediction,
+    DepositForm,
   },
   head: {},
 })

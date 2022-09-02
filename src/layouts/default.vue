@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app lang="">
     <f-loading v-if="initing" :loading="initing" :color="color" fullscreen />
 
     <template v-else>
@@ -30,8 +30,15 @@ class NuxtDefaultLayout extends Vue {
     return this.$vuetify.breakpoint.mdAndUp;
   }
 
+  get language() {
+    console.log("language: " + this.$i18n.locale);
+    return this.$i18n.locale;
+  }
+
   async mounted() {
     this.initing = true;
+    const html = document.getElementsByTagName("html");
+    html.item(0)?.setAttribute("lang", this.$i18n.locale);
     try {
       await this.$utils.app.initApp(this);
     } catch (error) {

@@ -8,6 +8,7 @@ const config: NuxtConfig = {
     middleware: "route",
   },
   srcDir: "./src",
+  components: [{ path: "~/components", extensions: ["vue"] }],
   head: {
     meta: [
       { charset: "utf-8" },
@@ -137,6 +138,17 @@ const config: NuxtConfig = {
     transpile: ["vuetify", "@foxone/uikit"],
     analyze: {
       analyzerMode: "static",
+    },
+    optimization: {
+      splitChunks: {
+        maxAsyncRequests: 10,
+        maxInitialRequests: 6,
+      },
+    },
+    splitChunks: {
+      layouts: true,
+      pages: true,
+      commons: true,
     },
   },
   env: {

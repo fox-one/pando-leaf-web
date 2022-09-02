@@ -22,7 +22,6 @@ import {
 import { use } from "echarts/core";
 
 import infiniteScroll from "vue-infinite-scroll";
-import "@/components";
 
 import "@foxone/uikit/build/index.min.css";
 import "@foxone/pando-ui/build/index.css";
