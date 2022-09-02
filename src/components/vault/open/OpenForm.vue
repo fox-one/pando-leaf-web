@@ -34,13 +34,12 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
-import OpenAppBar from "./OpenAppBar.vue";
-import OpenVaultAction from "./OpenVaultAction.vue";
+import OpenAppBar from "@/components/vault/open/OpenAppBar.vue";
+import OpenVaultAction from "@/components/vault/open/OpenVaultAction.vue";
 import BaseFormInput from "@/components/base/FormInput.vue";
-import CollateralRatioSlider from "./../CollateralRatioSlider.vue";
+import CollateralRatioSlider from "@/components/vault/CollateralRatioSlider.vue";
 import { RISK } from "~/enums";
 import BigNumber from "bignumber.js";
-import { toPrecision } from "@foxone/utils/number";
 
 @Component({
   components: {
@@ -61,7 +60,7 @@ export default class OpenForm extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { format } = this.$utils.number;
+    const { format, toPrecision } = this.$utils.number;
 
     const depositNum = Number(this.bindDepositAmount);
     const mintNum = Number(this.bindDebtAmount);

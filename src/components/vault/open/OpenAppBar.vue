@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import ActionCreateVault from "../ActionCreateVault.vue";
+import ActionCreateVault from "@/components/vault/ActionCreateVault.vue";
 import BaseStepIndicator from "@/components/base/StepIndicator.vue";
 
 @Component({

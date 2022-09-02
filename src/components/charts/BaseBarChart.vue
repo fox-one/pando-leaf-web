@@ -17,11 +17,10 @@ import {
   Ref,
   Watch,
 } from "vue-property-decorator";
-import BaseChart from "./BaseChart.vue";
-import { getBaseOption } from "./BaseChart.vue";
+import BaseChart from "@/components/charts/BaseChart.vue";
+import { getBaseOption } from "@/components/charts/BaseChart.vue";
 
 import type { EChartsOption } from "echarts";
-import dayjs from "dayjs";
 
 @Component({
   components: {

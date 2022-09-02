@@ -40,13 +40,12 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
-import PaybackFormInput from "./PaybackFormInput.vue";
+import PaybackFormInput from "@/components/vault/payback/PaybackFormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
-import CollateralRatioSlider from "./../CollateralRatioSlider.vue";
-import PaybackAction from "./PaybackAction.vue";
-import PaybackHelper from "./PaybackHelper.vue";
+import CollateralRatioSlider from "@/components/vault/CollateralRatioSlider.vue";
+import PaybackAction from "@/components/vault/payback/PaybackAction.vue";
+import PaybackHelper from "@/components/vault/payback/PaybackHelper.vue";
 import BigNumber from "bignumber.js";
-import { toPercent } from "@foxone/utils/number";
 
 @Component({
   components: {
@@ -68,7 +67,7 @@ export default class PaybackForm extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { format } = this.$utils.number;
+    const { format, toPercent } = this.$utils.number;
 
     const {
       liquidationPrice,

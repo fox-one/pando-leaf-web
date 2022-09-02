@@ -29,8 +29,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import ActionCreateVault from "./ActionCreateVault.vue";
-import VaultHidden from "./VaultHidden.vue";
+import VaultHidden from "@/components/vault/VaultHidden.vue";
+import ActionCreateVault from "@/components/vault/ActionCreateVault.vue";
 
 @Component({
   components: {

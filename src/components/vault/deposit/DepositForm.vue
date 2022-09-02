@@ -29,7 +29,7 @@ import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import CollateralRatioSlider from "@/components/vault/CollateralRatioSlider.vue";
-import DepositAction from "./DepositAction.vue";
+import DepositAction from "@/components/vault/deposit/DepositAction.vue";
 
 @Component({
   components: {

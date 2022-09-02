@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { VatAction } from "~/enums";
-import VaultHistoryItem from "./VaultHistoryItem.vue";
+import VaultHistoryItem from "@/components/vault/VaultHistoryItem.vue";
 
 @Component({
   components: {

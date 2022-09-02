@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import { Component, PropSync, Vue, Watch } from "vue-property-decorator";
-import CollateralListItem from "./CollateralListItem.vue";
+import CollateralListItem from "@/components/vault/CollateralListItem.vue";
 import { Get } from "vuex-pathify";
 
 @Component({

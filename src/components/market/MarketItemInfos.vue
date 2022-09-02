@@ -61,7 +61,7 @@
 <script lang="ts" scoped>
 import dayjs from "dayjs";
 import { Vue, Component, Prop, Watch, PropSync } from "vue-property-decorator";
-import MarketInfosItem from "./MarketInfosItem.vue";
+import MarketInfosItem from "@/components/market/MarketInfosItem.vue";
 import { Get, Sync } from "vuex-pathify";
 import { LINKS } from "~/constants";
 

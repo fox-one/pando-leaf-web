@@ -21,9 +21,9 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
-import TypeSelect from "./TypeSelect.vue";
-import DurationSelect from "./DurationSelect.vue";
-import ChartTitle from "./ChartTitle.vue";
+import TypeSelect from "@/components/charts/TypeSelect.vue";
+import DurationSelect from "@/components/charts/DurationSelect.vue";
+import ChartTitle from "@/components/charts/ChartTitle.vue";
 
 @Component({
   inheritAttrs: false,

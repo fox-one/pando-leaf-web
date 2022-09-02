@@ -57,9 +57,8 @@
 <script lang="ts" scoped>
 import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
-import WithdrawAction from "./WithdrawAction.vue";
-import CollateralRatioSlider from "./../CollateralRatioSlider.vue";
-import { toPercent } from "@foxone/utils/number";
+import WithdrawAction from "@/components/vault/withdraw/WithdrawAction.vue";
+import CollateralRatioSlider from "@/components/vault/CollateralRatioSlider.vue";
 import BigNumber from "bignumber.js";
 import { RISK } from "~/enums";
 
@@ -81,6 +80,7 @@ export default class extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
+    const { toPercent } = this.$utils.number;
 
     const {
       collateralAsset,

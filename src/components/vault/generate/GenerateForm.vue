@@ -30,10 +30,9 @@
 import { Vue, Component, Prop, PropSync, Ref } from "vue-property-decorator";
 import BaseFormInput from "@/components/base/FormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
-import CollateralRatioSlider from "./../CollateralRatioSlider.vue";
-import GenerateAction from "./GenerateAction.vue";
+import CollateralRatioSlider from "@/components/vault/CollateralRatioSlider.vue";
+import GenerateAction from "@/components/vault/generate/GenerateAction.vue";
 import BigNumber from "bignumber.js";
-import { toPercent, toPrecision } from "@foxone/utils/number";
 import { RISK } from "~/enums";
 
 @Component({
@@ -53,7 +52,7 @@ export default class GenerateForm extends Vue {
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
-    const { format } = this.$utils.number;
+    const { format, toPercent, toPrecision } = this.$utils.number;
 
     const {
       liquidationPrice,

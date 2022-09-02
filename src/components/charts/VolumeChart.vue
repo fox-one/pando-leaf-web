@@ -10,7 +10,7 @@
 <script lang="ts">
 import dayjs from "dayjs";
 import { Component, Prop, PropSync, Vue, Watch } from "vue-property-decorator";
-import BaseBarChart from "./BaseBarChart.vue";
+import BaseBarChart from "@/components/charts/BaseBarChart.vue";
 
 @Component({
   components: {

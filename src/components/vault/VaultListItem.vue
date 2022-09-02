@@ -36,10 +36,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import VaultName from "./VaultName.vue";
-import VaultCardFields from "./VaultCardFields.vue";
-import EmptyVaultPlaceHolder from "./EmptyVaultPlaceHolder.vue";
-import VaultCardActions from "./VaultCardActions.vue";
+import VaultName from "@/components/vault/VaultName.vue";
+import VaultCardFields from "@/components/vault/VaultCardFields.vue";
+import EmptyVaultPlaceHolder from "@/components/vault/EmptyVaultPlaceHolder.vue";
+import VaultCardActions from "@/components/vault/VaultCardActions.vue";
 import { getVaultFields } from "@/utils/vault";
 import { RISK } from "~/enums";
 

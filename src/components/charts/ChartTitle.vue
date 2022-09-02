@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import Render from "../base/Render";
+import Render from "@/components/base/Render";
 
 @Component({
   components: {

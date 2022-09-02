@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import VaultListItem from "./VaultListItem.vue";
+import VaultListItem from "@/components/vault/VaultListItem.vue";
 import { Get, Sync } from "vuex-pathify";
 
 import { getVaultRisk } from "@/utils/vault";

@@ -139,14 +139,8 @@ const config: NuxtConfig = {
     analyze: {
       analyzerMode: "static",
     },
-    optimization: {
-      splitChunks: {
-        maxAsyncRequests: 10,
-        maxInitialRequests: 6,
-      },
-    },
     splitChunks: {
-      layouts: true,
+      layouts: false,
       pages: true,
       commons: true,
     },

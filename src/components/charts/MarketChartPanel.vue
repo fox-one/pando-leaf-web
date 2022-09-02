@@ -73,8 +73,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import VolumeChart from "./VolumeChart.vue";
-import ChartLayout from "./ChartLayout.vue";
+import VolumeChart from "@/components/charts/VolumeChart.vue";
+import ChartLayout from "@/components/charts/ChartLayout.vue";
 import dayjs from "dayjs";
 
 @Component({

@@ -18,8 +18,8 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, PropSync, Ref } from "vue-property-decorator";
-import StepOneAction from "./StepOneAction.vue";
-import StepOneFormInput from "./StepOneFormInput.vue";
+import StepOneAction from "@/components/vault/open/StepOneAction.vue";
+import StepOneFormInput from "@/components/vault/open/StepOneFormInput.vue";
 import BaseRiskSlider from "@/components/base/RiskSlider.vue";
 import BigNumber from "bignumber.js";
 

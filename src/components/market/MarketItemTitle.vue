@@ -15,7 +15,7 @@
 
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
-import MarketItemAction from "./MarketItemAction.vue";
+import MarketItemAction from "@/components/market/MarketItemAction.vue";
 
 @Component({
   components: {
