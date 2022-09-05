@@ -36,7 +36,7 @@
 <script lang="ts">
 import { Component, Mixins } from "vue-property-decorator";
 import LoginPlaceHolder from "@/components/vault/LoginPlaceHolder.vue";
-import EmptyVaultsPlaceHolder from "~/components/vault/EmptyVaultsPlaceHolder.vue";
+import EmptyVaultsPlaceHolder from "@/components/vault/EmptyVaultsPlaceHolder.vue";
 import PositionOverview from "@/components/vault/PositionOverview.vue";
 import VaultList from "@/components/vault/VaultList.vue";
 import VaultSorter from "@/components/vault/VaultSorter.vue";

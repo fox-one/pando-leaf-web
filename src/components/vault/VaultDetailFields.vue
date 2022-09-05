@@ -7,9 +7,9 @@
       class="field py-3"
     >
       <div class="field__title greyscale_3--text d-flex align-center">
-        <h4 class="mr-1">
+        <h3 class="field__title mr-1">
           {{ field.title }}
-        </h4>
+        </h3>
 
         <base-tooltip
           v-if="field.hint"

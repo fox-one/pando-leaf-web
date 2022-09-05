@@ -13,7 +13,7 @@
       :data-value="index"
       :ripple="false"
     >
-      <h3 style="font-size: 16px">{{ item.text }}</h3>
+      <h2 style="font-size: 16px">{{ item.text }}</h2>
     </v-tab>
   </f-tabs>
 </template>

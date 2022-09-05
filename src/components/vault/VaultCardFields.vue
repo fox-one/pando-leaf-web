@@ -8,11 +8,11 @@
       md="4"
       class="field py-2"
     >
-      <div class="field__title">
+      <h3 class="field__title">
         <span class="mr-1" :style="[{ color: field.titleColor }]">
           {{ field.title }}
         </span>
-      </div>
+      </h3>
 
       <div class="field__value mt-2" :style="[{ color: field.color }]">
         {{ field.value }}

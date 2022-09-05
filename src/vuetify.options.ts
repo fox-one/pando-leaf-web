@@ -21,7 +21,6 @@ export default function ({ store }) {
 
   const options = {
     icons: {
-      iconfont: "mdiSvg",
       values: {
         ...icons,
         ...makeIconValues(),

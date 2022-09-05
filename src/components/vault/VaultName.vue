@@ -1,8 +1,8 @@
 <template>
   <div class="vault-name" :style="[{ background: meta.color }]">
-    <h2 class="name-text">
+    <div class="name-text">
       {{ meta.name }}
-    </h2>
+    </div>
 
     <v-row no-gutters class="pb-6">
       <v-col cols="6" class="vault-content">

@@ -90,5 +90,8 @@ export function makeIconValues() {
     iconBidFill: {
       component: "icon-bid-fill",
     },
+    iconClose: {
+      component: "icon-close",
+    },
   };
 }

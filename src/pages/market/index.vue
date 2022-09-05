@@ -57,6 +57,10 @@ class VaultPage extends Mixins(mixins.page) {
   get bottomNav() {
     return "market";
   }
+
+  mounted() {
+    this.setLang();
+  }
 }
 export default VaultPage;
 </script>

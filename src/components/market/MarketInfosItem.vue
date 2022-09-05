@@ -1,9 +1,9 @@
 <template>
   <v-col class="d-flex justify-space-between" v-bind="$attrs">
-    <div :class="`market-item-label ${labelClass}`">
+    <h3 :class="`market-item-label ${labelClass}`">
       <span class="mr-1"> {{ title }}</span>
       <base-tooltip v-if="hint" :hint="hint" :learn-more="learnMore" />
-    </div>
+    </h3>
 
     <div :class="`market-item-value ${valueClass}`">
       {{ value }} {{ valueUnit }}

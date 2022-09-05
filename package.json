@@ -41,7 +41,6 @@
     "@foxone/pandoseed": "^0.9.13",
     "@foxone/uikit": "^3.1.4-1",
     "@foxone/utils": "^0.2.22",
-    "@mdi/js": "^5.5.55",
     "@nuxt/types": "^2.14.6",
     "@nuxtjs/axios": "5.12.2",
     "@nuxtjs/dotenv": "^1.4.1",

@@ -8,14 +8,13 @@
       size="14"
       @click="alert = false"
     >
-      {{ icon }}
+      $iconClose
     </v-icon>
   </article>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
-import { mdiCloseCircle } from "@mdi/js";
 
 @Component
 class Alert extends Vue {
@@ -24,10 +23,6 @@ class Alert extends Vue {
   @Prop({ type: Boolean, default: false }) close!: boolean;
 
   @PropSync("show") alert!: boolean;
-
-  get icon() {
-    return mdiCloseCircle;
-  }
 
   get colors() {
     const theme = this.$vuetify.theme.currentTheme;
