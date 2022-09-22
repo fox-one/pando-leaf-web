@@ -1,4 +1,4 @@
-import { ACTION_ASSET_ID, EVENTS } from "~/constants";
+import { ACTION_ASSET_ID } from "~/constants";
 import { TransactionStatus } from "~/enums";
 
 export interface Callbacks {
@@ -13,87 +13,43 @@ export async function requestPayment(
   cbs: Callbacks = {}
 ) {
   const resp = await vm.$http.postActions(params);
-  const resParams: API.PayUrl = {
-    follow_id: params.follow_id,
-    pay_url: resp.code_url,
-  };
-
-  if (vm.$fennec.connected) {
-    await vm.$fennec.ctx?.wallet.multisigsPayment({ code: resp.code });
-
-    showPaying(vm);
-    pollingTransferStatus(vm, resParams, cbs);
-  } else if (vm.$utils.mixin.isMixin()) {
-    window.location.href = `${resp?.code_url}`;
-
-    showPaying(vm);
-    pollingTransferStatus(vm, resParams, cbs);
-  } else {
-    vm.$root.$emit(EVENTS.PAY_QR_CODE, resParams, cbs);
-  }
+  await vm.$passport.payment({
+    code: resp.code,
+    multisig: true,
+    checker: () => {
+      return checker(vm, params, cbs);
+    },
+  });
 }
 
-let timer;
-
-export async function pollingTransferStatus(
-  vm: Vue,
-  params: API.PayUrl,
-  cbs: Callbacks
-) {
-  let result: API.Transaction | null = null;
+export async function checker(vm: Vue, params, cbs: Callbacks) {
   try {
-    result = await vm.$http.getTransaction(params.follow_id);
+    const resp = await vm.$http.getTransaction(params.follow_id);
 
-    if (!vm.$store.state.app.paying.visible) return;
-
-    if (result) {
+    if (resp) {
       afterTransferCompleted(vm);
 
       const checked = await cbs?.checker?.();
+
       if (cbs?.checker && !checked) {
         vm.$utils.helper.showNetworkCongestion(vm);
-      } else if (result.status === TransactionStatus.OK) {
-        cbs.success?.(result);
+      } else if (resp.status === TransactionStatus.OK) {
+        cbs.success?.(resp);
       } else {
-        cbs.error?.(result);
+        cbs.error?.(resp);
       }
 
-      hidePaying(vm);
+      return true;
     } else {
-      timer = setTimeout(() => {
-        pollingTransferStatus(vm, params, cbs);
-      }, 2000);
-
-      setPayingTimer(vm, timer);
+      return false;
     }
-  } catch (error: any) {
-    // 这里会报 404，用 helper.errorHandler 处理会反复弹出”资源不存在“
-    timer = setTimeout(() => {
-      pollingTransferStatus(vm, params, cbs);
-    }, 2000);
-
-    cbs.error?.(error);
+  } catch (error) {
+    return false;
   }
 }
 
 export async function afterTransferCompleted(vm: Vue) {
   await vm.$utils.app.refresh(vm);
-}
-
-export function showPaying(vm: Vue) {
-  vm.$store.commit("app/SET_PAYING", { visible: true });
-}
-
-export function hidePaying(vm: Vue) {
-  vm.$store.commit("app/SET_PAYING", { visible: false, timer: null });
-}
-
-export function setPayingTimer(vm: Vue, timer) {
-  vm.$store.commit("app/SET_PAYING", { timer });
-}
-
-export function showPayQrDialog(vm: Vue, params: API.PayUrl) {
-  vm.$root.$emit(EVENTS.PAY_QR_CODE, params);
 }
 
 export function shouldGetMoreActionAsset(vm: Vue, cbs?: Callbacks) {

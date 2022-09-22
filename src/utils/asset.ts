@@ -1,22 +1,17 @@
 export async function getAssets(vm: Vue) {
-  const store = vm.$store;
-  if (vm.$fennec.connected) {
-    return store.dispatch("asset/loadFennecWalletAssets", {
-      fennec: vm.$fennec,
-    });
-  } else {
-    return store.dispatch("asset/loadWalletAssets");
+  if (vm.$store.getters["auth/isLogged"]) {
+    const assets = await vm.$passport.getAssets();
+
+    if (assets?.length > 0) {
+      vm.$store.commit("asset/SET_WALLET_ASSETS", assets);
+    }
   }
 }
 
-export async function loadWalletAsset(vm: Vue, assetId: string) {
-  const store = vm.$store;
-  if (vm.$fennec.connected) {
-    return store.dispatch("asset/loadFennecWalletAsset", {
-      fennec: vm.$fennec,
-      assetId,
-    });
-  } else {
-    return store.dispatch("asset/loadWalletAsset", assetId);
+export async function loadWalletAsset(vm: Vue, id: string) {
+  if (vm.$store.getters["auth/isLogged"]) {
+    const asset = await vm.$passport.getAsset(id);
+
+    vm.$store.commit("asset/SET_WALLET_ASSET", asset);
   }
 }

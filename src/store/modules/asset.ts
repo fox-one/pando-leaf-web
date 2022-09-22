@@ -63,28 +63,6 @@ const actions: ActionTree<State.Asset, unknown> = {
     commit("SET_ASSETS", response.assets);
   },
 
-  async loadWalletAssets({ commit }) {
-    const response = await this.$http.getAssetsFromMixin();
-    commit("SET_WALLET_ASSETS", response || []);
-  },
-
-  async loadWalletAsset({ commit }, id) {
-    const response = await this.$http.getAssetFromMixin(id);
-    commit("SET_WALLET_ASSET", { id, data: response });
-  },
-
-  async loadFennecWalletAssets({ commit, state }, { fennec }) {
-    const walletAssets = await fennec.ctx?.wallet?.getAssets();
-    commit("SET_WALLET_ASSETS", walletAssets || []);
-  },
-
-  async loadFennecWalletAsset({ commit }, { fennec, assetId }) {
-    const walletAsset = await fennec.ctx?.wallet?.getAsset(assetId);
-    if (walletAsset) {
-      commit("SET_WALLET_ASSET", { id: assetId, data: walletAsset });
-    }
-  },
-
   async loadNetworkAssets({ commit }) {
     const assets = await this.$http.getNetworkAssets();
     commit("SET_NETWORK_ASSETS", assets || []);

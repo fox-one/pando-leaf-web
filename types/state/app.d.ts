@@ -31,7 +31,6 @@ declare namespace State {
     appbar: AppBarState;
     settings: SettingsState;
     bottomNav: BottomNavState;
-    paying: PayState;
     visited: boolean;
     initing: boolean;
     safetyWarningShown: boolean;

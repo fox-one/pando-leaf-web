@@ -1,18 +1,14 @@
 import { EVENTS, TERMS_VERSION } from "~/constants";
+import { sync } from "./account";
 
 export async function initApp(vm: Vue) {
   try {
-    await loadMarket(vm);
+    await loadMarketData(vm);
 
-    if (vm.$route.name === "auth") {
-      vm.$store.commit("app/SET_INITING", false);
+    await sync(vm);
 
-      return;
-    }
+    await loadAccountData(vm);
 
-    await vm.$utils.account.checkFennecAuth(vm);
-    await vm.$store.dispatch("account/loadProfile");
-    await loadAccount(vm);
     setUpTask(vm);
 
     vm.$store.commit("app/SET_INITING", false);
@@ -21,31 +17,32 @@ export async function initApp(vm: Vue) {
   }
 }
 
-export async function loadMarket(vm: Vue) {
+export async function loadMarketData(vm: Vue) {
   await Promise.all([
     vm.$store.dispatch("asset/loadAssets"),
     vm.$store.dispatch("asset/loadNetworkAssets"),
     vm.$store.dispatch("oracle/loadOracles"),
     vm.$store.dispatch("collateral/loadCollaterals"),
-    vm.$store.dispatch("collateral/loadFiats", {
-      token: vm.$config.FIAT_TOKEN,
-    }),
+    vm.$store.dispatch("collateral/loadFiats"),
   ]);
 }
 
-export async function loadAccount(vm: Vue) {
+export async function loadAccountData(vm: Vue) {
   try {
     await Promise.all([
+      vm.$store.dispatch("account/loadProfile"),
       vm.$store.dispatch("vault/loadVaults"),
       vm.$utils.asset.getAssets(vm),
     ]);
-  } catch (error) {}
+  } catch (error) {
+    // ignore
+  }
 }
 
 export async function refresh(vm: Vue) {
-  await loadMarket(vm);
+  await loadMarketData(vm);
   if (vm.$store.getters["auth/isLogged"]) {
-    await loadAccount(vm);
+    await loadAccountData(vm);
   }
 }
 

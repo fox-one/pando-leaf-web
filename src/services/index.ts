@@ -105,10 +105,8 @@ export default function (http: Http) {
       return http.get(`${MIXIN_HOST}/network/assets/${id}`);
     },
 
-    getFiats(opts: { token: string }): Promise<{ assets: API.Fiat[] }> {
-      return http.get(`${MIXIN_HOST}/external/fiats`, {
-        token: opts.token,
-      } as any);
+    getFiats(): Promise<{ assets: API.Fiat[] }> {
+      return http.get(`${MIXIN_HOST}/external/fiats`);
     },
 
     async getMe(): Promise<API.Profile> {

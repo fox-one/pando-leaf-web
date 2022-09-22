@@ -18,10 +18,6 @@ const state = (): State.App => ({
   bottomNav: {
     value: "",
   },
-  paying: {
-    visible: false,
-    timer: null,
-  },
   fiat: {
     symbol: "$",
     name: "USD",
@@ -35,12 +31,6 @@ const state = (): State.App => ({
 
 const mutations: MutationTree<State.App> = {
   ...make.mutations(state),
-  SET_PAYING(state, data) {
-    if (data.visible === false && state.paying.timer) {
-      clearTimeout(state.paying.timer as any);
-    }
-    state.paying = { ...state.paying, ...data };
-  },
   SET_APPBAR(state, value) {
     const defaultValue = {
       title: "",

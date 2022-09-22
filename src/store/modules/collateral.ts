@@ -47,8 +47,8 @@ const actions: ActionTree<State.Vault, any> = {
     commit("SET_COLLATERALS", response.collaterals);
   },
 
-  async loadFiats({ commit }, { token }) {
-    const resp = await this.$http.getFiats({ token });
+  async loadFiats({ commit }) {
+    const resp = await this.$http.getFiats();
     commit("SET_FIATS", resp);
   },
 };

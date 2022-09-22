@@ -244,7 +244,7 @@ export default class MarketItemInfos extends Vue {
         .format("mm:ss");
       if (this.countDownTimer <= 0) {
         clearInterval(this.countId);
-        this.$utils.app.loadMarket(this);
+        this.$utils.app.loadMarketData(this);
       }
     }, 100);
   }

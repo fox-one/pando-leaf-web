@@ -23,6 +23,7 @@
       :user-name="meta.name"
       :user-avatar="meta.avatar"
       :version="VERSION"
+      :mvm="$passport.helper.isMVM()"
       @close="handleClose()"
       @connect="handleConnect()"
       @disconnect="handleDisconnect()"

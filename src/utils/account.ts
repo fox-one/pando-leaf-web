@@ -1,60 +1,26 @@
-import { EVENTS } from "@/constants";
+export async function sync(vm: Vue) {
+  try {
+    const tokenLocale = vm.$store.state.auth.token;
+    const channelLocale = vm.$store.state.auth.channel;
 
-const scope = "['PROFILE:READ', 'ASSETS:READ']";
+    if (!channelLocale) {
+      logout(vm);
 
-let logining = false;
+      return;
+    }
 
-export async function authMixin(vm: Vue, code: string) {
-  if (logining) return;
-  logining = true;
-  const res = await vm.$http.auth(code);
-
-  await updateProfile(vm, {
-    token: res.token,
-    scope: res.scope,
-    channel: "mixin",
-  });
-
-  await vm.$store.dispatch("account/loadProfile");
-  logining = false;
-}
-
-export async function authFennec(vm: Vue) {
-  await vm.$fennec.connect("Pando Leaf");
-
-  const token = await vm.$fennec.ctx!.wallet.signToken({
-    payload: { from: "pando-leaf" },
-  });
-
-  await updateProfile(vm, { token, scope, channel: "fennec" });
-}
-
-async function updateProfile(
-  vm: Vue,
-  payload: { token: string; scope: string; channel: string }
-) {
-  vm.$store.commit("auth/SET_OAUTH_INFO", payload);
-  await vm.$utils.app.loadAccount(vm);
-}
-
-export async function checkFennecAuth(vm: Vue) {
-  if (vm.$store.state.auth.channel === "fennec") {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        vm.$fennec
-          .connect("Pando Leaf")
-          .then(() => {
-            resolve(true);
-          })
-          .catch(() => {
-            reject();
-          });
-      }, 1000);
+    const auth = await vm.$passport.sync({
+      channel: channelLocale,
+      token: tokenLocale,
     });
+
+    vm.$store.commit("auth/SET_OAUTH_INFO", auth);
+  } catch (error) {
+    vm.$utils.helper.errorHandler(vm, error);
+    logout(vm);
   }
 }
-
-export async function logout(vm: Vue) {
+export async function logout(vm: any) {
   return Promise.all([
     vm.$store.commit("auth/CLEAR"),
     vm.$store.commit("account/CLEAR"),
@@ -79,6 +45,16 @@ export function requestLogout(vm: Vue, cbs: { onDisconnect?: any }) {
   });
 }
 
-export function openAuth(vm: Vue) {
-  vm.$root.$emit(EVENTS.OPEN_AUTH);
+export async function openAuth(vm: Vue) {
+  try {
+    const { channel, token } = await vm.$passport.auth();
+
+    console.log({ token, channel });
+
+    vm.$store.commit("auth/SET_OAUTH_INFO", { token, channel });
+
+    await vm.$utils.app.loadAccountData(vm);
+  } catch (error: any) {
+    vm.$uikit.toast.error({ message: error.message });
+  }
 }

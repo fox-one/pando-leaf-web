@@ -6,13 +6,13 @@
       @click="handleLearnMore"
     >
       <template #head>
-        <v-icon>$FIconDocumentFill</v-icon>
+        <v-icon>$FIconDocument</v-icon>
       </template>
     </f-list-item>
 
     <f-list-item :title="$t('contact.us')" hide-tail @click="handleContact">
       <template #head>
-        <v-icon>$FIconCommentFill</v-icon>
+        <v-icon>$FIconComment</v-icon>
       </template>
     </f-list-item>
   </div>
