@@ -49,8 +49,6 @@ export async function openAuth(vm: Vue) {
   try {
     const { channel, token } = await vm.$passport.auth();
 
-    console.log({ token, channel });
-
     vm.$store.commit("auth/SET_OAUTH_INFO", { token, channel });
 
     await vm.$utils.app.loadAccountData(vm);
