@@ -104,7 +104,7 @@ const config: NuxtConfig = {
           { code: "ko", iso: "ko-KR" },
         ],
         defaultLocale: "en",
-        strategy: "prefix_except_default",
+        strategy: "no_prefix",
         detectBrowserLanguage: false,
         parsePages: false,
       },

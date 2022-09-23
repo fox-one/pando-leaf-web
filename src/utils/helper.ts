@@ -5,14 +5,9 @@ import parse from "parse-duration";
 
 export function errorHandler(vm: Vue, error: any) {
   const fallback = "未知错误";
-  const errorcode = error.code !== -1 ? error.code : error.status;
-  const i18nMessage = vm.$t(`errorcode.${errorcode}`).toString();
-  const message = `${errorcode || ""} ${
-    errorcode !== 400 ? i18nMessage : error.message || error.msg || fallback
-  }`;
-  vm.$uikit.toast.error({
-    message: i18nMessage.includes("errorcode.") ? message : i18nMessage,
-  });
+
+  const message = error.message || error.msg || fallback;
+  vm.$uikit.toast.error({ message });
 }
 
 export function handleTxResult(vm: Vue, tx: API.Transaction) {

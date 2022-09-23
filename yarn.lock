@@ -1544,10 +1544,10 @@
   resolved "https://registry.npmjs.org/@foxone/icons/-/icons-3.1.5.tgz#054cc9feee3b51cffffc601339c01da8cc8df5d2"
   integrity sha512-uBz0PfMtBB9N8qOxZTsvaFW6cMK/Zp1clBuUKD13H8kNiWknDyxx+XM4n/uvZySi2OB+NrJoENjRix+N9qbrsA==
 
-"@foxone/mixin-api@0.1.24", "@foxone/mixin-api@^0.1.24":
-  version "0.1.24"
-  resolved "https://registry.npmjs.org/@foxone/mixin-api/-/mixin-api-0.1.24.tgz#d800479850e229a4fa50655a26067b37f5855d9b"
-  integrity sha512-QoFqdJo4hyrC2OEj7fkf5Nq9YZNBMleYDgqBeX6CWlAQIPCCfkjd+MQT3wQrCfwe7flWEwOked+naOWR1PIOXg==
+"@foxone/mixin-api@0.1.25", "@foxone/mixin-api@^0.1.25":
+  version "0.1.25"
+  resolved "https://registry.npmjs.org/@foxone/mixin-api/-/mixin-api-0.1.25.tgz#7a96c519d1dc0a25eda2a649900a4a4aa0e4551a"
+  integrity sha512-JUA73YhRwqG/dGM9QjDExp3WpPhldT/6jcDQreHOn+MHBPiwg6Ux/PGliFLz1PI747geTgVocAoiRTUYKNOqnw==
   dependencies:
     axios "^0.21.1"
     browser-passworder "^2.0.3"
@@ -1555,14 +1555,14 @@
     jsonwebtoken "^8.5.1"
     node-forge "^0.10.0"
 
-"@foxone/mixin-passport@^0.1.24":
-  version "0.1.24"
-  resolved "https://registry.npmjs.org/@foxone/mixin-passport/-/mixin-passport-0.1.24.tgz#75625d0fcd25467c402e059ec05fe040f0d5e5de"
-  integrity sha512-hxJj2rzagcxB0Yn5WzMCKYmce2Xl311NPHYfis6MYaCGKi44/opcHbJoH+evd3Lhc3dt2OCjKMfn8eCoOx2c6Q==
+"@foxone/mixin-passport@^0.1.25":
+  version "0.1.25"
+  resolved "https://registry.npmjs.org/@foxone/mixin-passport/-/mixin-passport-0.1.25.tgz#931c47e3ce0be72cf734a50d2ea4e2636f5c5adb"
+  integrity sha512-U1CSnhpZlVlyx6IqEJnogA+lZLxcMSwd8SczhJEgqzyIpe9o4Q9Y5MVtoD/iNfK9oPTHMfd+nz7O8EnkGncIqQ==
   dependencies:
     "@foxone/fennec-dapp" "^0.5.4"
-    "@foxone/mixin-api" "0.1.24"
-    "@foxone/mvm" "0.1.24"
+    "@foxone/mixin-api" "0.1.25"
+    "@foxone/mvm" "0.1.25"
     "@foxone/utils" "^0.2.6"
 
 "@foxone/mixin-sdk-jsbridge@~0.5.1":
@@ -1575,12 +1575,12 @@
     js-base64 "~3.6.1"
     peeler-js "~0.4.2"
 
-"@foxone/mvm@0.1.24":
-  version "0.1.24"
-  resolved "https://registry.npmjs.org/@foxone/mvm/-/mvm-0.1.24.tgz#05603b1cfc17cd6fcf618708678ca675fea9bd38"
-  integrity sha512-8WBnwgjkYoWmmXk8f2P7DJjr0fZheo2k9jJvgRJ2JBnjmb848tDjqCEUlYnEbWjIBgRsrjcJW8JSSFrLfk3URg==
+"@foxone/mvm@0.1.25":
+  version "0.1.25"
+  resolved "https://registry.npmjs.org/@foxone/mvm/-/mvm-0.1.25.tgz#48f7207fd0a4d65be6630e396979528325f44315"
+  integrity sha512-jkiK7xjenbZPVNKf0KIyXIDzim97GX1LGntf59l7I0VldN9jwM1OMgDqzLijhdad9ZkXjLEbdtXCSYLsp1MdIw==
   dependencies:
-    "@foxone/mixin-api" "^0.1.24"
+    "@foxone/mixin-api" "^0.1.25"
     "@metamask/detect-provider" "^1.2.0"
     "@walletconnect/web3-provider" "^1.7.8"
     bignumber.js "^9.0.1"

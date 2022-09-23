@@ -3,6 +3,8 @@
     <f-loading v-if="initing" :loading="initing" :color="color" fullscreen />
 
     <template v-else>
+      <pando-banner v-if="isHome" app="leaf" :dev="dev" />
+
       <desktop-layout v-if="desktop" />
 
       <mobile-layout v-else />
@@ -14,6 +16,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import DesktopLayout from "@/components/layouts/desktop/Indexx.vue";
 import MobileLayout from "@/components/layouts/mobile/Index.vue";
+import { isProduct } from "@/constants";
 
 @Component({
   components: {
@@ -26,12 +29,19 @@ class NuxtDefaultLayout extends Vue {
 
   initing = false;
 
+  dev = !isProduct;
+
   get desktop() {
     return this.$vuetify.breakpoint.mdAndUp;
   }
 
+  get isHome() {
+    return ["index", "vault", "auctions", "market"].includes(
+      this.$route.name as string
+    );
+  }
+
   get language() {
-    console.log("language: " + this.$i18n.locale);
     return this.$i18n.locale;
   }
 

@@ -13,15 +13,19 @@
     v-bind="$attrs"
   >
     <template #tools="{ messages }">
-      <form-input-tools
+      <f-asset-input-tools
+        :wallet-connected="meta.logged"
         :balance="meta.balance"
         :fiat-amount="meta.fiatAmount"
         :messages="messages"
         :fillable="fillable"
-        :leftLabel="text.balance"
+        :balance-label="text.balance"
         @fill="handleFill"
       >
-      </form-input-tools>
+        <template #append-left>
+          <base-mvm-action :asset="asset" />
+        </template>
+      </f-asset-input-tools>
     </template>
   </f-asset-amount-input>
 </template>
@@ -31,6 +35,7 @@ import { Component, Vue, Prop, PropSync } from "vue-property-decorator";
 import FormInputTools from "./FormInputTools.vue";
 
 @Component({
+  name: "FormInput",
   components: { FormInputTools },
 })
 export default class extends Vue {
@@ -69,12 +74,14 @@ export default class extends Vue {
       getters["asset/getWalletAssetById"];
 
     const walletAsset = getWalletAssetById(this.asset?.id);
+    const logged = getters["auth/isLogged"];
 
     const balance = this.balance ? this.balance : walletAsset?.balance ?? "-";
     const inputAmount = +(this.bindAmount ?? "0");
     const price = +this.asset?.price;
     const fiatAmount = inputAmount * price;
     return {
+      logged,
       balance,
       fiatAmount: isValid(fiatAmount) ? toFiat(this, { n: fiatAmount }) : "-",
       placeholder: this.placeholder ?? this.$t("common.amount"),

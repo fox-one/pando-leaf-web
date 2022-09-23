@@ -13,15 +13,19 @@
     v-bind="$attrs"
   >
     <template #tools="{ messages }">
-      <form-input-tools
+      <f-asset-input-tools
+        :wallet-connected="meta.logged"
         :balance="meta.balance"
         :fiat-amount="meta.fiatAmount"
         :messages="messages"
         :fillable="fillable"
-        :leftLabel="text.balance"
+        :balance-label="text.balance"
         @fill="handleFill"
       >
-      </form-input-tools>
+        <template #append-left>
+          <base-mvm-action :asset="asset" />
+        </template>
+      </f-asset-input-tools>
     </template>
 
     <template #assets="{ assets, asset, on }">
@@ -91,6 +95,7 @@ export default class extends Vue {
       getters["asset/getWalletAssetById"];
 
     const walletAsset = getWalletAssetById(this.asset?.id);
+    const logged = getters["auth/isLogged"];
 
     const balance = this.balance ? this.balance : walletAsset?.balance ?? "-";
     const inputAmount = +(this.bindAmount ?? "0");
@@ -101,6 +106,7 @@ export default class extends Vue {
     });
 
     return {
+      logged,
       balance,
       fiatAmount: isValid(fiatAmount) ? toFiat(this, { n: fiatAmount }) : "-",
       placeholder: this.placeholder ?? this.$t("common.amount"),

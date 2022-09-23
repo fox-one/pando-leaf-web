@@ -51,6 +51,7 @@ const plugin: Plugin = ({ app }) => {
   Vue.use(Passport, {
     origin: "Pando Leaf",
     config: { infuraId: "a018fa2f735a435f9a7917f0d429c61a" },
+    JWTPayload: { from: "pando-leaf" },
     onDisconnect: () => {
       app.$utils.account.logout(app);
     },

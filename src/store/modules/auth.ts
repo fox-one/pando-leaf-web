@@ -1,5 +1,4 @@
 import { MutationTree, GetterTree } from "vuex";
-import { SCOPE } from "~/enums";
 import { make } from "vuex-pathify";
 
 const state = (): State.Auth => ({
@@ -12,8 +11,8 @@ const getters: GetterTree<State.Auth, any> = {
   isLogged(state) {
     return Boolean(state.token);
   },
-  canReadAsset(state) {
-    return state.scope.indexOf(SCOPE.ASSETS_READ) > -1;
+  canReadAsset() {
+    return true;
   },
 };
 
