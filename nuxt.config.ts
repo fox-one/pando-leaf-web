@@ -4,9 +4,8 @@ import i18n from "./src/i18n";
 const config: NuxtConfig = {
   ssr: false,
   router: {
-    mode: "history",
+    mode: "hash",
     middleware: "route",
-    trailingSlash: true,
   },
   srcDir: "./src",
   components: [{ path: "~/components", extensions: ["vue"] }],
