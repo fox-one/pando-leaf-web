@@ -6,6 +6,7 @@ const config: NuxtConfig = {
   router: {
     mode: "history",
     middleware: "route",
+    trailingSlash: true,
   },
   srcDir: "./src",
   components: [{ path: "~/components", extensions: ["vue"] }],
@@ -136,9 +137,6 @@ const config: NuxtConfig = {
   },
   build: {
     transpile: ["vuetify", "@foxone/uikit"],
-    analyze: {
-      analyzerMode: "static",
-    },
     splitChunks: {
       layouts: false,
       pages: true,
