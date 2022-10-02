@@ -28,7 +28,7 @@
     "@foxone/icons": "^3.1.5",
     "@foxone/mixin-passport": "^0.1.25",
     "@foxone/pando-lots-vue": "~0.1.4",
-    "@foxone/pando-ui": "^0.0.8",
+    "@foxone/pando-ui": "^0.0.9-0",
     "@foxone/pandoseed": "^1.0.3",
     "@foxone/uikit": "^3.2.9-0",
     "@foxone/utils": "^0.2.22",

@@ -1606,10 +1606,10 @@
     xgplayer-hls.js "~2.6.1"
     xgplayer-mp4 "~1.2.4"
 
-"@foxone/pando-ui@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.npmjs.org/@foxone/pando-ui/-/pando-ui-0.0.8.tgz#809682ddfb59fa1f9f143f112ebabf93af35fc23"
-  integrity sha512-+HtdsZ8H+6cYOp6Lqrh6eLb6Frg/4/OH5KI55DRmM2+7j/b5QDdpZ5qyzI+OBdq1hfxTy1zjMiRtG3IZi2uGSg==
+"@foxone/pando-ui@^0.0.9-0":
+  version "0.0.9-0"
+  resolved "https://registry.npmjs.org/@foxone/pando-ui/-/pando-ui-0.0.9-0.tgz#942d748631212d916fed875891ccfab95a7820cb"
+  integrity sha512-HfJ2H/sOivY6PQS7gHtTBYb8by8ecACNSZhbX/EHY5egBSt1Sb9WlffigQ0axBkVJdVtaMYGQwLzYlyMYmWM/g==
   dependencies:
     "@multiavatar/multiavatar" "^1.0.7"
 
