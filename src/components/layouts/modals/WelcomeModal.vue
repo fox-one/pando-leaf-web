@@ -40,14 +40,14 @@
       <f-panel class="pa-0 welcome-dialog">
         <v-layout align-center>
           <div class="wrapper">
-            <v-icon :size="207">$iconWelcomeImg</v-icon>
+            <v-icon :size="207">$IconWelcomeImg</v-icon>
           </div>
 
           <v-divider vertical />
           <div class="wrapper">
             <div class="welcome-title">
               {{ $t("welcome.what-is") }}
-              <v-icon size="68" class="mx-1">$iconLeaf</v-icon>
+              <v-icon size="68" class="mx-1">$IconLeaf</v-icon>
               <span style="display: none">Leaf</span>
             </div>
 
@@ -55,7 +55,7 @@
               {{ $t("welcome.description") }}
             </div>
 
-            <f-button class="mt-8" @click="handleNext">
+            <f-button color="primary" class="mt-8" @click="handleNext">
               {{ $t("common.continue") }}
             </f-button>
           </div>

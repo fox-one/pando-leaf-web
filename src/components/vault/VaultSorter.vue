@@ -49,17 +49,17 @@ class VaultSorter extends Vue {
 
       iconCollateralValue:
         this.sortedBy === SortBy.COLLATERAL_VALUE_ASC
-          ? "$iconSortAsc"
+          ? "$IconSortAsc"
           : this.sortedBy === SortBy.COLLATERAL_VALUE_DESC
-          ? "$iconSortDesc"
-          : "$iconSort",
+          ? "$IconSortDesc"
+          : "$IconSort",
 
       iconCollateralRatio:
         this.sortedBy === SortBy.COLLATERAL_RATIO_ASC
-          ? "$iconSortAsc"
+          ? "$IconSortAsc"
           : this.sortedBy === SortBy.COLLATERAL_RATIO_DESC
-          ? "$iconSortDesc"
-          : "$iconSort",
+          ? "$IconSortDesc"
+          : "$IconSort",
     };
   }
 

@@ -27,6 +27,8 @@ import infiniteScroll from "vue-infinite-scroll";
 import "@foxone/uikit/build/index.min.css";
 import "@foxone/pando-ui/build/index.css";
 
+import "../components/icons";
+
 import type { Plugin } from "@nuxt/types";
 
 dayjs.extend(relativeTime);

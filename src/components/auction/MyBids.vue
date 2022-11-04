@@ -6,7 +6,7 @@
   >
     <template #activator="{ on }">
       <div v-on="on" class="my-bids-activator ml-4">
-        <v-icon size="16">$iconBids</v-icon>
+        <v-icon size="16">$IconBids</v-icon>
         <span class="ml-1">{{ $t("auction.my-bids") }}</span>
       </div>
     </template>

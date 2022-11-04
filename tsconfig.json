@@ -25,6 +25,11 @@
       "vuetify"
     ]
   },
-  "include": ["types/**/*.ts", "node_modules/vuetify", "src/**/*.ts"],
+  "include": [
+    "types/**/*.ts",
+    "node_modules/vuetify",
+    "src/**/*.ts",
+    "src/**/*.vue"
+  ],
   "exclude": ["node_modules"]
 }

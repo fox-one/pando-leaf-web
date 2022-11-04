@@ -30,7 +30,7 @@ class VaultCardActions extends Vue {
 
     if (hasDebt) {
       actions.push({
-        icon: "$iconPayback",
+        icon: "$IconPayback",
         value: "payback",
         text: this.$t("common.payback"),
         disabled: !hasDebt,
@@ -40,14 +40,14 @@ class VaultCardActions extends Vue {
     if (hasCollateral) {
       actions.push(
         {
-          icon: "$iconGenerate",
+          icon: "$IconGenerate",
           value: "generate",
           text: this.$t("common.generate"),
           disabled: !hasCollateral,
           href: "vault-generate",
         },
         {
-          icon: "$iconWithdraw",
+          icon: "$IconWithdraw",
           value: "withdraw",
           text: this.$t("common.withdraw"),
           disabled: !hasCollateral,
@@ -56,7 +56,7 @@ class VaultCardActions extends Vue {
       );
     }
     actions.push({
-      icon: "$iconDeposit",
+      icon: "$IconDeposit",
       value: "deposit",
       text: this.$t("common.deposit"),
       disabled: false,

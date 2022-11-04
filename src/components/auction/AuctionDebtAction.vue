@@ -8,7 +8,7 @@
       @click="confirm"
       :style="meta.leading ? `background:${leadingColor} !important;` : ''"
     >
-      <v-icon v-if="!meta.leading" class="mr-1" size="16">$iconBidFill</v-icon>
+      <v-icon v-if="!meta.leading" class="mr-1" size="16">$IconBidFill</v-icon>
       <span :style="meta.leading ? `color: #000000;` : ''">
         {{
           meta.leading

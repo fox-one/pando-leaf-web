@@ -2,7 +2,9 @@
   <div class="infomation-item" :style="[{ fontSize: `${fontSize}px` }]">
     <v-layout class="py-3" column>
       <v-layout align-center>
-        <h3 class="greyscale_3--text d-flex align-center">
+        <div
+          class="greyscale_3--text d-flex align-center infomation-item__title"
+        >
           <span class="mr-1">{{ label }}</span>
 
           <base-tooltip
@@ -10,7 +12,7 @@
             :hint="hint"
             :learn-more="learnMore"
           ></base-tooltip>
-        </h3>
+        </div>
 
         <v-spacer />
 
@@ -71,6 +73,11 @@ export default class extends Vue {
 <style lang="scss" scoped>
 .infomation-item {
   font-style: normal;
+  font-weight: 500;
+}
+
+.infomation-item__title {
+  font-size: 14px;
   font-weight: 500;
 }
 </style>

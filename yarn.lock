@@ -1539,10 +1539,10 @@
   dependencies:
     "@foxone/fennec-base" "0.5.4"
 
-"@foxone/icons@^3.1.5":
-  version "3.1.5"
-  resolved "https://registry.npmjs.org/@foxone/icons/-/icons-3.1.5.tgz#054cc9feee3b51cffffc601339c01da8cc8df5d2"
-  integrity sha512-uBz0PfMtBB9N8qOxZTsvaFW6cMK/Zp1clBuUKD13H8kNiWknDyxx+XM4n/uvZySi2OB+NrJoENjRix+N9qbrsA==
+"@foxone/icons@3":
+  version "3.1.9"
+  resolved "https://registry.npmjs.org/@foxone/icons/-/icons-3.1.9.tgz#2dce28e0917041d6bcf7f58c24a425ba61d2abb7"
+  integrity sha512-W1x9UxZjpTeeqiQQN7LxTg4UD9uij6aLdQd0NHedy1IwZrwohjoKMrBs5TQZzU+8kgkjj0cUsKkFMsFY6erOhg==
 
 "@foxone/mixin-api@0.1.25", "@foxone/mixin-api@^0.1.25":
   version "0.1.25"
@@ -1606,10 +1606,10 @@
     xgplayer-hls.js "~2.6.1"
     xgplayer-mp4 "~1.2.4"
 
-"@foxone/pando-ui@^0.0.9-0":
-  version "0.0.9-0"
-  resolved "https://registry.npmjs.org/@foxone/pando-ui/-/pando-ui-0.0.9-0.tgz#942d748631212d916fed875891ccfab95a7820cb"
-  integrity sha512-HfJ2H/sOivY6PQS7gHtTBYb8by8ecACNSZhbX/EHY5egBSt1Sb9WlffigQ0axBkVJdVtaMYGQwLzYlyMYmWM/g==
+"@foxone/pando-ui@^0.0.9-3":
+  version "0.0.9-3"
+  resolved "https://registry.npmjs.org/@foxone/pando-ui/-/pando-ui-0.0.9-3.tgz#563adcff210cf8b461c4113291c14c43c2b92e9b"
+  integrity sha512-uVykd5iuXc5uD915XeMhoEcihDJKF1peuxwPHBpHvZIhQO03lgj2J6rXGUUAU2r+C2IZ+WKZy4oAN5LtO2ooAQ==
   dependencies:
     "@multiavatar/multiavatar" "^1.0.7"
 
@@ -1618,10 +1618,10 @@
   resolved "https://registry.npmjs.org/@foxone/pandoseed/-/pandoseed-1.0.3.tgz#dd9f7fd624a5dbf2a6889584168be02c0ade2a5b"
   integrity sha512-CeMTLbRtFa1xBgltZrGwKZdiwpWnuoqJBFdDsWW6ntzHpbxWaXE+BV3riuTwMxcYO6yrp0an9V+QL5I/pU9ooA==
 
-"@foxone/uikit@^3.2.9-0":
-  version "3.2.9-0"
-  resolved "https://registry.npmjs.org/@foxone/uikit/-/uikit-3.2.9-0.tgz#536c78ca64039711a251f4642bc6538d12283240"
-  integrity sha512-sOPzlLF/H3l26MaKbcCMOXJQRQex1VfUPT3qm2kCunLYFaMFGs1gWHdzvnhmblGQAH1ScWy6lVMSOxsg65pF+w==
+"@foxone/uikit@^3.2.9-11":
+  version "3.2.9-11"
+  resolved "https://registry.npmjs.org/@foxone/uikit/-/uikit-3.2.9-11.tgz#f4f4a6a63831bb17fee0d78555f0710cb14a0a67"
+  integrity sha512-8LfnDxUwilHJjJCrm4LUcm2eJ72/fQVNdumzDFc03t3CGIF8ffLIwUHvlXNUBmkkoTegTfSa0orFqzUkVg2j8Q==
   dependencies:
     "@nuxt/types" "^2.15.8"
     axios "^0.26.0"
@@ -12660,7 +12660,12 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@4.2.4, typescript@~4.2:
+typescript@^4.8.4:
+  version "4.8.4"
+  resolved "https://registry.npmjs.org/typescript/-/typescript-4.8.4.tgz#c464abca159669597be5f96b8943500b238e60e6"
+  integrity sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==
+
+typescript@~4.2:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.4.tgz#8610b59747de028fda898a8aef0e103f156d0961"
   integrity sha512-V+evlYHZnQkaz8TRBuxTA92yZBPotr5H+WhQ7bD3hZUndx5tGOa1fuCgeSjxAzM1RiN5IzvadIXTVefuuwZCRg==

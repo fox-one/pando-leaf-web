@@ -8,7 +8,7 @@
       size="14"
       @click="alert = false"
     >
-      $iconClose
+      $IconClose
     </v-icon>
   </article>
 </template>

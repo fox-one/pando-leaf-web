@@ -5,7 +5,7 @@
     <span class="ml-1 greyscale_1--text font-weight-bold" @click="autoBid()">
       {{ `${meta.minBid} ${meta.symbol}` }}
 
-      <v-icon class="ml-1 mt-n1" size="12"> $iconAuctionDetail </v-icon>
+      <v-icon class="ml-1 mt-n1" size="12"> $IconAuctionDetail </v-icon>
     </span>
   </div>
 </template>

@@ -35,7 +35,7 @@ class VaultActions extends Vue {
 
     return [
       {
-        icon: "$iconPaybackOld",
+        icon: "$IconPaybackOld",
         value: "payback",
         text: this.$t("common.payback"),
         disabled: !hasDebt,
@@ -44,7 +44,7 @@ class VaultActions extends Vue {
         clazz: "bg-color",
       },
       {
-        icon: "$iconGenerateOld",
+        icon: "$IconGenerateOld",
         value: "generate",
         text: this.$t("common.generate"),
         disabled: !hasCollateral,
@@ -53,7 +53,7 @@ class VaultActions extends Vue {
         clazz: "bg-color",
       },
       {
-        icon: "$iconWithdrawOld",
+        icon: "$IconWithdrawOld",
         value: "withdraw",
         text: this.$t("common.withdraw"),
         disabled: !hasCollateral,
@@ -62,7 +62,7 @@ class VaultActions extends Vue {
         clazz: "bg-color",
       },
       {
-        icon: "$iconDepositOld",
+        icon: "$IconDepositOld",
         value: "deposit",
         text: this.$t("common.deposit"),
         disabled: false,

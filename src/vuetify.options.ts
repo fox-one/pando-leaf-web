@@ -1,32 +1,14 @@
-import zh from "vuetify/es5/locale/zh-Hans";
-import en from "vuetify/es5/locale/en";
-import ja from "vuetify/es5/locale/ja";
-import enUIKit from "@foxone/uikit/src/locales/en-US.json";
-import jaUIKit from "@foxone/uikit/src/locales/ja-JP.json";
-import zhUIKit from "@foxone/uikit/src/locales/zh-TW.json";
-import { makeIconValues } from "@/components/icons";
-import UIKit from "@foxone/uikit";
+import { preset } from "@foxone/uikit";
 import icons from "@/utils/icons";
-
 import { mergeDeep } from "vuetify/lib/util/helpers";
-
-const locales = {
-  zh: { ...zh, ...zhUIKit },
-  en: { ...en, ...enUIKit },
-  ja: { ...ja, ...jaUIKit },
-};
 
 export default function ({ store }) {
   const isDark = store.state.app.settings.dark;
 
   const options = {
     icons: {
-      values: {
-        ...icons,
-        ...makeIconValues(),
-      },
+      values: icons,
     },
-    lang: { locales },
     theme: {
       dark: isDark,
       options: {
@@ -90,5 +72,5 @@ export default function ({ store }) {
       },
     },
   };
-  return mergeDeep(UIKit.preset, options);
+  return mergeDeep(preset, options);
 }

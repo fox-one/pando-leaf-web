@@ -23,7 +23,7 @@
         align-center
       >
         <v-icon class="mr-1" color="greyscale_3" size="12">
-          $iconUpdateRight
+          $IconUpdateRight
         </v-icon>
 
         <span> {{ meta.changedValue }} {{ meta.debtSymbol }} </span>

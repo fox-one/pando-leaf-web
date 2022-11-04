@@ -1,6 +1,6 @@
 <template>
   <v-layout column align-center justify-center>
-    <v-icon class="mb-8" size="110">$iconNoVault</v-icon>
+    <v-icon class="mb-8" size="110">$IconNoVault</v-icon>
     <div class="greyscale_3--text font-weight-medium body-2 mb-8">
       {{ $t("me.no-vault-1") }}
     </div>
