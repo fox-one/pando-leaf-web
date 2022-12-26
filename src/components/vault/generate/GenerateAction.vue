@@ -17,7 +17,7 @@
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { Get } from "vuex-pathify";
-import { ACTION_ASSET_ID, EVENTS } from "~/constants";
+import { ACTION_ASSET_ID, ACTION_ASSET_AMOUNT, EVENTS } from "~/constants";
 
 @Component({
   components: {},
@@ -83,7 +83,7 @@ export default class GenerateAction extends Vue {
     const request = {
       user_id: this.user_id,
       follow_id: this.follow_id,
-      amount: "0.00000001",
+      amount: ACTION_ASSET_AMOUNT + "",
       asset_id: ACTION_ASSET_ID,
       parameters: ["bit", "35", "uuid", this.vault.id, "decimal", this.amount],
     } as API.ActionPayload;

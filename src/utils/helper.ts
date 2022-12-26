@@ -4,9 +4,22 @@ import { v4 as uuid } from "uuid";
 import parse from "parse-duration";
 
 export function errorHandler(vm: Vue, error: any) {
-  const fallback = "未知错误";
+  const code = error.code || "";
+  let message = "";
 
-  const message = error.message || error.msg || fallback;
+  let locale = "";
+  if (code && vm.$t(`errorcode.${code}`) !== code) {
+    locale = vm.$t(`errorcode.${code}`) as string;
+  }
+
+  message = `${code} ${
+    error.message || error.msg || locale || "Unknown Error"
+  }`;
+
+  if (error.data) {
+    message += ` ${JSON.stringify(error.data)}`;
+  }
+
   vm.$uikit.toast.error({ message });
 }
 

@@ -246,5 +246,5 @@
   "vaults-hidden": "{count} 隱藏的金庫",
   "welcome.description": "Pando Leaf 是一個通過抵押數字資產生成穩定幣的去中心化產品。前往創建金庫開始你的旅程吧。",
   "welcome.what-is": "什麼是 Pando",
-  "eth.require": "需要 ETH 执行操作"
+  "eth.require": "需要至少 {amount} ETH 执行操作"
 }

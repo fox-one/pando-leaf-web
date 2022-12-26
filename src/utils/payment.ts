@@ -1,4 +1,4 @@
-import { ACTION_ASSET_ID } from "~/constants";
+import { ACTION_ASSET_ID, ACTION_ASSET_AMOUNT } from "~/constants";
 import { TransactionStatus } from "~/enums";
 
 export interface Callbacks {
@@ -58,8 +58,14 @@ export function shouldGetMoreActionAsset(vm: Vue, cbs?: Callbacks) {
   const canReadAsset = getters["auth/canReadAsset"];
   if (isLogged && canReadAsset) {
     const getWalletAssetById = getters["asset/getWalletAssetById"];
-    if (Number(getWalletAssetById(ACTION_ASSET_ID)?.balance ?? "0") <= 0) {
-      vm.$utils.helper.errorHandler(vm, { message: vm.$t("eth.require") });
+
+    if (
+      Number(getWalletAssetById(ACTION_ASSET_ID)?.balance ?? "0") <=
+      +ACTION_ASSET_AMOUNT
+    ) {
+      vm.$utils.helper.errorHandler(vm, {
+        message: vm.$t("eth.require", { amount: ACTION_ASSET_AMOUNT }),
+      });
 
       return true;
     }

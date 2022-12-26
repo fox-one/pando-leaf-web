@@ -40,6 +40,8 @@ export const CNB_ASSET_ID = "965e5c6e-434c-3fa9-b780-c50f43cd955c";
 // ETH
 export const ACTION_ASSET_ID = "43d61dcd-e413-450d-80b8-101d5e903357";
 
+export const ACTION_ASSET_AMOUNT = "0.00000001";
+
 export const PANDO_DOC = "https://docs.pando.im/docs/leaf/intro";
 
 export const EVENTS = {

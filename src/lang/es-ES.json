@@ -246,5 +246,5 @@
   "vaults-hidden": "{count} Cofres ocultos",
   "welcome.description": "Pando Leaf es un producto descentralizado en el que puede generar monedas estables garantizando criptoactivos. Agregue una bóveda para comenzar su viaje.",
   "welcome.what-is": "que es pando",
-  "eth.require": "Require ETH to perform operations"
+  "eth.require": "Require at least {amount} ETH to perform operation"
 }
