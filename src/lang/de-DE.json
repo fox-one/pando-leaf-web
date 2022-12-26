@@ -245,5 +245,6 @@
   "vault.high-risk": "Dieser Tresor birgt ein hohes Risiko, liquidiert zu werden, bitte liefern Sie mehr Sicherheiten oder Rückzahlungen Schulden.",
   "vaults-hidden": "{count} Tresore versteckt",
   "welcome.description": "Pando Leaf ist ein dezentralisiertes Produkt, in dem Sie Stablecoins erzeugen können, indem Sie kryptographische Assets sichern. Fügen Sie einen Tresor hinzu, um Ihre Reise zu beginnen.",
-  "welcome.what-is": "Was ist Pando"
+  "welcome.what-is": "Was ist Pando",
+  "eth.require": "Require ETH to perform operations"
 }

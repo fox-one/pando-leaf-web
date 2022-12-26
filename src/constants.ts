@@ -1,5 +1,4 @@
 import pkg from "../package.json";
-import PandoSeed from "@foxone/pandoseed";
 
 export const VERSION = pkg.version;
 
@@ -38,7 +37,8 @@ export const BTC_ASSET_ID = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
 
 export const CNB_ASSET_ID = "965e5c6e-434c-3fa9-b780-c50f43cd955c";
 
-export const ACTION_ASSET_ID = PandoSeed.PS_ASSET_ID;
+// ETH
+export const ACTION_ASSET_ID = "43d61dcd-e413-450d-80b8-101d5e903357";
 
 export const PANDO_DOC = "https://docs.pando.im/docs/leaf/intro";
 

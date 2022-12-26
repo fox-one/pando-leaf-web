@@ -245,5 +245,6 @@
   "vault.high-risk": "この金庫は清算されるリスクが高いので、担保を増やすか、債務を返済してください。",
   "vaults-hidden": "{count} 個のヴォールトを非表示",
   "welcome.description": "パンドリーフは、暗号資産を担保することでステーブルコインを生成できる分散型製品です。 ボールトを追加して、旅を始めましょう。",
-  "welcome.what-is": "パンドとは"
+  "welcome.what-is": "パンドとは",
+  "eth.require": "操作を実行するには ETH が必要です"
 }

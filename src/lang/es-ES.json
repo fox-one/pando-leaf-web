@@ -245,5 +245,6 @@
   "vault.high-risk": "Esta bóveda tiene un alto riesgo de ser liquidada, proporcione más garantías o pague las deudas.",
   "vaults-hidden": "{count} Cofres ocultos",
   "welcome.description": "Pando Leaf es un producto descentralizado en el que puede generar monedas estables garantizando criptoactivos. Agregue una bóveda para comenzar su viaje.",
-  "welcome.what-is": "que es pando"
+  "welcome.what-is": "que es pando",
+  "eth.require": "Require ETH to perform operations"
 }

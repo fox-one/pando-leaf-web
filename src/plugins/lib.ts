@@ -2,7 +2,6 @@ import Vue from "vue";
 import UIKit from "@foxone/uikit";
 
 import PandoUI from "@foxone/pando-ui";
-import PandoSeed from "@foxone/pandoseed";
 import Passport from "@foxone/mixin-passport";
 
 import dayjs from "dayjs";
@@ -60,7 +59,6 @@ const plugin: Plugin = ({ app }) => {
   });
 
   Vue.use(PandoUI, app.vuetify);
-  Vue.use(PandoSeed.plugin, app.vuetify);
   Vue.use(infiniteScroll);
 
   use([

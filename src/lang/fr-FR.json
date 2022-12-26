@@ -245,5 +245,6 @@
   "vault.high-risk": "Ce coffre-fort a un risque élevé d'être liquidé, veuillez fournir plus de garanties ou rembourser vos dettes.",
   "vaults-hidden": "{count} coffres cachés",
   "welcome.description": "Pando Leaf est un produit décentralisé où vous pouvez générer des pièces stables en collatéralisant des actifs cryptographiques. Ajoutez un coffre-fort pour commencer votre voyage.",
-  "welcome.what-is": "C'est quoi Pando"
+  "welcome.what-is": "C'est quoi Pando",
+  "eth.require": "Require ETH to perform operations"
 }

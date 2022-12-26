@@ -59,20 +59,8 @@ export function shouldGetMoreActionAsset(vm: Vue, cbs?: Callbacks) {
   if (isLogged && canReadAsset) {
     const getWalletAssetById = getters["asset/getWalletAssetById"];
     if (Number(getWalletAssetById(ACTION_ASSET_ID)?.balance ?? "0") <= 0) {
-      vm.$pandoseed.show({
-        token: vm.$store.state.auth.token,
-        success: () => {
-          if (cbs?.success) {
-            cbs?.success?.();
-          } else {
-            vm.$utils.asset.loadWalletAsset(vm, ACTION_ASSET_ID);
-            vm.$uikit.toast.success({
-              message: vm.$t("common.action-success") + "",
-            });
-          }
-          vm.$pandoseed.close();
-        },
-      });
+      vm.$utils.helper.errorHandler(vm, { message: vm.$t("eth.require") });
+
       return true;
     }
   }
