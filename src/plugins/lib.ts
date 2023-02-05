@@ -42,7 +42,7 @@ const plugin: Plugin = ({ app }) => {
     },
     dialog: { flat: true },
     auth: {
-      wallets: ["fennec", "mixin", "metamask", "walletconnect"],
+      wallets: ["fennec", "mixin"],
       clientId: CONFIG.MIXIN_CLIENT_ID,
       scope: "PROFILE:READ ASSETS:READ",
       pkce: true,
