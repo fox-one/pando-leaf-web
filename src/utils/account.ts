@@ -2,6 +2,7 @@ export async function sync(vm: Vue) {
   try {
     const tokenLocale = vm.$store.state.auth.token;
     const channelLocale = vm.$store.state.auth.channel;
+    const mixinTokenLocale = vm.$store.state.auth.mixin_token;
 
     if (!channelLocale) {
       logout(vm);
@@ -12,6 +13,7 @@ export async function sync(vm: Vue) {
     const auth = await vm.$passport.sync({
       channel: channelLocale,
       token: tokenLocale,
+      mixin_token: mixinTokenLocale,
     });
 
     vm.$store.commit("auth/SET_OAUTH_INFO", auth);

@@ -4,6 +4,7 @@ import { AxiosRequestConfig } from "axios";
 import Http from "./http";
 import createApis from "./index";
 import { v4 as uuid } from "uuid";
+import { MIXIN_HOST } from "@/constants";
 
 function generateStructureInterceptor(app: NuxtAppOptions) {
   return [
@@ -55,8 +56,8 @@ function generateAuthInterceptor(app: NuxtAppOptions) {
     (configs) => {
       let token = "";
 
-      if (configs.token) {
-        token = configs.token;
+      if (configs.baseURL === MIXIN_HOST) {
+        token = app.store?.state.auth.mixin_token;
       } else {
         token = app.store?.state.auth.token;
       }

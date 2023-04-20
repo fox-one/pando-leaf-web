@@ -66,6 +66,10 @@ const config: NuxtConfig = {
       {
         src: "https://polyfill.io/v3/polyfill.min.js?features=Intl",
       },
+      {
+        src: "https://cdn.jsdelivr.net/npm/@foxone/mvm@0.1.31/dist/mvm.min.js",
+        defer: true,
+      },
     ],
   },
   loading: { color: "#fff" },

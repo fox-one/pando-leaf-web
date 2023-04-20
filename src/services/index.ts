@@ -4,8 +4,8 @@ import { MIXIN_HOST } from "@/constants";
 
 export default function (http: Http) {
   return {
-    auth(code: string): Promise<API.AuthResult> {
-      return http.post("/login", { data: { code } });
+    auth(data: API.AuthParams): Promise<API.AuthResult> {
+      return http.post("/login", { data });
     },
 
     listCollaterals(): Promise<{ collaterals: API.Collateral[] }> {

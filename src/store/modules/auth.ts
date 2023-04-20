@@ -3,6 +3,7 @@ import { make } from "vuex-pathify";
 
 const state = (): State.Auth => ({
   token: "",
+  mixin_token: "",
   scope: "",
   channel: "",
 });
@@ -22,6 +23,9 @@ const mutations: MutationTree<State.Auth> = {
     state.token = data.token;
     state.scope = data.scope;
     state.channel = data.channel;
+  },
+  SET_MIXIN_TOKEN(state, value) {
+    state.mixin_token = value;
   },
   CLEAR(state) {
     state.token = "";
