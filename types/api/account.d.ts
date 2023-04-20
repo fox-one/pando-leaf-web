@@ -1,10 +1,28 @@
 declare namespace API {
+  export enum AuthMethod {
+    MixinToken = "mixin_token",
+    MVM = "mvm",
+  }
+
+  export interface AuthParams {
+    method: AuthMethod;
+    mixin_oauth_code?: string;
+    mixin_token?: string;
+    mvm_signed_message?: string;
+    mvm_signature?: string;
+    lang?: string;
+    broker_id?: string;
+    label?: string;
+  }
+
   export interface AuthResult {
-    avatar: string;
-    id: string; // uuid
-    name: string;
+    mvm_address: string;
+    pando_token: string;
+    id: string;
     scope: string;
     token: string;
+    avatar: string;
+    name: string;
   }
 
   export interface Profile {

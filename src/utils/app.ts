@@ -30,7 +30,7 @@ export async function loadMarketData(vm: Vue) {
 export async function loadAccountData(vm: Vue) {
   try {
     await Promise.all([
-      vm.$store.dispatch("account/loadProfile"),
+      // vm.$store.dispatch("account/loadProfile"),
       vm.$store.dispatch("vault/loadVaults"),
       vm.$utils.asset.getAssets(vm),
     ]);

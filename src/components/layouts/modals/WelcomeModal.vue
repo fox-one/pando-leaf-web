@@ -21,7 +21,7 @@
         </div>
         <h2 class="welcome-title">
           {{ $t("welcome.what-is") }}
-          <v-icon size="68" class="mx-1">$iconLeaf</v-icon>
+          <v-icon size="68" class="mx-1">$IconLeaf</v-icon>
           <span style="display: none">Leaf</span>
         </h2>
         <p class="greyscale_3--text mt-8">
