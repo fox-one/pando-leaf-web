@@ -55,6 +55,8 @@ export async function openAuth(vm: Vue) {
 
     await vm.$utils.app.loadAccountData(vm);
   } catch (error: any) {
-    vm.$uikit.toast.error({ message: error.message });
+    vm.$uikit.toast.error({
+      message: error.message || error.msg || "Login Error",
+    });
   }
 }

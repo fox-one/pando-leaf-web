@@ -1070,10 +1070,10 @@
   resolved "https://registry.npmjs.org/@foxone/icons/-/icons-3.1.9.tgz#2dce28e0917041d6bcf7f58c24a425ba61d2abb7"
   integrity sha512-W1x9UxZjpTeeqiQQN7LxTg4UD9uij6aLdQd0NHedy1IwZrwohjoKMrBs5TQZzU+8kgkjj0cUsKkFMsFY6erOhg==
 
-"@foxone/mixin-passport@0.1.31":
-  version "0.1.31"
-  resolved "https://registry.npmjs.org/@foxone/mixin-passport/-/mixin-passport-0.1.31.tgz#c1e5e41ef7a3920726e9fd89bf3c8f33f161c7d9"
-  integrity sha512-fpmhe4oq4BTB3pWBEOZtt7rPPF0crXwuKheLVNYOZ0GLFIFBjZQAD2BN5tYAGykNXMRMz4eeiH2aZgqXat2v9w==
+"@foxone/mixin-passport@^0.1.32":
+  version "0.1.32"
+  resolved "https://registry.npmjs.org/@foxone/mixin-passport/-/mixin-passport-0.1.32.tgz#a7424dbde2a6aa443aafca4931821b4e97861406"
+  integrity sha512-bNh6eoVeZkxDjc270t/Iwl5voroPnyhUVXud6htsHHbhwXrFfON5YnClDP9TjNdRFbc+LU7nbmAVfwkPOTYLeQ==
   dependencies:
     "@foxone/fennec-dapp" "^0.5.4"
     "@foxone/utils" "^0.2.6"
