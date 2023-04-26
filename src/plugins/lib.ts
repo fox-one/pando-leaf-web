@@ -54,7 +54,7 @@ const plugin: Plugin = ({ app, store }) => {
     origin: "Pando Leaf",
     config: { infuraId: "a018fa2f735a435f9a7917f0d429c61a" },
     JWTPayload: { from: "pando-leaf" },
-    chainId: 73927,
+    chainId: "0x120c7",
     customizeToken: true,
     signMessage: true,
     hooks: {
