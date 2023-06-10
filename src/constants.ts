@@ -42,7 +42,7 @@ export const ACTION_ASSET_ID = "43d61dcd-e413-450d-80b8-101d5e903357";
 
 export const ACTION_ASSET_AMOUNT = "0.00000001";
 
-export const PANDO_DOC = "https://docs.pando.im/docs/leaf/intro";
+export const PANDO_DOC = "https://docs.pando.im/manual/mint.html";
 
 export const EVENTS = {
   PAY_QR_CODE: "PAY_QR_CODE",
