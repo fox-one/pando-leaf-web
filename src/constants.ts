@@ -81,8 +81,8 @@ export const InLossAssets = [
 
 export const LossAssetRate = {
   // "336d5d97-329c-330d-8e62-2b7c9ba40ea0": "10%",
-  "c6d0c728-2624-429b-8e0d-d9d19b6592fa": "10%", // BTC
-  "43d61dcd-e413-450d-80b8-101d5e903357": "70%", // ETH
+  "c6d0c728-2624-429b-8e0d-d9d19b6592fa": "90%", // BTC
+  "43d61dcd-e413-450d-80b8-101d5e903357": "30%", // ETH
   "d5e9440c-9aaf-3d2e-8eb8-63b3fc648bc3": "60%", // sETH-BTC
 };
 
