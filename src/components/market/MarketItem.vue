@@ -29,6 +29,10 @@ export default class MarketItem extends Vue {
   @Prop({ default: false }) disabled!: boolean;
 
   expand = false;
+
+  mounted() {
+    console.log(this.collateral);
+  }
 }
 </script>
 

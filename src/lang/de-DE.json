@@ -246,5 +246,7 @@
   "vaults-hidden": "{count} Tresore versteckt",
   "welcome.description": "Pando Leaf ist ein dezentralisiertes Produkt, in dem Sie Stablecoins erzeugen können, indem Sie kryptographische Assets sichern. Fügen Sie einen Tresor hinzu, um Ihre Reise zu beginnen.",
   "welcome.what-is": "Was ist Pando",
-  "eth.require": "Require at least {amount} ETH to perform operation"
+  "eth.require": "Require at least {amount} ETH to perform operation",
+
+  "mixin.loss.intro": "This vault is affected by Mixin 9/23 accident, the price is about {rate} of market price. Learn more >"
 }

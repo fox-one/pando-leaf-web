@@ -246,5 +246,7 @@
   "vaults-hidden": "{count} 個のヴォールトを非表示",
   "welcome.description": "パンドリーフは、暗号資産を担保することでステーブルコインを生成できる分散型製品です。 ボールトを追加して、旅を始めましょう。",
   "welcome.what-is": "パンドとは",
-  "eth.require": "操作を実行するには、少なくとも {amount} ETH が必要です"
+  "eth.require": "操作を実行するには、少なくとも {amount} ETH が必要です",
+
+  "mixin.loss.intro": "この保管庫は Mixin 9/23 の事故の影響を受けており、価格は市場価格の {rate} です。 さらに詳しく >"
 }

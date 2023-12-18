@@ -97,7 +97,7 @@ class VaultFields extends Vue {
             symbol: collateralSymbol,
           }),
           value: `${format({ n: price })} ${debtSymbol}`,
-          titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
+          // titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
         },
         {
           title: this.$t("common.collateral-ratio"),
@@ -105,7 +105,7 @@ class VaultFields extends Vue {
           color: this.$vuetify.theme.currentTheme[riskLevelMeta.color],
           hint: this.$t("tooltip.collateralization-ratio"),
           learnMore: LINKS["vault.liquidation-ratio"],
-          titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
+          // titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
         },
         {
           title: this.$t("common.next-price"),
@@ -116,14 +116,14 @@ class VaultFields extends Vue {
               })
             : undefined,
           learnMore: LINKS["vault.price-oracles"],
-          titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
+          // titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
         },
         {
           title: this.$t("common.liquidation-price"), // debt * ratio / collateral
           value: liquidationPriceText,
           hint: this.$t("tooltip.liquidation-price"),
           learnMore: LINKS["vault.liquidation-price"],
-          titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
+          // titleColor: this.$vuetify.theme.currentTheme[riskLevelMeta.subtitle],
         }
       );
     }
@@ -143,7 +143,7 @@ export default VaultFields;
     line-height: 15px;
     display: flex;
     align-items: center;
-    color: var(--v-greyscale_1-base);
+    color: var(--v-greyscale_3-base);
   }
 
   &__value {

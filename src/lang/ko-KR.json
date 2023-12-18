@@ -246,5 +246,7 @@
   "vaults-hidden": "{count} Vaults Hidden",
   "welcome.description": "Pando Leaf는 암호화 자산을 담보로 하여 스테이블 코인을 생성할 수 있는 탈중앙화 제품입니다. 보관소를 추가하여 여정을 시작하세요.",
   "welcome.what-is": "판도가 뭐야?",
-  "eth.require": "작업을 수행하려면 최소 {amount} ETH가 필요합니다."
+  "eth.require": "작업을 수행하려면 최소 {amount} ETH가 필요합니다.",
+
+  "mixin.loss.intro": "This vault is affected by Mixin 9/23 accident, the price is about {rate} of market price. Learn more >"
 }

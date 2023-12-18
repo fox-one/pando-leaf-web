@@ -246,5 +246,7 @@
   "vaults-hidden": "{count} Cofres ocultos",
   "welcome.description": "Pando Leaf es un producto descentralizado en el que puede generar monedas estables garantizando criptoactivos. Agregue una bóveda para comenzar su viaje.",
   "welcome.what-is": "que es pando",
-  "eth.require": "Require at least {amount} ETH to perform operation"
+  "eth.require": "Require at least {amount} ETH to perform operation",
+
+  "mixin.loss.intro": "This vault is affected by Mixin 9/23 accident, the price is about {rate} of market price. Learn more >"
 }

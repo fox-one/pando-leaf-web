@@ -18,10 +18,18 @@
     <empty-vault-place-holder class="pt-5 mt-3" v-else :id="id" />
 
     <div
-      v-if="meta.inHighRisk"
+      v-if="!meta.isInLoss && meta.inHighRisk"
       class="risk_high--text mt-4 mb-1 f-caption font-weight-medium"
     >
       *{{ $t("vault.high-risk") }}
+    </div>
+
+    <div
+      v-if="meta.isInLoss"
+      class="mt-4 mb-1 f-caption loss-hint"
+      @click.stop="handleToIntro"
+    >
+      {{ $t("mixin.loss.intro", { rate: meta.lossRate }) }}
     </div>
 
     <vault-card-actions
@@ -42,6 +50,11 @@ import EmptyVaultPlaceHolder from "@/components/vault/EmptyVaultPlaceHolder.vue"
 import VaultCardActions from "@/components/vault/VaultCardActions.vue";
 import { getVaultFields } from "@/utils/vault";
 import { RISK } from "~/enums";
+import {
+  InLossAssets,
+  LossAssetRate,
+  AttackAssetsExplanationHref,
+} from "@/constants";
 
 @Component({
   components: {
@@ -58,7 +71,11 @@ class VaultListItem extends Vue {
     const { vault, collateralAsset, debtAsset, debtAmount, riskLevelMeta } =
       getVaultFields(this, this.id);
 
-    const bgColor = riskLevelMeta.bg_color;
+    const isInLoss = InLossAssets.includes(collateralAsset?.id ?? "");
+
+    const lossRate = LossAssetRate[collateralAsset?.id ?? ""] ?? 0;
+
+    const bgColor = isInLoss ? "greyscale_6" : riskLevelMeta.bg_color;
     const isDark = this.$vuetify.theme.dark;
     const actionColor = isDark
       ? riskLevelMeta.value === RISK.NA
@@ -68,6 +85,9 @@ class VaultListItem extends Vue {
     const inHighRisk = riskLevelMeta.value === RISK.HIGH;
 
     return {
+      isInLoss,
+      lossRate,
+      collateralAsset,
       name: `#${vault?.identity_id}`,
       collateralAssetLogo: collateralAsset?.logo ?? "",
       debtAssetLogo: debtAsset?.logo ?? "",
@@ -83,6 +103,10 @@ class VaultListItem extends Vue {
     this.$router.push(
       this.localePath({ name: "vault-detail", query: { id: this.id } })
     );
+  }
+
+  handleToIntro() {
+    window.open(AttackAssetsExplanationHref, "_blank");
   }
 }
 export default VaultListItem;
@@ -100,6 +124,10 @@ export default VaultListItem;
 .actions__wrapper {
   padding: 16px 16px;
   width: 100%;
-  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.03);
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
+}
+
+.loss-hint {
+  color: var(--v-warning-base);
 }
 </style>
