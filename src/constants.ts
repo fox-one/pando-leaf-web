@@ -35,10 +35,12 @@ export const DEFAULT_ASSET_ID = "c94ac88f-4671-3976-b60a-09064f1811e8";
 
 export const BTC_ASSET_ID = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
 
+export const ETH_ASSET_ID = "43d61dcd-e413-450d-80b8-101d5e903357";
+
 export const CNB_ASSET_ID = "965e5c6e-434c-3fa9-b780-c50f43cd955c";
 
 // ETH
-export const ACTION_ASSET_ID = "43d61dcd-e413-450d-80b8-101d5e903357";
+export const ACTION_ASSET_ID = CNB_ASSET_ID;
 
 export const ACTION_ASSET_AMOUNT = "0.00000001";
 
