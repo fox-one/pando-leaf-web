@@ -5,7 +5,7 @@
       {{ $t("me.no-vault-1") }}
     </div>
 
-    <action-create-vault @itemclick="handleItemclick">
+    <action-create-vault v-if="!windDown" @itemclick="handleItemclick">
       <template #activator="{ on }">
         <slot name="activator" :on="on">
           <f-button
@@ -31,6 +31,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import VaultHidden from "@/components/vault/VaultHidden.vue";
 import ActionCreateVault from "@/components/vault/ActionCreateVault.vue";
+import { ProtocolWindDown } from "~/constants";
 
 @Component({
   components: {
@@ -39,6 +40,8 @@ import ActionCreateVault from "@/components/vault/ActionCreateVault.vue";
   },
 })
 class EmptyPlaceHolder extends Vue {
+  windDown = ProtocolWindDown;
+
   handleItemclick(item: API.Collateral) {
     this.$router.push(
       this.localePath({ name: "vault-open", query: { id: item.id } })

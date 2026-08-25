@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { ProtocolWindDown } from "~/constants";
 
 @Component
 class VaultActions extends Vue {
@@ -33,7 +34,7 @@ class VaultActions extends Vue {
   get actions() {
     const { hasCollateral, hasDebt } = this;
 
-    return [
+    const actions = [
       {
         icon: "$IconPaybackOld",
         value: "payback",
@@ -71,6 +72,12 @@ class VaultActions extends Vue {
         clazz: "bg-color-opposite",
       },
     ];
+
+    if (ProtocolWindDown) {
+      return actions.filter((item) => item.value === "payback" || item.value === "withdraw");
+    }
+
+    return actions;
   }
 
   handleClick(item) {
