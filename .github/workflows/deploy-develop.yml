@@ -17,16 +17,16 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository_owner == 'fox-one'
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           path: |
             node_modules
             **/node_modules
           key: ${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
           node-version: "14.17.0"
           cache: "yarn"
@@ -48,7 +48,7 @@ jobs:
           echo "$ROBOT_CONTENT" > dist/robots.txt
 
       # upload to aws
-      - uses: aws-actions/configure-aws-credentials@v1
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ${{ env.AWS_REGION }}
           aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
