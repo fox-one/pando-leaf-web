@@ -7,7 +7,7 @@
     <v-spacer />
 
     <market-item-action
-      v-if="showButton"
+      v-if="showButton && !windDown"
       :collateral="collateral"
     ></market-item-action>
   </v-layout>
@@ -16,6 +16,7 @@
 <script lang="ts" scoped>
 import { Vue, Component, Prop } from "vue-property-decorator";
 import MarketItemAction from "@/components/market/MarketItemAction.vue";
+import { ProtocolWindDown } from "~/constants";
 
 @Component({
   components: {
@@ -26,6 +27,8 @@ export default class MarketItemTitle extends Vue {
   @Prop() collateral!: API.Collateral;
 
   @Prop({ default: true }) showButton!: boolean;
+
+  windDown = ProtocolWindDown;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;

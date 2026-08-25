@@ -21,7 +21,7 @@
 
         <v-spacer />
 
-        <action-create-vault @itemclick="handleItemclick" />
+        <action-create-vault v-if="!windDown" @itemclick="handleItemclick" />
       </div>
 
       <vault-sorter />
@@ -44,7 +44,7 @@ import VaultHidden from "@/components/vault/VaultHidden.vue";
 import ActionCreateVault from "@/components/vault/ActionCreateVault.vue";
 import mixins from "@/mixins";
 import { Get } from "vuex-pathify";
-import { LINKS } from "~/constants";
+import { LINKS, ProtocolWindDown } from "~/constants";
 
 @Component({
   components: {
@@ -64,6 +64,8 @@ class VaultPage extends Mixins(mixins.page) {
   @Get("auth/isLogged") isLogged!: boolean;
 
   @Get("vault/vaultsEmpty") vaultsEmpty!: boolean;
+
+  windDown = ProtocolWindDown;
 
   get title() {
     return `${this.$t("app-name")}`;

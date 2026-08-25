@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { ProtocolWindDown } from "~/constants";
 
 @Component
 class VaultCardActions extends Vue {
@@ -38,30 +39,32 @@ class VaultCardActions extends Vue {
       });
     }
     if (hasCollateral) {
-      actions.push(
-        {
+      if (!ProtocolWindDown) {
+        actions.push({
           icon: "$IconGenerate",
           value: "generate",
           text: this.$t("common.generate"),
           disabled: !hasCollateral,
           href: "vault-generate",
-        },
-        {
-          icon: "$IconWithdraw",
-          value: "withdraw",
-          text: this.$t("common.withdraw"),
-          disabled: !hasCollateral,
-          href: "vault-withdraw",
-        }
-      );
+        });
+      }
+      actions.push({
+        icon: "$IconWithdraw",
+        value: "withdraw",
+        text: this.$t("common.withdraw"),
+        disabled: !hasCollateral,
+        href: "vault-withdraw",
+      });
     }
-    actions.push({
-      icon: "$IconDeposit",
-      value: "deposit",
-      text: this.$t("common.deposit"),
-      disabled: false,
-      href: "vault-deposit",
-    });
+    if (!ProtocolWindDown) {
+      actions.push({
+        icon: "$IconDeposit",
+        value: "deposit",
+        text: this.$t("common.deposit"),
+        disabled: false,
+        href: "vault-deposit",
+      });
+    }
     return actions;
   }
 

@@ -44,6 +44,8 @@ export const ACTION_ASSET_ID = CNB_ASSET_ID;
 
 export const ACTION_ASSET_AMOUNT = "0.00000001";
 
+export const ProtocolWindDown = true;
+
 export const PANDO_DOC = "https://docs.pando.im/manual/mint.html";
 
 export const EVENTS = {

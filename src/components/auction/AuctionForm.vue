@@ -5,7 +5,7 @@
 
       <auction-done-detail v-if="meta.isDone" :flip="flip" />
 
-      <div v-else>
+      <div v-else-if="!windDown">
         <f-divider size="8" :opacity="meta.opacity" class="mx-n4 mb-6" />
 
         <auction-debt-form v-if="meta.isStage1" :flip="flip" />
@@ -24,6 +24,7 @@ import AuctionDetail from "@/components/auction/AuctionDetail.vue";
 import AuctionDoneDetail from "@/components/auction/AuctionDoneDetail.vue";
 import AuctionDebtForm from "@/components/auction/AuctionDebtForm.vue";
 import AuctionCollateralForm from "@/components/auction/AuctionCollateralForm.vue";
+import { ProtocolWindDown } from "~/constants";
 
 @Component({
   components: {
@@ -35,6 +36,8 @@ import AuctionCollateralForm from "@/components/auction/AuctionCollateralForm.vu
 })
 export default class AuctionPage extends Vue {
   @Prop() flip!: API.Flip;
+
+  windDown = ProtocolWindDown;
 
   get meta() {
     const getters = this.$store.getters as Getter.GettersTree;
